@@ -7,7 +7,7 @@
     <script title="debug">
         window.DEBUG = true;
     </script>
-    
+
     <link rel="stylesheet" href="../../module.css">
     ${ include('../../templates/style.html') }
 
@@ -35,19 +35,19 @@
             this.computed = this.computed || getComputedStyle(data.host),
 
             // Todo: Observers are not being registered on first render, because
-            // they are protected by the paddingbox check, but then not on any 
+            // they are protected by the paddingbox check, but then not on any
             // other render either. This is because this is a TextRenderer being
-            // told to rerender, where the observers are only updated on 
-            // rerenders of the parent TemplateRenderer. And this is a bit of a 
-            // worry, because it's a hole in my thinking that I had not... well, 
-            // to be fair I smelled something off about the observation system, 
+            // told to rerender, where the observers are only updated on
+            // rerenders of the parent TemplateRenderer. And this is a bit of a
+            // worry, because it's a hole in my thinking that I had not... well,
+            // to be fair I smelled something off about the observation system,
             // I guess this is where it's coming from.
             //
             // For the moment, kick start the observation here by reading them
             // before the paddingbox check.
             data.points.map((point) => (point.x, point.y)),
 
-            // And observe each box change (TEMP, get rid of data.box, we only 
+            // And observe each box change (TEMP, get rid of data.box, we only
             // use it for this)
             data.box && (
                 this.viewbox    = { x: data.contentbox.x * 2, y: data.contentbox.y * 2, width: data.contentbox.width * 2, height: data.contentbox.height * 2 },
@@ -61,25 +61,25 @@
                 //data.clear(this.ctx, { x: 0, y: 0, width: element.width, height: element.height }),
 
                 data.drawXLines(this.ctx, this.viewbox, data.xaxis
-                    .filter((line) => data.valuebox.x + data.valuebox.width >= line.value && line.value >= data.valuebox.x)     
+                    .filter((line) => data.valuebox.x + data.valuebox.width >= line.value && line.value >= data.valuebox.x)
                     .map((line) => data.toRatioX(line.value)),
                     this.xGridColor
                 ),
 
                 data.drawYLines(this.ctx, this.viewbox, data.yaxis
-                    .filter((line) => data.valuebox.y + data.valuebox.height >= line.value && line.value >= data.valuebox.y)     
+                    .filter((line) => data.valuebox.y + data.valuebox.height >= line.value && line.value >= data.valuebox.y)
                     .map((line) => data.toRatioY(line.value)),
                     this.yGridColor
                 ),
 /*
                 data.xScale === 'linear' ?
                     data.points.forEach((point) => data.drawCrosshair(this.ctx, this.viewbox, 28, {
-                        x: data.toRatioX(point.x), 
-                        y: data.toRatioY(point.y) 
+                        x: data.toRatioX(point.x),
+                        y: data.toRatioY(point.y)
                     }, this.graphColor)) :
                     data.drawCurve(
                         this.ctx,
-                        this.viewbox, 
+                        this.viewbox,
                         data.points.map((point, i) => ({
                             x: data.toRatioX(point.x),
                             y: data.toRatioY(point.y)
@@ -119,7 +119,7 @@
                     'logarithmic-96dB': (data.valuebox.y + data.valuebox.height)/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2
                 })[data.yScale] :
                 line.value >= data.valuebox.y
-            ))    
+            ))
             .map((line) => include(this.node.getRootNode().getElementById('line-def'), {
                 part: 'y-line line',
                 x1: data.toViewX(data.valuebox.x),
@@ -152,7 +152,7 @@
                 'logarithmic-96dB': (data.valuebox.y + data.valuebox.height)/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2/2
             })[data.yScale] :
             tick.value >= data.valuebox.y
-        ))   
+        ))
         .map((tick, index) => include(this.node.getRootNode().getElementById('y-tick'), { up: data, tick })) }
     </template>
 </head>
@@ -167,10 +167,10 @@
     <script type="module" src="./module.js"></script>
 
     ${ include('../../templates/scripts.html') }
-    
+
     <script type="module">
     // Log events
-    import events from '../../../dom/modules/events.js';
+    import events from '../../dom/modules/events.js';
     events('input change', document)
     .each((e) => console.log(e.type, JSON.stringify(e.target.value)));
     </script>

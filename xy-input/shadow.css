@@ -1,14 +1,14 @@
 
-@import '../html.css';
-@import '../svg.css';
-@import '../control/control.css';
+@import '../../bolt/elements/html.css';
+@import '../../bolt/elements/svg.css';
+@import '../modules/control.css';
 
 :host {
     display: block;
     padding: 0.3125rem;
-    
+
     /* We rely on maintaining the height of the SVG via viewbox to determine the
-       height of the grid row. Safari has a bad habit of making 100% and 1fr 
+       height of the grid row. Safari has a bad habit of making 100% and 1fr
        bigger than they should be (seemingly ignoring padding top/bottom), which
        causes the labels to render too low. */
     grid-template-columns: 1fr;
@@ -38,7 +38,7 @@
     border: 1px solid #cccccc;
     border-radius: var(--track-radius);
     box-shadow: var(--track-shadow);
-    
+
     box-sizing: border-box;
     position: relative;
 }
@@ -70,7 +70,7 @@
 
     justify-self: stretch;
     width: 100%;
-    
+
     overflow: visible;
     position: relative;
     z-index: 2;

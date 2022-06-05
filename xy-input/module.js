@@ -1,7 +1,7 @@
 
 /** <xy-input>
 
-Import `<xy-input>` custom element. This also registers the custom 
+Import `<xy-input>` custom element. This also registers the custom
 element and upgrades instances already in the DOM.
 
 ```html
@@ -19,30 +19,32 @@ element and upgrades instances already in the DOM.
 ```
 **/
 
-import { clamp }   from '../../../fn/modules/clamp.js';
-import id          from '../../../fn/modules/id.js';
-import get         from '../../../fn/modules/get.js';
-import last        from '../../../fn/modules/last.js';
-import overload    from '../../../fn/modules/overload.js';
-import noop        from '../../../fn/modules/noop.js';
-import { Observer, notify, getTarget } from '../../../fn/observer/observer.js';
+import { clamp }   from '../../fn/modules/clamp.js';
+import id          from '../../fn/modules/id.js';
+import get         from '../../fn/modules/get.js';
+import last        from '../../fn/modules/last.js';
+import overload    from '../../fn/modules/overload.js';
+import noop        from '../../fn/modules/noop.js';
+import { Observer, notify, getTarget } from '../../fn/observer/observer.js';
 
-import delegate    from '../../../dom/modules/delegate.js';
-import element     from '../../../dom/modules/element.js';
-import events      from '../../../dom/modules/events.js';
-import gestures    from '../../../dom/modules/gestures.js';
-import rect        from '../../../dom/modules/rect.js';
-import { trigger } from '../../../dom/modules/trigger.js';
-import { px, rem } from '../../../dom/modules/parse-length.js';
+import delegate    from '../../dom/modules/delegate.js';
+import element     from '../../dom/modules/element.js';
+import events      from '../../dom/modules/events.js';
+import gestures    from '../../dom/modules/gestures.js';
+import rect        from '../../dom/modules/rect.js';
+import { trigger } from '../../dom/modules/trigger.js';
+import { px, rem } from '../../dom/modules/parse-length.js';
 
-import Literal     from '../../../literal/module.js';
+import Literal     from '../../literal/module.js';
 
-import axes        from './axes.js';
-import scales      from './scales.js';
-import Data        from './data.js';
-import parseValue  from './parse-value.js';
-import parseTicks  from './parse-ticks.js';
-import parsePoints from './parse-points.js';
+import parseValue  from '../modules/parse-value.js';
+import parseTicks  from '../modules/parse-ticks.js';
+import parsePoints from '../modules/parse-points.js';
+
+import axes        from './modules/axes.js';
+import scales      from './modules/scales.js';
+import Data        from './modules/data.js';
+
 
 const assign = Object.assign;
 
@@ -286,11 +288,9 @@ function updateViewbox(element, data) {
     observer.box = updateBoxes(element, observer.pxbox, observer.paddingbox, observer.contentbox, observer.rangebox);
 }
 
-export default element('xy-input', {
-    stylesheet: 
-        window.xyInputStylesheet ||
-        import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css',
+const stylesheet = import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css';
 
+export default element('xy-input', {
     construct: function(shadow, internal) {
         const literal  = new Literal('#xy-input-shadow');
         const data     = new Data(this);
@@ -319,7 +319,7 @@ export default element('xy-input', {
             return state;
         })
         .each(noop);
-        
+
         events('resize', window).each((e) => updateViewbox(this, data));
     },
 
@@ -328,7 +328,7 @@ export default element('xy-input', {
 
         updateViewbox(this, this[$state].data);
 
-        // Insert content now that CSS has loaded to avoid flash of unstyled 
+        // Insert content now that CSS has loaded to avoid flash of unstyled
         // content.
         this[$state].rendered.then(() => {
             shadow.appendChild(literal.content);
@@ -379,7 +379,7 @@ export default element('xy-input', {
             }
 
             notify('xmin', data);
-            
+
             if (!isValueboxAttribute) {
                 notify('valuebox.x', data);
                 notify('valuebox.width', data);
@@ -435,9 +435,9 @@ export default element('xy-input', {
     xlaw: {
         /**
         xlaw="linear"
-        Scale on the x axis. This is the name of a transform to be applied over the 
+        Scale on the x axis. This is the name of a transform to be applied over the
         x domain of the fader travel. Possible values are:
-    
+
         - `"linear"`
         - `"quadratic"`
         - `"cubic"`
@@ -450,29 +450,29 @@ export default element('xy-input', {
 
         attribute: function(value) {
             const data = this[$state].data;
-    
+
             if (window.DEBUG && !scales[value]) {
                 throw new Error('<xy-input> invalid attribute scale="' + value + '" (valid values "' + Object.keys(scales).join('" ,"') + '")');
             }
-    
+
             Observer(data).xScale = value;
         }
     },
 
     xstep: {
-        /** 
+        /**
         xstep="any"
         Not yet implemented.
         **/
     },
 
     xaxis: {
-        /** 
+        /**
         xaxis=""
-        
+
         A space separated list of values at which to display tick marks. Values
         may be listed with or without units, eg:
-        
+
         ```html
         <xy-input yticks="0 0.2 0.4 0.6 0.8 1">
         <xy-input yticks="-48dB -36dB -24dB -12dB 0dB">
@@ -521,7 +521,7 @@ export default element('xy-input', {
             }
 
             notify('min', data);
-            
+
             if (!isValueboxAttribute) {
                 notify('valuebox.y', data);
                 notify('valuebox.height', data);
@@ -576,9 +576,9 @@ export default element('xy-input', {
     ylaw: {
         /**
         ylaw="linear"
-        Scale on the y axis. This is the name of a transform to be applied over the 
+        Scale on the y axis. This is the name of a transform to be applied over the
         y range of the fader travel. Possible values are:
-    
+
         - `"linear"`
         - `"db-linear-24"`
         - `"db-linear-48"`
@@ -610,7 +610,7 @@ export default element('xy-input', {
             if (data.ticksAttribute) {
                 data.ticks = createTicks(data, data.ticksAttribute);
             }
-    
+
             if (data.step) {
                 data.steps = createSteps(data, value === 'ticks' ?
                     data.ticksAttribute || '' :
@@ -621,11 +621,11 @@ export default element('xy-input', {
     },
 
     ystep: {
-        /** 
+        /**
         ystep="any"
-        
+
         Either:
-    
+
         - A space separated list of values. Values may be listed with units.
         - The string `"yticks"`. Values in the `yticks` attribute are used as steps.
         **/
@@ -648,7 +648,7 @@ export default element('xy-input', {
 
         A space separated list of values at which to display tick marks. Values
         may be listed with or without units, eg:
-        
+
         ```html
         <xy-input yticks="0 0.2 0.4 0.6 0.8 1">
         <xy-input yticks="-48dB -36dB -24dB -12dB 0dB">
@@ -660,10 +660,10 @@ export default element('xy-input', {
             Observer(data).yaxis = value !== null ?
                 axes[value] || parseTicks(value) :
                 axes.default ;
-    
+
             // Create ticks
             //scope.ticks(createTicks(data, value));
-    
+
             // If step is 'ticks' update steps
             if (data.stepsAttribute === 'ticks') {
                 data.ystep = createSteps(data, value || '');
@@ -672,11 +672,11 @@ export default element('xy-input', {
     },
 
     properties: {
-        /** 
+        /**
         properties="x y"
         By default the points data `element.value` use the property keys `'x'`
-        and `'y'` of a point to render. Where `.value` is data owned by you, you 
-        may require the element to use other keys. They may be set with this 
+        and `'y'` of a point to render. Where `.value` is data owned by you, you
+        may require the element to use other keys. They may be set with this
         attribute.
         **/
         attribute: function(value) {
@@ -690,13 +690,13 @@ export default element('xy-input', {
     },
 
     valuebox: {
-        /** 
+        /**
         valuebox=""
-        Defines an `"x y width height"` box to use as the range of values that 
-        map to the padding box of the `<xy-input>`. The origin is at the 
+        Defines an `"x y width height"` box to use as the range of values that
+        map to the padding box of the `<xy-input>`. The origin is at the
         bottom and y increases upwards.
 
-        Where not given, valuebox is internally set to the limits of `min` 
+        Where not given, valuebox is internally set to the limits of `min`
         and `max`. Most often this is what you want, and the valuebox attribute
         is safe to ignore.
         **/
@@ -707,9 +707,9 @@ export default element('xy-input', {
     },
 
     ordered: {
-        /** 
+        /**
         ordered=""
-        Boolean attribute. When set, data points may not overlap their 
+        Boolean attribute. When set, data points may not overlap their
         neighbours, keeping the order of points on the x axis constant.
         **/
         attribute: function(value) {
@@ -717,7 +717,7 @@ export default element('xy-input', {
         }
     },
 
-    value: {        
+    value: {
         /**
         value=""
         The initial value of the element.
@@ -748,7 +748,7 @@ export default element('xy-input', {
     },
     /*
     include: {
-        /** 
+        /**
         include=""
         **/
     /*    attribute: function(url) {
@@ -757,13 +757,13 @@ export default element('xy-input', {
         }
     },*/
 
-    /** 
+    /**
     "input"
     Event sent when one of the handles moves.
     **/
 
-    /** 
+    /**
     "change"
     Event sent on conclusion of a move (and after formdata is updated).
     **/
-});
+}, stylesheet);
