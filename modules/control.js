@@ -167,7 +167,7 @@ export const transformUnit = overload(id, {
     semitone: unitEmptyString,
 
     s: unitMilliKilo,
-    
+
     int: () => '',
 
     default: function(unit, value) {
@@ -186,7 +186,7 @@ export function evaluate(string) {
     if (number || number === 0) { return number; }
 
     // Detect units
-    const tokens = /^(-?[\d.]+)(?:(dB|bpm)|(m|k)?(\w+))$/.exec(string);
+    const tokens = /^(-?[\d.]+)(?:(db|bpm)|(m|k)?(\w+))$/.exec(string.toLowerCase());
     if (!tokens) { return 0; }
 
     const value = parseFloat(tokens[1]) ;
