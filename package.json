@@ -1,0 +1,37 @@
+{
+    "title": "form-elements",
+    "name": "@stephband/form-elements",
+    "version": "0.0.1",
+    "description": "A collection of advanced form controls published as custom elements",
+    "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
+    "author": {
+        "name": "Stephen Band",
+        "twitter": "@stephband",
+        "email": "stephband@cruncher.ch"
+    },
+    "card": {
+        "image": "https://stephen.band/form-elements/card.jpg"
+    },
+    "homepage": "https://stephen.band/form-elements/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/stephband/form-elements.git"
+    },
+    "bugs": {
+        "url": "https://github.com/stephband/form-elements/issues"
+    },
+    "funding": {
+        "github": "https://github.com/sponsors/stephband"
+    },
+    "license" : "GPL-3.0",
+    "type": "module",
+    "browser": "./build/form-elements.js",
+    "files": [
+        "build/*",
+        "docs/docs.css",
+        "docs/docs.js",
+        "index.html",
+        "README.md",
+        "LICENSE"
+    ]
+}
