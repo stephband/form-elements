@@ -1,0 +1,13 @@
+
+/**
+::part(label)
+Style the label.
+**/
+
+[part="label"] {
+    line-height: 15px;
+    font-size: 1em;
+    line-height: 1.2em;
+    letter-spacing: -0.04em;
+    color: currentcolor;
+}

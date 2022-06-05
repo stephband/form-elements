@@ -1,0 +1,23 @@
+/**
+::part(output)
+Style the display of the output value.
+**/
+
+/* Value display */
+
+[part="output"] {
+    font-family: 'Fira Mono', 'Andale Mono', monospace;
+    font-size: 0.75rem;
+    line-height: 1rem;
+    letter-spacing: -0.04em;
+    color: #46789a;
+    height: auto;
+    white-space: pre;
+}
+
+[part="output"] > abbr {
+    display: inline-block;
+    font-size: 0.8em;
+    margin-left: 0.1em;
+    vertical-align: baseline;
+}

@@ -1,0 +1,27 @@
+:host {
+    /** --value-color **/
+    --value-color: #88deff;
+
+    /** --handle-background **/
+    --handle-background: white;
+
+    /** --handle-border **/
+    --handle-border: 1px solid rgb(122 144 158);
+}
+
+:host(:focus) {
+    --value-color: #75ebff;
+    --handle-background: #46789a;
+    --handle-border: 1px solid #46789a;
+
+    --tick-color: #46789a;
+    --tick-background: #46789a;
+
+    /* Nullify simulated focus style. */
+    outline-width: 0 !important;
+    box-shadow: none !important;
+}
+
+:host > * {
+    margin: 0;
+}

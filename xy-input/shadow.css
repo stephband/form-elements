@@ -1,7 +1,11 @@
 
 @import '../../bolt/elements/html.css';
 @import '../../bolt/elements/svg.css';
-@import '../modules/control.css';
+@import '../css/normalise.css';
+@import '../css/host.css';
+@import '../css/label.css';
+@import '../css/output.css';
+@import '../css/tick.css';
 
 :host {
     display: block;
