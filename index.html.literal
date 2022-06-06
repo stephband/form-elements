@@ -8,54 +8,40 @@
         window.DEBUG = true;
     </script>
 
-    <link rel="stylesheet" href="./docs/docs.css">
-    <link rel="stylesheet" href="./build/form-elements.css">
-
-    <style>
-    [is="form-elements"] {
-        font-size: 1rem;
-    }
-    </style>
+    <link rel="stylesheet" href="../bolt/module.css">
+    ${ include('../bolt/templates/style.html') }
 </head>
 
-<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid y-start-grid">
-    <header class="x1 3x @1-x1 @1-4x @2-x2">
-        <h1 class="docs-text-01"><span class="tag-brace">&lt;</span>select is="form-elements"<span class="tag-brace">&gt;</span>${ include('./docs/templates/version.literal', './package.json') }</h1>
-        <p class="@1-no-wrap">The customised built-in <code>&lt;select&gt;</code> element that acts as a navigation menu.</p>
+<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid" style="align-content: start;">
+    <nav class="x1 x-stretch y1 @2-x1 @2-1x">
+        <a class="thumb thumb-1:1" width="400" height="400" style="background-image: url('../images/logo.svg'); background-size: contain; width: 120%; padding-top: 120%; max-width: 6rem; margin-top: -16%; margin-left: -8%; margin-right: -12%;">Bolt</a>
+    </nav>
+
+    <header class="x1 3x @1-x3 @1-4x @2-x4">
+        <h1>Form elements</h1>
+        <p>A collection of advanced form controls published as custom elements.</p>
     </header>
 
-    <div class="x1 3x @1-4x @2-x2 x-stretch y-start">
-        <select is="form-elements">
-            <option value="/">Home</option>
-            <option value="../form-elements/">Documentation</option>
-            <option value="../form-elements/test.html">Test</option>
-            <option value="?param=1">?param=1</option>
-            <option value="?param=2">?param=2</option>
-            <option value="#1">#1</option>
-            <option value="#2">#2</option>
-        </select>
-    </div>
-
-    ${ include('./docs/templates/content.literal', comments("./module.js")) }
-
-    <section class="x1 3x @1-4x @2-x2 x-stretch y-start">
-        <h2 class="docs-text-02">Contribute</h2>
-        ${ include('./docs/templates/contribute.literal', './package.json') }
+    <section class="x1 3x @1-x3 @1-4x @2-x4">
+        <h2>&lt;range-input&gt;</h2>
+        <a href="./range-input/">&lt;range-input&gt;</a>
     </section>
 
-    <hr class="x1 3x @1-6x @2-x2 @2-7x"/>
+    <section class="x1 3x @1-x3 @1-4x @2-x4">
+        <h2>&lt;rotary-input&gt;</h2>
+        <a href="./rotary-input/">&lt;rotary-input&gt;</a>
+    </section>
 
-    <footer class="x1 3x @1-4x @2-x2">
-        <small class="block">
-            <p class="docs-text-09">Made by <a href="https://stephen.band">Stephen Band</a> at <a href="https://cruncher.ch"><img style="width: 20px; display: inline-block; vertical-align: -0.5em;" src="https://cruncher.ch/static/images/logo.svg" alt="The Cruncher logo"/> Cruncher</a>.</p>
-            <p class="docs-text-09">This page is set in <a href="https://www.swisstypefaces.com/fonts/euclid/">Euclid</a> and <a href="https://github.com/evilmartians/mono">Martian Mono</a>.</p>
-            <p class="docs-text-09">Images <code>&copy;2022</code> Stephen Band.</p>
-            <p class="docs-text-09">Fonts used for this documentation are not included as part of the open source license covering the use of the <code>&lt;select is="form-elements"&gt;</code> element.</p>
-        </small>
-    </footer>
+    <section class="x1 3x @1-x3 @1-4x @2-x4">
+        <h2>&lt;xy-input&gt;</h2>
+        <a href="./xy-input/">&lt;xy-input&gt;</a>
+    </section>
+
+    ${ include('../bolt/templates/scripts.html') }
 
     <script type="module">
-        import './docs/docs.js';
-        import './build/form-elements.js';
+        import RangeInput  from './range-input/module.js';
+        import RotaryInput from './rotary-input/module.js';
+        import XYInput     from './xy-input/module.js';
     </script>
 </body>

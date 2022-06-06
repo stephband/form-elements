@@ -1,7 +1,7 @@
 {
     "title": "form-elements",
     "name": "@stephband/form-elements",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "A collection of advanced form controls published as custom elements",
     "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
     "author": {
@@ -10,7 +10,7 @@
         "email": "stephband@cruncher.ch"
     },
     "card": {
-        "image": "https://stephen.band/form-elements/card.jpg"
+        "image": "https://stephen.band/form-elements/card.png"
     },
     "homepage": "https://stephen.band/form-elements/",
     "repository": {
