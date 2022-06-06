@@ -1,0 +1,38 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    ${ include('../../bolt/templates/head.literal', '../package.json') }
+
+    <script title="debug">
+        window.DEBUG = true;
+    </script>
+
+    <link rel="stylesheet" href="../../bolt/module.css">
+    ${ include('../../bolt/templates/style.html') }
+</head>
+
+<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+    <nav class="x1 x-stretch y1 @2-x1 @2-1x">
+        <a class="thumb thumb-1:1" width="400" height="400" style="background-image: url('../images/logo.svg'); background-size: contain; width: 120%; padding-top: 120%; max-width: 6rem; margin-top: -16%; margin-left: -8%; margin-right: -12%;">Bolt</a>
+    </nav>
+
+    ${ include('../../bolt/templates/element.literal', comments(
+        "./module.js",
+        "./modules/lifecycle.js",
+        "../controls/attributes.js",
+        "./modules/properties.js",
+        "../controls/control.css",
+        "./shadow.css"
+    )) }
+
+    ${ include('../../bolt/templates/scripts.html') }
+
+    <script type="module">
+    import RotaryInput from './module.js';
+    import events      from '../../dom/modules/events.js';
+
+    //events('input change', document)
+    //.each((e) => console.log(e.type, e.target.value));
+    </script>
+</body>

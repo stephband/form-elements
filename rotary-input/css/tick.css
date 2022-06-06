@@ -1,0 +1,40 @@
+
+/* tick */
+
+[part="tick"] {
+    --tick-radius: calc(0.5 * var(--handle-width) + 0.625rem);
+    --tick-line-height: 0.9375rem;
+    --tick-height: 0.1875rem;
+
+    padding: calc(2 * var(--tick-radius) + var(--tick-line-height) + var(--tick-height)) 0 0 0;
+    width: 0;
+    box-sizing: content-box;
+    height: auto;
+    transform-origin: 50% 50%;
+    color: currentcolor;
+}
+
+[part="tick"]::before {
+    content: '';
+    display: block;
+    width: 0.1875rem;
+    height: 0.1875rem;
+    background: currentcolor;
+    border-radius: 50%;
+    transform: translate3d(-50%, 0, 0);
+}
+
+[part="tick"]::after {
+    content: none;
+}
+
+[part="tick"] > span {
+    /* Required for transform */
+    display: inline-block;
+    width: auto;
+
+    /* Register the start of the text right in the centre of the tick so that
+       when it is transformed back it is perfectly centred. */
+    margin-left: 50%;
+    transform-origin: 50% 50%;
+}

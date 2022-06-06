@@ -1,0 +1,11 @@
+
+/* output */
+
+[part="output"] {
+    width: var(--handle-width);
+    text-align: center;
+}
+
+:host(:focus) > [part="output"] {
+    color: white;
+}

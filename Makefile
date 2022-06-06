@@ -1,7 +1,7 @@
 DEBUG=
 
 # Tell make to ignore existing folders and allow overwriting existing files
-.PHONY: literal docs xy-input modules
+.PHONY: literal docs range-input rotary-input xy-input modules
 
 # Must format with tabs not spaces
 literal:

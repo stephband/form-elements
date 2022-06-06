@@ -23,6 +23,7 @@ import element    from '../../dom/modules/element.js';
 import lifecycle  from './modules/lifecycle.js';
 import properties from './modules/properties.js';
 
-const stylesheet = window.xyInputStylesheet || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css';
+const stylesheet = window.xyInputStylesheet
+    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css';
 
 export default element('<xy-input>', lifecycle, properties, stylesheet);
