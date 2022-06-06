@@ -2,10 +2,7 @@
 import by          from '../../../fn/modules/by.js';
 import get         from '../../../fn/modules/get.js';
 import nothing     from '../../../fn/modules/nothing.js';
-import overload    from '../../../fn/modules/overload.js';
-import requestTick from '../../../fn/modules/request-tick.js';
 import Privates    from '../../../fn/modules/privates.js';
-import trigger     from '../../../dom/modules/trigger.js';
 import { evaluate, invert, transformTick, transformOutput, transformUnit } from '../../controls/control.js';
 
 
@@ -14,21 +11,21 @@ export function createTicks(data, tokens) {
         tokens
         .split(/\s+/)
         .map(evaluate)
-        .filter((number) => {
+        .filter((number) => (
             // Filter ticks to min-max range, special-casing logarithmic-0
             // which travels to 0 whatever it's min value
-            return number >= (data.law === 'linear-logarithmic' ? 0 : data.min)
+            number >= (data.law === 'linear-logarithmic' ? 0 : data.min)
                 && number <= data.max
-        })
-        .map((value) => {
+        ))
+        .map((value) => (
             // Freeze to tell mounter it's immutable, prevents
             // unnecessary observing
-            return Object.freeze({
+            Object.freeze({
                 value:        value,
                 unitValue:    invert(data.law, value, data.min, data.max),
                 displayValue: transformTick(data.unit, value)
-            });
-        }) :
+            })
+        )) :
         nothing ;
 }
 

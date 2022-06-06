@@ -112,11 +112,12 @@ export default {
     mode:       'closed',
     focusable:  true,
 
-    construct: function(elem, shadow, internals) {
-        const privates = Privates(elem);
+    construct: function(shadow, internals) {
+        const privates = Privates(this);
         const data     = privates.data  = assign({}, defaults);
 
-        privates.element     = elem;
+        privates.scope       = createTemplate(this, shadow);
+        privates.element     = this;
         privates.shadow      = shadow;
         privates.internals   = internals;
         privates.handleEvent = handleEvent;
@@ -129,32 +130,32 @@ export default {
             const e0 = events.shift();
             const y0 = e0.clientY;
             const y  = data.unitValue;
-            const touchValue = getComputedStyle(elem).getPropertyValue('--touch-range');
+            const touchValue = getComputedStyle(this).getPropertyValue('--touch-range');
             const touchRange = parseValue(touchValue);
 
             let dy;
 
             events
             .latest()
-            .each(function (e) {
+            .each((e) => {
                 dy = y0 - e.clientY;
                 var unitValue = clamp(0, 1, y + dy / touchRange);
                 const value = transform(data.law, unitValue, data.min, data.max) ;
-                elem.value = value;
+                this.value = value;
                 // Doesn't work
                 //elem.dispatchEvent(new InputEvent('input'));
-                trigger('input', elem);
+                trigger('input', this);
             });
         });
     },
 
-    connect: function(elem, shadow) {
-        const privates = Privates(elem);
+    connect: function(shadow) {
+        const privates = Privates(this);
         const data     = privates.data;
 
         // Rotary control must have value
         if (data.value === undefined) {
-            elem.value = clamp(data.min, data.max, 0);
+            this.value = clamp(data.min, data.max, 0);
         }
     }
 };
