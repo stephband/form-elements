@@ -614,16 +614,15 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 </div>
 
 
-    <script type="module" src="./module.js"></script>
-
     <script type="module">
     import '../../bolt/module.js';
     import '../../bolt/documentation.js';
 </script>
 
     <script type="module">
-    // Log events
-    import events from '../../dom/modules/events.js';
+    import XYInput from './module.js';
+    import events  from '../../dom/modules/events.js';
+
     //events('input change', document)
     //.each((e) => console.log(e.type, e.target.value));
     </script>

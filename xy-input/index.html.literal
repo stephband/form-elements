@@ -169,13 +169,12 @@
         "./shadow.css"
     )) }
 
-    <script type="module" src="./module.js"></script>
-
     ${ include('../../bolt/templates/scripts.html') }
 
     <script type="module">
-    // Log events
-    import events from '../../dom/modules/events.js';
+    import XYInput from './module.js';
+    import events  from '../../dom/modules/events.js';
+
     //events('input change', document)
     //.each((e) => console.log(e.type, e.target.value));
     </script>
