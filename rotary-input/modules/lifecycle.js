@@ -16,7 +16,7 @@ import { transform } from '../../controls/control.js';
 import gestures      from '../../../dom/modules/gestures.js';
 import parseValue    from '../../../dom/modules/parse-length.js';
 import trigger       from '../../../dom/modules/trigger.js';
-import handleEvent   from './handle-event.js';
+import handleEvent   from '../../modules/handle-event.js';
 
 const assign = Object.assign;
 

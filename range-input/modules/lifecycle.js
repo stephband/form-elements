@@ -3,7 +3,7 @@
 /**
 <range-control>
 
-Import `<range-control>` custom element. This also registers the custom 
+Import `<range-control>` custom element. This also registers the custom
 element and upgrades instances already in the DOM.
 
 ```html
@@ -24,12 +24,12 @@ Safari 14 crashes when clicking on elements with delegateFocus:
 https://github.com/material-components/material-components-web-components/issues/1720
 */
 
-import Privates from '../../fn/modules/privates.js';
-import { clamp } from '../../fn/modules/clamp.js';
-import overload from '../../fn/modules/overload.js';
-import create from '../../dom/modules/create.js';
-import element from '../../dom/modules/element.js';
-import { attributes, properties, handleEvent } from './attributes.js';
+import Privates    from '../../../fn/modules/privates.js';
+import { clamp }   from '../../../fn/modules/clamp.js';
+import overload    from '../../../fn/modules/overload.js';
+import create      from '../../../dom/modules/create.js';
+import element     from '../../../dom/modules/element.js';
+import handleEvent from '../../modules/handle-event.js';
 
 const DEBUG = true;
 
@@ -102,12 +102,12 @@ function createTemplate(elem, shadow) {
         },
 
         'ticks': (function(buttons) {
-            return function(scopes) {    
+            return function(scopes) {
                 // Clear out existing ticks
                 buttons.forEach((node) => node.remove());
                 buttons.length = 0;
 
-                // Create new ticks and put them in the dom    
+                // Create new ticks and put them in the dom
                 scopes.forEach(function(scope) {
                     const button = create('button', {
                         type: 'button',
@@ -128,23 +128,17 @@ function createTemplate(elem, shadow) {
 
 /* Element */
 
-export default element('range-control', {
-    template: function(elem, shadow) {
-        const privates = Privates(elem);
-        privates.scope = createTemplate(elem, shadow);
-    },
-
+export default {
     mode:       'closed',
     focusable:  true,
-    attributes: attributes,
-    properties: properties,
 
-    construct: function(elem, shadow, internals) {
+    construct: function(shadow, internals) {
         // Setup internal data store `privates`
-        const privates = Privates(elem);
+        const privates = Privates(this);
         const data     = privates.data  = assign({}, defaults);
 
-        privates.element     = elem;
+        privates.scope       = createTemplate(this, shadow);
+        privates.element     = this;
         privates.shadow      = shadow;
         privates.internals   = internals;
         privates.handleEvent = handleEvent;
@@ -157,13 +151,13 @@ export default element('range-control', {
         shadow.addEventListener('input', privates);
     },
 
-    connect: function(elem, shadow) {
-        const privates = Privates(elem);
+    connect: function(shadow) {
+        const privates = Privates(this);
         const data     = privates.data;
 
         // Range control must have value
         if (data.value === undefined) {
-            elem.value = clamp(data.min, data.max, 0);
+            this.value = clamp(data.min, data.max, 0);
         }
     }
-});
+};

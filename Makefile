@@ -28,5 +28,6 @@ xy-input:
 	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./xy-input-shadow.css ./xy-input/shadow.css
 
 modules:
+	make range-input
 	make rotary-input
 	make xy-input

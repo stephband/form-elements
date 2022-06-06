@@ -25,8 +25,8 @@
     ${ include('../../bolt/templates/scripts.html') }
 
     <script type="module">
-    import RotaryInput from './module.js';
-    import events      from '../../dom/modules/events.js';
+    import RangeInput from './module.js';
+    import events     from '../../dom/modules/events.js';
 
     //events('input change', document)
     //.each((e) => console.log(e.type, e.target.value));

@@ -1,8 +1,8 @@
 
-import overload from '../../../fn/modules/overload.js';
-import trigger  from '../../../dom/modules/trigger.js';
+import overload from '../../fn/modules/overload.js';
+import trigger  from '../../dom/modules/trigger.js';
 
-import { transform } from '../../controls/control.js';
+import { transform } from '../controls/control.js';
 
 
 /* Events */

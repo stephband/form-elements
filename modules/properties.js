@@ -1,9 +1,9 @@
 
-import by          from '../../../fn/modules/by.js';
-import get         from '../../../fn/modules/get.js';
-import nothing     from '../../../fn/modules/nothing.js';
-import Privates    from '../../../fn/modules/privates.js';
-import { evaluate, invert, transformTick, transformOutput, transformUnit } from '../../controls/control.js';
+import by          from '../../fn/modules/by.js';
+import get         from '../../fn/modules/get.js';
+import nothing     from '../../fn/modules/nothing.js';
+import Privates    from '../../fn/modules/privates.js';
+import { evaluate, invert, transformTick, transformOutput, transformUnit } from '../controls/control.js';
 
 
 export function createTicks(data, tokens) {

@@ -1,5 +1,5 @@
 
-@import './control.css';
+@import '../controls/control.css';
 
 :host {
     /** --track-height **/
@@ -21,7 +21,7 @@
 
     /** --handle-height **/
     --handle-height: var(--handle-width);
-    
+
     /** --handle-shadow **/
     --handle-shadow: 0 0.125rem 0.25rem 0.0625rem rgba(0,0,0,0.16);
 

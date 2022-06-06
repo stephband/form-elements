@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/range-input/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+<meta name="author" content="Stephen Band" />
+<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
+<meta name="viewport" content="width=device-width" />
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@stephband">
+<meta property="og:title" content="form-elements" />
+<meta property="og:description" content="A collection of advanced form controls published as custom elements" />
+<meta property="og:image" content="https://stephen.band/form-elements/card.png" />
+<meta property="og:url" content="https://stephen.band/form-elements/" />
+
+
+<title>form-elements</title>
+
+
+
+<script title="load">
+    document.documentElement.className += ' js loading';
+    // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+    // Wait for other load handlers to run first - Bolt does a few things on
+    // load (eg. targetable scrolls) and we want them to run before the loading
+    // class is removed
+    window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+</script>
+
+
+    <script title="debug">
+        window.DEBUG = true;
+        window.rangeInputStylesheet = './shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../bolt/module.css">
+    <link rel="stylesheet" href="../../bolt/documentation/prism-cruncher.css" />
+<link rel="stylesheet" href="../../bolt/documentation.css" />
+<link rel="stylesheet" href="../../bolt/debug.css" />
+
+</head>
+
+<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+    
+<header class="x1 3x @1-x3 @1-4x @2-x4">
+    
+    <h2 class="docs-text-02">&lt;range-input&gt;</h2>
+    <p>Import <code>&lt;range-input&gt;</code> custom element. This also registers the custom
+element and upgrades instances already in the DOM.</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>range-input.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ratio<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Scale<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gain<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-48dB<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0dB<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linear-logarithmic<span class="token punctuation">"</span></span> <span class="token attr-name">unit</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dB<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-6dB<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>frequency<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20000<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz 100Hz 200Hz 1kHz 2kHz 10kHz 20kHz<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>logarithmic<span class="token punctuation">"</span></span> <span class="token attr-name">unit</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Hz<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Frequency<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>rating<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>5<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1 2 3 4 5<span class="token punctuation">"</span></span> <span class="token attr-name">steps</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ticks<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linear<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Rating<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span></code></pre>
+
+    
+    <h2 class="docs-text-02">&lt;range-control&gt;</h2>
+    <p>Import <code>&lt;range-control&gt;</code> custom element. This also registers the custom
+element and upgrades instances already in the DOM.</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>range-control.rolled.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ratio<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Scale<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gain<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-48dB<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0dB<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linear-logarithmic<span class="token punctuation">"</span></span> <span class="token attr-name">unit</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dB<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-6dB<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>frequency<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20000<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz 100Hz 200Hz 1kHz 2kHz 10kHz 20kHz<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>logarithmic<span class="token punctuation">"</span></span> <span class="token attr-name">unit</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Hz<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Frequency<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-control</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>rating<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>5<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1 2 3 4 5<span class="token punctuation">"</span></span> <span class="token attr-name">steps</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ticks<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linear<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Rating<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-control</span><span class="token punctuation">></span></span></code></pre>
+
+    
+</header>
+
+<form class="x1 3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    <script type="module" src="range-input.js"></script>
+<range-control name="ratio" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1" value="0">Scale</range-control>
+<range-control name="gain" min="-48dB" max="0dB" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB" law="linear-logarithmic" unit="dB" value="-6dB">Volume</range-control>
+<range-control name="frequency" min="20" max="20000" ticks="20Hz 100Hz 200Hz 1kHz 2kHz 10kHz 20kHz" law="logarithmic" unit="Hz" value="20Hz">Frequency</range-control>
+<range-control name="rating" min="1" max="5" ticks="1 2 3 4 5" steps="ticks" law="linear" value="3">Rating</range-control>
+    <!-- for testing form submission values -->
+    <input hidden class="button" type="submit" />
+</form>
+
+<div class="x1 3x @1-x3 @1-2x @2-x4 x-stretch y-start">
+    
+    <h3 class="docs-text-03">Attributes</h3>
+    
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-min-1">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-min-1">
+        <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
+    </a>
+</h3>
+
+<p>Value at lower limit of fader. Can interpret values with recognised units,
+eg. <code>&quot;0dB&quot;</code>.</p>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-max-1">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-max-1">
+        <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
+    </a>
+</h3>
+
+<p>Value at upper limit of fader. Can interpret values with recognised units,
+eg. <code>&quot;0dB&quot;</code>.</p>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-law-1">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-law-1">
+        <code class="token language-html">law <span class="default">="<em>linear</em>"</span></code>
+    </a>
+</h3>
+
+<p>Fader law. This is the name of a transform to be applied over the range
+of the fader travel. Possible values are:</p>
+<ul>
+<li><code>&quot;linear&quot;</code></li>
+<li><code>&quot;linear-logarithmic&quot;</code></li>
+<li><code>&quot;logarithmic&quot;</code></li>
+<li><code>&quot;quadratic&quot;</code></li>
+<li><code>&quot;cubic&quot;</code></li>
+</ul>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-unit-1">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-unit-1">
+        <code class="token language-html">unit</code>
+    </a>
+</h3>
+
+<p>The value’s unit, if it has one. The output value and all ticks are
+displayed in this unit. Possible values are:</p>
+<ul>
+<li><code>&quot;dB&quot;</code> – <code>0-1</code> is displayed as <code>-∞dB</code> to <code>0dB</code></li>
+<li><code>&quot;Hz&quot;</code></li>
+</ul>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ticks-1">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-ticks-1">
+        <code class="token language-html">ticks</code>
+    </a>
+</h3>
+
+<p>A space separated list of values at which to display tick marks. Values
+may be listed with or without units, eg:</p>
+<pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
+ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-steps-1">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-steps-1">
+        <code class="token language-html">steps</code>
+    </a>
+</h3>
+
+<p>Steps is either:</p>
+<ul>
+<li>A space separated list of values. As with <code>ticks</code>, values may be listed with or without units.</li>
+<li>The string <code>&quot;ticks&quot;</code>. The values in the <code>ticks</code> attribute are used as steps.</li>
+</ul>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value-1">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-value-1">
+        <code class="token language-html">value</code>
+    </a>
+</h3>
+
+<p>The initial value of the fader.</p>
+
+</div>
+
+ 
+
+    
+    
+    
+
+    
+    <h3 class="docs-text-03">Properties</h3>
+    
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-type-1">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property-type-1">
+        <code class="property language-js">.type</code>
+    </a>
+</h3>
+
+<p>“number”
+A readonly property with the value <code>&quot;number&quot;</code> (provided for consistency
+with native form elements, which all have a type).</p>
+
+</div>
+
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min-1">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property-min-1">
+        <code class="property language-js">.min</code>
+    </a>
+</h3>
+
+<p>0
+Value at lower limit of fader, as a number.</p>
+
+</div>
+
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max-1">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property-max-1">
+        <code class="property language-js">.max</code>
+    </a>
+</h3>
+
+<p>1
+Value at upper limit of fader, as a number.</p>
+
+</div>
+
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-value-1">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property-value-1">
+        <code class="property language-js">.value</code>
+    </a>
+</h3>
+
+<p>0
+Current value of the field, as a number.</p>
+
+</div>
+
+ 
+    
+    
+    
+    
+</div>
+
+<div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
+    
+    <h3 class="docs-text-03">Parts</h3>
+    
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-label-1">
+<h3 class="part-docs-text-05 docs-text-05">
+    <a href="#part-label-1">
+        <code class=" language-css">::part(label)</code>
+    </a>
+</h3>
+
+<p>Style the label.</p>
+
+</div>
+
+ 
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-output-1">
+<h3 class="part-docs-text-05 docs-text-05">
+    <a href="#part-output-1">
+        <code class=" language-css">::part(output)</code>
+    </a>
+</h3>
+
+<p>Style the display of the output value.</p>
+
+</div>
+
+ 
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-tick-1">
+<h3 class="part-docs-text-05 docs-text-05">
+    <a href="#part-tick-1">
+        <code class=" language-css">::part(tick)</code>
+    </a>
+</h3>
+
+<p>Style the tick marks.</p>
+
+</div>
+
+ 
+
+    
+    <h3 class="docs-text-03">Variables</h3>
+    
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-value-color-1">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-value-color-1">
+        <code class=" language-css">--value-color</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-background-1">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-handle-background-1">
+        <code class=" language-css">--handle-background</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-border-1">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-handle-border-1">
+        <code class=" language-css">--handle-border</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-track-height">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-track-height">
+        <code class=" language-css">--track-height</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-track-background">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-track-background">
+        <code class=" language-css">--track-background</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-track-border">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-track-border">
+        <code class=" language-css">--track-border</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-track-shadow">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-track-shadow">
+        <code class=" language-css">--track-shadow</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-width">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-handle-width">
+        <code class=" language-css">--handle-width</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-height">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-handle-height">
+        <code class=" language-css">--handle-height</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-shadow">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-handle-shadow">
+        <code class=" language-css">--handle-shadow</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-bleed">
+<h3 class="var-docs-text-05 docs-text-05">
+    <a href="#var-bleed">
+        <code class=" language-css">--bleed</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+</div>
+
+
+    <script type="module">
+    import '../../bolt/module.js';
+    import '../../bolt/documentation.js';
+</script>
+
+    <script type="module">
+    import RangeInput from './module.js';
+    import events     from '../../dom/modules/events.js';
+
+    //events('input change', document)
+    //.each((e) => console.log(e.type, e.target.value));
+    </script>
+</body>
