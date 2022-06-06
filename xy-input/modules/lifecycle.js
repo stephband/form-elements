@@ -272,8 +272,8 @@ export default {
             viewbox:  literal.content.querySelector('svg').viewBox.baseVal
         };
 
-        gestures({ threshold: 0 }, shadow)
-        .scan((previous, gesture) => {
+        gestures({ threshold: 1 }, shadow)
+        .reduce((previous, gesture) => {
             data.box = updateBoxes(this, data.pxbox, data.paddingbox, data.contentbox, data.rangebox);
             const state = assign({ previous, events: [] }, this[$state]);
 
@@ -283,8 +283,7 @@ export default {
             .each(handle);
 
             return state;
-        })
-        .each(noop);
+        });
 
         events('resize', window).each((e) => updateViewbox(this, data));
     },
