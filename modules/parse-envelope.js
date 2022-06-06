@@ -22,6 +22,8 @@ Into a nested array of the form:
 import capture from '../../fn/modules/capture.js';
 import noop    from '../../fn/modules/noop.js';
 
+const defaultTargetEventDuration = 0.4;
+
 const parseTargetData = capture(/^([+-]?[0-9.]+)/, {
     // Parse:                     (float)
     1: function param(data, captures) {

@@ -132,7 +132,7 @@
                 <line part="${ data.part }" x1="${ data.x1 }" x2="${ data.x2 }" y1="${ data.y1 }"  y2="${ data.y2 }" id="line-def"></line>
 
                 <circle part="handle" class="control control-handle control-point" cx="${ data.up.toViewX(data.point.x) }" cy="${ data.up.toViewY(data.point.y) }" r="0.5" data-index="${ data.index }" id="control-def">
-                    <title>${data.point.label} ${data.point.x && data.point.x.toFixed(2)}, ${data.point.y && data.point.y.toFixed(2)}</title>
+                    <title>${data.point.label} ${data.point.x && data.point.x.toFixed(2)}, ${data.point.y && data.point.y.toFixed(2)} ${data.point.type}</title>
                 </circle>
             </defs>
 
@@ -414,9 +414,9 @@ attribute.</p>
 <p>Defines an <code>&quot;x y width height&quot;</code> box to use as the range of values that
 map to the padding box of the <code>&lt;xy-input&gt;</code>. The origin is at the
 bottom and y increases upwards.</p>
-<p>Where not given, valuebox is internally set to the limits of <code>min</code>
-and <code>max</code>. Most often this is what you want, and the valuebox attribute
-is safe to ignore.</p>
+<p>Where not given, <code>valuebox</code> defaults to the limits of <code>min</code> and <code>max</code>.
+Most often this is what you want, and the valuebox attribute is safe to
+ignore.</p>
 
 </div>
 
@@ -624,7 +624,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
     <script type="module">
     // Log events
     import events from '../../dom/modules/events.js';
-    events('input change', document)
-    .each((e) => console.log(e.type, JSON.stringify(e.target.value)));
+    //events('input change', document)
+    //.each((e) => console.log(e.type, e.target.value));
     </script>
 </body>
