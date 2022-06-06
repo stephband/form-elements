@@ -1,0 +1,105 @@
+
+
+/* [type="range"] thumb */
+
+[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+
+    box-sizing: border-box;
+    cursor: pointer;
+    cursor: ew-resize;
+
+    width:  var(--handle-width);
+    height: var(--handle-height);
+
+    /* Centre it vertically on the track */
+    transform: translate3d(0, calc(0.5 * (var(--track-height) - var(--handle-height))), 0);
+
+    /* Use a border to create a larger hit zone for the thumb */
+    border-radius: 50%;
+    border: var(--handle-border);
+
+    /* Constrain background image */
+    background-clip: content-box;
+    background-origin: padding-box;
+    background: var(--handle-background);
+
+    /* Shadow */
+    box-shadow: var(--handle-shadow);
+}
+/*
+[type="range"]:focus::-webkit-slider-thumb,
+:host(:focus) [type="range"]::-webkit-slider-thumb {
+    background: var(--focus-handle-background);
+    border: var(--focus-handle-border);
+    box-shadow: var(--focus-handle-shadow);
+}
+*/
+[type="range"]::-moz-range-thumb {
+    box-sizing: border-box;
+    cursor: pointer;
+    cursor: ew-resize;
+
+    width:  var(--handle-width);
+    height: var(--handle-width);
+
+    /* Increase the size of the hit zone to support fat fingers. */
+    outline: 0.25rem solid transparent;
+
+    margin-top: -4px;
+
+    /* Use a border to create a larger hit zone for the thumb */
+    border-radius: 50%;
+    border: var(--handle-border);
+
+    /* Constrain background image */
+    background-clip: content-box;
+    background-origin: padding-box;
+    background: var(--handle-background);
+
+    /* Shadow */
+    box-shadow: var(--handle-shadow);
+}
+/*
+[type="range"]:focus::-moz-range-thumb,
+:host(:focus) [type="range"]::-moz-range-thumb {
+    background: var(--focus-handle-background);
+    border: var(--focus-handle-border);
+    box-shadow: var(--focus-handle-shadow);
+}
+*/
+[type="range"]::-ms-thumb {
+    cursor: pointer;
+    cursor: ew-resize;
+
+    width:  var(--handle-width);
+    height: var(--handle-width);
+
+    margin-top: 1px;
+
+    /* Use a border to create a larger hit zone for the thumb */
+    border-radius: 50%;
+    border: var(--handle-border);
+
+    /* Constrain background image */
+    background-clip: content-box;
+    background-origin: padding-box;
+    background: var(--handle-background);
+
+    /* Shadow */
+    box-shadow: var(--handle-shadow);
+}
+
+/*
+[type="range"]:focus::-ms-thumb {
+    border: var(--handle-border-focus);
+    background: var(--handle-background-focus);
+    box-shadow: var(--handle-shadow-focus);
+}
+
+:host(:focus) [type="range"]::-ms-thumb {
+    background: var(--focus-handle-background);
+    border: var(--focus-handle-border);
+    box-shadow: var(--focus-handle-shadow);
+}
+*/

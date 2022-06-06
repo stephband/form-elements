@@ -151,7 +151,7 @@ export default {
 
         shadow.addEventListener('mousedown', privates);
 
-        gestures({ threshold: 1, select: 'div' }, shadow)
+        gestures({ threshold: 1, select: '.handle' }, shadow)
         .each((events) => events.reduce(toValueUpdates, data));
     },
 
@@ -165,3 +165,5 @@ export default {
         }
     }
 };
+
+document.body.addEventListener('click', (e) => console.log('CLICK', e.target));

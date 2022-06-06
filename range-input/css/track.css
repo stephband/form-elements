@@ -1,0 +1,147 @@
+
+/* Range inputs */
+
+[type="range"] {
+    cursor: pointer;
+
+    -webkit-appearance: none !important;
+    background-color: transparent;
+    border-width: 0;
+
+    /* For IE height should be big enough to accomodate the thumb. */
+    height: 1.4375rem;
+
+    /*required for proper track sizing in FF*/
+    width: 100%;
+    color: inherit;
+}
+
+[type="range"]:focus {
+    /* Get rid of outline. We highlight the handle when this element is in
+       focus, but should this really be the default? */
+    outline: none;
+    outline-width: 0 !important;
+}
+
+[type="range"]::-moz-focus-outer {
+    /* Get rid of that annoying border in FF */
+    border: 0;
+}
+
+[type="range"]:-moz-focusring {
+    outline: 0 solid transparent;
+}
+
+
+
+
+/* [type="range"] track */
+
+[type="range"]::-webkit-slider-runnable-track {
+    height: var(--track-height);
+    background: var(--track-background) linear-gradient(
+        to right,
+        transparent 0%,
+        transparent calc(min(var(--unit-value), var(--unit-zero)) * 100%),
+        var(--value-color) calc(min(var(--unit-value), var(--unit-zero)) * 100%),
+        var(--value-color) calc(max(var(--unit-value), var(--unit-zero)) * 100%),
+        transparent calc(max(var(--unit-value), var(--unit-zero)) * 100%)
+    );
+    border: var(--track-border);
+
+    /* Rounded ends. For some reason specifiying this in rems destroys the
+       effect at this small scale. */
+    /*border-top-left-radius: 2px 1.5px;
+    border-bottom-left-radius: 2px 1.5px;
+    border-top-right-radius: 2px 1.5px;
+    border-bottom-right-radius: 2px 1.5px;*/
+    border-radius: calc(0.5 * var(--track-height));
+
+    /* Subtle shading around track to give embossed effect */
+    box-shadow: var(--track-shadow);
+}
+
+/*
+:host(:focus) [type="range"]::-webkit-slider-runnable-track {
+    background: var(--focus-track-background);
+    border: var(--focus-track-border);
+    box-shadow: var(--focus-track-shadow);
+}
+*/
+
+[type="range"]::-moz-range-track {
+    height: var(--track-height);
+    background: var(--track-background) linear-gradient(
+        to right,
+        transparent 0%,
+        transparent calc(min(var(--unit-value), var(--unit-zero)) * 100%),
+        var(--value-color) calc(min(var(--unit-value), var(--unit-zero)) * 100%),
+        var(--value-color) calc(max(var(--unit-value), var(--unit-zero)) * 100%),
+        transparent calc(max(var(--unit-value), var(--unit-zero)) * 100%)
+    );
+    border: var(--track-border);
+    border-radius: calc(0.5 * var(--track-height));
+    box-shadow: var(--track-shadow);
+}
+/*
+[type="range"]::-moz-range-progress {
+    height: var(--track-height);
+    background: var(--track-background);
+    border-radius: calc(0.5 * var(--track-height));
+    box-shadow: var(--track-shadow);
+}
+*/
+
+/*
+[type="range"]:focus::-moz-range-track,
+[type="range"]:focus::-moz-range-progress,
+:host(:focus) [type="range"]::-moz-range-track,
+:host(:focus) [type="range"]::-moz-range-progress {
+    background: var(--focus-track-background);
+    border: var(--focus-track-border);
+    box-shadow: var(--focus-track-shadow);
+}
+*/
+
+[type=range]::-ms-track {
+    height: var(--track-height);
+    border: var(--track-border);
+    border-radius: calc(0.5 * var(--track-height));
+
+    /* Remove bg colour from the track and use ms-fill-lower and
+       ms-fill-upper instead */
+    /*background: transparent;*/
+    background: var(--track-background) linear-gradient(
+        to right,
+        transparent 0%,
+        transparent calc(min(var(--unit-value), var(--unit-zero)) * 100%),
+        var(--value-color) calc(min(var(--unit-value), var(--unit-zero)) * 100%),
+        var(--value-color) calc(max(var(--unit-value), var(--unit-zero)) * 100%),
+        transparent calc(max(var(--unit-value), var(--unit-zero)) * 100%)
+    );
+
+    /* Remove default tick marks */
+    color: transparent;
+}
+/*
+[type=range]::-ms-fill-lower {
+    background: var(--track-background);
+    border-radius: calc(0.5 * var(--track-height));
+    box-shadow: var(--track-shadow);
+}
+
+[type=range]::-ms-fill-upper {
+    background: var(--track-background);
+    border-radius: calc(0.5 * var(--track-height));
+    box-shadow: var(--track-shadow);
+}
+*/
+
+/*
+:host(:focus) [type=range]::-ms-track {
+    background: var(--focus-track-background);
+    border: var(--focus-track-border);
+    box-shadow: var(--focus-track-shadow);
+    background: red;
+}
+*/

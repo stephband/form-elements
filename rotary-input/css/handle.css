@@ -1,12 +1,27 @@
-/* knob */
+/* Handle static element */
+
+:host::after {
+    content: '';
+    grid-area: handle;
+    width: var(--handle-width);
+    height: 0;
+    padding-top: var(--handle-width);
+    box-shadow: var(--handle-shadow);
+    background: var(--handle-background);
+    border: var(--handle-border);
+    border-radius: 50%;
+    z-index: 0;
+}
+
+/* Handle rotating element */
 
 .handle {
     cursor: pointer;
     cursor: ns-resize;
     width: var(--handle-width);
     height: 0;
-    padding-top: calc(var(--handle-width) - 2px);
-    background: transparent;/*var(--handle-background);*/
+    padding-top: var(--handle-width);
+    background: transparent;
     border: 0;
     border-radius: 50%;
     transform: rotate3d(0, 0, 1, calc(var(--rotation-start) + var(--unit-value) * var(--rotation-range)));

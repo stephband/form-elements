@@ -8,6 +8,7 @@
 
     padding: calc(2 * var(--tick-radius) + var(--tick-line-height) + var(--tick-height)) 0 0 0;
     width: 0;
+    outline-width: 0;
     box-sizing: content-box;
     transform-origin: 50% 50%;
 }
