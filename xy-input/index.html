@@ -1,23 +1,23 @@
 <!DOCTYPE html>
-<!-- Literal template "/Users/stephband/Sites/unipop/unipop/static/bolt/elements/xy-input/index.html.literal" -->
+<!-- Literal template "/Users/stephband/Sites/form-elements/xy-input/index.html.literal" -->
 
 <html lang="en">
 <head>
     <meta charset="utf-8" />
-<meta name="author" content="stephband" />
-<meta name="description" content="Documentation for Bolt. A front-end toolkit of classes, evented behaviours and custom elements." />
+<meta name="author" content="Stephen Band" />
+<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
 <meta name="viewport" content="width=device-width" />
 
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@stephband">
-<meta property="og:title" content="Bolt" />
-<meta property="og:description" content="A front-end toolkit of classes, evented behaviours and custom elements." />
-<meta property="og:image" content="undefined" />
-<meta property="og:url" content="http://stephen.band/bolt/" />
+<meta property="og:title" content="form-elements" />
+<meta property="og:description" content="A collection of advanced form controls published as custom elements" />
+<meta property="og:image" content="https://stephen.band/form-elements/card.jpg" />
+<meta property="og:url" content="https://stephen.band/form-elements/" />
 
 
-<title>Bolt</title>
+<title>form-elements</title>
 
 
 
@@ -35,10 +35,10 @@
         window.DEBUG = true;
     </script>
 
-    <link rel="stylesheet" href="../../module.css">
-    <link rel="stylesheet" href="../../documentation/prism-cruncher.css" />
-<link rel="stylesheet" href="../../documentation.css" />
-<link rel="stylesheet" href="../../debug.css" />
+    <link rel="stylesheet" href="../../bolt/module.css">
+    <link rel="stylesheet" href="../../bolt/documentation/prism-cruncher.css" />
+<link rel="stylesheet" href="../../bolt/documentation.css" />
+<link rel="stylesheet" href="../../bolt/debug.css" />
 
 
     <style></style>
@@ -189,12 +189,12 @@
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     <nav class="x1 x-stretch y1 @2-x1 @2-1x">
-        <a class="thumb thumb-1:1" width="400" height="400" style="background-image: url('../../images/logo.svg'); background-size: contain; width: 120%; padding-top: 120%; max-width: 6rem; margin-top: -16%; margin-left: -8%; margin-right: -12%;">Bolt</a>
+        <a class="thumb thumb-1:1" width="400" height="400" style="background-image: url('../images/logo.svg'); background-size: contain; width: 120%; padding-top: 120%; max-width: 6rem; margin-top: -16%; margin-left: -8%; margin-right: -12%;">Bolt</a>
     </nav>
 
-
+    
 <header class="x1 3x @1-x3 @1-4x @2-x4">
-
+    
     <h2 class="docs-text-02">&lt;xy-input&gt;</h2>
     <p>Import <code>&lt;xy-input&gt;</code> custom element. This also registers the custom
 element and upgrades instances already in the DOM.</p>
@@ -203,23 +203,23 @@ element and upgrades instances already in the DOM.</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
     <span class="token selector">xy-input</span> <span class="token punctuation">{</span>
         <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
-        <span class="token property">height</span><span class="token punctuation">:</span> 6.25rem<span class="token punctuation">;</span>
+        <span class="token property">height</span><span class="token punctuation">:</span> 10rem<span class="token punctuation">;</span>
     <span class="token punctuation">}</span>
 </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
 
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xy-input</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xy-input</span><span class="token punctuation">></span></span>
 <span class="token comment">&lt;!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB">&lt;/xy-input--></span></code></pre>
 
-
+    
 </header>
 
 <form class="x1 3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    <script type="module" src="../../templates/module.js"></script>
+    <script type="module" src="../../bolt/templates/module.js"></script>
 
 <style>
     xy-input {
         width: 100%;
-        height: 6.25rem;
+        height: 10rem;
     }
 </style>
 
@@ -230,9 +230,9 @@ element and upgrades instances already in the DOM.</p>
 </form>
 
 <div class="x1 3x @1-x3 @1-2x @2-x4 x-stretch y-start">
-
+    
     <h3 class="docs-text-03">Attributes</h3>
-
+    
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xmin">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xmin">
@@ -245,7 +245,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xmax">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xmax">
@@ -258,7 +258,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xlaw">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xlaw">
@@ -281,7 +281,7 @@ x domain of the fader travel. Possible values are:</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xstep">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xstep">
@@ -293,7 +293,7 @@ x domain of the fader travel. Possible values are:</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xaxis">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xaxis">
@@ -308,7 +308,7 @@ may be listed with or without units, eg:</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ymin">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ymin">
@@ -321,7 +321,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ymax">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ymax">
@@ -334,7 +334,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ylaw">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ylaw">
@@ -357,7 +357,7 @@ y range of the fader travel. Possible values are:</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ystep">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ystep">
@@ -373,7 +373,7 @@ y range of the fader travel. Possible values are:</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-yaxis">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-yaxis">
@@ -388,7 +388,7 @@ may be listed with or without units, eg:</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-properties">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-properties">
@@ -403,7 +403,7 @@ attribute.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-valuebox">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-valuebox">
@@ -420,7 +420,7 @@ is safe to ignore.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ordered">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ordered">
@@ -433,7 +433,7 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-value">
@@ -445,7 +445,7 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 </div>
 
-
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-include">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-include">
@@ -456,15 +456,15 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 </div>
 
+ 
 
+    
+    
+    
 
-
-
-
-
-
+    
     <h3 class="docs-text-03">Properties</h3>
-
+    
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-xmin">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-xmin">
@@ -477,7 +477,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-xmax">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-xmax">
@@ -490,7 +490,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-ymin">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-ymin">
@@ -503,7 +503,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-ymax">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-ymax">
@@ -516,7 +516,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-value">
@@ -528,11 +528,11 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
-
-
+ 
+    
+    
     <h3 class="docs-text-03">Events</h3>
-
+    
 <div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-input">
 <h3 class="string-docs-text-05 docs-text-05">
     <a href="#string-input">
@@ -544,7 +544,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-change">
 <h3 class="string-docs-text-05 docs-text-05">
     <a href="#string-change">
@@ -556,17 +556,17 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 </div>
 
 <div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
+    
+    
+    
 
-
-
-
-
+    
     <h3 class="docs-text-03">Variables</h3>
-
+    
 <div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-line-color">
 <h3 class="var-docs-text-05 docs-text-05">
     <a href="#var-line-color">
@@ -577,7 +577,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-line-color-x">
 <h3 class="var-docs-text-05 docs-text-05">
     <a href="#var-line-color-x">
@@ -588,7 +588,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-line-color-y">
 <h3 class="var-docs-text-05 docs-text-05">
     <a href="#var-line-color-y">
@@ -599,7 +599,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 <div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-plot-color">
 <h3 class="var-docs-text-05 docs-text-05">
     <a href="#var-plot-color">
@@ -610,15 +610,15 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
+ 
 </div>
 
 
     <script type="module" src="./module.js"></script>
 
     <script type="module">
-    import './module.js';
-    //import '../../documentation.js';
+    import '../../bolt/module.js';
+    import '../../bolt/documentation.js';
 </script>
 
     <script type="module">

@@ -10,7 +10,7 @@ element and upgrades instances already in the DOM.
 <style>
     xy-input {
         width: 100%;
-        height: 6.25rem;
+        height: 10rem;
     }
 </style>
 
@@ -35,7 +35,8 @@ import rect        from '../../dom/modules/rect.js';
 import { trigger } from '../../dom/modules/trigger.js';
 import { px, rem } from '../../dom/modules/parse-length.js';
 
-import Literal     from '../../literal/module.js';
+//import Literal     from '../../literal/module.js';
+import Literal     from '../../literal/renderers/template-renderer.js';
 
 import parseValue  from '../modules/parse-value.js';
 import parseTicks  from '../modules/parse-ticks.js';

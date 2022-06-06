@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../templates/head.literal', '../../package.json') }
+    ${ include('../../bolt/templates/head.literal', '../package.json') }
 
     <script title="debug">
         window.DEBUG = true;
     </script>
 
-    <link rel="stylesheet" href="../../module.css">
-    ${ include('../../templates/style.html') }
+    <link rel="stylesheet" href="../../bolt/module.css">
+    ${ include('../../bolt/templates/style.html') }
 
     <style></style>
 
@@ -159,14 +159,14 @@
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     <nav class="x1 x-stretch y1 @2-x1 @2-1x">
-        <a class="thumb thumb-1:1" width="400" height="400" style="background-image: url('../../images/logo.svg'); background-size: contain; width: 120%; padding-top: 120%; max-width: 6rem; margin-top: -16%; margin-left: -8%; margin-right: -12%;">Bolt</a>
+        <a class="thumb thumb-1:1" width="400" height="400" style="background-image: url('../images/logo.svg'); background-size: contain; width: 120%; padding-top: 120%; max-width: 6rem; margin-top: -16%; margin-left: -8%; margin-right: -12%;">Bolt</a>
     </nav>
 
-    ${ include('../../templates/element.literal', comments("./module.js", "./shadow.css")) }
+    ${ include('../../bolt/templates/element.literal', comments("./module.js", "./shadow.css")) }
 
     <script type="module" src="./module.js"></script>
 
-    ${ include('../../templates/scripts.html') }
+    ${ include('../../bolt/templates/scripts.html') }
 
     <script type="module">
     // Log events
