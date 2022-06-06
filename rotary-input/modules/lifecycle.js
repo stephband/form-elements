@@ -31,7 +31,7 @@ const defaults = {
 
 function createTemplate(elem, shadow, internals) {
     const style  = create('style', ':host {}');
-    const label  = create('label', { for: 'input', html: '<slot></slot>' });
+    const label  = create('label', { for: 'input', part: 'label', html: '<slot></slot>' });
     const handle = create('div', { class: 'handle' });
     const text   = create('text');
     const abbr   = create('abbr');

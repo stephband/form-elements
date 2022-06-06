@@ -1,0 +1,75 @@
+:host {
+    padding: 0.3125rem;
+
+    /** --line-color **/
+    /** --line-color-x **/
+    /** --line-color-y **/
+    --line-color: #cccccc;
+    --line-color-x: var(--line-color);
+    --line-color-y: var(--line-color);
+
+    /** --plot-color **/
+    --plot-color: #00bb55;
+
+    --track-background: #01181e;
+    --track-radius: 0.1875rem;
+    --track-shadow: inset 0 0 90px hsla(192, 94%, 6%, 0.16875),
+        0 1px 1px hsla(192, 18%, 64%, 0.15),
+        0 -1px 1px hsla(192, 60%, 8%, 0.4);
+    --handle-stroke-width: 1px;
+
+    min-height: 7.5rem;
+    /* Accomodate tick labels */
+    margin-bottom: 1.25rem;
+
+    background: #f8f8f8;
+    border: 1px solid #cccccc;
+    border-radius: var(--track-radius);
+    box-shadow:    var(--track-shadow);
+}
+
+:host > canvas {
+    pointer-events: none;
+    grid-column: 1;
+    grid-row: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    margin: 0;
+}
+
+:host > svg {
+    width: 100%;
+    /* Height must be auto (100% too big in Safari) and controlled by viewbox
+       to cover the area else shapes inside are not clickable. */
+    height: auto;
+
+    overflow: visible;
+    position: relative;
+    z-index: 2;
+    transform: translate3d(0,0,0);
+}
+
+:host > svg > circle {
+    z-index: 2;
+    transform: translate3d(0,0,0);
+}
+
+:host > [part="x-tick tick"],
+:host > [part="y-tick tick"] {
+    position: absolute;
+    left: 6px;
+    bottom: 6px;
+}
+
+/* TODO: sort out positioning of xy-input internals */
+:host > [part="label"] {
+    position: absolute;
+    bottom: -2.5rem;
+    left: 50%;
+    transform: translate3d(-50%, 0, 0);
+}

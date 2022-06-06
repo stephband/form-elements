@@ -1,0 +1,29 @@
+
+[part$="tick"] {
+    font-size: inherit !important;
+    /* Try to avoid overlapping tick labels on the x axis */
+    line-height: 1em;
+
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    justify-self: start;
+}
+
+[part$="tick"] > span {
+    font-size: 0.625em;
+}
+
+[part="x-tick tick"] {
+    text-align: center;
+}
+
+[part="y-tick tick"] {
+    text-align: right;
+    min-width: 2em;
+}
+
+[part$="tick"]::before {
+    /* Remove the tick dot */
+    content: none;
+}

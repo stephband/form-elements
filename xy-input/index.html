@@ -33,6 +33,7 @@
 
     <script title="debug">
         window.DEBUG = true;
+        window.xyInputShadowStylesheet = './shadow.css';
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">
@@ -40,9 +41,7 @@
 <link rel="stylesheet" href="../../bolt/documentation.css" />
 <link rel="stylesheet" href="../../bolt/debug.css" />
 
-
-    <style></style>
-
+    
     <template id="xy-input-shadow">
         <template id="x-tick">
             <label part="x-tick tick" style="transform: translate(calc(${ data.up.toViewX(data.tick.value) }em - 50%), 1.5em);">
@@ -185,6 +184,7 @@
         ))
         .map((tick, index) => include(this.node.getRootNode().getElementById('y-tick'), { up: data, tick })) }
     </template>
+
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
@@ -430,9 +430,9 @@ neighbours, keeping the order of points on the x axis constant.</p>
 </div>
 
  
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value-2">
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-value-2">
+    <a href="#attribute-value">
         <code class="token language-html">value</code>
     </a>
 </h3>
@@ -529,9 +529,9 @@ eg. <code>&quot;0dB&quot;</code>.</p>
     
     <h3 class="docs-text-03">Events</h3>
     
-<div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-input-1">
+<div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-input">
 <h3 class="string-docs-text-05 docs-text-05">
-    <a href="#string-input-1">
+    <a href="#string-input">
         <code class=" language-js">"input"</code>
     </a>
 </h3>
@@ -561,52 +561,8 @@ eg. <code>&quot;0dB&quot;</code>.</p>
     
 
     
-    <h3 class="docs-text-03">Variables</h3>
     
-<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-line-color">
-<h3 class="var-docs-text-05 docs-text-05">
-    <a href="#var-line-color">
-        <code class=" language-css">--line-color</code>
-    </a>
-</h3>
-
-
-</div>
-
- 
-<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-line-color-x">
-<h3 class="var-docs-text-05 docs-text-05">
-    <a href="#var-line-color-x">
-        <code class=" language-css">--line-color-x</code>
-    </a>
-</h3>
-
-
-</div>
-
- 
-<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-line-color-y">
-<h3 class="var-docs-text-05 docs-text-05">
-    <a href="#var-line-color-y">
-        <code class=" language-css">--line-color-y</code>
-    </a>
-</h3>
-
-
-</div>
-
- 
-<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-plot-color">
-<h3 class="var-docs-text-05 docs-text-05">
-    <a href="#var-plot-color">
-        <code class=" language-css">--plot-color</code>
-    </a>
-</h3>
-
-
-</div>
-
- 
+    
 </div>
 
 

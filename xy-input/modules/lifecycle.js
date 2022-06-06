@@ -7,6 +7,8 @@ import noop        from '../../../fn/modules/noop.js';
 import { remove }  from '../../../fn/modules/remove.js';
 import { Observer, notify } from '../../../fn/observer/observer.js';
 
+
+import create      from '../../../dom/modules/create.js';
 import delegate    from '../../../dom/modules/delegate.js';
 import events      from '../../../dom/modules/events.js';
 import gestures    from '../../../dom/modules/gestures.js';
@@ -14,7 +16,8 @@ import rect        from '../../../dom/modules/rect.js';
 import { trigger } from '../../../dom/modules/trigger.js';
 import { px }      from '../../../dom/modules/parse-length.js';
 
-import Literal     from '../../../literal/renderers/template-renderer.js';
+import Literal      from '../../../literal/renderers/template-renderer.js';
+
 import { $state, maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';
 
 import Data        from './data.js';
@@ -253,6 +256,11 @@ export default {
         const literal  = new Literal('#xy-input-shadow');
         const data     = new Data(this);
         const formdata = new FormData();
+
+        shadow.append(create('label', {
+            part: 'label',
+            children: [create('slot')]
+        }));
 
         this[$state] = {
             rendered: literal.push(data),

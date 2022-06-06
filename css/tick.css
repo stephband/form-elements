@@ -4,25 +4,24 @@
 Style the tick marks.
 **/
 
-[part="tick"] {
+[part$="tick"] {
     cursor: pointer;
     display: block;
+    height: auto;
+    margin: 0;
+    padding: 0;
 
-    font-size: 0.5625rem;
+    font-size: 0.625em;
     line-height: 0.9375rem;
     letter-spacing: -0.0125em;
     text-align: center;
+    white-space: nowrap;
 
-    padding: 0;
-    /* Make ::after mark visible outside label*/
+    /* Make ::before mark visible outside label*/
     overflow: visible;
-
     border-width: 0;
-    color: currentcolor;
+    color: #666666;
     background: transparent;
-
-    /* Interior tick value text appears outside the tick */
-    overflow: visible;
 
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
@@ -30,17 +29,23 @@ Style the tick marks.
               user-select: none; /* Non-prefixed version */
 }
 
-[part="tick"]::after {
+[part$="tick"]::before {
     content: '';
     display: block;
-    width: 0.125rem;
-    height: 0.125rem;
+    width: 0.1875rem;
+    height: 0.1875rem;
     margin-left: auto;
     margin-right: auto;
     background: currentcolor;
-    border-radius: 0.0625rem;
+    border-radius: 50%;
 }
 
-[part="tick"]:focus {
+[part$="tick"]:focus-visible {
     outline: none;
+}
+
+[part$="tick"] > span,
+[part$="tick"] > span {
+    font-size: inherit;
+    font-family: 'Fira Mono', monospace;
 }

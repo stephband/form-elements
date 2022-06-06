@@ -9,23 +9,12 @@
     padding: calc(2 * var(--tick-radius) + var(--tick-line-height) + var(--tick-height)) 0 0 0;
     width: 0;
     box-sizing: content-box;
-    height: auto;
     transform-origin: 50% 50%;
-    color: currentcolor;
 }
 
 [part="tick"]::before {
-    content: '';
-    display: block;
-    width: 0.1875rem;
-    height: 0.1875rem;
-    background: currentcolor;
-    border-radius: 50%;
+    margin: 0;
     transform: translate3d(-50%, 0, 0);
-}
-
-[part="tick"]::after {
-    content: none;
 }
 
 [part="tick"] > span {
