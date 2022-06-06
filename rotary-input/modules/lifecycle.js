@@ -8,6 +8,7 @@ tallest element. If there are no ticks the component will collapse a bit
 smaller.
 */
 
+import overload      from '../../../fn/modules/overload.js';
 import Privates      from '../../../fn/modules/privates.js';
 import { clamp }     from '../../../fn/modules/clamp.js';
 import create        from '../../../dom/modules/create.js';
@@ -108,13 +109,39 @@ function createTemplate(elem, shadow, internals) {
 
 /* Events */
 
+const toValueUpdates = overload((pointer, e) => e.type, {
+    'pointerdown': (data, e) => ({
+        host: data.host,
+        law:  data.law,
+        min:  data.min,
+        max:  data.max,
+        e0:   e,
+        y0:   e.clientY,
+        y:    data.unitValue,
+        touchRange: parseValue(data.style.getPropertyValue('--touch-range'))
+    }),
+
+    default: (scope, e) => {
+        const { host, law, min, max, y, y0, touchRange } = scope;
+        const dy        = y0 - e.clientY;
+        const unitValue = clamp(0, 1, y + dy / touchRange);
+        const value     = transform(law, unitValue, min, max) ;
+
+        host.value = value;
+        trigger('input', host);
+        return scope;
+    }
+});
+
 export default {
     mode:       'closed',
     focusable:  true,
-
     construct: function(shadow, internals) {
         const privates = Privates(this);
         const data     = privates.data  = assign({}, defaults);
+
+        data.host  = this;
+        data.style = getComputedStyle(this);
 
         privates.scope       = createTemplate(this, shadow);
         privates.element     = this;
@@ -124,29 +151,8 @@ export default {
 
         shadow.addEventListener('mousedown', privates);
 
-        gestures({ threshold: 1, selector: 'div' }, shadow)
-        .each(function(events) {
-            // First event is touchstart or mousedown
-            const e0 = events.shift();
-            const y0 = e0.clientY;
-            const y  = data.unitValue;
-            const touchValue = getComputedStyle(this).getPropertyValue('--touch-range');
-            const touchRange = parseValue(touchValue);
-
-            let dy;
-
-            events
-            .latest()
-            .each((e) => {
-                dy = y0 - e.clientY;
-                var unitValue = clamp(0, 1, y + dy / touchRange);
-                const value = transform(data.law, unitValue, data.min, data.max) ;
-                this.value = value;
-                // Doesn't work
-                //elem.dispatchEvent(new InputEvent('input'));
-                trigger('input', this);
-            });
-        });
+        gestures({ threshold: 1, select: 'div' }, shadow)
+        .each((events) => events.reduce(toValueUpdates, data));
     },
 
     connect: function(shadow) {
