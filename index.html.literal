@@ -20,6 +20,22 @@
     * + xy-input {
         margin-top: 2rem;
     }
+
+    .link-button {
+        --height: 2.5rem;
+        --border-width: 1px;
+
+        border-color: currentcolor;
+        border-radius: 0.3125rem;
+    }
+
+    .link-button:hover {
+        color: #4f6473;
+    }
+
+    * + .link-button {
+        margin-top: 1.25rem;
+    }
     </style>
 
     ${ include('./xy-input/templates/xy-input-shadow.html') }
@@ -28,26 +44,38 @@
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid" style="align-content: start;">
     <header class="x1 3x @1-x3 @1-4x @2-x4">
         <h1>Form elements</h1>
-        <p>A collection of advanced form controls published as custom elements.</p>
+        <p>A collection of advanced form controls published as custom elements.
+        Ranges of these elements can be scaled with linear, logarithm, or
+        exponential curves, values and tickmarks can by expressed in dB, Hz,
+        seconds and other units, and the elements may be used in forms with their
+        values being submitted like other form controls.
+        </p>
     </header>
 
     <div class="x1 3x @1-x3 @1-4x @2-x4">
         <h2>&lt;range-input&gt;</h2>
-        <a href="./range-input/">Documentation</a>
+        <p>A horizontal slider with an <code>&lt;input type="range"&lt;</code>
+        at its core, clickable tick marks, and a live value readout.</p>
+        <a class="link-button button" href="./range-input/">Documentation</a>
     </div>
 
     <range-input class="x1 y2 3x" name="scale" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1" value="0">Scale</range-input>
 
     <div class="x1 3x @1-x3 @1-4x @2-x4">
         <h2>&lt;rotary-input&gt;</h2>
-        <a href="./rotary-input/">Documentation</a>
+        <p>A rotating knob that can be dragged vertically, with clickable tick
+        marks and live value readout.</p>
+        <a class="link-button button" href="./rotary-input/">Documentation</a>
     </div>
 
     <rotary-input class="x2 2x y3" name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1">Pan</rotary-input>
 
     <div class="x1 3x @1-x3 @1-4x @2-x4">
         <h2>&lt;xy-input&gt;</h2>
-        <a href="./xy-input/">Documentation</a>
+        <p>An input that contains a series of one or more x/y handles and an
+        (optional) background plot. Both axes may be scaled, and the element has
+        a <code>value</code> property that returns an array of coordinates.</p>
+        <a class="link-button button" href="./xy-input/">Documentation</a>
     </div>
 
     <xy-input class="x1 y4 3x">Envelope</xy-input>

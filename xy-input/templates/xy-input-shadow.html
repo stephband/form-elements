@@ -39,7 +39,7 @@
                 this.viewbox    = { x: data.contentbox.x * 2, y: data.contentbox.y * 2, width: data.contentbox.width * 2, height: data.contentbox.height * 2 },
                 this.xGridColor = this.computed.getPropertyValue('--line-color-x').trim(),
                 this.yGridColor = this.computed.getPropertyValue('--line-color-y').trim(),
-                this.graphColor = this.computed.getPropertyValue('--plot-color').trim(),
+                this.plotColor  = this.computed.getPropertyValue('--plot-color').trim(),
 
                 // Clears canvas as well as setting up size
                 element.width  = data.paddingbox.width * 2,
@@ -73,7 +73,7 @@
                         this.graphColor
                     ),
 */
-                data.drawAudioEnvelope(this.ctx, this.viewbox, data.valuebox, data.points, '#440066')
+                data.drawAudioEnvelope(this.ctx, this.viewbox, data.valuebox, data.points, this.plotColor)
             ), ''
         }</canvas>
 

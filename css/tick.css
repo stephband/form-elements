@@ -11,9 +11,10 @@ Style the tick marks.
     margin: 0;
     padding: 0;
 
+    font-family: 'Fira Mono', monospace;
     font-size: 0.625em;
     line-height: 0.9375rem;
-    letter-spacing: -0.0125em;
+    letter-spacing: -0.04em;
     text-align: center;
     white-space: nowrap;
 
@@ -47,5 +48,4 @@ Style the tick marks.
 [part$="tick"] > span,
 [part$="tick"] > span {
     font-size: inherit;
-    font-family: 'Fira Mono', monospace;
 }

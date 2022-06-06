@@ -1,7 +1,8 @@
 
 [part="handle"] {
-    fill: url(#handle-gradient);
-    stroke: inherit;
+    /*fill: url(#handle-gradient);*/
+    fill: white;
+    stroke: var(--handle-color);
     stroke-width: var(--handle-stroke-width);
     cursor: pointer;
 }

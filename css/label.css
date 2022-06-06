@@ -7,6 +7,5 @@ Style the label.
 [part="label"] {
     font-size: 1em;
     line-height: 1.25em;
-    letter-spacing: -0.02em;
     color: currentcolor;
 }

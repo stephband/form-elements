@@ -2,11 +2,20 @@
     /** --value-color **/
     --value-color: #88deff;
 
+    /** --track-background **/
+    --track-background: #eeeeee;
+
+    /** --handle-color **/
+    --handle-color: #4f6473;
+
     /** --handle-background **/
     --handle-background: white;
 
     /** --handle-border **/
-    --handle-border: 1px solid rgb(122 144 158);
+    --handle-border: 1px solid var(--handle-color);
+
+    /** --output-color **/
+    --output-color: #46789a;
 
     display: block;
     position: relative;
