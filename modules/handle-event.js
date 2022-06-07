@@ -14,7 +14,7 @@ Sent continuously during a fader movement.
 
 function touchstart(e) {
     const target = e.target.closest('button');
-console.log('YEAH');
+
     // Ignore non-ticks
     if (!target) { return; }
 

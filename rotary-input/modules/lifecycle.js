@@ -165,5 +165,3 @@ export default {
         }
     }
 };
-
-document.body.addEventListener('click', (e) => console.log('CLICK', e.target));
