@@ -16,16 +16,12 @@
         var(--value-color) calc(max(var(--unit-value), var(--unit-zero)) * var(--rotation-range)),
         transparent calc(max(var(--unit-value), var(--unit-zero)) * var(--rotation-range))
     );
-    box-shadow:
-        var(--track-shadow),
-        inset 0 0 0 1px rgba(0,0,0,0.125);
+    box-shadow: var(--track-shadow);
     border-width: 0;
     border-radius: 50%;
     z-index: 0;
 }
 
 :host(:focus)::before {
-    box-shadow:
-        var(--focus-shadow),
-        var(--track-shadow);
+
 }

@@ -22,7 +22,9 @@ smaller.
     --track-width: 0.5rem;
 
     /** --track-shadow **/
-    --track-shadow: inset 0 0.25rem 0.5rem rgba(0, 0, 0, 0.24);
+    --track-shadow:
+        inset 0 0.25rem 0.5rem rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(0,0,0,0.125);
 
     /**
     --rotation-start
@@ -75,6 +77,9 @@ smaller.
     --handle-dot-background: white;
     --tick-color: #46789a;
     --tick-background: #46789a;
+    --track-shadow:
+        inset 0 0.25rem 0.5rem rgba(0, 0, 0, 0.24),
+        inset 0 0 0 1px rgba(0,0,0,0.125);
 
     /* Nullify simulated focus style. */
     outline-width: 0 !important;

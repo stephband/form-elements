@@ -9,7 +9,7 @@
     /** --track-shadow **/
     --track-shadow:
         inset 0 0.0625rem 0.25rem rgba(0,0,0,0.2),
-        inset 0 0 0 1px rgba(0,0,0,0.125) ;
+        inset 0 0 0 1px rgba(0,0,0,0.125);
 
     --track-top: 1rem;
 
@@ -44,7 +44,9 @@
 :host(:focus) {
     /*--track-background: #eeeeee;*/
     --track-border: none;
-    --track-shadow: inset 0 0.0625rem 0.25rem rgba(0,0,0,0.2);
+    --track-shadow:
+        inset 0 0.0625rem 0.25rem rgba(0,0,0,0.2),
+        inset 0 0 0 1px rgba(0,0,0,0.125);
 }
 
 :host > label {
