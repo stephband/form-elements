@@ -6,12 +6,11 @@
 
     <script title="debug">
         window.DEBUG = true;
-        window.xyInputShadowStylesheet = './shadow.css';
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">
     ${ include('../../bolt/templates/style.html') }
-    ${ include('./templates/xy-input-shadow.html') }
+    ${ include('./templates/xy-input-template.html') }
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
@@ -25,7 +24,7 @@
     ${ include('../../bolt/templates/scripts.html') }
 
     <script type="module">
-    import XYInput from './module.js';
+    import XYInput from '../xy-input.js';
     import events  from '../../dom/modules/events.js';
 
     //events('input change', document)

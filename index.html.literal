@@ -38,7 +38,7 @@
     }
     </style>
 
-    ${ include('./xy-input/templates/xy-input-shadow.html') }
+    ${ include('./xy-input/templates/xy-input-template.html') }
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid" style="align-content: start;">
