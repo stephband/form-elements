@@ -33,7 +33,6 @@
 
     <script title="debug">
         window.DEBUG = true;
-        window.rotaryInputStylesheet = './shadow.css';
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">
@@ -44,9 +43,9 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-
+    
 <header class="x1 3x @1-x3 @1-4x @2-x4">
-
+    
     <h2 class="docs-text-02">&lt;rotary-input&gt;</h2>
     <p>Import <code>&lt;rotary-input&gt;</code> custom element. This also registers the custom
 element and upgrades instances already in the DOM.</p>
@@ -54,7 +53,7 @@ element and upgrades instances already in the DOM.</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pan<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Pan<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
 <span class="token comment">&lt;!--rotary-input name="gain" min="-48dB" max="0dB" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB" law="linear-logarithmic" unit="dB" value="-6dB">Volume&lt;/rotary-input--></span></code></pre>
 
-
+    
 </header>
 
 <form class="x1 3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
@@ -66,12 +65,12 @@ element and upgrades instances already in the DOM.</p>
 </form>
 
 <div class="x1 3x @1-x3 @1-2x @2-x4 x-stretch y-start">
-
+    
     <h3 class="docs-text-03">Attributes</h3>
-
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-min-1">
+    
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-min">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-min-1">
+    <a href="#attribute-min">
         <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
     </a>
 </h3>
@@ -81,10 +80,10 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-max-1">
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-max">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-max-1">
+    <a href="#attribute-max">
         <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
     </a>
 </h3>
@@ -94,10 +93,10 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
-
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-law-1">
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-law">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-law-1">
+    <a href="#attribute-law">
         <code class="token language-html">law <span class="default">="<em>linear</em>"</span></code>
     </a>
 </h3>
@@ -114,10 +113,10 @@ of the fader travel. Possible values are:</p>
 
 </div>
 
-
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-unit-1">
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-unit">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-unit-1">
+    <a href="#attribute-unit">
         <code class="token language-html">unit</code>
     </a>
 </h3>
@@ -131,41 +130,42 @@ displayed in this unit. Possible values are:</p>
 
 </div>
 
-
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ticks-1">
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ticks">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-ticks-1">
+    <a href="#attribute-ticks">
         <code class="token language-html">ticks</code>
     </a>
 </h3>
 
-<p>A space separated list of values at which to display tick marks. Values
-may be listed with or without units, eg:</p>
+<p>A space or comma separated list of values at which to display tick marks.
+Values may be listed with or without units, eg:</p>
 <pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
 ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 </div>
 
-
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-steps-1">
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-step">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-steps-1">
-        <code class="token language-html">steps</code>
+    <a href="#attribute-step">
+        <code class="token language-html">step</code>
     </a>
 </h3>
 
-<p>Steps is either:</p>
+<p>Step is either:</p>
 <ul>
-<li>A space separated list of values. As with <code>ticks</code>, values may be listed with or without units.</li>
-<li>The string <code>&quot;ticks&quot;</code>. The values in the <code>ticks</code> attribute are used as steps.</li>
+<li>The string <code>&quot;any&quot;</code>, the default</li>
+<li>The string <code>&quot;tick&quot;</code>. The values in the <code>ticks</code> attribute are used as step values</li>
+<li>A space or comma separated list of values, written with or without units</li>
 </ul>
 
 </div>
 
-
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value-1">
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-value-1">
+    <a href="#attribute-value">
         <code class="token language-html">value</code>
     </a>
 </h3>
@@ -174,18 +174,18 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 </div>
 
+ 
 
+    
+    
+    
 
-
-
-
-
-
+    
     <h3 class="docs-text-03">Properties</h3>
-
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-type-1">
+    
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-type">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-type-1">
+    <a href="#property-type">
         <code class="property language-js">.type</code>
     </a>
 </h3>
@@ -196,10 +196,10 @@ with native form elements, which all have a type).</p>
 
 </div>
 
-
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min-1">
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-min-1">
+    <a href="#property-min">
         <code class="property language-js">.min</code>
     </a>
 </h3>
@@ -209,10 +209,10 @@ Value at lower limit of fader, as a number.</p>
 
 </div>
 
-
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max-1">
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-max-1">
+    <a href="#property-max">
         <code class="property language-js">.max</code>
     </a>
 </h3>
@@ -222,10 +222,10 @@ Value at upper limit of fader, as a number.</p>
 
 </div>
 
-
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-value-1">
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-value">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-value-1">
+    <a href="#property-value">
         <code class="property language-js">.value</code>
     </a>
 </h3>
@@ -235,20 +235,20 @@ Current value of the field, as a number.</p>
 
 </div>
 
-
-
-
-
-
+ 
+    
+    
+    
+    
 </div>
 
 <div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
-
+    
     <h3 class="docs-text-03">Parts</h3>
-
-<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-label-1">
+    
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-label">
 <h3 class="part-docs-text-05 docs-text-05">
-    <a href="#part-label-1">
+    <a href="#part-label">
         <code class=" language-css">::part(label)</code>
     </a>
 </h3>
@@ -257,10 +257,10 @@ Current value of the field, as a number.</p>
 
 </div>
 
-
-<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-output-1">
+ 
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-output">
 <h3 class="part-docs-text-05 docs-text-05">
-    <a href="#part-output-1">
+    <a href="#part-output">
         <code class=" language-css">::part(output)</code>
     </a>
 </h3>
@@ -269,10 +269,10 @@ Current value of the field, as a number.</p>
 
 </div>
 
-
-<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-tick-1">
+ 
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-tick">
 <h3 class="part-docs-text-05 docs-text-05">
-    <a href="#part-tick-1">
+    <a href="#part-tick">
         <code class=" language-css">::part(tick)</code>
     </a>
 </h3>
@@ -281,14 +281,14 @@ Current value of the field, as a number.</p>
 
 </div>
 
+ 
 
-
-
+    
     <h3 class="docs-text-03">Variables</h3>
-
-<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-value-color-1">
+    
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-value-color">
 <h3 class="var-docs-text-05 docs-text-05">
-    <a href="#var-value-color-1">
+    <a href="#var-value-color">
         <code class=" language-css">--value-color</code>
     </a>
 </h3>
@@ -296,10 +296,10 @@ Current value of the field, as a number.</p>
 
 </div>
 
-
-<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-background-1">
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-background">
 <h3 class="var-docs-text-05 docs-text-05">
-    <a href="#var-handle-background-1">
+    <a href="#var-handle-background">
         <code class=" language-css">--handle-background</code>
     </a>
 </h3>
@@ -307,10 +307,10 @@ Current value of the field, as a number.</p>
 
 </div>
 
-
-<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-border-1">
+ 
+<div class="var-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="var-handle-border">
 <h3 class="var-docs-text-05 docs-text-05">
-    <a href="#var-handle-border-1">
+    <a href="#var-handle-border">
         <code class=" language-css">--handle-border</code>
     </a>
 </h3>
@@ -318,7 +318,7 @@ Current value of the field, as a number.</p>
 
 </div>
 
-
+ 
 </div>
 
 
@@ -328,7 +328,7 @@ Current value of the field, as a number.</p>
 </script>
 
     <script type="module">
-    import RotaryInput from './module.js';
+    import RotaryInput from '../rotary-input.js';
     import events      from '../../dom/modules/events.js';
 
     //events('input change', document)
