@@ -1,9 +1,10 @@
 
 
-import nothing         from '../../fn/modules/nothing.js';
-import { clamp }       from '../../fn/modules/clamp.js';
-import parseTicks      from './parse-ticks.js';
-import { nearestStep } from './step.js';
+import nothing           from '../../fn/modules/nothing.js';
+import { clamp }         from '../../fn/modules/clamp.js';
+import parseTicks        from './parse-ticks.js';
+import { nearestStep }   from './step.js';
+import { generateTicks } from './ticks.js';
 
 function assignNormalValue(object, scale, min, max) {
     object.normalValue = scale.normalise(min, max, object.value);
