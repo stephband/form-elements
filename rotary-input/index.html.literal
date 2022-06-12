@@ -16,7 +16,7 @@
     ${ include('../../bolt/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
-        "../modules/properties.js",
+        "./modules/properties.js",
         "../controls/control.css",
         "./shadow.css"
     )) }

@@ -12,7 +12,7 @@ import { clamp }   from '../../../fn/modules/clamp.js';
 import overload    from '../../../fn/modules/overload.js';
 import create      from '../../../dom/modules/create.js';
 import element     from '../../../dom/modules/element.js';
-import handleEvent from '../../modules/handle-event.js';
+import handleEvent from '../../controls/handle-event.js';
 
 const DEBUG = true;
 
