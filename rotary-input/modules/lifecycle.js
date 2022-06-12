@@ -129,7 +129,7 @@ function update(data, law, min, max, ticks, step) {
 }
 
 function updateValue(data, law, min, max, value) {
-    if (value === data.value) { console.log('REPEAT VALUE SET - ARE WE BOTHERED?', value); }
+    //if (value === data.value) { console.log('REPEAT VALUE SET - ARE WE BOTHERED?', value); }
     data.value     = clamp(min, max, value);
     data.unitValue = normalise(law, min, max, data.value);
 
