@@ -14,7 +14,7 @@ function outputMilliKilo(unit, value) {
     };
 }
 
-export default overload((unit) => unit.toLowerCase(), {
+export const toDisplay = overload((unit) => unit.toLowerCase(), {
     'pan': (unit, value) => ({
         unit: '',
         value: value === -1 ? '-1.00' :

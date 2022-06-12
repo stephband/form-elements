@@ -86,7 +86,7 @@
        effect of blurring the text on pixel screens. */
     margin-left: -0.6875rem;
     width: 1.375rem;
-    left: calc((0.5 * var(--handle-width) - var(--bleed)) + var(--tick-value) * (100% + 2 * var(--bleed) - var(--handle-width)));
+    left: calc((0.5 * var(--handle-width) - var(--bleed)) + var(--normal-value) * (100% + 2 * var(--bleed) - var(--handle-width)));
 }
 
 :host > span {

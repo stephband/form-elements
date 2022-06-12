@@ -145,8 +145,6 @@ const toCoordinates = overload((data, e) => e.type, {
     }
 });
 
-
-
 const handle = delegate({
     '.duration-handle': overload((element, data) => data.type, {
         'pointermove': function(element, data) {
@@ -238,7 +236,6 @@ const handle = delegate({
         default: noop
     })
 });
-
 
 function updateViewbox(element, data) {
     const observer = Observer(data);

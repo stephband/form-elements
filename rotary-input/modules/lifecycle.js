@@ -8,42 +8,27 @@ tallest element. If there are no ticks the component will collapse a bit
 smaller.
 */
 
-import get           from '../../../fn/modules/get.js';
-import noop          from '../../../fn/modules/noop.js';
-import nothing       from '../../../fn/modules/nothing.js';
-import overload      from '../../../fn/modules/overload.js';
-import Privates      from '../../../fn/modules/privates.js';
-import { clamp }     from '../../../fn/modules/clamp.js';
-import Stream        from '../../../fn/modules/stream.js';
-import create        from '../../../dom/modules/create.js';
-import events        from '../../../dom/modules/events.js';
-import gestures      from '../../../dom/modules/gestures.js';
-import trigger       from '../../../dom/modules/trigger.js';
-import parseLength   from '../../../dom/modules/parse-length.js';
-import parseValue    from '../../modules/parse-value.js';
-import parseTicks    from '../../modules/parse-ticks.js';
-import scales        from '../../modules/scales.js';
-import toDisplay     from '../../modules/display.js';
+import get             from '../../../fn/modules/get.js';
+import overload        from '../../../fn/modules/overload.js';
+import Privates        from '../../../fn/modules/privates.js';
+import { clamp }       from '../../../fn/modules/clamp.js';
+import Stream          from '../../../fn/modules/stream.js';
+import create          from '../../../dom/modules/create.js';
+import events          from '../../../dom/modules/events.js';
+import gestures        from '../../../dom/modules/gestures.js';
+import trigger         from '../../../dom/modules/trigger.js';
+import parseLength     from '../../../dom/modules/parse-length.js';
+import parseValue      from '../../modules/parse-value.js';
+import parseTicks      from '../../modules/parse-ticks.js';
+import { updateData, updateValue } from '../../modules/data.js';
+import { getScale }     from '../../modules/scales.js';
+import { toDisplay }   from '../../modules/display.js';
+import { toKeyValue }  from '../../modules/key.js';
+import * as defaults   from '../../modules/defaults.js';
 
-import { generateTicks } from './ticks.js';
-import { nearestStep, previousStep, nextStep } from './step.js';
-
-
-const defaults = {
-    scale:   'linear',
-    min:     0,
-    max:     1,
-    ticks:   '',
-    step:    'any',
-    display: '',
-    value:   0
-};
-
-/* Events */
-
-function toScale(name) {
-    return scales[name && name.toLowerCase() || 'linear'];
-}
+/*
+Events
+*/
 
 function toTickValue(e) {
     const target = e.target.closest('[name="value"]');
@@ -72,105 +57,10 @@ const toGestureValue = overload((pointer, e) => e.type, {
     }
 });
 
-const toKeyValue = overload(get('keyCode'), {
-    // Up arrow
-    38: (e, scale, min, max, steps, normalValue) => {
-        // If we don't preventDefault the browser scrolls
-        e.preventDefault();
 
-        // Move in steps
-        if (steps) {
-            const step = nextStep(steps, normalValue);
-            return step.value;
-        }
-
-        // Move in big increments if the shift key is down
-        const diff = e.shiftKey ? 10 : 1 ;
-        return scale.denormalise(min, max, (Math.round(100 * normalValue) + diff) * 0.01);
-    },
-
-    // Down arrow
-    40: (e, scale, min, max, steps, normalValue) => {
-        // If we don't preventDefault the browser scrolls
-        e.preventDefault();
-
-        // Move in steps
-        if (steps) {
-            const step = previousStep(steps, normalValue);
-            return step.value;
-        }
-
-        // Move in big increments if the shift key is down
-        const diff = e.shiftKey ? 10 : 1 ;
-        return scale.denormalise(min, max, (Math.round(100 * normalValue) - diff) * 0.01);
-    },
-
-    // Other keys
-    default: noop
-});
-
-
-/* Update models */
-
-function assignnormalValue(object, scale, min, max) {
-    object.normalValue = scale.normalise(min, max, object.value);
-    return object;
-}
-
-function updateData(data, scale, min, max, ticks, step, display) {
-    data.scale = scale;
-    data.min   = min;
-    data.max   = max;
-
-    data.ticks = (ticks ? ticks :
-        display ? generateTicks(display, min, max) :
-        nothing)
-        // Filter to ticks within range min-max
-        .filter((tick) => tick.value >= data.min && tick.value <= data.max)
-        .map((tick) => assignnormalValue(tick, scale, min, max)) ;
-
-    data.step =
-        step === 'any' ? undefined :
-        step === 'tick' ? data.ticks :
-        parseTicks(step)
-        .filter((step) => step.value >= data.min && step.value <= data.max)
-        .map((step) => assignnormalValue(step, scale, min, max)) ;
-
-    data.display = display;
-    return data;
-}
-
-function updateValue(data, scale, min, max, value) {
-    //if (value === data.value) { console.log('REPEAT VALUE SET - ARE WE BOTHERED?', value); }
-    data.value       = clamp(min, max, value);
-    data.normalValue = scale.normalise(min, max, data.value);
-
-    // Round to nearest step
-    if (data.step) {
-        // We find the nearest visually by getting nearest to normalValue
-        const step = nearestStep(data.step, data.normalValue);
-        data.value       = step.value;
-        data.normalValue = step.normalValue;
-    }
-
-    return data;
-}
-
-
-/* Render to DOM */
-
-function renderValue(style, internals, outputText, outputAbbr, unit, value, normalValue) {
-    // Render handle position
-    style.setProperty('--normal-value', normalValue);
-
-    // Render display
-    const display = toDisplay(unit, value);
-    outputText.textContent = display.value;
-    outputAbbr.textContent = display.unit;
-
-    // Render form data
-    internals.setFormValue(value);
-}
+/*
+Render
+*/
 
 function renderTick(buttons, tick) {
     buttons.push(
@@ -192,7 +82,20 @@ function renderTick(buttons, tick) {
     return buttons;
 }
 
-function render(style, scale, min, max, ticks, buttons, marker) {
+function renderValue(style, internals, outputText, outputAbbr, unit, value, normalValue) {
+    // Render handle position
+    style.setProperty('--normal-value', normalValue);
+
+    // Render display
+    const display = toDisplay(unit, value);
+    outputText.textContent = display.value;
+    outputAbbr.textContent = display.unit;
+
+    // Render form data
+    internals.setFormValue(value);
+}
+
+function renderData(style, scale, min, max, ticks, buttons, marker) {
     // Style
     style.setProperty('--normal-zero', scale.normalise(min, max, 0));
 
@@ -204,7 +107,9 @@ function render(style, scale, min, max, ticks, buttons, marker) {
 }
 
 
-/* Define the lifecycle */
+/*
+Lifecycle
+*/
 
 export default {
     mode: 'closed',
@@ -257,7 +162,7 @@ export default {
         const attributes = Stream
         .combine({
             shadow:  privates.shadow,
-            scale:   privates.scale.map(toScale),
+            scale:   privates.scale.map(getScale),
             min:     privates.min.map(parseValue),
             max:     privates.max.map(parseValue),
             ticks:   privates.ticks.map(parseTicks),
@@ -268,7 +173,7 @@ export default {
         .broadcast();
 
         attributes
-        .each((data) => render(hostStyle, data.scale, data.min, data.max, data.ticks, buttons, marker));
+        .each((data) => renderData(hostStyle, data.scale, data.min, data.max, data.ticks, buttons, marker));
 
         // Track value updates
         Stream

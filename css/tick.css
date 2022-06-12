@@ -41,8 +41,12 @@ Style the tick marks.
     border-radius: 50%;
 }
 
+[part$="tick"]:focus {
+    outline-width: 0;
+}
+
 [part$="tick"]:focus-visible {
-    outline: none;
+    outline-width: 0.0625rem;
 }
 
 [part$="tick"] > span,

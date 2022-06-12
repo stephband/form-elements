@@ -68,7 +68,7 @@ Scales
 Names must be lowercase, as attribute values are converted to lowercase.
 */
 
-export default {
+const scales = {
     'linear': {
         normalise: function(min, max, value) {
             return (value - min) / (max - min);
@@ -102,3 +102,7 @@ export default {
     'log-72db': new LinLogScale(dB72),
     'log-96db': new LinLogScale(dB96)
 };
+
+export function getScale(name) {
+    return scales[name && name.toLowerCase() || 'linear'];
+}

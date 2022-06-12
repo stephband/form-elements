@@ -7,12 +7,20 @@ Safari 14 crashes when clicking on elements with delegateFocus:
 https://github.com/material-components/material-components-web-components/issues/1720
 */
 
-import Privates    from '../../../fn/modules/privates.js';
-import { clamp }   from '../../../fn/modules/clamp.js';
-import overload    from '../../../fn/modules/overload.js';
-import create      from '../../../dom/modules/create.js';
-import element     from '../../../dom/modules/element.js';
-import handleEvent from '../../controls/handle-event.js';
+import Privates        from '../../../fn/modules/privates.js';
+import { clamp }       from '../../../fn/modules/clamp.js';
+import Stream          from '../../../fn/modules/stream.js';
+import create          from '../../../dom/modules/create.js';
+import events          from '../../../dom/modules/events.js';
+import trigger         from '../../../dom/modules/trigger.js';
+import parseValue      from '../../modules/parse-value.js';
+import parseTicks      from '../../modules/parse-ticks.js';
+import { updateData, updateValue } from '../../modules/data.js';
+import { getScale }     from '../../modules/scales.js';
+import { toDisplay }   from '../../modules/display.js';
+import { nearestStep } from '../../modules/step.js';
+import { toKeyValue }  from '../../modules/key.js';
+import * as defaults   from '../../modules/defaults.js';
 
 const DEBUG = true;
 
@@ -22,125 +30,170 @@ const define = Object.defineProperties;
 // Get path to dir of this module
 const path   = import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/');
 
-const defaults = {
-    law: 'linear',
-    min: 0,
-    max: 1
-};
 
 
-/* Shadow */
 
-function createTemplate(elem, shadow) {
-    const link   = create('link',  { rel: 'stylesheet', href: path + 'module.css' });
-    const style  = create('style', ':host {}');
-    const label  = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
-    const input  = create('input', { type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any' });
-    const text   = create('text');
-    const abbr   = create('abbr');
-    const output = create('output', { children: [text, abbr], part: 'output' });
-    const marker = create('text', '');
+/*
+Events
+*/
 
-    shadow.appendChild(link);
-    shadow.appendChild(style);
-    shadow.appendChild(label);
-    shadow.appendChild(input);
-    shadow.appendChild(output);
-    shadow.appendChild(marker);
-
-    // Get the :host {} style rule from style
-    const css = style.sheet.cssRules[0].style;
-
-    return {
-        'unitValue': function(unitValue) {
-            if (input.value !== unitValue + '') {
-                input.value = unitValue + '';
-            }
-
-            css.setProperty('--normal-value', unitValue);
-        },
-
-        'normalZero': function(normalZero) {
-            css.setProperty('--normal-zero', normalZero);
-        },
-
-        'displayValue': function(displayValue) {
-            text.textContent = displayValue;
-            css.setProperty('--display-value', displayValue);
-        },
-
-        'displayUnit': function(displayUnit) {
-            // Add and remove output > abbr
-            if (displayUnit) {
-                if (!abbr.parentNode) {
-                    output.appendChild(abbr);
-                }
-
-                // Update abbr text
-                abbr.textContent = displayUnit;
-            }
-            else if (abbr.parentNode) {
-                abbr.remove();
-            }
-        },
-
-        'ticks': (function(buttons) {
-            return function(scopes) {
-                // Clear out existing ticks
-                buttons.forEach((node) => node.remove());
-                buttons.length = 0;
-
-                // Create new ticks and put them in the dom
-                scopes.forEach(function(scope) {
-                    const button = create('button', {
-                        type: 'button',
-                        name: 'unit-value',
-                        value: scope.unitValue,
-                        style: '--tick-value: ' + scope.unitValue + ';',
-                        text: scope.displayValue,
-                        part: 'tick'
-                    });
-
-                    marker.before(button);
-                    buttons.push(button);
-                });
-            };
-        })([])
-    };
+function toTickValue(e) {
+    const target = e.target.closest('[name="value"]');
+    return parseFloat(target.value);
 }
 
-/* Element */
+
+/*
+Render
+*/
+
+function renderTick(buttons, tick) {
+    buttons.push(
+        create('button', {
+            type: 'button',
+            part: 'tick',
+            name: 'value',
+            value: tick.value,
+            style: '--normal-value: ' + tick.normalValue + ';',
+            text: tick.label
+        })
+    );
+
+    return buttons;
+}
+
+function renderData(style, scale, min, max, ticks, buttons, marker) {
+    // Style
+    style.setProperty('--normal-zero', scale.normalise(min, max, 0));
+
+    // Ticks
+    buttons.forEach((node) => node.remove());
+    buttons.length = 0;
+    buttons = ticks.reduce(renderTick, buttons);
+    marker.after.apply(marker, buttons);
+}
+
+function renderValue(style, input, internals, outputText, outputAbbr, unit, value, normalValue) {
+    // Render handle position
+    //style.setProperty('--normal-value', normalValue);
+    input.value = normalValue;
+
+    // Render display
+    const display = toDisplay(unit, value);
+    outputText.textContent = display.value;
+    outputAbbr.textContent = display.unit;
+
+    // Render form data
+    internals.setFormValue(value);
+}
+
+
+/*
+Lifecycle
+*/
 
 export default {
-    mode:       'closed',
-    focusable:  true,
+    mode: 'closed',
+
+    focusable: true,
 
     construct: function(shadow, internals) {
-        // Setup internal data store `privates`
-        const privates = Privates(this);
-        const data     = privates.data  = assign({}, defaults);
+        // DOM
+        const style   = create('style', ':host {} :host > * { visibility: hidden; }');
+        const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
+        const input   = create('input', { type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any' });
+        const text    = create('text');
+        const abbr    = create('abbr');
+        const output  = create('output', { children: [text, abbr], part: 'output' });
+        const marker  = create('text', '');
+        const buttons = [];
 
-        privates.scope       = createTemplate(this, shadow);
-        privates.element     = this;
-        privates.shadow      = shadow;
-        privates.internals   = internals;
-        privates.handleEvent = handleEvent;
+        shadow.append(style, label, input, output, marker);
 
-        // Listen to touches on ticks
-        shadow.addEventListener('mousedown', privates);
-        shadow.addEventListener('touchstart', privates);
+        // Components
+        const privates   = Privates(this);
+        const data       = {};
+        const hostStyle  = style.sheet.cssRules[0].style;
+        const childStyle = style.sheet.cssRules[1].style;
 
-        // Listen to range input
-        shadow.addEventListener('input', privates);
+        privates.host       = this;
+        privates.shadow     = shadow;
+        privates.hostStyle  = hostStyle;
+        privates.childStyle = childStyle;
+        privates.internals  = internals;
+        privates.data       = data;
+
+        // Inputs
+        privates.shadow    = new Promise((resolve) => privates.load = resolve);
+        privates.scale     = Stream.of(defaults.scale);
+        privates.min       = Stream.of(defaults.min);
+        privates.max       = Stream.of(defaults.max);
+        privates.step      = Stream.of(defaults.step);
+        privates.ticks     = Stream.of(defaults.ticks);
+        privates.display   = Stream.of(defaults.display);
+        privates.value     = Stream.of(defaults.value);
+
+
+
+
+        // Track attribute updates
+        const attributes = Stream
+        .combine({
+            shadow:  privates.shadow,
+            scale:   privates.scale.map(getScale),
+            min:     privates.min.map(parseValue),
+            max:     privates.max.map(parseValue),
+            ticks:   privates.ticks.map(parseTicks),
+            display: privates.display,
+            step:    privates.step
+        })
+        .scan((data, state) => updateData(data, state.scale, state.min, state.max, state.ticks, state.step, state.display), data)
+        .broadcast();
+
+        attributes
+        .each((data) => renderData(hostStyle, data.scale, data.min, data.max, data.ticks, buttons, marker));
+
+        // Track value updates
+        Stream
+        .combine({
+            data:    attributes,
+            value:   privates.value
+        })
+        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
+        .each((data) => renderValue(hostStyle, input, internals, text, abbr, data.display, data.value, data.normalValue)) ;
+
+
+
+
+        // Track pointer on ticks and update value
+        events({ type: 'pointerdown', select: '[name="value"]' }, shadow)
+        .map(toTickValue)
+        .each((value) => {
+            privates.value.push(value);
+            trigger('input', this);
+        });
+
+        // Track input changes
+        events('input', shadow)
+        .each((e) => {
+            const normalValue = parseFloat(e.target.value);
+            const value       = data.scale.denormalise(data.min, data.max, normalValue);
+            privates.value.push(value);
+        });
+
+        // While this is focused allow up and down arrows to change value
+        events('keydown', this)
+        .filter(() => document.activeElement === this || this.contains(document.activeElement))
+        .map((e) => toKeyValue(e, data.scale, data.min, data.max, data.step, data.normalValue))
+        .each((value) => {
+            privates.value.push(value);
+            trigger('input', this);
+        });
     },
 
-    connect: function(shadow) {
+    load: function(shadow) {
         const privates = Privates(this);
-        const data     = privates.data;
-
-        // Range control must have value
-        if (data.value === undefined) {
-            this.value = clamp(data.min, data.max, 0);
-        }
+        privates.childStyle.visibility = '';
+        privates.load(shadow);
     }
 };

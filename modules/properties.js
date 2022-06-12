@@ -1,6 +1,6 @@
 
-import Privates   from '../../../fn/modules/privates.js';
-import parseValue from '../../modules/parse-value.js';
+import Privates   from '../../fn/modules/privates.js';
+import parseValue from './parse-value.js';
 
 export default {
     /**
