@@ -73,35 +73,43 @@ export default {
     },
 
     /**
-    law="linear"
-    Fader law. This is the name of a transform to be applied over the range
+    scale="linear"
+    Fader scale. This is the name of a transform to be applied over the range
     of the fader travel. Possible values are:
 
     - `"linear"`
-    - `"linear-logarithmic"`
-    - `"logarithmic"`
     - `"quadratic"`
     - `"cubic"`
+    - `"log"`
+    - `"log-24dB"`
+    - `"log-48dB"`
+    - `"log-60dB"`
+    - `"log-72dB"`
+    - `"log-96dB"`
     **/
 
-    law: {
+    scale: {
         attribute: function(string) {
             const privates = Privates(this);
-            privates.law.push(string || 'linear');
+            privates.scale.push(string || 'linear');
         }
     },
 
     /**
-    unit=""
-    The value's unit, if it has one. The output value and all ticks are
+    display=""
+    The units to display the value in. The output value and all ticks are
     displayed in this unit. Possible values are:
     - `"dB"` – `0-1` is displayed as `-∞dB` to `0dB`
     - `"Hz"`
+    - `"bpm"`
+    - `"s"`
+    - `"semitone"`
     **/
 
-    unit: {
-        attribute: function(value) {
-            Privates(this).data.unit = value;
+    display: {
+        attribute: function(string) {
+            const privates = Privates(this);
+            privates.display.push(string || '');
         }
     },
 
@@ -126,8 +134,7 @@ export default {
     /**
     step=""
     Step is either:
-
-    - The string `"any"`, the default
+    - The string `"any"` (the default value)
     - The string `"tick"`. The values in the `ticks` attribute are used as step values
     - A space or comma separated list of values, written with or without units
     **/
@@ -139,20 +146,14 @@ export default {
         }
     },
 
-    prefix: {
-        attribute: function(value) {
-            Privates(this).data.prefix = value;
-        }
-    },
-
     /**
     value=""
-    The initial value of the fader.
+    The initial value of the `<rotary-input>`.
     **/
 
     /**
-    .value=0
-    Current value of the field, as a number.
+    .value
+    Current value of the `<rotary-input>` as a number.
     **/
 
     value: {

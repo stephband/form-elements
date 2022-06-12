@@ -9,8 +9,8 @@ smaller.
 */
 
 :host {
-    --unit-value: 0;
-    --unit-zero:  0;
+    --normal-value: 0;
+    --normal-zero:  0;
 
     /** --handle-width **/
     --handle-width: calc(100% - 4rem);
@@ -94,11 +94,11 @@ smaller.
 :host > [part="tick"] {
     grid-area: handle;
     z-index: 1;
-    transform: rotate3d(0, 0, 1, calc(var(--rotation-start) + var(--unit-value) * var(--rotation-range)));
+    transform: rotate3d(0, 0, 1, calc(var(--rotation-start) + var(--normal-value) * var(--rotation-range)));
 }
 
 :host > [part="tick"] > span {
-    transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (var(--rotation-start) + var(--unit-value) * var(--rotation-range)))) translate3d(calc(var(--unit-value) * 6.28318531 /*|sin*/ * -33%), 0, 0);
+    transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (var(--rotation-start) + var(--normal-value) * var(--rotation-range)))) translate3d(calc(var(--normal-value) * 6.28318531 /*|sin*/ * -33%), 0, 0);
 }
 
 :host > [part="label"] {

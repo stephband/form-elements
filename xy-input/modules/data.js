@@ -1,5 +1,6 @@
+
+import scales from '../../modules/scales.js';
 import axes   from './axes.js';
-import scales from './scales.js';
 
 import { requestDrawCurve, clear, drawXLines, drawYLines, drawCrosshair } from './canvas.js';
 import { drawAudioEnvelope } from './draw-audio.js';
@@ -34,28 +35,28 @@ assign(Data.prototype, {
     drawAudioEnvelope: drawAudioEnvelope,
 
     toRatioX: function(x) {
-        return scales[this.xScale].to(this.valuebox.x, this.valuebox.x + this.valuebox.width, x);
+        return scales[this.xScale].normalise(this.valuebox.x, this.valuebox.x + this.valuebox.width, x);
     },
 
     toRatioY: function(y) {
-        return scales[this.yScale].to(this.valuebox.y, this.valuebox.y + this.valuebox.height, y);
+        return scales[this.yScale].normalise(this.valuebox.y, this.valuebox.y + this.valuebox.height, y);
     },
 
     toViewX: function(x) {
-        const ratio = scales[this.xScale].to(this.valuebox.x, this.valuebox.x + this.valuebox.width, x);
+        const ratio = scales[this.xScale].normalise(this.valuebox.x, this.valuebox.x + this.valuebox.width, x);
         return ratio * this.rangebox[2] + this.rangebox[0];
     },
 
     toViewY: function(y) {
-        const ratio = scales[this.yScale].to(this.valuebox.y, this.valuebox.y + this.valuebox.height, y);
+        const ratio = scales[this.yScale].normalise(this.valuebox.y, this.valuebox.y + this.valuebox.height, y);
         return ratio * this.rangebox[3] + this.rangebox[1];
     },
 
     toValueX: function(xratio) {
-        return scales[this.xScale].from(this.valuebox.x, this.valuebox.x + this.valuebox.width, xratio);
+        return scales[this.xScale].denormalise(this.valuebox.x, this.valuebox.x + this.valuebox.width, xratio);
     },
 
     toValueY: function(yratio) {
-        return scales[this.yScale].from(this.valuebox.y, this.valuebox.y + this.valuebox.height, yratio);
+        return scales[this.yScale].denormalise(this.valuebox.y, this.valuebox.y + this.valuebox.height, yratio);
     }
 });

@@ -123,7 +123,7 @@ export const attributes = {
                 data.stepsAttribute );
         }
 
-        scope.unitZero(invert(data.law, 0, data.min, data.max));
+        scope.normalZero(invert(data.law, 0, data.min, data.max));
     },
 
     /**
@@ -230,7 +230,7 @@ export const properties = {
             // Check for readiness
             if (data.max === undefined) { return; }
             scope.ticks(createTicks(data, data.ticksAttribute));
-            scope.unitZero(invert(data.law, 0, data.min, data.max));
+            scope.normalZero(invert(data.law, 0, data.min, data.max));
 
             // Check for readiness
             if (data.value === undefined) { return; }
@@ -259,7 +259,7 @@ export const properties = {
 
             if (data.min === undefined) { return; }
             scope.ticks(createTicks(data, data.ticksAttribute));
-            scope.unitZero(invert(data.law, 0, data.min, data.max));
+            scope.normalZero(invert(data.law, 0, data.min, data.max));
 
             // Check for readiness
             if (data.value === undefined) { return; }

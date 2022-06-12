@@ -1,9 +1,9 @@
 
-import by          from '../../fn/modules/by.js';
-import get         from '../../fn/modules/get.js';
-import nothing     from '../../fn/modules/nothing.js';
-import Privates    from '../../fn/modules/privates.js';
-import { evaluate, invert, transformTick, transformOutput, transformUnit } from '../controls/control.js';
+import by          from '../../../fn/modules/by.js';
+import get         from '../../../fn/modules/get.js';
+import nothing     from '../../../fn/modules/nothing.js';
+import Privates    from '../../../fn/modules/privates.js';
+import { evaluate, invert, transformTick, transformOutput, transformUnit } from '../../controls/control.js';
 
 
 export function createTicks(data, tokens) {
@@ -108,7 +108,7 @@ export default {
             // Check for readiness
             if (data.max === undefined) { return; }
             scope.ticks(createTicks(data, data.ticksAttribute));
-            scope.unitZero(invert(data.law, 0, data.min, data.max));
+            scope.normalZero(invert(data.law, 0, data.min, data.max));
 
             // Check for readiness
             if (data.value === undefined) { return; }
@@ -147,7 +147,7 @@ export default {
 
             if (data.min === undefined) { return; }
             scope.ticks(createTicks(data, data.ticksAttribute));
-            scope.unitZero(invert(data.law, 0, data.min, data.max));
+            scope.normalZero(invert(data.law, 0, data.min, data.max));
 
             // Check for readiness
             if (data.value === undefined) { return; }
@@ -187,7 +187,7 @@ export default {
                     data.stepsAttribute) ;
             }
 
-            scope.unitZero(invert(data.law, 0, data.min, data.max));
+            scope.normalZero(invert(data.law, 0, data.min, data.max));
         }
     },
 

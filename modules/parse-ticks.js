@@ -33,8 +33,10 @@ function toTicks(ticks, value) {
 }
 
 export default function parseTicks(string) {
-    return string
-    .trim()
-    .split(/\s*,\s*|\s+/)
-    .reduce(toTicks, []);
+    const trimmed = string.trim();
+    return trimmed ?
+        trimmed
+        .split(/\s*,\s*|\s+/)
+        .reduce(toTicks, []) :
+        null ;
 }

@@ -5,9 +5,9 @@ import parseValue  from '../../modules/parse-value.js';
 import parseTicks  from '../../modules/parse-ticks.js';
 import parsePoints from '../../modules/parse-points.js';
 import { $state }  from '../../modules/constants.js';
+import scales      from '../../modules/scales.js';
 
 import axes        from './axes.js';
-import scales      from './scales.js';
 import { setFormValue } from './form.js';
 
 export default {/*

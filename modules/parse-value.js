@@ -28,7 +28,7 @@ export default function parseValue(string) {
             Infinity :
         parseFloat(tokens[1]) ;
 
-    return tokens[3] === 'dB' ? toGain(value) :
+    return tokens[3] === 'db' ? toGain(value) :
         // BPM to frequency in beats per second
         tokens[3] === 'bpm' ? value / 60 :
         // milli-

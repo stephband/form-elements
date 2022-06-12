@@ -57,11 +57,11 @@ function createTemplate(elem, shadow) {
                 input.value = unitValue + '';
             }
 
-            css.setProperty('--unit-value', unitValue);
+            css.setProperty('--normal-value', unitValue);
         },
 
-        'unitZero': function(unitZero) {
-            css.setProperty('--unit-zero', unitZero);
+        'normalZero': function(normalZero) {
+            css.setProperty('--normal-zero', normalZero);
         },
 
         'displayValue': function(displayValue) {

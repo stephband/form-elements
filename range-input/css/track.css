@@ -42,10 +42,10 @@
     background: var(--track-background) linear-gradient(
         to right,
         transparent 0%,
-        transparent calc(min(var(--unit-value), var(--unit-zero)) * 100%),
-        var(--value-color) calc(min(var(--unit-value), var(--unit-zero)) * 100%),
-        var(--value-color) calc(max(var(--unit-value), var(--unit-zero)) * 100%),
-        transparent calc(max(var(--unit-value), var(--unit-zero)) * 100%)
+        transparent calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
+        transparent calc(max(var(--normal-value), var(--normal-zero)) * 100%)
     );
     border: var(--track-border);
 
@@ -74,10 +74,10 @@
     background: var(--track-background) linear-gradient(
         to right,
         transparent 0%,
-        transparent calc(min(var(--unit-value), var(--unit-zero)) * 100%),
-        var(--value-color) calc(min(var(--unit-value), var(--unit-zero)) * 100%),
-        var(--value-color) calc(max(var(--unit-value), var(--unit-zero)) * 100%),
-        transparent calc(max(var(--unit-value), var(--unit-zero)) * 100%)
+        transparent calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
+        transparent calc(max(var(--normal-value), var(--normal-zero)) * 100%)
     );
     border: var(--track-border);
     border-radius: calc(0.5 * var(--track-height));
@@ -114,10 +114,10 @@
     background: var(--track-background) linear-gradient(
         to right,
         transparent 0%,
-        transparent calc(min(var(--unit-value), var(--unit-zero)) * 100%),
-        var(--value-color) calc(min(var(--unit-value), var(--unit-zero)) * 100%),
-        var(--value-color) calc(max(var(--unit-value), var(--unit-zero)) * 100%),
-        transparent calc(max(var(--unit-value), var(--unit-zero)) * 100%)
+        transparent calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
+        transparent calc(max(var(--normal-value), var(--normal-zero)) * 100%)
     );
 
     /* Remove default tick marks */

@@ -10,6 +10,7 @@ smaller.
 
 import get           from '../../../fn/modules/get.js';
 import noop          from '../../../fn/modules/noop.js';
+import nothing       from '../../../fn/modules/nothing.js';
 import overload      from '../../../fn/modules/overload.js';
 import Privates      from '../../../fn/modules/privates.js';
 import { clamp }     from '../../../fn/modules/clamp.js';
@@ -21,21 +22,28 @@ import trigger       from '../../../dom/modules/trigger.js';
 import parseLength   from '../../../dom/modules/parse-length.js';
 import parseValue    from '../../modules/parse-value.js';
 import parseTicks    from '../../modules/parse-ticks.js';
-import { normalise, denormalise } from '../../modules/normalise.js';
+import scales        from '../../modules/scales.js';
+import toDisplay     from '../../modules/display.js';
+
+import { generateTicks } from './ticks.js';
 import { nearestStep, previousStep, nextStep } from './step.js';
-import displayValue  from '../../modules/display-value.js';
 
 
 const defaults = {
-    law:   'linear',
-    min:   0,
-    max:   1,
-    ticks: '',
-    step:  'any',
-    value: 0
+    scale:   'linear',
+    min:     0,
+    max:     1,
+    ticks:   '',
+    step:    'any',
+    display: '',
+    value:   0
 };
 
 /* Events */
+
+function toScale(name) {
+    return scales[name && name.toLowerCase() || 'linear'];
+}
 
 function toTickValue(e) {
     const target = e.target.closest('[name="value"]');
@@ -44,21 +52,21 @@ function toTickValue(e) {
 
 const toGestureValue = overload((pointer, e) => e.type, {
     'pointerdown': (data, e) => ({
-        law:   data.law,
+        scale: data.scale,
         min:   data.min,
         max:   data.max,
         e0:    e,
         y0:    e.clientY,
-        y:     data.unitValue,
+        y:     data.normalValue,
         value: data.value,
         touchRange: parseLength(getComputedStyle(e.target).getPropertyValue('--touch-range'))
     }),
 
     default: (data, e) => {
-        const { law, min, max, y, y0, touchRange } = data;
+        const { scale, min, max, y, y0, touchRange } = data;
         const dy        = y0 - e.clientY;
-        const unitValue = clamp(0, 1, y + dy / touchRange);
-        const value     = denormalise(law, min, max, unitValue) ;
+        const normalValue = clamp(0, 1, y + dy / touchRange);
+        const value     = scale.denormalise(min, max, normalValue) ;
         data.value = value;
         return data;
     }
@@ -66,34 +74,35 @@ const toGestureValue = overload((pointer, e) => e.type, {
 
 const toKeyValue = overload(get('keyCode'), {
     // Up arrow
-    38: (e, law, min, max, steps, unitValue) => {
+    38: (e, scale, min, max, steps, normalValue) => {
         // If we don't preventDefault the browser scrolls
         e.preventDefault();
 
         // Move in steps
         if (steps) {
-            const step = nextStep(steps, unitValue);
+            const step = nextStep(steps, normalValue);
             return step.value;
         }
 
         // Move in big increments if the shift key is down
         const diff = e.shiftKey ? 10 : 1 ;
-        return denormalise(law, min, max, (Math.round(100 * unitValue) + diff) * 0.01);
+        return scale.denormalise(min, max, (Math.round(100 * normalValue) + diff) * 0.01);
     },
+
     // Down arrow
-    40: (e, law, min, max, steps, unitValue) => {
+    40: (e, scale, min, max, steps, normalValue) => {
         // If we don't preventDefault the browser scrolls
         e.preventDefault();
 
         // Move in steps
         if (steps) {
-            const step = previousStep(steps, unitValue);
+            const step = previousStep(steps, normalValue);
             return step.value;
         }
 
         // Move in big increments if the shift key is down
         const diff = e.shiftKey ? 10 : 1 ;
-        return denormalise(law, min, max, (Math.round(100 * unitValue) - diff) * 0.01);
+        return scale.denormalise(min, max, (Math.round(100 * normalValue) - diff) * 0.01);
     },
 
     // Other keys
@@ -103,60 +112,64 @@ const toKeyValue = overload(get('keyCode'), {
 
 /* Update models */
 
-function assignUnitValue(object, law, min,max) {
-    object.unitValue = normalise(law, min, max, object.value);
+function assignnormalValue(object, scale, min, max) {
+    object.normalValue = scale.normalise(min, max, object.value);
     return object;
 }
 
-function update(data, law, min, max, ticks, step) {
-    // Law
-    data.law   = law;
+function updateData(data, scale, min, max, ticks, step, display) {
+    data.scale = scale;
     data.min   = min;
     data.max   = max;
-    data.ticks = ticks
+
+    data.ticks = (ticks ? ticks :
+        display ? generateTicks(display, min, max) :
+        nothing)
         // Filter to ticks within range min-max
         .filter((tick) => tick.value >= data.min && tick.value <= data.max)
-        .map((tick) => assignUnitValue(tick, law, min, max));
+        .map((tick) => assignnormalValue(tick, scale, min, max)) ;
 
     data.step =
         step === 'any' ? undefined :
-        step === 'ticks' ? data.ticks :
+        step === 'tick' ? data.ticks :
         parseTicks(step)
         .filter((step) => step.value >= data.min && step.value <= data.max)
-        .map((step) => assignUnitValue(step, law, min, max)) ;
+        .map((step) => assignnormalValue(step, scale, min, max)) ;
 
+    data.display = display;
     return data;
 }
 
-function updateValue(data, law, min, max, value) {
+function updateValue(data, scale, min, max, value) {
     //if (value === data.value) { console.log('REPEAT VALUE SET - ARE WE BOTHERED?', value); }
-    data.value     = clamp(min, max, value);
-    data.unitValue = normalise(law, min, max, data.value);
+    data.value       = clamp(min, max, value);
+    data.normalValue = scale.normalise(min, max, data.value);
 
     // Round to nearest step
     if (data.step) {
-        // We find the nearest visually by getting nearest to unitValue
-        const step = nearestStep(data.step, data.unitValue);
-        data.value     = step.value;
-        data.unitValue = step.unitValue;
+        // We find the nearest visually by getting nearest to normalValue
+        const step = nearestStep(data.step, data.normalValue);
+        data.value       = step.value;
+        data.normalValue = step.normalValue;
     }
 
     return data;
-
-    // TODO: Should all these really be here?
-    //data.displayValue = transformOutput(data.unit, value);
-    //data.displayUnit  = transformUnit(data.unit, value);
-    //data.unitValue    = unitValue;
 }
 
 
 /* Render to DOM */
 
-function renderValue(style, internals, unit, value, unitValue) {
+function renderValue(style, internals, outputText, outputAbbr, unit, value, normalValue) {
+    // Render handle position
+    style.setProperty('--normal-value', normalValue);
+
+    // Render display
+    const display = toDisplay(unit, value);
+    outputText.textContent = display.value;
+    outputAbbr.textContent = display.unit;
+
+    // Render form data
     internals.setFormValue(value);
-    style.setProperty('--display-value', displayValue(unit, value));
-    //style.setProperty('--display-unit',  data.displayUnit);
-    style.setProperty('--unit-value', unitValue);
 }
 
 function renderTick(buttons, tick) {
@@ -166,11 +179,11 @@ function renderTick(buttons, tick) {
             part: 'tick',
             name: 'value',
             value: tick.value,
-            style: '--unit-value: ' + tick.unitValue + ';',
+            style: '--normal-value: ' + tick.normalValue + ';',
             children: [
                 create('span', {
                     text: tick.label,
-                    style: 'transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (var(--rotation-start) + ' + tick.unitValue + ' * var(--rotation-range)))) translate3d(calc(' + Math.sin(tick.unitValue * 6.28318531) + ' * -33%), 0, 0);'
+                    style: 'transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (var(--rotation-start) + ' + tick.normalValue + ' * var(--rotation-range)))) translate3d(calc(' + Math.sin(tick.normalValue * 6.28318531) + ' * -33%), 0, 0);'
                 })
             ]
         })
@@ -179,24 +192,9 @@ function renderTick(buttons, tick) {
     return buttons;
 }
 
-function renderUnit(displayUnit) {
-    // Add and remove output > abbr
-    if (displayUnit) {
-        if (!abbr.parentNode) {
-            output.appendChild(abbr);
-        }
-
-        // Update abbr text
-        abbr.textContent = displayUnit;
-    }
-    else if (abbr.parentNode) {
-        abbr.remove();
-    }
-}
-
-function render(style, law, min, max, ticks, buttons, marker) {
+function render(style, scale, min, max, ticks, buttons, marker) {
     // Style
-    style.setProperty('--unit-zero', normalise(law, min, max, 0));
+    style.setProperty('--normal-zero', scale.normalise(min, max, 0));
 
     // Ticks
     buttons.forEach((node) => node.remove());
@@ -215,7 +213,7 @@ export default {
 
     construct: function(shadow, internals) {
         // DOM
-        const style   = create('style', ':host {}');
+        const style   = create('style', ':host {} :host > * { visibility: hidden; }');
         const label   = create('label', { for: 'input', part: 'label', html: '<slot></slot>' });
         const handle  = create('div', { class: 'handle' });
         const text    = create('text');
@@ -227,22 +225,26 @@ export default {
         shadow.append(style, label, handle, output, marker);
 
         // Components
-        const privates = Privates(this);
-        const data     = {};
+        const privates   = Privates(this);
+        const data       = {};
+        const hostStyle  = style.sheet.cssRules[0].style;
+        const childStyle = style.sheet.cssRules[1].style;
 
-        privates.host      = this;
-        privates.shadow    = shadow;
-        privates.style     = style.sheet.cssRules[0].style;
-        privates.internals = internals;
-        privates.data      = data;
+        privates.host       = this;
+        privates.shadow     = shadow;
+        privates.hostStyle  = hostStyle;
+        privates.childStyle = childStyle;
+        privates.internals  = internals;
+        privates.data       = data;
 
         // Inputs
         privates.shadow    = new Promise((resolve) => privates.load = resolve);
-        privates.law       = Stream.of(defaults.law);
+        privates.scale     = Stream.of(defaults.scale);
         privates.min       = Stream.of(defaults.min);
         privates.max       = Stream.of(defaults.max);
         privates.step      = Stream.of(defaults.step);
         privates.ticks     = Stream.of(defaults.ticks);
+        privates.display   = Stream.of(defaults.display);
         privates.value     = Stream.of(defaults.value);
 
         // Updates
@@ -254,24 +256,28 @@ export default {
         // Track attribute updates
         const attributes = Stream
         .combine({
-            //shadow: privates.shadow,
-            law:    privates.law,
-            min:    privates.min.map(parseValue),
-            max:    privates.max.map(parseValue),
-            ticks:  privates.ticks.map(parseTicks),
-            step:   privates.step
+            shadow:  privates.shadow,
+            scale:   privates.scale.map(toScale),
+            min:     privates.min.map(parseValue),
+            max:     privates.max.map(parseValue),
+            ticks:   privates.ticks.map(parseTicks),
+            display: privates.display,
+            step:    privates.step
         })
-        .scan((data, state) => update(data, state.law, state.min, state.max, state.ticks, state.step), data)
+        .scan((data, state) => updateData(data, state.scale, state.min, state.max, state.ticks, state.step, state.display), data)
         .broadcast();
 
         attributes
-        .each((data) => render(privates.style, data.law, data.min, data.max, data.ticks, buttons, marker));
+        .each((data) => render(hostStyle, data.scale, data.min, data.max, data.ticks, buttons, marker));
 
         // Track value updates
         Stream
-        .combine({ data: attributes, value: privates.value })
-        .scan((data, state) => updateValue(data, state.data.law, state.data.min, state.data.max, state.value), data)
-        .each((data) => renderValue(privates.style, privates.internals, data.unit, data.value, data.unitValue)) ;
+        .combine({
+            data:    attributes,
+            value:   privates.value
+        })
+        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
+        .each((data) => renderValue(hostStyle, internals, text, abbr, data.display, data.value, data.normalValue)) ;
 
         // Track pointer on ticks and update value
         events({ type: 'pointerdown', select: '[name="value"]' }, shadow)
@@ -290,12 +296,13 @@ export default {
         // While this is focused allow up and down arrows to change value
         events('keydown', this)
         .filter(() => document.activeElement === this || this.contains(document.activeElement))
-        .map((e) => toKeyValue(e, data.law, data.min, data.max, data.step, data.unitValue))
+        .map((e) => toKeyValue(e, data.scale, data.min, data.max, data.step, data.normalValue))
         .each(pushValue);
     },
 
     load: function(shadow) {
         const privates = Privates(this);
+        privates.childStyle.visibility = '';
         privates.load(shadow);
     }
 };
