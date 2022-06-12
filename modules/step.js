@@ -1,11 +1,11 @@
 
-export function nearestStep(steps, unitValue) {
+export function nearestStep(steps, normalValue) {
     let n = steps.length;
     let diff = Infinity;
     let step;
 
     while (n--) {
-        const d = Math.abs(unitValue - steps[n].unitValue);
+        const d = Math.abs(normalValue - steps[n].normalValue);
 
         if (d < diff) {
             diff = d;

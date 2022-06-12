@@ -1,7 +1,7 @@
 {
     "title": "form-elements",
     "name": "@stephband/form-elements",
-    "version": "0.0.2",
+    "version": "0.0.4",
     "description": "A collection of advanced form controls published as custom elements",
     "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
     "author": {
