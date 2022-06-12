@@ -101,7 +101,7 @@ const toKeyValue = overload(get('keyCode'), {
 });
 
 
-
+/* Update models */
 
 function assignUnitValue(object, law, min,max) {
     object.unitValue = normalise(law, min, max, object.value);
@@ -148,6 +148,9 @@ function updateValue(data, law, min, max, value) {
     //data.displayUnit  = transformUnit(data.unit, value);
     //data.unitValue    = unitValue;
 }
+
+
+/* Render to DOM */
 
 function renderValue(style, internals, unit, value, unitValue) {
     internals.setFormValue(value);
@@ -202,6 +205,8 @@ function render(style, law, min, max, ticks, buttons, marker) {
     marker.after.apply(marker, buttons);
 }
 
+
+/* Define the lifecycle */
 
 export default {
     mode: 'closed',
