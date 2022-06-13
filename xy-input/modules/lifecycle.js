@@ -433,7 +433,7 @@ export default {
         privates.ystep    = Stream.of(defaults.step);
         privates.yticks   = Stream.of(defaults.ticks);
         privates.ydisplay = Stream.of(defaults.display);
-        //privates.value    = Stream.of(defaults.value);
+        privates.value    = Stream.of(defaults.value);
 
         privates.shadow.then(() => {
             updateViewbox(this, hostStyle, computed, canvas, privates);
