@@ -16,7 +16,7 @@ import Stream          from '../../../fn/modules/stream.js';
 import create          from '../../../dom/modules/create.js';
 import events          from '../../../dom/modules/events.js';
 import gestures        from '../../../dom/modules/gestures.js';
-import trigger         from '../../../dom/modules/trigger.js';
+import { trigger }     from '../../../dom/modules/trigger.js';
 import parseLength     from '../../../dom/modules/parse-length.js';
 import parseValue      from '../../modules/parse-value.js';
 import parseTicks      from '../../modules/parse-ticks.js';

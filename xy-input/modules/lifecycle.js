@@ -3,8 +3,9 @@ import Privates        from '../../../fn/modules/privates.js';
 import { clamp }       from '../../../fn/modules/clamp.js';
 import Stream          from '../../../fn/modules/stream.js';
 import create          from '../../../dom/modules/create.js';
+import delegate        from '../../../dom/modules/delegate.js';
 import events          from '../../../dom/modules/events.js';
-import trigger         from '../../../dom/modules/trigger.js';
+import { trigger }     from '../../../dom/modules/trigger.js';
 import parseValue      from '../../modules/parse-value.js';
 import parseTicks      from '../../modules/parse-ticks.js';
 import { updateData }  from '../../modules/data.js';
@@ -23,14 +24,13 @@ import { Observer, notify } from '../../../fn/observer/observer.js';
 
 import gestures    from '../../../dom/modules/gestures.js';
 import rect        from '../../../dom/modules/rect.js';
-import { trigger } from '../../../dom/modules/trigger.js';
 import { px }      from '../../../dom/modules/parse-length.js';
 
-import Literal      from '../../../literal/renderers/template-renderer.js';
+//import Literal      from '../../../literal/renderers/template-renderer.js';
 
 import { $state, maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';
 
-import Data        from './data.js';
+//import Data        from './data.js';
 import { setFormValue } from './form.js';
 
 import { requestDrawCurve, clear, drawXLines, drawYLines, drawCrosshair } from './canvas.js';
@@ -46,9 +46,8 @@ toCoordinates()
 Turn gesture positions into coordinates
 */
 
-function updateBoxes(element, pxbox, paddingbox, contentbox, rangebox) {
-    const box           = rect(element);
-    const computed      = getComputedStyle(element);
+function updateBoxes(host, computed, pxbox, paddingbox, contentbox, rangebox) {
+    const box           = rect(host);
     const fontsize      = px(computed['font-size']);
     const borderLeft    = px(computed.borderLeftWidth) || 0;
     const borderTop     = px(computed.borderTopWidth) || 0;
@@ -80,6 +79,16 @@ function updateBoxes(element, pxbox, paddingbox, contentbox, rangebox) {
     rangebox[3] = -contentbox.height / fontsize;
 
     return box;
+}
+
+function updateViewbox(host, style, computed, canvas, data) {
+    data.box = updateBoxes(host, computed, data.pxbox, data.paddingbox, data.contentbox, data.rangebox);
+    canvas.width  = data.paddingbox.width * 2;
+    canvas.height = data.paddingbox.height * 2;
+    style.setProperty('--range-x',      data.rangebox[0]);
+    style.setProperty('--range-y',      data.rangebox[1]);
+    style.setProperty('--range-width',  data.rangebox[2]);
+    style.setProperty('--range-height', data.rangebox[3]);
 }
 
 function setXY(e, data) {
@@ -252,16 +261,7 @@ const handle = delegate({
     })
 });
 
-function updateViewbox(element, data) {
-    const observer = Observer(data);
 
-    data.pxbox      || (observer.pxbox = {});
-    data.paddingbox || (observer.paddingbox = {});
-    data.contentbox || (observer.contentbox = {});
-    data.rangebox   || (observer.rangebox = []);
-
-    observer.box = updateBoxes(element, observer.pxbox, observer.paddingbox, observer.contentbox, observer.rangebox);
-}
 
 
 /* Update */
@@ -273,7 +273,7 @@ function updateValue() {
 
 /* Render */
 
-function renderCanvas(ctx, computed, contentbox) {
+function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata, points) {
     const viewbox    = {
         x:      contentbox.x * 2,
         y:      contentbox.y * 2,
@@ -285,20 +285,17 @@ function renderCanvas(ctx, computed, contentbox) {
     const yGridColor = computed.getPropertyValue('--line-color-y').trim();
     const plotColor  = computed.getPropertyValue('--plot-color').trim();
 
-    // Clears canvas as well as setting up size
-    //element.width  = data.paddingbox.width * 2,
-    //element.height = data.paddingbox.height * 2,
-    data.clear(ctx, { x: 0, y: 0, width: element.width, height: element.height }),
+    clear(ctx, { x: 0, y: 0, width: canvas.width, height: canvas.height }),
 
-    drawXLines(ctx, viewbox, xticks
-        .filter((line) => data.valuebox.x + data.valuebox.width >= line.value && line.value >= data.valuebox.x)
-        .map((line) => data.toRatioX(line.value)),
+    drawXLines(ctx, viewbox, xdata.ticks
+        .filter((line) => valuebox.x + valuebox.width >= line.value && line.value >= valuebox.x)
+        .map((line) => line.normalValue),
         xGridColor
     );
 
-    drawYLines(ctx, viewbox, yticks
-        .filter((line) => data.valuebox.y + data.valuebox.height >= line.value && line.value >= data.valuebox.y)
-        .map((line) => data.toRatioY(line.value)),
+    drawYLines(ctx, viewbox, ydata.ticks
+        .filter((line) => valuebox.y + valuebox.height >= line.value && line.value >= valuebox.y)
+        .map((line) => line.normalValue),
         yGridColor
     );
 
@@ -319,7 +316,9 @@ function renderCanvas(ctx, computed, contentbox) {
         ),
     */
 
-    drawAudioEnvelope(ctx, viewbox, data.valuebox, data.points, plotColor);
+    points
+    && points.length
+    && drawAudioEnvelope(ctx, viewbox, valuebox, points, plotColor) ;
 }
 
 function renderLine() {
@@ -332,11 +331,11 @@ function renderLine() {
     });
 }
 
-function renderTickX(buttons, tick) {
+function renderTick(buttons, tick, axis) {
     buttons.push(
         create('label', {
-            part:  'x-tick tick',
-            style: '--normal-value: ' + tick.normalValue + ';',
+            part:  axis + '-tick tick',
+            style: '--normal-' + axis + ': ' + tick.normalValue + ';',
             html:  '<span>' + tick.label + '</span>'
         })
     );
@@ -368,14 +367,14 @@ function renderHandle() {
     });
 }
 
-function renderData(prefix, style, scale, min, max, ticks, buttons, marker) {
+function renderData(axis, style, scale, min, max, ticks, lines, buttons, marker) {
     // Style
-    style.setProperty('--' + prefix + '-normal-zero', scale.normalise(min, max, 0));
+    style.setProperty('--' + axis + '-normal-zero', scale.normalise(min, max, 0));
 
     // Ticks
     buttons.forEach((node) => node.remove());
     buttons.length = 0;
-    buttons = ticks.reduce(renderTickX, buttons);
+    buttons = ticks.reduce((buttons, tick) => renderTick(buttons, tick, axis), buttons);
     marker.after.apply(marker, buttons);
 }
 
@@ -399,8 +398,10 @@ export default {
         // Components
         const privates   = Privates(this);
         const data       = { value: [] };
+        const computed   = getComputedStyle(this);
         const hostStyle  = style.sheet.cssRules[0].style;
         const childStyle = style.sheet.cssRules[1].style;
+        const ctx        = canvas.getContext('2d');
         const formdata   = new FormData();
 
         privates.host       = this;
@@ -409,11 +410,17 @@ export default {
         privates.childStyle = childStyle;
         privates.internals  = internals;
         privates.data       = data;
-        privates.ctx        = canvas.getContext('2d');
+        privates.ctx        = ctx;
         privates.formdata   = formdata;
 
         // Inputs
         privates.shadow   = new Promise((resolve) => privates.load = resolve);
+        privates.pxbox    = {};
+        privates.paddingbox = {};
+        privates.contentbox = {};
+        privates.rangebox = [0, 6.75, 6.75, -6.75];
+        privates.valuebox = { x: 0, y: 0, width: 1, height: 1 };
+
         privates.xscale   = Stream.of(defaults.scale);
         privates.xmin     = Stream.of(defaults.min);
         privates.xmax     = Stream.of(defaults.max);
@@ -427,6 +434,10 @@ export default {
         privates.yticks   = Stream.of(defaults.ticks);
         privates.ydisplay = Stream.of(defaults.display);
         //privates.value    = Stream.of(defaults.value);
+
+        privates.shadow.then(() => {
+            updateViewbox(this, hostStyle, computed, canvas, privates);
+        });
 
         // Track attribute updates
         const xattributes = Stream
@@ -458,14 +469,14 @@ export default {
         // Render canvas
         Stream
         .combine({ xattributes, yattributes })
-        .each((state) => renderCanvas(ctx, computed, contentbox, state.xattributes, state.yattributes));
+        .each((state) => renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xattributes, state.yattributes, data.value));
 
         // Render DOM
         xattributes
-        .each((data) => renderData('x', style, data.scale, data.min, data.max, data.ticks, xlines, xticks, xmarker));
+        .each((data) => renderData('x', hostStyle, data.scale, data.min, data.max, data.ticks, xlines, xticks, xmarker));
 
         yattributes
-        .each((data) => renderData('y', style, data.scale, data.min, data.max, data.ticks, ylines, yticks, ymarker));
+        .each((data) => renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ylines, yticks, ymarker));
 
         // Track value updates
         /*Stream
@@ -503,7 +514,7 @@ export default {
             return state;
         });
 
-        events('resize', window).each((e) => updateViewbox(this, data));
+        events('resize', window).each((e) => updateViewbox(this, hostStyle, computed, canvas, privates));
     },
 
     load: function(shadow) {
@@ -511,18 +522,4 @@ export default {
         privates.childStyle.visibility = '';
         privates.load(shadow);
     }
-/*
-    load: function(shadow) {
-        const literal = this[$state].literal;
-
-        updateViewbox(this, this[$state].data);
-
-        // Insert content now that CSS has loaded to avoid flash of unstyled
-        // content.
-        this[$state].rendered.then(() => {
-            shadow.appendChild(literal.content);
-            literal.connect();
-        });
-    }
-*/
 };

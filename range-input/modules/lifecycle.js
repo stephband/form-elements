@@ -12,7 +12,7 @@ import { clamp }       from '../../../fn/modules/clamp.js';
 import Stream          from '../../../fn/modules/stream.js';
 import create          from '../../../dom/modules/create.js';
 import events          from '../../../dom/modules/events.js';
-import trigger         from '../../../dom/modules/trigger.js';
+import { trigger }     from '../../../dom/modules/trigger.js';
 import parseValue      from '../../modules/parse-value.js';
 import parseTicks      from '../../modules/parse-ticks.js';
 import { updateData, updateValue } from '../../modules/data.js';

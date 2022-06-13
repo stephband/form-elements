@@ -1,19 +1,18 @@
 
 import { Observer, getTarget } from '../../../fn/observer/observer.js';
 import Privates      from '../../../fn/modules/privates.js';
-import createBoolean from '../../../dom/modules/element/create-boolean.js';
-import parseValue    from '../modules/parse-value.js';
+import parseValue    from '../../modules/parse-value.js';
 
-function createAttribute(name, default) {
+function createAttribute(name, defaultValue) {
     return {
         attribute: function(value) {
             const privates = Privates(this);
-            privates[name].push(value || default);
+            privates[name].push(value || defaultValue);
         }
     };
 }
 
-function createAttributeProperty(name, default) {
+function createAttributeProperty(name, defaultValue) {
     return {
         attribute: function(value) {
             this[name] = value;
@@ -21,7 +20,7 @@ function createAttributeProperty(name, default) {
 
         set: function(value) {
             const privates = Privates(this);
-            privates[name].push(value === undefined ? default : value);
+            privates[name].push(value === undefined ? defaultValue : value);
         },
 
         get: function() {

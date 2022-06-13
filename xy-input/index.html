@@ -33,6 +33,7 @@
 
     <script title="debug">
         window.DEBUG = true;
+        window.xyInputStylesheet = './shadow.css';
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">
@@ -40,7 +41,7 @@
 <link rel="stylesheet" href="../../bolt/documentation.css" />
 <link rel="stylesheet" href="../../bolt/debug.css" />
 
-    
+
     <template id="xy-input-shadow">
         <template id="x-tick">
             <label part="x-tick tick" style="transform: translate(calc(${ data.up.toViewX(data.tick.value) }em - 50%), 1.5em);">
@@ -187,9 +188,9 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    
+
 <header class="x1 3x @1-x3 @1-4x @2-x4">
-    
+
     <h2 class="docs-text-02">&lt;xy-input&gt;</h2>
     <p>Import <code>&lt;xy-input&gt;</code> custom element. This also registers the custom
 element and upgrades instances already in the DOM.</p>
@@ -205,7 +206,7 @@ element and upgrades instances already in the DOM.</p>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xy-input</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xy-input</span><span class="token punctuation">></span></span>
 <span class="token comment">&lt;!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB">&lt;/xy-input--></span></code></pre>
 
-    
+
 </header>
 
 <form class="x1 3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
@@ -218,16 +219,16 @@ element and upgrades instances already in the DOM.</p>
     }
 </style>
 
-<xy-input></xy-input>
+<xy-input xticks="0 0.2 0.4 0.6 0.8 1" yticks="0 0.2 0.4 0.6 0.8 1"></xy-input>
 <!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB"></xy-input-->
     <!-- for testing form submission values -->
     <input hidden class="button" type="submit" />
 </form>
 
 <div class="x1 3x @1-x3 @1-2x @2-x4 x-stretch y-start">
-    
+
     <h3 class="docs-text-03">Attributes</h3>
-    
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xmin">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xmin">
@@ -240,7 +241,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xmax">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xmax">
@@ -253,7 +254,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xlaw">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xlaw">
@@ -276,7 +277,7 @@ x domain of the fader travel. Possible values are:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xstep">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xstep">
@@ -288,7 +289,7 @@ x domain of the fader travel. Possible values are:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-xaxis">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-xaxis">
@@ -303,7 +304,7 @@ may be listed with or without units, eg:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ymin">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ymin">
@@ -316,7 +317,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ymax">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ymax">
@@ -329,7 +330,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ylaw">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ylaw">
@@ -352,7 +353,7 @@ y range of the fader travel. Possible values are:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ystep">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ystep">
@@ -368,7 +369,7 @@ y range of the fader travel. Possible values are:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-yaxis">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-yaxis">
@@ -383,7 +384,7 @@ may be listed with or without units, eg:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-properties">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-properties">
@@ -398,7 +399,7 @@ attribute.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-valuebox">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-valuebox">
@@ -415,7 +416,7 @@ ignore.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ordered">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ordered">
@@ -428,7 +429,7 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value-2">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-value-2">
@@ -440,7 +441,7 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-include">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-include">
@@ -451,15 +452,15 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 </div>
 
- 
 
-    
-    
-    
 
-    
+
+
+
+
+
     <h3 class="docs-text-03">Properties</h3>
-    
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-xmin">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-xmin">
@@ -472,7 +473,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-xmax">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-xmax">
@@ -485,7 +486,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-ymin">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-ymin">
@@ -498,7 +499,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-ymax">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-ymax">
@@ -511,7 +512,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value-2">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-value-2">
@@ -523,11 +524,11 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
-    
-    
+
+
+
     <h3 class="docs-text-03">Events</h3>
-    
+
 <div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-input">
 <h3 class="string-docs-text-05 docs-text-05">
     <a href="#string-input">
@@ -539,7 +540,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-change">
 <h3 class="string-docs-text-05 docs-text-05">
     <a href="#string-change">
@@ -551,17 +552,17 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 </div>
 
 <div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
-    
-    
-    
 
-    
-    
-    
+
+
+
+
+
+
 </div>
 
 
@@ -571,7 +572,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 </script>
 
     <script type="module">
-    import XYInput from '../xy-input.js';
+    import XYInput from './module.js';
     import events  from '../../dom/modules/events.js';
 
     //events('input change', document)
