@@ -33,6 +33,7 @@
 
     <script title="debug">
         window.DEBUG = true;
+        window.rangeInputStylesheet = './shadow.css';
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">
@@ -48,9 +49,9 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    
+
 <header class="x1 3x @1-x3 @1-4x @2-x4">
-    
+
     <h2 class="docs-text-02">&lt;range-input&gt;</h2>
     <p>Import <code>&lt;range-input&gt;</code> custom element. This also registers the custom
 element and upgrades instances already in the DOM.</p>
@@ -60,23 +61,23 @@ element and upgrades instances already in the DOM.</p>
 &lt;range-input name="frequency" min="20" max="20000" ticks=max="20000" ticks="20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz" scale="log" display="Hz" value="20Hz">Frequency<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-input</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>rating<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>5<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1 2 3 4 5<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>tick<span class="token punctuation">"</span></span> <span class="token attr-name">scale</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>linear<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>3<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Rating<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-input</span><span class="token punctuation">></span></span></code></pre>
 
-    
+
 </header>
 
 <form class="x1 3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
     <script type="module" src="range-input.js"></script>
 <range-input name="ratio" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1" value="0">Scale</range-input>
 <range-input name="gain" min="-48dB" max="0dB" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB" scale="log-60dB" display="dB" value="-6dB">Volume</range-input>
-<range-input name="frequency" min="20" max="20000" ticks=max="20000" ticks="20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz" scale="log" display="Hz" value="20Hz">Frequency</range-input>
+<range-input name="frequency" min="20" max="20000" max="20000" ticks="20Hz 50Hz 100Hz 200Hz 500Hz 1kHz 2kHz 5kHz 10kHz 20kHz" scale="log" display="Hz" value="20Hz">Frequency</range-input>
 <range-input name="rating" min="1" max="5" ticks="1 2 3 4 5" step="tick" scale="linear" value="3">Rating</range-input>
     <!-- for testing form submission values -->
     <input hidden class="button" type="submit" />
 </form>
 
 <div class="x1 3x @1-x3 @1-2x @2-x4 x-stretch y-start">
-    
+
     <h3 class="docs-text-03">Attributes</h3>
-    
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-min">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-min">
@@ -89,7 +90,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-max">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-max">
@@ -102,7 +103,7 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-scale">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-scale">
@@ -126,7 +127,7 @@ of the fader travel. Possible values are:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-display">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-display">
@@ -146,7 +147,7 @@ displayed in this unit. Possible values are:</p>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ticks">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-ticks">
@@ -161,7 +162,7 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-step">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-step">
@@ -178,7 +179,7 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 </div>
 
- 
+
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-value">
@@ -190,15 +191,15 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 </div>
 
- 
 
-    
-    
-    
 
-    
+
+
+
+
+
     <h3 class="docs-text-03">Properties</h3>
-    
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-type">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property-type">
@@ -212,7 +213,7 @@ with native form elements, which all have a type).</p>
 
 </div>
 
- 
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property-min">
@@ -225,7 +226,7 @@ Value at lower limit of fader, as a number.</p>
 
 </div>
 
- 
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property-max">
@@ -238,7 +239,7 @@ Value at upper limit of fader, as a number.</p>
 
 </div>
 
- 
+
 <div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value">
 <h3 class="property-docs-text-05 docs-text-05">
     <a href="#property|selector-value">
@@ -250,17 +251,17 @@ Value at upper limit of fader, as a number.</p>
 
 </div>
 
- 
-    
-    
-    
-    
+
+
+
+
+
 </div>
 
 <div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
-    
+
     <h3 class="docs-text-03">Parts</h3>
-    
+
 <div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-label">
 <h3 class="part-docs-text-05 docs-text-05">
     <a href="#part-label">
@@ -272,7 +273,7 @@ Value at upper limit of fader, as a number.</p>
 
 </div>
 
- 
+
 <div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-tick">
 <h3 class="part-docs-text-05 docs-text-05">
     <a href="#part-tick">
@@ -284,7 +285,7 @@ Value at upper limit of fader, as a number.</p>
 
 </div>
 
- 
+
 <div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-output">
 <h3 class="part-docs-text-05 docs-text-05">
     <a href="#part-output">
@@ -296,11 +297,11 @@ Value at upper limit of fader, as a number.</p>
 
 </div>
 
- 
 
-    
-    
-    
+
+
+
+
 </div>
 
 
@@ -310,7 +311,7 @@ Value at upper limit of fader, as a number.</p>
 </script>
 
     <script type="module">
-    import RangeInput from '../range-input.js';
+    import RangeInput from './module.js';
     import events     from '../../dom/modules/events.js';
 
     //events('input change', document)

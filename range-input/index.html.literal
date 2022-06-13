@@ -11,8 +11,8 @@
     <link rel="stylesheet" href="../../bolt/module.css">
     ${ include('../../bolt/templates/style.html') }
     <style>
-        rotary-input {
-            max-width: 240px;
+        range-input + range-input {
+            marging-top: 1.5rem;
         }
     </style>
 </head>
