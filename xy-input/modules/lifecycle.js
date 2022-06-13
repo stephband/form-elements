@@ -1,5 +1,18 @@
 
-import { clamp }   from '../../../fn/modules/clamp.js';
+import Privates        from '../../../fn/modules/privates.js';
+import { clamp }       from '../../../fn/modules/clamp.js';
+import Stream          from '../../../fn/modules/stream.js';
+import create          from '../../../dom/modules/create.js';
+import events          from '../../../dom/modules/events.js';
+import trigger         from '../../../dom/modules/trigger.js';
+import parseValue      from '../../modules/parse-value.js';
+import parseTicks      from '../../modules/parse-ticks.js';
+import { updateData }  from '../../modules/data.js';
+
+import { getScale }    from '../../modules/scales.js';
+import { toDisplay }   from '../../modules/display.js';
+import { nearestStep } from '../../modules/step.js';
+
 import get         from '../../../fn/modules/get.js';
 import last        from '../../../fn/modules/last.js';
 import overload    from '../../../fn/modules/overload.js';
@@ -8,9 +21,6 @@ import { remove }  from '../../../fn/modules/remove.js';
 import { Observer, notify } from '../../../fn/observer/observer.js';
 
 
-import create      from '../../../dom/modules/create.js';
-import delegate    from '../../../dom/modules/delegate.js';
-import events      from '../../../dom/modules/events.js';
 import gestures    from '../../../dom/modules/gestures.js';
 import rect        from '../../../dom/modules/rect.js';
 import { trigger } from '../../../dom/modules/trigger.js';
@@ -22,6 +32,11 @@ import { $state, maxTapDuration, maxDoubleTapDuration } from '../../modules/cons
 
 import Data        from './data.js';
 import { setFormValue } from './form.js';
+
+import { requestDrawCurve, clear, drawXLines, drawYLines, drawCrosshair } from './canvas.js';
+import { drawAudioEnvelope } from './draw-audio.js';
+
+import * as defaults   from '../../modules/defaults.js';
 
 const assign = Object.assign;
 
@@ -248,18 +263,224 @@ function updateViewbox(element, data) {
     observer.box = updateBoxes(element, observer.pxbox, observer.paddingbox, observer.contentbox, observer.rangebox);
 }
 
+
+/* Update */
+
+function updateValue() {
+
+}
+
+
+/* Render */
+
+function renderCanvas(ctx, computed, contentbox) {
+    const viewbox    = {
+        x:      contentbox.x * 2,
+        y:      contentbox.y * 2,
+        width:  contentbox.width * 2,
+        height: contentbox.height * 2
+    };
+
+    const xGridColor = computed.getPropertyValue('--line-color-x').trim();
+    const yGridColor = computed.getPropertyValue('--line-color-y').trim();
+    const plotColor  = computed.getPropertyValue('--plot-color').trim();
+
+    // Clears canvas as well as setting up size
+    //element.width  = data.paddingbox.width * 2,
+    //element.height = data.paddingbox.height * 2,
+    data.clear(ctx, { x: 0, y: 0, width: element.width, height: element.height }),
+
+    drawXLines(ctx, viewbox, xticks
+        .filter((line) => data.valuebox.x + data.valuebox.width >= line.value && line.value >= data.valuebox.x)
+        .map((line) => data.toRatioX(line.value)),
+        xGridColor
+    );
+
+    drawYLines(ctx, viewbox, yticks
+        .filter((line) => data.valuebox.y + data.valuebox.height >= line.value && line.value >= data.valuebox.y)
+        .map((line) => data.toRatioY(line.value)),
+        yGridColor
+    );
+
+    /*
+    data.xScale === 'linear' ?
+        data.points.forEach((point) => data.drawCrosshair(this.ctx, this.viewbox, 28, {
+            x: data.toRatioX(point.x),
+            y: data.toRatioY(point.y)
+        }, this.graphColor)) :
+        data.drawCurve(
+            this.ctx,
+            this.viewbox,
+            data.points.map((point, i) => ({
+                x: data.toRatioX(point.x),
+                y: data.toRatioY(point.y)
+            })).sort(by(get('x'))),
+            this.graphColor
+        ),
+    */
+
+    drawAudioEnvelope(ctx, viewbox, data.valuebox, data.points, plotColor);
+}
+
+function renderLine() {
+    create('line', {
+        part: '',
+        x1:   '',
+        y1:   '',
+        x2:   '',
+        y2:   ''
+    });
+}
+
+function renderTickX(buttons, tick) {
+    buttons.push(
+        create('label', {
+            part:  'x-tick tick',
+            style: '--normal-value: ' + tick.normalValue + ';',
+            html:  '<span>' + tick.label + '</span>'
+        })
+    );
+
+    return buttons;
+}
+
+function renderYTick(buttons, tick) {
+    buttons.push(
+        create('label', {
+            part:  'y-tick tick',
+            style: '--normal-value: ' + tick.normalValue + ';',
+            html:  '<span>' + tick.label + '</span>'
+        })
+    );
+
+    return buttons;
+}
+
+function renderHandle() {
+    const title = create('title');
+    create('path', {
+        part:  'handle',
+        class: 'control control-handle control-point',
+        d:     '',
+        x:     '',
+        y:     '',
+        children: [title]
+    });
+}
+
+function renderData(prefix, style, scale, min, max, ticks, buttons, marker) {
+    // Style
+    style.setProperty('--' + prefix + '-normal-zero', scale.normalise(min, max, 0));
+
+    // Ticks
+    buttons.forEach((node) => node.remove());
+    buttons.length = 0;
+    buttons = ticks.reduce(renderTickX, buttons);
+    marker.after.apply(marker, buttons);
+}
+
+
 export default {
-    construct: function(shadow, internal) {
-        const literal  = new Literal('#xy-input-shadow');
-        const data     = new Data(this);
-        const formdata = new FormData();
+    construct: function(shadow, internals) {
+        // DOM
+        const style   = create('style', ':host {} :host > * { visibility: hidden; }');
+        const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
+        const canvas  = create('canvas');
+        const svg     = create('svg');
+        const xmarker = create('text', '');
+        const ymarker = create('text', '');
+        const xlines  = [];
+        const ylines  = [];
+        const xticks  = [];
+        const yticks  = [];
 
-        shadow.append(create('label', {
-            part: 'label',
-            children: [create('slot')]
-        }));
+        shadow.append(style, label, canvas, svg, xmarker, ymarker);
 
-        this[$state] = {
+        // Components
+        const privates   = Privates(this);
+        const data       = { value: [] };
+        const hostStyle  = style.sheet.cssRules[0].style;
+        const childStyle = style.sheet.cssRules[1].style;
+        const formdata   = new FormData();
+
+        privates.host       = this;
+        privates.shadow     = shadow;
+        privates.hostStyle  = hostStyle;
+        privates.childStyle = childStyle;
+        privates.internals  = internals;
+        privates.data       = data;
+        privates.ctx        = canvas.getContext('2d');
+        privates.formdata   = formdata;
+
+        // Inputs
+        privates.shadow   = new Promise((resolve) => privates.load = resolve);
+        privates.xscale   = Stream.of(defaults.scale);
+        privates.xmin     = Stream.of(defaults.min);
+        privates.xmax     = Stream.of(defaults.max);
+        privates.xstep    = Stream.of(defaults.step);
+        privates.xticks   = Stream.of(defaults.ticks);
+        privates.xdisplay = Stream.of(defaults.display);
+        privates.yscale   = Stream.of(defaults.scale);
+        privates.ymin     = Stream.of(defaults.min);
+        privates.ymax     = Stream.of(defaults.max);
+        privates.ystep    = Stream.of(defaults.step);
+        privates.yticks   = Stream.of(defaults.ticks);
+        privates.ydisplay = Stream.of(defaults.display);
+        //privates.value    = Stream.of(defaults.value);
+
+        // Track attribute updates
+        const xattributes = Stream
+        .combine({
+            shadow:  privates.shadow,
+            scale:   privates.xscale.map(getScale),
+            min:     privates.xmin.map(parseValue),
+            max:     privates.xmax.map(parseValue),
+            ticks:   privates.xticks.map(parseTicks),
+            step:    privates.xstep,
+            display: privates.xdisplay
+        })
+        .scan(updateData, {})
+        .broadcast();
+
+        const yattributes = Stream
+        .combine({
+            shadow:  privates.shadow,
+            scale:   privates.yscale.map(getScale),
+            min:     privates.ymin.map(parseValue),
+            max:     privates.ymax.map(parseValue),
+            ticks:   privates.yticks.map(parseTicks),
+            step:    privates.ystep,
+            display: privates.ydisplay
+        })
+        .scan(updateData, {})
+        .broadcast();
+
+        // Render canvas
+        Stream
+        .combine({ xattributes, yattributes })
+        .each((state) => renderCanvas(ctx, computed, contentbox, state.xattributes, state.yattributes));
+
+        // Render DOM
+        xattributes
+        .each((data) => renderData('x', style, data.scale, data.min, data.max, data.ticks, xlines, xticks, xmarker));
+
+        yattributes
+        .each((data) => renderData('y', style, data.scale, data.min, data.max, data.ticks, ylines, yticks, ymarker));
+
+        // Track value updates
+        /*Stream
+        .combine({
+            xdata: xattributes,
+            ydata: yattributes,
+            value: privates.value
+        })
+        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
+        .each((data) => renderValue(hostStyle, input, internals, text, abbr, data.display, data.value, data.normalValue)) ;
+        */
+
+
+
+        /*this[$state] = {
             rendered: literal.push(data),
             host:     this,
             data:     data,
@@ -267,7 +488,7 @@ export default {
             literal:  literal,
             formdata: formdata,
             viewbox:  literal.content.querySelector('svg').viewBox.baseVal
-        };
+        };*/
 
         gestures({ threshold: 1 }, shadow)
         .reduce((previous, gesture) => {
@@ -286,6 +507,12 @@ export default {
     },
 
     load: function(shadow) {
+        const privates = Privates(this);
+        privates.childStyle.visibility = '';
+        privates.load(shadow);
+    }
+/*
+    load: function(shadow) {
         const literal = this[$state].literal;
 
         updateViewbox(this, this[$state].data);
@@ -297,4 +524,5 @@ export default {
             literal.connect();
         });
     }
+*/
 };

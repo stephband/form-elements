@@ -169,7 +169,7 @@ export default {
             display: privates.display,
             step:    privates.step
         })
-        .scan((data, state) => updateData(data, state.scale, state.min, state.max, state.ticks, state.step, state.display), data)
+        .scan(updateData, data)
         .broadcast();
 
         attributes

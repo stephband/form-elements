@@ -158,7 +158,7 @@ export function requestDrawCurve(ctx, box, points, color) {
         box.x + box.width,
         box.y + box.height
     );
-    
+
     ctx.stroke();
 
     ctx.lineTo(

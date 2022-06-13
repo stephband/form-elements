@@ -11,7 +11,8 @@ function assignNormalValue(object, scale, min, max) {
     return object;
 }
 
-export function updateData(data, scale, min, max, ticks, step, display) {
+export function updateData(data, state) {
+    const { scale, min, max, ticks, step, display } = state;
     data.scale = scale;
     data.min   = min;
     data.max   = max;

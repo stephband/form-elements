@@ -1,444 +1,256 @@
 
-import { Observer, notify, getTarget } from '../../../fn/observer/observer.js';
+import { Observer, getTarget } from '../../../fn/observer/observer.js';
+import Privates      from '../../../fn/modules/privates.js';
+import createBoolean from '../../../dom/modules/element/create-boolean.js';
+import parseValue    from '../modules/parse-value.js';
 
-import parseValue  from '../../modules/parse-value.js';
-import parseTicks  from '../../modules/parse-ticks.js';
-import parsePoints from '../../modules/parse-points.js';
-import { $state }  from '../../modules/constants.js';
-import scales      from '../../modules/scales.js';
+function createAttribute(name, default) {
+    return {
+        attribute: function(value) {
+            const privates = Privates(this);
+            privates[name].push(value || default);
+        }
+    };
+}
 
-import axes        from './axes.js';
-import { setFormValue } from './form.js';
+function createAttributeProperty(name, default) {
+    return {
+        attribute: function(value) {
+            this[name] = value;
+        },
 
-export default {/*
-    type: {
-        value: 'array',
+        set: function(value) {
+            const privates = Privates(this);
+            privates[name].push(value === undefined ? default : value);
+        },
+
+        get: function() {
+            const privates = Privates(this);
+            return privates.data[name];
+        },
+
         enumerable: true
-    },*/
+    };
+}
 
-    // Remember attributers are setup in this declared order
-
-    xmin: {
-        /**
-        xmin="0"
-        Value at lower limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
-
+function createBoolean(name) {
+    return {
         attribute: function(value) {
-            this.xmin = value;
-        },
-
-        /**
-        .xmin
-        Value at lower limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
-
-        get: function() {
-            return this[$state].data.xmin;
-        },
-
-        set: function(value) {
-            value = parseValue(value);
-            const data = this[$state].data;
-
-            if (value === data.xmin) { return; }
-
-            data.xmin = value;
-            const isValueboxAttribute = this.getAttribute('valuebox');
-
-            if (!isValueboxAttribute) {
-                data.valuebox.x = value;
-                data.valuebox.width = data.xmax - data.valuebox.x;
-            }
-
-            notify('xmin', data);
-
-            if (!isValueboxAttribute) {
-                notify('valuebox.x', data);
-                notify('valuebox.width', data);
-            }
+            const privates = Privates(this);
+            privates[name].push(!!value);
         }
-    },
+    };
+}
 
-    xmax: {
-        /**
-        xmax="1"
-        Value at upper limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
+export default {
+    /**
+    xmin="0"
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
 
-        attribute: function(value) {
-            this.xmax = value;
-        },
+    /**
+    .xmin
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
+    xmin: createAttributeProperty('xmin', 0),
 
-        /**
-        .xmax
-        Value at upper limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
+    /**
+    xmax="1"
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
 
-        get: function() {
-            return this[$state].data.xmax;
-        },
+    /**
+    .xmax
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
+    xmax: createAttributeProperty('xmax', 1),
 
-        set: function(value) {
-            value = parseValue(value);
+    /**
+    ymin="0"
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
 
-            if (Number.isNaN(value)) {
-                if (window.DEBUG) {
-                    throw new Error('Invalid value max = ' + value + ' set on <xy-input>');
-                }
+    /**
+    .ymin
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
+    ymin: createAttributeProperty('ymin', 0),
 
-                value = 1;
-            }
+    /**
+    ymax="1"
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
 
-            const data = this[$state].data;
+    /**
+    .ymax
+    Value at upper limit of fader. Can interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
+    **/
+    ymax: createAttributeProperty('ymax', 1),
 
-            if (value === data.xmax) { return; }
+    /**
+    xscale="linear"
+    Scale on the x axis. This is the name of a transform to be applied over the
+    x range of the fader travel. Possible values are:
 
-            data.xmax = value;
+    - `"linear"`
+    - `"pow-2"`
+    - `"pow-3"`
+    - `"pow-4"`
+    - `"log"`
+    - `"log-24dB"`
+    - `"log-48dB"`
+    - `"log-60dB"`
+    - `"log-96dB"`
+    **/
+    xscale: createAttribute('xscale', 'linear'),
 
-            const isValueboxAttribute = this.getAttribute('valuebox');
-            !isValueboxAttribute && (data.valuebox.width = value - data.valuebox.x);
-            notify('xmax', data);
-            !isValueboxAttribute && notify('valuebox.width', data);
-        }
-    },
+    /**
+    yscale="linear"
+    Scale on the y axis. This is the name of a transform to be applied over the
+    y range of the fader travel. Possible values are:
 
-    xlaw: {
-        /**
-        xlaw="linear"
-        Scale on the x axis. This is the name of a transform to be applied over the
-        x domain of the fader travel. Possible values are:
+    - `"linear"`
+    - `"pow-2"`
+    - `"pow-3"`
+    - `"pow-4"`
+    - `"log"`
+    - `"log-24dB"`
+    - `"log-48dB"`
+    - `"log-60dB"`
+    - `"log-96dB"`
+    **/
+    yscale: createAttribute('yscale', 'linear'),
 
-        - `"linear"`
-        - `"quadratic"`
-        - `"cubic"`
-        - `"db-linear-24"`
-        - `"db-linear-48"`
-        - `"db-linear-60"`
-        - `"db-linear-96"`
-        - `"lin-24dB-log"`
-        **/
+    /**
+    xticks=""
+    A space or comma separated list of values at which to display tick marks.
+    Values may be listed with or without units, eg:
 
-        attribute: function(value) {
-            const data = this[$state].data;
+    ```html
+    xticks="0 0.2 0.4 0.6 0.8 1"
+    xticks="-48dB -36dB -24dB -12dB 0dB"
+    ```
+    **/
+    xticks: createAttribute('xticks'),
 
-            if (window.DEBUG && !scales[value]) {
-                throw new Error('<xy-input> invalid attribute scale="' + value + '" (valid values "' + Object.keys(scales).join('" ,"') + '")');
-            }
+    /**
+    yticks=""
+    A space or comma separated list of values at which to display tick marks.
+    Values may be listed with or without units, eg:
 
-            Observer(data).xScale = value;
-        }
-    },
+    ```html
+    yticks="0 0.2 0.4 0.6 0.8 1"
+    yticks="-48dB -36dB -24dB -12dB 0dB"
+    ```
+    **/
+    yticks: createAttribute('yticks'),
 
-    xstep: {
-        /**
-        xstep="any"
-        Not yet implemented.
-        **/
-    },
+    /**
+    xstep=""
+    Step is either:
+    - The string `"any"` (the default value)
+    - The string `"tick"`. The values in the `ticks` attribute are used as step values
+    - A space or comma separated list of values, written with or without units
+    **/
+    xstep: createAttribute('xstep'),
 
-    xaxis: {
-        /**
-        xaxis=""
+    /**
+    ystep=""
+    Step is either:
+    - The string `"any"` (the default value)
+    - The string `"tick"`. The values in the `ticks` attribute are used as step values
+    - A space or comma separated list of values, written with or without units
+    **/
+    ystep: createAttribute('ystep'),
 
-        A space separated list of values at which to display tick marks. Values
-        may be listed with or without units, eg:
+    /**
+    xdisplay=""
+    The units to display the value in. The output value and all ticks are
+    displayed in this unit. Possible values are:
+    - `"dB"` – `0-1` is displayed as `-∞dB` to `0dB`
+    - `"Hz"`
+    - `"bpm"`
+    - `"s"`
+    - `"semitone"`
+    **/
+    xdisplay: createAttribute('xdisplay'),
 
-        ```html
-        <xy-input yticks="0 0.2 0.4 0.6 0.8 1">
-        <xy-input yticks="-48dB -36dB -24dB -12dB 0dB">
-        ```
-        **/
-        attribute: function(value) {
-            const data = this[$state].data;
-            Observer(data).xaxis = value !== null ?
-                axes[value] || parseTicks(value) :
-                axes.default ;
-        }
-    },
+    /**
+    ydisplay=""
+    The units to display the value in. The output value and all ticks are
+    displayed in this unit. Possible values are:
+    - `"dB"` – `0-1` is displayed as `-∞dB` to `0dB`
+    - `"Hz"`
+    - `"bpm"`
+    - `"s"`
+    - `"semitone"`
+    **/
+    ydisplay: createAttribute('ydisplay'),
 
-    ymin: {
-        /**
-        ymin="0"
-        Value at lower limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
+    /**
+    valuebox=""
+    Defines an `"x y width height"` box to use as the range of values that
+    map to the padding box of the `<xy-input>`. The origin is at the
+    bottom and y increases upwards.
 
-        attribute: function(value) {
-            this.ymin = value;
-        },
-
-        /**
-        .ymin
-        Value at lower limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
-
-        get: function() {
-            return this[$state].data.min;
-        },
-
-        set: function(value) {
-            value = parseValue(value);
-            const data = this[$state].data;
-
-            if (value === data.min) { return; }
-            data.min = value;
-
-            const isValueboxAttribute = this.getAttribute('valuebox');
-            if (!isValueboxAttribute) {
-                data.valuebox.y = value;
-                data.valuebox.height = data.max - data.valuebox.y;
-            }
-
-            notify('min', data);
-
-            if (!isValueboxAttribute) {
-                notify('valuebox.y', data);
-                notify('valuebox.height', data);
-            }
-        }
-    },
-
-    ymax: {
-        /**
-        ymax="1"
-        Value at upper limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
-
-        attribute: function(value) {
-            this.ymax = value;
-        },
-
-        /**
-        .ymax
-        Value at upper limit of fader. Can interpret values with recognised units,
-        eg. `"0dB"`.
-        **/
-
-        get: function() {
-            return this[$state].data.max;
-        },
-
-        set: function(value) {
-            value = parseValue(value);
-
-            if (Number.isNaN(value)) {
-                if (window.DEBUG) {
-                    throw new Error('Invalid value max = ' + value + ' set on <xy-input>');
-                }
-
-                value = 1;
-            }
-
-            const data = this[$state].data;
-
-            if (value === data.max) { return; }
-            data.max = value;
-
-            const isValueboxAttribute = this.getAttribute('valuebox');
-            !isValueboxAttribute && (data.valuebox.height = value - data.valuebox.y);
-            notify('max', data);
-            !isValueboxAttribute && notify('valuebox.height', data);
-        }
-    },
-
-    ylaw: {
-        /**
-        ylaw="linear"
-        Scale on the y axis. This is the name of a transform to be applied over the
-        y range of the fader travel. Possible values are:
-
-        - `"linear"`
-        - `"db-linear-24"`
-        - `"db-linear-48"`
-        - `"db-linear-60"`
-        - `"db-linear-96"`
-        - `"logarithmic"`
-        - `"quadratic"`
-        - `"cubic"`
-        **/
-
-        attribute: function(value) {
-            const data = this[$state].data;
-
-            if (window.DEBUG && !scales[value]) {
-                throw new Error('<xy-input> invalid attribute scale="' + value + '" (valid values "' + Object.keys(scales).join('" ,"') + '")');
-            }
-
-            Observer(data).yScale = value;
-
-            /*
-            data.transformY = value === 'db-linear-96' ? dbLinear96 :
-                value === 'db-linear-60' ? dbLinear60 :
-                value === 'db-linear-48' ? dbLinear48 :
-                value === 'linear' ? id :
-                id ;
-            */
-
-            /*
-            if (data.ticksAttribute) {
-                data.ticks = createTicks(data, data.ticksAttribute);
-            }
-
-            if (data.step) {
-                data.steps = createSteps(data, value === 'ticks' ?
-                    data.ticksAttribute || '' :
-                    data.stepsAttribute );
-            }
-            */
-        }
-    },
-
-    ystep: {
-        /**
-        ystep="any"
-
-        Either:
-
-        - A space separated list of values. Values may be listed with units.
-        - The string `"yticks"`. Values in the `yticks` attribute are used as steps.
-        **/
-
-        attribute: function(value) {
-            const data = this[$state].data;
-            //data.ystepAttribute = value;
-
-            // If steps is 'ticks' use ticks attribute as step value list
-            data.ystep = createSteps(data, value === 'yticks' ?
-                data.yticks || '' :
-                value
-            );
-        }
-    },
-
-    yaxis: {
-        /**
-        yaxis=""
-
-        A space separated list of values at which to display tick marks. Values
-        may be listed with or without units, eg:
-
-        ```html
-        <xy-input yticks="0 0.2 0.4 0.6 0.8 1">
-        <xy-input yticks="-48dB -36dB -24dB -12dB 0dB">
-        ```
-        **/
-        attribute: function(value) {
-            const data = this[$state].data;
-
-            Observer(data).yaxis = value !== null ?
-                axes[value] || parseTicks(value) :
-                axes.default ;
-
-            // Create ticks
-            //scope.ticks(createTicks(data, value));
-
-            // If step is 'ticks' update steps
-            if (data.stepsAttribute === 'ticks') {
-                data.ystep = createSteps(data, value || '');
-            }
-        },
-    },
-
-    properties: {
-        /**
-        properties="x y"
-        By default the points data `element.value` use the property keys `'x'`
-        and `'y'` of a point to render. Where `.value` is data owned by you, you
-        may require the element to use other keys. They may be set with this
-        attribute.
-        **/
-        attribute: function(value) {
-            const [x, y] = value ?
-                value.trim().split(/\s+|\s*,\s*/) :
-                ['x', 'y'] ;
-
-            this[$state].data.xname = value || 'x';
-            this[$state].data.yname = value || 'y';
-        }
-    },
-
+    Where not given, `valuebox` defaults to the limits of `min` and `max`.
+    Most often this is what you want, and the valuebox attribute is safe to
+    ignore.
+    **/
     valuebox: {
-        /**
-        valuebox=""
-        Defines an `"x y width height"` box to use as the range of values that
-        map to the padding box of the `<xy-input>`. The origin is at the
-        bottom and y increases upwards.
-
-        Where not given, `valuebox` defaults to the limits of `min` and `max`.
-        Most often this is what you want, and the valuebox attribute is safe to
-        ignore.
-        **/
-
         attribute: function(value) {
             // TODO: parse valuebox
         }
     },
 
-    ordered: {
-        /**
-        ordered=""
-        Boolean attribute. When set, data points may not overlap their
-        neighbours, keeping the order of points on the x axis constant.
-        **/
-        attribute: function(value) {
-            this[$state].data.ordered = value !== null;
-        }
-    },
+    /**
+    ordered=""
+    Boolean attribute. When set, data points may not overlap their
+    neighbours, keeping the order of points on the x axis constant.
+    **/
+    ordered: createBoolean('ordered'),
 
+    /**
+    value=""
+    The initial value of the element.
+    **/
+
+    /**
+    .value
+    The value of the element. Returns an array of data points. The array is a
+    live object. It changes in response to changes to the element, and the
+    element changes in response changes to the array or its data points.
+
+    When submitted as part of a form the array is serialised to a formdata
+    parameters.
+    **/
     value: {
-        /**
-        value=""
-        The initial value of the element.
-        **/
         attribute: function(value) {
             this.value = value;
         },
 
-        /**
-        .value
-        The value of the element.
-        **/
         get: function() {
-            return Observer(this[$state].data.points);
+            const privates = Privates(this);
+            return Observer(privates.data.points);
         },
 
         set: function(values) {
-            const { data, internal, formdata } = this[$state];
-
-            Observer(data).points = typeof values === 'string' ?
-                parsePoints(values) :
-                getTarget(values) ;
-
-            setFormValue(internal, formdata, this.name, data.points);
+            const privates = Privates(this);
+            privates.value.push(
+                typeof values === 'string' ?
+                    parsePoints(values) :
+                    getTarget(values)
+            );
         },
 
         enumerable: true
     },
-    /*
-    include: {
-        /**
-        include=""
-        **/
-    /*    attribute: function(url) {
-            const data = this[$state].data;
-            Observer(data).include = url;
-        }
-    },*/
-
-    /**
-    "input"
-    Event sent when one of the handles moves.
-    **/
-
-    /**
-    "change"
-    Event sent on conclusion of a move (and after formdata is updated).
-    **/
 };

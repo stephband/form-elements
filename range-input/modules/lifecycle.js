@@ -16,7 +16,7 @@ import trigger         from '../../../dom/modules/trigger.js';
 import parseValue      from '../../modules/parse-value.js';
 import parseTicks      from '../../modules/parse-ticks.js';
 import { updateData, updateValue } from '../../modules/data.js';
-import { getScale }     from '../../modules/scales.js';
+import { getScale }    from '../../modules/scales.js';
 import { toDisplay }   from '../../modules/display.js';
 import { nearestStep } from '../../modules/step.js';
 import { toKeyValue }  from '../../modules/key.js';
@@ -147,7 +147,7 @@ export default {
             display: privates.display,
             step:    privates.step
         })
-        .scan((data, state) => updateData(data, state.scale, state.min, state.max, state.ticks, state.step, state.display), data)
+        .scan(updateData, data)
         .broadcast();
 
         attributes
