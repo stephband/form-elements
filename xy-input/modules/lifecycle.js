@@ -405,35 +405,36 @@ export default {
         const formdata   = new FormData();
 
         privates.host       = this;
-        privates.shadow     = shadow;
         privates.hostStyle  = hostStyle;
         privates.childStyle = childStyle;
         privates.internals  = internals;
         privates.data       = data;
         privates.ctx        = ctx;
         privates.formdata   = formdata;
+        privates.shadow     = new Promise((resolve) => privates.load = resolve);
 
-        // Inputs
-        privates.shadow   = new Promise((resolve) => privates.load = resolve);
-        privates.pxbox    = {};
+        privates.pxbox      = {};
         privates.paddingbox = {};
         privates.contentbox = {};
-        privates.rangebox = [0, 6.75, 6.75, -6.75];
-        privates.valuebox = { x: 0, y: 0, width: 1, height: 1 };
+        privates.rangebox   = [0, 6.75, 6.75, -6.75];
+        privates.valuebox   = { x: 0, y: 0, width: 1, height: 1 };
 
+        // Inputs
         privates.xscale   = Stream.of(defaults.scale);
         privates.xmin     = Stream.of(defaults.min);
         privates.xmax     = Stream.of(defaults.max);
         privates.xstep    = Stream.of(defaults.step);
         privates.xticks   = Stream.of(defaults.ticks);
         privates.xdisplay = Stream.of(defaults.display);
+
         privates.yscale   = Stream.of(defaults.scale);
         privates.ymin     = Stream.of(defaults.min);
         privates.ymax     = Stream.of(defaults.max);
         privates.ystep    = Stream.of(defaults.step);
         privates.yticks   = Stream.of(defaults.ticks);
         privates.ydisplay = Stream.of(defaults.display);
-        privates.value    = Stream.of(defaults.value);
+
+        privates.value    = Stream.of('0 0 step');
 
         privates.shadow.then(() => {
             updateViewbox(this, hostStyle, computed, canvas, privates);
