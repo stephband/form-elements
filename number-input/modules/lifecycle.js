@@ -1,5 +1,6 @@
 
 import Privates  from '../../../fn/modules/privates.js';
+import Stream    from '../../../fn/modules/stream/stream.js';
 import { clamp } from '../../../fn/modules/clamp.js';
 import get       from '../../../fn/modules/get.js';
 import noop      from '../../../fn/modules/noop.js';
@@ -61,7 +62,7 @@ function incrementValue(host, internal, e, input, increment) {
 
     // Unfortunately that also prevents focus on host
     host.focus();
-console.log('SET', input.value);
+
     // Set form
     internal.setFormValue(input.value);
 }
@@ -98,6 +99,10 @@ export default {
         privates.childStyle = childStyle;
         privates.internal   = internal;
         privates.input      = input;
+
+        // TODO: we must convert value to stream so that we can setFormValue
+        // on internals whenever one comes in!
+        privates.value      = Stream.of(0);
 
         // Decrement and increment buttons
         events('pointerdown', shadow)
