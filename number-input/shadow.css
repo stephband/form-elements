@@ -82,11 +82,11 @@ Number
 
 
 /**
-::part(increment-button)
+::part(decrement-button)
 **/
 
 /**
-::part(decrement-button)
+::part(increment-button)
 **/
 
 [part="decrement-button"],

@@ -12,7 +12,7 @@ function createAttribute(name) {
         },
 
         get: function() {
-            return Privates(this).input[name];
+            return parseFloat(Privates(this).input[name]);
         },
 
         enumerable: true
@@ -22,8 +22,7 @@ function createAttribute(name) {
 export default {
     /**
     .type="number"
-    A readonly property with the value `"number"` (provided for consistency
-    with native form elements, which all have a type).
+    A readonly property with the value `"number"`.
     **/
 
     type: {
@@ -33,26 +32,24 @@ export default {
 
     /**
     min="0"
-    Value at lower limit of fader. Can interpret values with recognised units,
-    eg. `"0dB"`.
+    Value of lower limit.
     **/
 
     /**
     .min=0
-    Value at lower limit of fader, as a number.
+    Value of lower limit.
     **/
 
     min: createAttribute('min'),
 
     /**
     max="1"
-    Value at upper limit of fader. Can interpret values with recognised units,
-    eg. `"0dB"`.
+    Value of upper limit.
     **/
 
     /**
     .max=1
-    Value at upper limit of fader, as a number.
+    Value of upper limit.
     **/
 
     max: createAttribute('max'),
@@ -61,20 +58,19 @@ export default {
     step=""
     Step is either:
     - The string `"any"` (the default value)
-    - The string `"tick"`. The values in the `ticks` attribute are used as step values
-    - A space or comma separated list of values, written with or without units
+    - A number
     **/
 
     step: createAttribute('step'),
 
     /**
     value=""
-    The initial value of the `<rotary-input>`.
+    The initial value of the `<number-input>`.
     **/
 
     /**
     .value
-    Current value of the `<rotary-input>` as a number.
+    Current value of the `<number-input>` as a number.
     **/
 
     value: createAttribute('value')

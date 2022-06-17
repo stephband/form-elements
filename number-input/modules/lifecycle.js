@@ -1,8 +1,4 @@
 
-/*
-
-*/
-
 import Privates  from '../../../fn/modules/privates.js';
 import { clamp } from '../../../fn/modules/clamp.js';
 import get       from '../../../fn/modules/get.js';
@@ -55,6 +51,15 @@ export default {
 
     construct: function(shadow, internals) {
         // DOM
+
+        /**
+        [slot="decrement-button"]
+        **/
+
+        /**
+        [slot="increment-button"]
+        **/
+
         const style     = create('style', ':host > * { visibility: hidden; }');
         const input     = create('input',  { type: 'number', part: 'input', name: 'value', min: '0', max: '1', step: 'any', value: 0 });
         const decrement = create('button', { type: 'button', part: 'decrement-button', name: 'decrement', value: '-1', html: '<slot name="decrement-button">-</slot>' });
@@ -111,14 +116,13 @@ export default {
         events('keydown', this)
         .filter(() => document.activeElement === this || this.contains(document.activeElement))
         .map((e) => toKeyValue(e, parseFloat(input.min), parseFloat(input.max), parseFloat(input.step), parseFloat(input.value)))
-        .each((value) => (
-            console.log(value),
+        .each((value) =>
             // Attempt to avoid rounding errors
             input.value =
                 Math.abs(value) < 0.1 ? value.toPrecision(1) :
                 Math.abs(value) < 10  ? value.toPrecision(2) :
                 Math.round(value)
-        ));
+        );
     },
 
     load: function(shadow) {
