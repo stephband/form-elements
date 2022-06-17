@@ -5,7 +5,8 @@ import get       from '../../../fn/modules/get.js';
 import noop      from '../../../fn/modules/noop.js';
 import overload  from '../../../fn/modules/overload.js';
 import create    from '../../../dom/modules/create.js';
-import events    from '../../../dom/modules/events.js';
+import delegate  from '../../../dom/modules/delegate.js';
+import events, { isPrimaryButton } from '../../../dom/modules/events.js';
 
 
 export const toKeyValue = overload(get('keyCode'), {
@@ -44,6 +45,24 @@ export const toKeyValue = overload(get('keyCode'), {
 Lifecycle
 */
 
+function incrementValue(host, e, input, increment) {
+    const value     = parseFloat(input.value || 0);
+    const min       = parseFloat(input.min);
+    const max       = parseFloat(input.max);
+    const step      = parseFloat(input.step);
+
+    input.value = clamp(min, max, value + (step ?
+        increment * step :
+        increment
+    ));
+
+    // Prevent input text being selected
+    e.preventDefault();
+
+    // Unfortunately that also prevents focus on host
+    host.focus();
+}
+
 export default {
     mode: 'closed',
 
@@ -78,25 +97,13 @@ export default {
         privates.input      = input;
 
         // Decrement and increment buttons
-        events({ type: 'pointerdown', select: '[type="button"]' }, shadow)
-        .each((e) => {
-            const value     = parseFloat(input.value || 0);
-            const increment = parseFloat(e.selectedTarget.value);
-            const min       = parseFloat(input.min);
-            const max       = parseFloat(input.max);
-            const step      = parseFloat(input.step);
-
-            input.value = clamp(min, max, value + (step ?
-                increment * step :
-                increment
-            ));
-
-            // Prevent input text being selected
-            e.preventDefault();
-
-            // Unfortunately that also prevents focus on host
-            this.focus();
-        });
+        events('pointerdown', shadow)
+        .filter(isPrimaryButton)
+        .each(delegate({
+            '[type="button"]':           (element, e) => incrementValue(this, e, input, parseFloat(element.value)),
+            '[slot="decrement-button"]': (element, e) => incrementValue(this, e, input, -1),
+            '[slot="increment-button"]': (element, e) => incrementValue(this, e, input, 1)
+        }));
 
         // Keep value between min < value < max
         events({ type: 'input', select: '[type="number"]' }, shadow)
