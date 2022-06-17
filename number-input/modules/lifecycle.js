@@ -45,7 +45,7 @@ export const toKeyValue = overload(get('keyCode'), {
 Lifecycle
 */
 
-function incrementValue(host, e, input, increment) {
+function incrementValue(host, internal, e, input, increment) {
     const value     = parseFloat(input.value || 0);
     const min       = parseFloat(input.min);
     const max       = parseFloat(input.max);
@@ -61,6 +61,9 @@ function incrementValue(host, e, input, increment) {
 
     // Unfortunately that also prevents focus on host
     host.focus();
+console.log('SET', input.value);
+    // Set form
+    internal.setFormValue(input.value);
 }
 
 export default {
@@ -68,7 +71,7 @@ export default {
 
     focusable: true,
 
-    construct: function(shadow, internals) {
+    construct: function(shadow, internal) {
         // DOM
 
         /**
@@ -93,16 +96,16 @@ export default {
         privates.host       = this;
         privates.shadow     = shadow;
         privates.childStyle = childStyle;
-        privates.internals  = internals;
+        privates.internal   = internal;
         privates.input      = input;
 
         // Decrement and increment buttons
         events('pointerdown', shadow)
         .filter(isPrimaryButton)
         .each(delegate({
-            '[type="button"]':           (element, e) => incrementValue(this, e, input, parseFloat(element.value)),
-            '[slot="decrement-button"]': (element, e) => incrementValue(this, e, input, -1),
-            '[slot="increment-button"]': (element, e) => incrementValue(this, e, input, 1)
+            '[type="button"]':           (element, e) => incrementValue(this, internal, e, input, parseFloat(element.value) *  (parseFloat(input.step) || 1)),
+            '[slot="decrement-button"]': (element, e) => incrementValue(this, internal, e, input, -1 * (parseFloat(input.step) || 1)),
+            '[slot="increment-button"]': (element, e) => incrementValue(this, internal, e, input, parseFloat(input.step) || 1)
         }));
 
         // Keep value between min < value < max
