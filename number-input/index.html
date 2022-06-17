@@ -42,6 +42,12 @@
 <link rel="stylesheet" href="../../bolt/debug.css" />
 
     <style>
+        @import './module.css';
+
+        number-input {
+            align-self: start;
+        }
+
         number-input + number-input {
             margin-top: 1.5rem;
         }
@@ -56,7 +62,7 @@
     <p>Import and register the <code>&lt;number-input&gt;</code> custom element:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number-input.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
 <p>You can now write <code>&lt;number-input&gt;</code> elements in your HTML:</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>number-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Scale<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>number-input</span><span class="token punctuation">></span></span></code></pre>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>number-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span></code></pre>
 
     
 </header>
@@ -71,9 +77,9 @@
     
     <h3 class="docs-text-03">Attributes</h3>
     
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-min-2">
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-min">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-min-2">
+    <a href="#attribute-min">
         <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
     </a>
 </h3>
@@ -84,9 +90,9 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 </div>
 
  
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-max-2">
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-max">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-max-2">
+    <a href="#attribute-max">
         <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
     </a>
 </h3>
@@ -97,29 +103,9 @@ eg. <code>&quot;0dB&quot;</code>.</p>
 </div>
 
  
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-display-2">
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-step">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-display-2">
-        <code class="token language-html">display</code>
-    </a>
-</h3>
-
-<p>The units to display the value in. The output value and all ticks are
-displayed in this unit. Possible values are:</p>
-<ul>
-<li><code>&quot;dB&quot;</code> – <code>0-1</code> is displayed as <code>-∞dB</code> to <code>0dB</code></li>
-<li><code>&quot;Hz&quot;</code></li>
-<li><code>&quot;bpm&quot;</code></li>
-<li><code>&quot;s&quot;</code></li>
-<li><code>&quot;semitone&quot;</code></li>
-</ul>
-
-</div>
-
- 
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-step-2">
-<h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-step-2">
+    <a href="#attribute-step">
         <code class="token language-html">step</code>
     </a>
 </h3>
@@ -134,9 +120,9 @@ displayed in this unit. Possible values are:</p>
 </div>
 
  
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value-2">
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-value-2">
+    <a href="#attribute-value">
         <code class="token language-html">value</code>
     </a>
 </h3>
@@ -154,9 +140,9 @@ displayed in this unit. Possible values are:</p>
     
     <h3 class="docs-text-03">Properties</h3>
     
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-type-2">
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-type">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-type-2">
+    <a href="#property-type">
         <code class="property language-js">.type</code>
     </a>
 </h3>
@@ -168,9 +154,9 @@ with native form elements, which all have a type).</p>
 </div>
 
  
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min-2">
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-min-2">
+    <a href="#property-min">
         <code class="property language-js">.min</code>
     </a>
 </h3>
@@ -181,9 +167,9 @@ Value at lower limit of fader, as a number.</p>
 </div>
 
  
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max-2">
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-max-2">
+    <a href="#property-max">
         <code class="property language-js">.max</code>
     </a>
 </h3>
@@ -194,9 +180,9 @@ Value at upper limit of fader, as a number.</p>
 </div>
 
  
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value-2">
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property|selector-value-2">
+    <a href="#property|selector-value">
         <code class="property language-js">.value</code>
     </a>
 </h3>
@@ -214,8 +200,30 @@ Value at upper limit of fader, as a number.</p>
 
 <div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
     
+    <h3 class="docs-text-03">Parts</h3>
     
-    
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-increment-button">
+<h3 class="part-docs-text-05 docs-text-05">
+    <a href="#part-increment-button">
+        <code class=" language-css">::part(increment-button)</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
+<div class="part-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="part-decrement-button">
+<h3 class="part-docs-text-05 docs-text-05">
+    <a href="#part-decrement-button">
+        <code class=" language-css">::part(decrement-button)</code>
+    </a>
+</h3>
+
+
+</div>
+
+ 
 
     
     
@@ -223,8 +231,9 @@ Value at upper limit of fader, as a number.</p>
 </div>
 
 
-
-    <number-input name="number" min="-1" max="1" value="0">Scale</number-input>
+    <number-input></number-input>
+    <number-input name="number" min="-1" max="1" value="0"></number-input>
+    <number-input name="number" min="0" max="100" step="1" value="20"></number-input>
 
     <script type="module">
     import '../../bolt/module.js';
@@ -233,6 +242,6 @@ Value at upper limit of fader, as a number.</p>
 
     <script type="module">
     import NumberInput from './module.js';
-    import events     from '../../dom/modules/events.js';
+    import events      from '../../dom/modules/events.js';
     </script>
 </body>

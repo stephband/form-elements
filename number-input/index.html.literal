@@ -12,6 +12,12 @@
     <link rel="stylesheet" href="../../bolt/module.css">
     ${ include('../../bolt/templates/style.html') }
     <style>
+        @import './module.css';
+
+        number-input {
+            align-self: start;
+        }
+
         number-input + number-input {
             margin-top: 1.5rem;
         }
@@ -26,13 +32,14 @@
         "./shadow.css"
     )) }
 
-
-    <number-input name="number" min="-1" max="1" value="0">Scale</number-input>
+    <number-input></number-input>
+    <number-input name="number" min="-1" max="1" value="0"></number-input>
+    <number-input name="number" min="0" max="100" step="1" value="20"></number-input>
 
     ${ include('../../bolt/templates/scripts.html') }
 
     <script type="module">
     import NumberInput from './module.js';
-    import events     from '../../dom/modules/events.js';
+    import events      from '../../dom/modules/events.js';
     </script>
 </body>

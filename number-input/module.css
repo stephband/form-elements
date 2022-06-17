@@ -1,0 +1,6 @@
+
+
+/* This disnae work but why? */
+number-input:focus {
+    outline: 5px solid -webkit-focus-ring-color;
+}

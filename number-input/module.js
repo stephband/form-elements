@@ -10,7 +10,7 @@ Import and register the `<number-input>` custom element:
 You can now write `<number-input>` elements in your HTML:
 
 ```html
-<number-input name="number" min="-1" max="1" value="0">Scale</number-input>
+<number-input name="number" min="-1" max="1" value="0" />
 ```
 **/
 

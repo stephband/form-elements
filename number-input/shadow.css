@@ -1,27 +1,110 @@
 
+@import '../css/host.css';
+
+
+/*
+Host
+*/
+
 :host {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
+    --button-width: 1.5em;
+
+    display: inline-block;
+    position: relative;
+
     column-gap: 0;
+    text-align: center;
+    border: 1px solid black;
 }
 
 :host > * {
     margin: 0;
-    grid-row: 1;
 }
 
-:host > [type="number"] {
-    grid-column: 2;
+:host > [name="value"] {
+    width: 100%;
+    min-width: calc(2 * var(--button-width));
+    padding-left: var(--button-width);
+    padding-right: var(--button-width);
 }
 
-[type="number"] {
+:host > [part="decrement-button"],
+:host > [part="increment-button"] {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: var(--button-width);
+    min-width: var(--button-width);
+}
+
+:host > [part="decrement-button"] {
+    left: 0;
+}
+
+:host > [part="increment-button"] {
+    right: 0;
+}
+
+
+/*
+Number
+*/
+
+[name="value"] {
+    display: block;
+    box-sizing: border-box;
+
     -webkit-appearance: textfield;
        -moz-appearance: textfield;
             appearance: textfield;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+
+    padding: 0;
+    border-width: 0;
+    text-align: inherit;
+    background: transparent;
 }
 
-[type="number"]::-webkit-inner-spin-button,
-[type="number"]::-webkit-outer-spin-button {
+[name="value"]::-webkit-inner-spin-button,
+[name="value"]::-webkit-outer-spin-button {
     -webkit-appearance: none;
 }
 
+[name="value"]:focus {
+    /* Remove focus ring inside the component */
+    outline: none !important;
+    outline-width: 0 !important;
+}
+
+
+/**
+::part(increment-button)
+**/
+
+/**
+::part(decrement-button)
+**/
+
+[part="decrement-button"],
+[part="increment-button"] {
+    display: block;
+    box-sizing: border-box;
+
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    line-height: inherit;
+
+    padding: 0;
+    border-width: 0;
+    text-align: center;
+    background: transparent;
+}
