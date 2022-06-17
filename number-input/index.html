@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/number-input/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+<meta name="author" content="Stephen Band" />
+<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
+<meta name="viewport" content="width=device-width" />
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@stephband">
+<meta property="og:title" content="form-elements" />
+<meta property="og:description" content="A collection of advanced form controls published as custom elements" />
+<meta property="og:image" content="https://stephen.band/form-elements/card.png" />
+<meta property="og:url" content="https://stephen.band/form-elements/" />
+
+
+<title>form-elements</title>
+
+
+
+<script title="load">
+    document.documentElement.className += ' js loading';
+    // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+    // Wait for other load handlers to run first - Bolt does a few things on
+    // load (eg. targetable scrolls) and we want them to run before the loading
+    // class is removed
+    window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+</script>
+
+
+    <script title="debug">
+        window.DEBUG = true;
+        window.numberInputStylesheet = './shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../bolt/module.css">
+    <link rel="stylesheet" href="../../bolt/documentation/prism-cruncher.css" />
+<link rel="stylesheet" href="../../bolt/documentation.css" />
+<link rel="stylesheet" href="../../bolt/debug.css" />
+
+    <style>
+        number-input + number-input {
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+    
+<header class="x1 3x @1-x3 @1-4x @2-x4">
+    
+    <h2 class="docs-text-02">&lt;number-input&gt;</h2>
+    <p>Import and register the <code>&lt;number-input&gt;</code> custom element:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number-input.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<p>You can now write <code>&lt;number-input&gt;</code> elements in your HTML:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>number-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Scale<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>number-input</span><span class="token punctuation">></span></span></code></pre>
+
+    
+</header>
+
+<form class="x1 3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    <script type="module" src="number-input.js"></script>
+    <!-- for testing form submission values -->
+    <input hidden class="button" type="submit" />
+</form>
+
+<div class="x1 3x @1-x3 @1-2x @2-x4 x-stretch y-start">
+    
+    <h3 class="docs-text-03">Attributes</h3>
+    
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-min-2">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-min-2">
+        <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
+    </a>
+</h3>
+
+<p>Value at lower limit of fader. Can interpret values with recognised units,
+eg. <code>&quot;0dB&quot;</code>.</p>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-max-2">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-max-2">
+        <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
+    </a>
+</h3>
+
+<p>Value at upper limit of fader. Can interpret values with recognised units,
+eg. <code>&quot;0dB&quot;</code>.</p>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-display-2">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-display-2">
+        <code class="token language-html">display</code>
+    </a>
+</h3>
+
+<p>The units to display the value in. The output value and all ticks are
+displayed in this unit. Possible values are:</p>
+<ul>
+<li><code>&quot;dB&quot;</code> – <code>0-1</code> is displayed as <code>-∞dB</code> to <code>0dB</code></li>
+<li><code>&quot;Hz&quot;</code></li>
+<li><code>&quot;bpm&quot;</code></li>
+<li><code>&quot;s&quot;</code></li>
+<li><code>&quot;semitone&quot;</code></li>
+</ul>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-step-2">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-step-2">
+        <code class="token language-html">step</code>
+    </a>
+</h3>
+
+<p>Step is either:</p>
+<ul>
+<li>The string <code>&quot;any&quot;</code> (the default value)</li>
+<li>The string <code>&quot;tick&quot;</code>. The values in the <code>ticks</code> attribute are used as step values</li>
+<li>A space or comma separated list of values, written with or without units</li>
+</ul>
+
+</div>
+
+ 
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value-2">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-value-2">
+        <code class="token language-html">value</code>
+    </a>
+</h3>
+
+<p>The initial value of the <code>&lt;rotary-input&gt;</code>.</p>
+
+</div>
+
+ 
+
+    
+    
+    
+
+    
+    <h3 class="docs-text-03">Properties</h3>
+    
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-type-2">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property-type-2">
+        <code class="property language-js">.type</code>
+    </a>
+</h3>
+
+<p>“number”
+A readonly property with the value <code>&quot;number&quot;</code> (provided for consistency
+with native form elements, which all have a type).</p>
+
+</div>
+
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min-2">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property-min-2">
+        <code class="property language-js">.min</code>
+    </a>
+</h3>
+
+<p>0
+Value at lower limit of fader, as a number.</p>
+
+</div>
+
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max-2">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property-max-2">
+        <code class="property language-js">.max</code>
+    </a>
+</h3>
+
+<p>1
+Value at upper limit of fader, as a number.</p>
+
+</div>
+
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value-2">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property|selector-value-2">
+        <code class="property language-js">.value</code>
+    </a>
+</h3>
+
+<p>Current value of the <code>&lt;rotary-input&gt;</code> as a number.</p>
+
+</div>
+
+ 
+    
+    
+    
+    
+</div>
+
+<div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
+    
+    
+    
+
+    
+    
+    
+</div>
+
+
+
+    <number-input name="number" min="-1" max="1" value="0">Scale</number-input>
+
+    <script type="module">
+    import '../../bolt/module.js';
+    import '../../bolt/documentation.js';
+</script>
+
+    <script type="module">
+    import NumberInput from './module.js';
+    import events     from '../../dom/modules/events.js';
+    </script>
+</body>
