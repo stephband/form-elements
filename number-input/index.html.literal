@@ -28,13 +28,23 @@
     ${ include('../../bolt/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
-        "./modules/properties.js",
+        "./module.css",
         "./shadow.css"
     )) }
 
-    <number-input></number-input>
-    <number-input name="number" min="-1" max="1" value="0"></number-input>
-    <number-input name="number" min="0" max="100" step="1" value="20"></number-input>
+    <number-input>
+        <input type="number" />
+    </number-input>
+
+    <number-input>
+        <input type="number" name="number" min="-1" max="1" value="0" />
+    </number-input>
+
+    <number-input>
+        <span slot="decrement-button">☚</span>
+        <span slot="increment-button">☛</span>
+        <input type="number" name="number" min="0" max="100" step="2" value="20" />
+    </number-input>
 
     ${ include('../../bolt/templates/scripts.html') }
 

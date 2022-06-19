@@ -1,6 +1,5 @@
 
 import Privates  from '../../../fn/modules/privates.js';
-import Stream    from '../../../fn/modules/stream/stream.js';
 import { clamp } from '../../../fn/modules/clamp.js';
 import get       from '../../../fn/modules/get.js';
 import noop      from '../../../fn/modules/noop.js';
@@ -10,18 +9,22 @@ import delegate  from '../../../dom/modules/delegate.js';
 import events, { isPrimaryButton } from '../../../dom/modules/events.js';
 
 
+function getIncrement(min, max, step, shift) {
+    return step ?
+        // Move in big increments if the shift key is down
+        shift ? 5 * step : step :
+        shift ? 0.05 * (max - min) : 0.01 * (max - min) ;
+}
+
 export const toKeyValue = overload(get('keyCode'), {
     // Up arrow
     38: (e, min, max, step, value) => {
         // If we don't preventDefault the browser scrolls
         e.preventDefault();
 
-        // Move in big increments if the shift key is down
-        const increment = step ?
-            e.shiftKey ? 5 * step : step :
-            e.shiftKey ? 0.05 * (max - min) : 0.01 * (max - min) ;
-
-        return clamp(min, max, value + increment);
+        return (typeof min === 'number' && typeof max === 'number') ?
+            clamp(min, max, value + getIncrement(min, max, step, e.shiftKey)) :
+            value + 1 ;
     },
 
     // Down arrow
@@ -29,17 +32,14 @@ export const toKeyValue = overload(get('keyCode'), {
         // If we don't preventDefault the browser scrolls
         e.preventDefault();
 
-        // Move in big increments if the shift key is down
-        const increment = step ?
-            e.shiftKey ? -5 * step : -1 * step :
-            e.shiftKey ? -0.05 * (max - min) : -0.01 * (max - min) ;
-
-        return clamp(min, max, value + increment);
+        return (typeof min === 'number' && typeof max === 'number') ?
+            clamp(min, max, value - getIncrement(min, max, step, e.shiftKey)) :
+            value - 1 ;
     },
 
     // Other keys
     default: noop
-})
+});
 
 
 /*
@@ -61,19 +61,15 @@ function incrementValue(host, internal, e, input, increment) {
     e.preventDefault();
 
     // Unfortunately that also prevents focus on host
-    host.focus();
-
-    // Set form
-    internal.setFormValue(input.value);
+    input.focus();
 }
 
 export default {
     mode: 'closed',
 
-    focusable: true,
+    //focusable: true,
 
     construct: function(shadow, internal) {
-        // DOM
 
         /**
         [slot="decrement-button"]
@@ -84,44 +80,53 @@ export default {
         **/
 
         const style     = create('style', ':host > * { visibility: hidden; }');
-        const input     = create('input',  { type: 'number', part: 'input', name: 'value', min: '0', max: '1', step: 'any', value: 0 });
+        const slot      = create('slot');
         const decrement = create('button', { type: 'button', part: 'decrement-button', name: 'decrement', value: '-1', html: '<slot name="decrement-button">-</slot>' });
         const increment = create('button', { type: 'button', part: 'increment-button', name: 'increment', value: '1', html: '<slot name="increment-button">+</slot>' });
 
-        shadow.append(style, input, decrement, increment);
+        shadow.append(style, slot, decrement, increment);
 
         // Components
-        const privates   = Privates(this);
-        const childStyle = style.sheet.cssRules[0].style;
+        const privates      = Privates(this);
+        privates.childStyle = style.sheet.cssRules[0].style;
 
-        privates.host       = this;
-        privates.shadow     = shadow;
-        privates.childStyle = childStyle;
-        privates.internal   = internal;
-        privates.input      = input;
+        // Where <number-input> wraps an input, we enhance that with our
+        // decrement/increment logic, otherwise we use the internal input.
+        // Todo: maybe we should just get rid of the internal input and treat
+        // this custom element as a wrapper, it would simplify everything - no
+        // need to setFormValue or any of that malarky
+        events('slotchange', slot)
+        .each((e) => {
+            const input = this.querySelector('[type="number"], [type="range"]');
+            privates.input = input;
 
-        // TODO: we must convert value to stream so that we can setFormValue
-        // on internals whenever one comes in!
-        privates.value      = Stream.of(0);
+            if (!input.value) {
+                input.value = clamp(
+                    input.min ? parseFloat(input.min) : -Infinity,
+                    input.max ? parseFloat(input.max) :  Infinity,
+                    0
+                );
+            }
+        });
 
         // Decrement and increment buttons
         events('pointerdown', shadow)
         .filter(isPrimaryButton)
         .each(delegate({
-            '[type="button"]':           (element, e) => incrementValue(this, internal, e, input, parseFloat(element.value) *  (parseFloat(input.step) || 1)),
-            '[slot="decrement-button"]': (element, e) => incrementValue(this, internal, e, input, -1 * (parseFloat(input.step) || 1)),
-            '[slot="increment-button"]': (element, e) => incrementValue(this, internal, e, input, parseFloat(input.step) || 1)
+            '[type="button"]':           (element, e) => incrementValue(this, internal, e, privates.input, parseFloat(element.value) *  (parseFloat(privates.input.step) || 1)),
+            '[slot="decrement-button"]': (element, e) => incrementValue(this, internal, e, privates.input, -1 * (parseFloat(privates.input.step) || 1)),
+            '[slot="increment-button"]': (element, e) => incrementValue(this, internal, e, privates.input, parseFloat(privates.input.step) || 1)
         }));
 
         // Keep value between min < value < max
         events({ type: 'input', select: '[type="number"]' }, shadow)
         .each((e) => {
-            const value = parseFloat(input.value || 0);
-            const min   = parseFloat(input.min);
-            const max   = parseFloat(input.max);
+            const value = parseFloat(privates.input.value || 0);
+            const min   = parseFloat(privates.input.min);
+            const max   = parseFloat(privates.input.max);
 
             if (value < min || value > max) {
-                input.value = clamp(min, max, value);
+                privates.input.value = clamp(min, max, value);
             }
 
             // Todo: constrain value to step
@@ -129,11 +134,17 @@ export default {
 
         // While this is focused allow up and down arrows to change value
         events('keydown', this)
-        .filter(() => document.activeElement === this || this.contains(document.activeElement))
-        .map((e) => toKeyValue(e, parseFloat(input.min), parseFloat(input.max), parseFloat(input.step), parseFloat(input.value)))
+        .filter(() => document.activeElement === this || document.activeElement === privates.input || this.contains(document.activeElement))
+        .map((e) => toKeyValue(
+            e,
+            privates.input.min && parseFloat(privates.input.min),
+            privates.input.max && parseFloat(privates.input.max),
+            parseFloat(privates.input.step),
+            parseFloat(privates.input.value)
+        ))
         .each((value) =>
             // Attempt to avoid rounding errors
-            input.value =
+            privates.input.value =
                 Math.abs(value) < 0.1 ? value.toPrecision(1) :
                 Math.abs(value) < 10  ? value.toPrecision(2) :
                 Math.round(value)

@@ -6,22 +6,25 @@
 Host
 */
 
+/**
+--button-width: 1.5rem;
+Width of decrement/increment buttons.
+**/
+
 :host {
     --button-width: 1.5em;
 
     display: inline-block;
     position: relative;
 
-    column-gap: 0;
-    text-align: center;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 :host > * {
     margin: 0;
 }
 
-:host > [name="value"] {
+:host > slot > [name="value"] {
     width: 100%;
     min-width: calc(2 * var(--button-width));
     padding-left: var(--button-width);
@@ -35,6 +38,7 @@ Host
     bottom: 0;
     width: var(--button-width);
     min-width: var(--button-width);
+    text-align: center;
 }
 
 :host > [part="decrement-button"] {
@@ -51,6 +55,14 @@ Number
 */
 
 [name="value"] {
+    padding: 0;
+    border-width: 0;
+    background: transparent;
+}
+
+[name="value"],
+::slotted([type="number"]),
+::slotted([type="range"]) {
     display: block;
     box-sizing: border-box;
 
@@ -63,11 +75,19 @@ Number
     font-weight: inherit;
     line-height: inherit;
 
-    padding: 0;
-    border-width: 0;
-    text-align: inherit;
-    background: transparent;
+    width: 100%;
+    min-width: calc(2 * var(--button-width));
+    text-indent: 0 !important;
+    padding-left: var(--button-width) !important;
+    padding-right: var(--button-width) !important;
+
+    text-align: center;
 }
+
+/* This selector (and no combination that I can find) actually works
+::slotted(input::-webkit-inner-spin-button),
+::slotted(input::-webkit-outer-spin-button),
+Unfortunate. Put this style in the outer module.css. */
 
 [name="value"]::-webkit-inner-spin-button,
 [name="value"]::-webkit-outer-spin-button {

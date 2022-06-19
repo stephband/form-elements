@@ -1,24 +1,51 @@
 /**
 <number-input>
 
-Import and register the `<number-input>` custom element:
+Import and register the `<number-input>` custom element, upgrading any
+`<number-input>` elements already in the DOM:
 
-```html
-<script type="module" src="number-input.js"></script>
+```js
+import NumberInput from './number-input.js';
 ```
 
-You can now write `<number-input>` elements in your HTML:
+The `<number-input>` element wraps an `<input type="number">`, augmenting it
+with styleable decrement/increment buttons and up/down arrow keyboard behaviour:
 
 ```html
-<number-input name="number" min="-1" max="1" value="0" />
+<number-input>
+    <input type="number" />
+</number-input>
 ```
+
+Default content of decrement and increment buttons may be overridden with custom
+HTML:
+
+```html
+<number-input>
+    <span slot="decrement-button">☚</span>
+    <span slot="increment-button">☛</span>
+    <input type="number" min="-1" max="1" step="0.1" />
+</number-input>
+```
+
+Note that the element itself is not a form element. It has no `value` and does
+not set any form data in its internals.
+**/
+
+/**
+slot="decrement-button"
+Replace default content of the decrement button (`"-"`) with your own HTML.
+**/
+
+/**
+slot="increment-button"
+Replace default content of the increment button (`"+"`) with your own HTML.
 **/
 
 import element    from '../../dom/modules/element.js';
 import lifecycle  from './modules/lifecycle.js';
-import properties from './modules/properties.js';
 
 const stylesheet = window.numberInputStylesheet
     || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'number-input-shadow.css';
 
-export default element('<number-input>', lifecycle, properties, stylesheet);
+export default element('<number-input>', lifecycle, {}, stylesheet);
