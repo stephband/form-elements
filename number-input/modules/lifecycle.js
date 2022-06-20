@@ -67,8 +67,6 @@ function incrementValue(host, internal, e, input, increment) {
 export default {
     mode: 'closed',
 
-    //focusable: true,
-
     construct: function(shadow, internal) {
 
         /**

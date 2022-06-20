@@ -16,8 +16,6 @@ Width of decrement/increment buttons.
 
     display: inline-block;
     position: relative;
-
-    /*border: 1px solid black;*/
 }
 
 :host > * {
