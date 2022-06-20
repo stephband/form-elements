@@ -1,31 +1,31 @@
 /**
-<number-input>
+<increment-control>
 
-Import and register the `<number-input>` custom element, upgrading any
-`<number-input>` elements already in the DOM:
+Import and register the `<increment-control>` custom element, upgrading any
+`<increment-control>` elements already in the DOM:
 
 ```js
-import NumberInput from './number-input.js';
+import NumberInput from './increment-control.js';
 ```
 
-The `<number-input>` element wraps an `<input type="number">`, augmenting it
+The `<increment-control>` element wraps an `<input type="number">`, augmenting it
 with styleable decrement/increment buttons and up/down arrow keyboard behaviour:
 
 ```html
-<number-input>
+<increment-control>
     <input type="number" />
-</number-input>
+</increment-control>
 ```
 
 Default content of decrement and increment buttons may be overridden with custom
 HTML:
 
 ```html
-<number-input>
+<increment-control>
     <span slot="decrement-button">☚</span>
     <span slot="increment-button">☛</span>
     <input type="number" min="-1" max="1" step="0.1" />
-</number-input>
+</increment-control>
 ```
 
 Note that the element itself is not a form element. It has no `value` and does
@@ -46,6 +46,6 @@ import element    from '../../dom/modules/element.js';
 import lifecycle  from './modules/lifecycle.js';
 
 const stylesheet = window.numberInputStylesheet
-    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'number-input-shadow.css';
+    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'increment-control-shadow.css';
 
-export default element('<number-input>', lifecycle, {}, stylesheet);
+export default element('<increment-control>', lifecycle, {}, stylesheet);

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!-- Literal template "/Users/stephband/Sites/form-elements/number-input/index.html.literal" -->
+<!-- Literal template "/Users/stephband/Sites/form-elements/increment-control/index.html.literal" -->
 
 <html lang="en">
 <head>
@@ -44,11 +44,11 @@
     <style>
         @import './module.css';
 
-        number-input {
+        increment-control {
             align-self: start;
         }
 
-        number-input + number-input {
+        increment-control + increment-control {
             margin-top: 1.5rem;
         }
     </style>
@@ -58,22 +58,22 @@
     
 <header class="x1 3x @1-x3 @1-4x @2-x4">
     
-    <h2 class="docs-text-02">&lt;number-input&gt;</h2>
-    <p>Import and register the <code>&lt;number-input&gt;</code> custom element, upgrading any
-<code>&lt;number-input&gt;</code> elements already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> NumberInput <span class="token keyword">from</span> <span class="token string">'../../bolt/templates/number-input.js'</span><span class="token punctuation">;</span></code></pre>
-<p>The <code>&lt;number-input&gt;</code> element wraps an <code>&lt;input type=&quot;number&quot;&gt;</code>, augmenting it
+    <h2 class="docs-text-02">&lt;increment-control&gt;</h2>
+    <p>Import and register the <code>&lt;increment-control&gt;</code> custom element, upgrading any
+<code>&lt;increment-control&gt;</code> elements already in the DOM:</p>
+<pre><code class="language-js"><span class="token keyword">import</span> NumberInput <span class="token keyword">from</span> <span class="token string">'../../bolt/templates/increment-control.js'</span><span class="token punctuation">;</span></code></pre>
+<p>The <code>&lt;increment-control&gt;</code> element wraps an <code>&lt;input type=&quot;number&quot;&gt;</code>, augmenting it
 with styleable decrement/increment buttons and up/down arrow keyboard behaviour:</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>number-input</span><span class="token punctuation">></span></span>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>increment-control</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>number-input</span><span class="token punctuation">></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>increment-control</span><span class="token punctuation">></span></span></code></pre>
 <p>Default content of decrement and increment buttons may be overridden with custom
 HTML:</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>number-input</span><span class="token punctuation">></span></span>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>increment-control</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>decrement-button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>☚<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>increment-button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>☛<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
     <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0.1<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>number-input</span><span class="token punctuation">></span></span></code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>increment-control</span><span class="token punctuation">></span></span></code></pre>
 <p>Note that the element itself is not a form element. It has no <code>value</code> and does
 not set any form data in its internals.</p>
 
@@ -81,9 +81,9 @@ not set any form data in its internals.</p>
 </header>
 
 <form class="x1 3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    <number-input>
+    <increment-control>
     <input type="number" />
-</number-input>
+</increment-control>
     <!-- for testing form submission values -->
     <input hidden class="button" type="submit" />
 </form>
@@ -176,19 +176,19 @@ Width of decrement/increment buttons.</p>
 </div>
 
 
-    <number-input>
+    <increment-control>
         <input type="number" />
-    </number-input>
+    </increment-control>
 
-    <number-input>
+    <increment-control>
         <input type="number" name="number" min="-1" max="1" value="0" />
-    </number-input>
+    </increment-control>
 
-    <number-input>
+    <increment-control>
         <span slot="decrement-button">☚</span>
         <span slot="increment-button">☛</span>
         <input type="number" name="number" min="0" max="100" step="2" value="20" />
-    </number-input>
+    </increment-control>
 
     <script type="module">
     import '../../bolt/module.js';
