@@ -49,7 +49,9 @@
     ${ include('../../bolt/templates/scripts.html') }
 
     <script type="module">
-    import NumberInput from './module.js';
+    import IncrementControl from './module.js';
     import events      from '../../dom/modules/events.js';
+
+    events('input', document).each(console.log);
     </script>
 </body>

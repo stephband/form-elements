@@ -196,7 +196,9 @@ Width of decrement/increment buttons.</p>
 </script>
 
     <script type="module">
-    import NumberInput from './module.js';
+    import IncrementControl from './module.js';
     import events      from '../../dom/modules/events.js';
+
+    events('input', document).each(console.log);
     </script>
 </body>
