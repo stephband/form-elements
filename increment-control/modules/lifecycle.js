@@ -7,6 +7,7 @@ import overload  from '../../../fn/modules/overload.js';
 import create    from '../../../dom/modules/create.js';
 import delegate  from '../../../dom/modules/delegate.js';
 import events, { isPrimaryButton } from '../../../dom/modules/events.js';
+import trigger   from '../../../dom/modules/trigger.js';
 
 
 function getIncrement(min, max, step, shift) {
@@ -62,6 +63,10 @@ function incrementValue(host, internal, e, input, increment) {
 
     // Unfortunately that also prevents focus on host
     input.focus();
+
+    // Send input and change events
+    trigger('input', input);
+    trigger('change', input);
 }
 
 export default {
@@ -140,13 +145,19 @@ export default {
             parseFloat(privates.input.step),
             parseFloat(privates.input.value)
         ))
-        .each((value) =>
+        .each((value) => {
+            const input = privates.input;
+
             // Attempt to avoid rounding errors
-            privates.input.value =
+            input.value =
                 Math.abs(value) < 0.1 ? value.toPrecision(1) :
                 Math.abs(value) < 10  ? value.toPrecision(2) :
-                Math.round(value)
-        );
+                Math.round(value);
+
+            // Send input and change events
+            trigger('input', input);
+            trigger('change', input);
+        });
     },
 
     load: function(shadow) {
