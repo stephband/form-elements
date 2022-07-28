@@ -92,6 +92,14 @@ function renderValue(style, input, internals, outputText, outputAbbr, unit, valu
 Lifecycle
 */
 
+function getHostStyle(style) {
+    return style.sheet.cssRules[0].style;
+}
+
+function getChildStyle(style) {
+    return style.sheet.cssRules[1].style;
+}
+
 export default {
     mode: 'closed',
 
@@ -113,13 +121,10 @@ export default {
         // Components
         const privates   = Privates(this);
         const data       = {};
-        const hostStyle  = style.sheet.cssRules[0].style;
-        const childStyle = style.sheet.cssRules[1].style;
 
         privates.host       = this;
         privates.shadow     = shadow;
-        privates.hostStyle  = hostStyle;
-        privates.childStyle = childStyle;
+        privates.style      = style;
         privates.internals  = internals;
         privates.data       = data;
 
@@ -151,7 +156,7 @@ export default {
         .broadcast();
 
         attributes
-        .each((data) => renderData(hostStyle, data.scale, data.min, data.max, data.ticks, buttons, marker));
+        .each((data) => renderData(getHostStyle(style), data.scale, data.min, data.max, data.ticks, buttons, marker));
 
         // Track value updates
         Stream
@@ -160,7 +165,7 @@ export default {
             value:   privates.value
         })
         .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
-        .each((data) => renderValue(hostStyle, input, internals, text, abbr, data.display, data.value, data.normalValue)) ;
+        .each((data) => renderValue(getHostStyle(style), input, internals, text, abbr, data.display, data.value, data.normalValue)) ;
 
 
 
@@ -193,7 +198,7 @@ export default {
 
     load: function(shadow) {
         const privates = Privates(this);
-        privates.childStyle.visibility = '';
+        getChildStyle(privates.style).visibility = '';
         privates.load(shadow);
     }
 };
