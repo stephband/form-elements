@@ -44,11 +44,11 @@ Style the tick marks.
 [part$="tick"]:focus {
     outline-width: 0;
 }
-
+/*
 [part$="tick"]:focus-visible {
     outline-width: 0.0625rem;
 }
-
+*/
 [part$="tick"] > span,
 [part$="tick"] > span {
     font-size: inherit;

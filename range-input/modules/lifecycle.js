@@ -75,7 +75,7 @@ function renderData(style, scale, min, max, ticks, buttons, marker) {
 
 function renderValue(style, input, internals, outputText, outputAbbr, unit, value, normalValue) {
     // Render handle position
-    //style.setProperty('--normal-value', normalValue);
+    style.setProperty('--normal-value', normalValue);
     input.value = normalValue;
 
     // Render display
