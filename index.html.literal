@@ -58,7 +58,7 @@
 
     <div class="x1 3x @1-x3 @1-4x @2-x4">
         <h2>&lt;increment-control&gt;</h2>
-        <p>A wrapper for <code>&lt;input type="number"&lt;</code> inputs
+        <p>A wrapper for <code>&lt;input type="number"&gt;</code> inputs
         providing styleable decrement/increment buttons, decrement/increment
         key bindings and reliable constraints on text input.</p>
         <a class="link-button button" href="./increment-control/">Documentation</a>
@@ -70,7 +70,7 @@
 
     <div class="x1 3x @1-x3 @1-4x @2-x4">
         <h2>&lt;range-input&gt;</h2>
-        <p>A horizontal slider with an <code>&lt;input type="range"&lt;</code>
+        <p>A horizontal slider with an <code>&lt;input type="range"&gt;</code>
         at its core, clickable tick marks, and a live value readout.</p>
         <a class="link-button button" href="./range-input/">Documentation</a>
     </div>
