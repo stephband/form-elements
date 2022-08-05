@@ -16,7 +16,7 @@ export function updateData(data, state) {
     data.scale = scale;
     data.min   = min;
     data.max   = max;
-console.log(ticks);
+
     data.ticks = (ticks ?
             ticks.length ? ticks :
             generateTicks(display, min, max) :

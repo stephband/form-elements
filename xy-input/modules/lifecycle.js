@@ -1,16 +1,15 @@
 
-import Privates        from '../../../fn/modules/privates.js';
-import { clamp }       from '../../../fn/modules/clamp.js';
-import Stream          from '../../../fn/modules/stream.js';
-import nothing         from '../../../fn/modules/nothing.js';
-import create          from '../../../dom/modules/create.js';
-import delegate        from '../../../dom/modules/delegate.js';
-import events          from '../../../dom/modules/events.js';
-import { trigger }     from '../../../dom/modules/trigger.js';
-import parseValue      from '../../modules/parse-value.js';
-import parseTicks      from '../../modules/parse-ticks.js';
-import { updateData }  from '../../modules/data.js';
-import { generateTicks } from '../../modules/ticks.js';
+import Privates          from '../../../fn/modules/privates.js';
+import { clamp }         from '../../../fn/modules/clamp.js';
+import Stream            from '../../../fn/modules/stream.js';
+import nothing           from '../../../fn/modules/nothing.js';
+import create            from '../../../dom/modules/create.js';
+import delegate          from '../../../dom/modules/delegate.js';
+import events            from '../../../dom/modules/events.js';
+import { trigger }       from '../../../dom/modules/trigger.js';
+import parseValue        from '../../modules/parse-value.js';
+import parseTicks        from '../../modules/parse-ticks.js';
+import { updateData }    from '../../modules/data.js';
 import { normalise, denormalise } from '../../modules/scales.js';
 
 import { getScale }    from '../../modules/scales.js';
@@ -328,16 +327,6 @@ function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata,
     points
     && points.length
     && drawAudioEnvelope(ctx, viewbox, valuebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, points, plotColor) ;
-}
-
-function renderLine() {
-    create('line', {
-        part: '',
-        x1:   '',
-        y1:   '',
-        x2:   '',
-        y2:   ''
-    });
 }
 
 function renderTick(buttons, tick, axis) {
