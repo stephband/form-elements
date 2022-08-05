@@ -138,7 +138,7 @@ export default {
     xticks="-48dB -36dB -24dB -12dB 0dB"
     ```
     **/
-    xticks: createAttribute('xticks'),
+    xticks: createAttribute('xticks', ''),
 
     /**
     yticks=""
@@ -150,7 +150,7 @@ export default {
     yticks="-48dB -36dB -24dB -12dB 0dB"
     ```
     **/
-    yticks: createAttribute('yticks'),
+    yticks: createAttribute('yticks', ''),
 
     /**
     xstep=""

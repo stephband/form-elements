@@ -4,6 +4,15 @@ import { dB24, dB30, dB36, dB48, dB60, dB66, dB72, dB96 } from './constants.js';
 const assign = Object.assign;
 
 
+export function normalise(min, max, value) {
+    return (value - min) / (max - min);
+}
+
+export function denormalise(min, max, ratio) {
+    return min + ratio * (max - min);
+}
+
+
 /*
 Linear/logarithmic normaliser
 */
@@ -69,19 +78,10 @@ Names must be lowercase, as attribute values are converted to lowercase.
 */
 
 const scales = {
-    'linear': {
-        normalise: function(min, max, value) {
-            return (value - min) / (max - min);
-        },
-
-        denormalise: function(min, max, ratio) {
-            return min + ratio * (max - min);
-        }
-    },
-
-    'pow-2': new PowerScale(2),
-    'pow-3': new PowerScale(3),
-    'pow-4': new PowerScale(4),
+    'linear': { normalise, denormalise },
+    'pow-2':  new PowerScale(2),
+    'pow-3':  new PowerScale(3),
+    'pow-4':  new PowerScale(4),
 
     'log': {
         normalise: function(min, max, value) {

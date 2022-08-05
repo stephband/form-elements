@@ -1,4 +1,7 @@
 
+import id         from '../../fn/modules/id.js';
+import overload   from '../../fn/modules/overload.js';
+import toType     from '../../fn/modules/to-type.js';
 import parseValue from './parse-value.js';
 
 /**
@@ -32,11 +35,15 @@ function toTicks(ticks, value) {
     return ticks;
 }
 
-export default function parseTicks(string) {
-    const trimmed = string.trim();
-    return trimmed ?
-        trimmed
-        .split(/\s*,\s*|\s+/)
-        .reduce(toTicks, []) :
-        null ;
-}
+export default overload(toType, {
+    string: function parseTicks(string) {
+        const trimmed = string.trim();
+        return trimmed ?
+            trimmed
+            .split(/\s*,\s*|\s+/)
+            .reduce(toTicks, []) :
+            [] ;
+    },
+
+    object: id
+});

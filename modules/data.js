@@ -16,9 +16,10 @@ export function updateData(data, state) {
     data.scale = scale;
     data.min   = min;
     data.max   = max;
-
-    data.ticks = (ticks ? ticks :
-        display ? generateTicks(display, min, max) :
+console.log(ticks);
+    data.ticks = (ticks ?
+            ticks.length ? ticks :
+            generateTicks(display, min, max) :
         nothing)
         // Filter to ticks within range min-max
         .filter((tick) => tick.value >= data.min && tick.value <= data.max)

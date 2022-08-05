@@ -2,6 +2,7 @@
 import Privates        from '../../../fn/modules/privates.js';
 import { clamp }       from '../../../fn/modules/clamp.js';
 import Stream          from '../../../fn/modules/stream.js';
+import nothing         from '../../../fn/modules/nothing.js';
 import create          from '../../../dom/modules/create.js';
 import delegate        from '../../../dom/modules/delegate.js';
 import events          from '../../../dom/modules/events.js';
@@ -9,6 +10,8 @@ import { trigger }     from '../../../dom/modules/trigger.js';
 import parseValue      from '../../modules/parse-value.js';
 import parseTicks      from '../../modules/parse-ticks.js';
 import { updateData }  from '../../modules/data.js';
+import { generateTicks } from '../../modules/ticks.js';
+import { normalise, denormalise } from '../../modules/scales.js';
 
 import { getScale }    from '../../modules/scales.js';
 import { toDisplay }   from '../../modules/display.js';
@@ -82,7 +85,6 @@ function updateBoxes(host, computed, pxbox, paddingbox, contentbox, rangebox) {
 }
 
 function updateViewbox(host, style, computed, canvas, svg, data) {
-    console.log(data.pxbox);
     data.box = updateBoxes(host, computed, data.pxbox, data.paddingbox, data.contentbox, data.rangebox);
 
     canvas.width  = data.paddingbox.width * 2;
@@ -271,8 +273,6 @@ const handle = delegate({
 });
 
 
-
-
 /* Update */
 
 function updateValue(data, state) {
@@ -352,25 +352,33 @@ function renderTick(buttons, tick, axis) {
     return buttons;
 }
 
-function renderHandle(xscale, xmin, xmax, yscale, ymin, ymax, point, index) {
-    /*const title = create('title', {
-        text: point.label
-    });*/
-
+function renderHandle(rangebox, xscale, xmin, xmax, yscale, ymin, ymax, point, index) {
     return create('path', {
         part:  'handle',
         class: 'control control-handle control-point',
-        d:     'M 0,0.5 a 0,0 0 1,1 0.5,-0.5 a 0,0 0 1,1 -0.5,0 Z',
-        x:     xscale.denormalise(xmin, xmax, point.x),
-        y:     yscale.denormalise(ymin, ymax, point.y),
-        //children: [title],
+        d:     'M 0 0, m -0.5 0, a 0.5 0.5 0 1 0 1 0, a 0.5 0.5 0 1 0 -1 0',
+
+        // Position it
+        transform: 'translate('
+            + denormalise(rangebox[0], rangebox[0] + rangebox[2], xscale.normalise(xmin, xmax, point.x))
+            + ' '
+            + denormalise(rangebox[1], rangebox[1] + rangebox[3], yscale.normalise(ymin, ymax, point.y))
+            + ')',
+
+        // Hover tooltip contains "label x, y"
+        html: '<title>'
+            + (point.label ? (point.label + ' ') : '')
+            + point.x + ', ' + point.y
+            + '</title>',
+
+        // Keep a track of which point this path is from
         data:  { index: index }
     });
 }
 
-function renderHandles(xdata, ydata, points) {
+function renderHandles(rangebox, xdata, ydata, points) {
     return points.map((point, index) =>
-        renderHandle(xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, index)
+        renderHandle(rangebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, index)
     );
 }
 
@@ -424,21 +432,21 @@ export default {
         privates.paddingbox = {};
         privates.contentbox = {};
         privates.rangebox   = [0, 6.75, 6.75, -6.75];
-        privates.valuebox   = { x: 0, y: 0, width: 1, height: 1 };
+        const valuebox = { x: 0, y: 0, width: 1, height: 1 };
 
         // Inputs
         privates.xscale   = Stream.of(defaults.scale);
         privates.xmin     = Stream.of(defaults.min);
         privates.xmax     = Stream.of(defaults.max);
         privates.xstep    = Stream.of(defaults.step);
-        privates.xticks   = Stream.of(defaults.ticks);
+        privates.xticks   = Stream.of(null);
         privates.xdisplay = Stream.of(defaults.display);
 
         privates.yscale   = Stream.of(defaults.scale);
         privates.ymin     = Stream.of(defaults.min);
         privates.ymax     = Stream.of(defaults.max);
         privates.ystep    = Stream.of(defaults.step);
-        privates.yticks   = Stream.of(defaults.ticks);
+        privates.yticks   = Stream.of(null);
         privates.ydisplay = Stream.of(defaults.display);
         privates.value    = Stream.of([{ x: 0, y: 0, type: 'step' }]);
 
@@ -473,10 +481,16 @@ export default {
         .scan(updateData, {})
         .broadcast();
 
-        // Render canvas
-        Stream
-        .combine({ xattributes, yattributes })
-        .each((state) => renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xattributes, state.yattributes, data.value));
+        xattributes.each((data) => {
+            // Keep valuebox up-to-date
+            valuebox.x      = data.min;
+            valuebox.width  = data.max;
+        });
+
+        yattributes.each((data) => {
+            valuebox.y      = data.min;
+            valuebox.height = data.max;
+        });
 
         // Render DOM
         xattributes
@@ -484,6 +498,11 @@ export default {
 
         yattributes
         .each((data) => renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ylines, yticks, ymarker));
+
+        // Render canvas
+        Stream
+        .combine({ xattributes, yattributes })
+        .each((state) => renderCanvas(canvas, ctx, computed, privates.contentbox, valuebox, state.xattributes, state.yattributes, data.value));
 
         // Track value updates
         Stream
@@ -493,24 +512,10 @@ export default {
             value: privates.value
         })
         .each((state) => {
-            renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xattributes, state.yattributes, state.value);
-            const handles = renderHandles(state.xattributes, state.yattributes, state.value);
+            renderCanvas(canvas, ctx, computed, privates.contentbox, valuebox, state.xattributes, state.yattributes, state.value);
+            const handles = renderHandles(privates.rangebox, state.xattributes, state.yattributes, state.value);
             svg.append.apply(svg, handles);
         });
-
-
-
-        /*this[$state] = {
-            rendered: literal.push(data),
-            host:     this,
-            data:     data,
-            internal: internal,
-            literal:  literal,
-            formdata: formdata,
-            viewbox:  literal.content.querySelector('svg').viewBox.baseVal
-        };*/
-
-
 
         gestures({ threshold: 1 }, shadow)
         .reduce((previous, gesture) => {
