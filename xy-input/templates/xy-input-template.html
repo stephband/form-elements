@@ -17,6 +17,7 @@
         </label>
 
         <canvas>${
+/*
             this.ctx      = this.ctx || element.getContext('2d'),
             this.computed = this.computed || getComputedStyle(data.host),
 
@@ -57,7 +58,7 @@
                     .map((line) => data.toRatioY(line.value)),
                     this.yGridColor
                 ),
-/*
+
                 data.xScale === 'linear' ?
                     data.points.forEach((point) => data.drawCrosshair(this.ctx, this.viewbox, 28, {
                         x: data.toRatioX(point.x),
@@ -72,9 +73,11 @@
                         })).sort(by(get('x'))),
                         this.graphColor
                     ),
-*/
+
                 data.drawAudioEnvelope(this.ctx, this.viewbox, data.valuebox, data.points, this.plotColor)
+
             ), ''
+*/
         }</canvas>
 
         <!-- SVG must be made to cover the available space else the shapes are not clickable in Safari -->

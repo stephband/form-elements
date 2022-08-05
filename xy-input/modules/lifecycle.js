@@ -81,14 +81,23 @@ function updateBoxes(host, computed, pxbox, paddingbox, contentbox, rangebox) {
     return box;
 }
 
-function updateViewbox(host, style, computed, canvas, data) {
+function updateViewbox(host, style, computed, canvas, svg, data) {
+    console.log(data.pxbox);
     data.box = updateBoxes(host, computed, data.pxbox, data.paddingbox, data.contentbox, data.rangebox);
+
     canvas.width  = data.paddingbox.width * 2;
     canvas.height = data.paddingbox.height * 2;
+
     style.setProperty('--range-x',      data.rangebox[0]);
     style.setProperty('--range-y',      data.rangebox[1]);
     style.setProperty('--range-width',  data.rangebox[2]);
     style.setProperty('--range-height', data.rangebox[3]);
+
+    svg.setAttribute('viewBox', data.rangebox[0] + ' '
+        + (data.rangebox[1] + data.rangebox[3]) + ' '
+        + data.rangebox[2] + ' '
+        + (-data.rangebox[3])
+    );
 }
 
 function setXY(e, data) {
@@ -266,8 +275,8 @@ const handle = delegate({
 
 /* Update */
 
-function updateValue() {
-
+function updateValue(data, state) {
+    return data;
 }
 
 
@@ -318,7 +327,7 @@ function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata,
 
     points
     && points.length
-    && drawAudioEnvelope(ctx, viewbox, valuebox, points, plotColor) ;
+    && drawAudioEnvelope(ctx, viewbox, valuebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, points, plotColor) ;
 }
 
 function renderLine() {
@@ -343,28 +352,26 @@ function renderTick(buttons, tick, axis) {
     return buttons;
 }
 
-function renderYTick(buttons, tick) {
-    buttons.push(
-        create('label', {
-            part:  'y-tick tick',
-            style: '--normal-value: ' + tick.normalValue + ';',
-            html:  '<span>' + tick.label + '</span>'
-        })
-    );
+function renderHandle(xscale, xmin, xmax, yscale, ymin, ymax, point, index) {
+    /*const title = create('title', {
+        text: point.label
+    });*/
 
-    return buttons;
-}
-
-function renderHandle() {
-    const title = create('title');
-    create('path', {
+    return create('path', {
         part:  'handle',
         class: 'control control-handle control-point',
-        d:     '',
-        x:     '',
-        y:     '',
-        children: [title]
+        d:     'M 0,0.5 a 0,0 0 1,1 0.5,-0.5 a 0,0 0 1,1 -0.5,0 Z',
+        x:     xscale.denormalise(xmin, xmax, point.x),
+        y:     yscale.denormalise(ymin, ymax, point.y),
+        //children: [title],
+        data:  { index: index }
     });
+}
+
+function renderHandles(xdata, ydata, points) {
+    return points.map((point, index) =>
+        renderHandle(xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, index)
+    );
 }
 
 function renderData(axis, style, scale, min, max, ticks, lines, buttons, marker) {
@@ -433,11 +440,10 @@ export default {
         privates.ystep    = Stream.of(defaults.step);
         privates.yticks   = Stream.of(defaults.ticks);
         privates.ydisplay = Stream.of(defaults.display);
-
-        privates.value    = Stream.of('0 0 step');
+        privates.value    = Stream.of([{ x: 0, y: 0, type: 'step' }]);
 
         privates.shadow.then(() => {
-            updateViewbox(this, hostStyle, computed, canvas, privates);
+            updateViewbox(this, hostStyle, computed, canvas, svg, privates);
         });
 
         // Track attribute updates
@@ -480,15 +486,17 @@ export default {
         .each((data) => renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ylines, yticks, ymarker));
 
         // Track value updates
-        /*Stream
+        Stream
         .combine({
-            xdata: xattributes,
-            ydata: yattributes,
+            xattributes,
+            yattributes,
             value: privates.value
         })
-        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
-        .each((data) => renderValue(hostStyle, input, internals, text, abbr, data.display, data.value, data.normalValue)) ;
-        */
+        .each((state) => {
+            renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xattributes, state.yattributes, state.value);
+            const handles = renderHandles(state.xattributes, state.yattributes, state.value);
+            svg.append.apply(svg, handles);
+        });
 
 
 
@@ -502,9 +510,12 @@ export default {
             viewbox:  literal.content.querySelector('svg').viewBox.baseVal
         };*/
 
+
+
         gestures({ threshold: 1 }, shadow)
         .reduce((previous, gesture) => {
-            data.box = updateBoxes(this, data.pxbox, data.paddingbox, data.contentbox, data.rangebox);
+            // Is this necessary?
+            data.box = updateBoxes(this, computed, privates.pxbox, privates.paddingbox, privates.contentbox, privates.rangebox);
             const state = assign({ previous, events: [] }, this[$state]);
 
             gesture
@@ -515,7 +526,8 @@ export default {
             return state;
         });
 
-        events('resize', window).each((e) => updateViewbox(this, hostStyle, computed, canvas, privates));
+        events('resize', window)
+        .each((e) => updateViewbox(this, hostStyle, computed, canvas, svg, privates));
     },
 
     load: function(shadow) {

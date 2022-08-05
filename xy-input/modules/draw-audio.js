@@ -107,7 +107,7 @@ const radius = 18;
     ctx.closePath();
 }
 
-export function drawAudioEnvelope(ctx, viewbox, valuebox, events, color) {
+export function drawAudioEnvelope(ctx, viewbox, valuebox, xscale, xmin, xmax, yscale, ymin, ymax, events, color) {
     // Draw lines / second
     const drawRate = samplesPerPixel * viewbox.width / valuebox.width;
     const offline  = new OfflineAudioContext(1, samplesPerPixel * viewbox.width, 22050);
@@ -130,8 +130,8 @@ export function drawAudioEnvelope(ctx, viewbox, valuebox, events, color) {
 
     ctx.cacheddata && drawCurvePositive(ctx, viewbox, samplesPerPixel, ctx.cacheddata, color);
     ctx.cacheddata && drawTargetLines(ctx, viewbox, events.map((event) => ({
-        x:        this.toRatioX(event.x),
-        y:        this.toRatioY(event.y),
+        x:        xscale.normalise(xmin, xmax, event.x),
+        y:        yscale.normalise(ymin, ymax, event.y),
         type:     event.type,
         duration: event.duration
     })).sort(by(get('x'))), color);
@@ -141,11 +141,11 @@ export function drawAudioEnvelope(ctx, viewbox, valuebox, events, color) {
     .then((buffer) => {
         // Only actually render the latest
         if (--ctx.activeRenders) { return; }
-        const data = buffer.getChannelData(0).map((y) => this.toRatioY(y));
+        const data = buffer.getChannelData(0).map((y) => yscale.normalise(ymin, ymax, y));
         !ctx.cacheddata && drawCurvePositive(ctx, viewbox, samplesPerPixel, data, color);
         !ctx.cacheddata && drawTargetLines(ctx, viewbox, events.map((event) => ({
-            x:        this.toRatioX(event.x),
-            y:        this.toRatioY(event.y),
+            x:        xscale.normalise(xmin, xmax, event.x),
+            y:        yscale.normalise(ymin, ymax, event.y),
             type:     event.type,
             duration: event.duration
         })).sort(by(get('x'))), color);
