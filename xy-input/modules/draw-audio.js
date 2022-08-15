@@ -1,15 +1,15 @@
 /* Canvas */
 
-import by  from '../../../fn/modules/by.js';
-import get from '../../../fn/modules/get.js';
+import by      from '../../../fn/modules/by.js';
+import get     from '../../../fn/modules/get.js';
 
 import Envelope from '../../../soundstage/nodes/envelope.js';
-//import { drawCurvePositive } from '../../../soundstage/modules/canvas.js';
-//import Event from './event.js';
 
 // Oversampling produces graphs with fewer audio aliasing artifacts
 // when curve points fall between pixels.
 const samplesPerPixel = 4;
+const nodashes = [];
+const dashes   = [2, 6];
 
 /**
 drawCurvePositive(ctx, box, rate, data, color)
@@ -24,16 +24,12 @@ color: base color
 **/
 
 export function drawCurvePositive(ctx, box, rate, data, color) {
-    let n = -1;
-
-    ctx.lineWidth   = '2';
-    ctx.lineCap     = 'round';
+    let n = 0;
 
     ctx.beginPath();
     ctx.moveTo(
-        box.x,
-        box.y + box.height
-        //box.y + (1 - box.height) * data[n]
+        box.x + n / rate,
+        box.y + (1 - data[0]) * box.height
     );
 
     while (++n < data.length) {
@@ -45,6 +41,9 @@ export function drawCurvePositive(ctx, box, rate, data, color) {
 
     // Stroke the waveform
     ctx.strokeStyle = color;
+    ctx.lineWidth   = '2';
+    ctx.lineCap     = 'round';
+    ctx.setLineDash(nodashes);
     ctx.stroke();
 
     // Now complete its area and then fill it
@@ -65,12 +64,7 @@ export function drawCurvePositive(ctx, box, rate, data, color) {
 
 export function drawTargetLines(ctx, box, data, color) {
     let n = -1;
-const radius = 18;
-
-    ctx.lineWidth   = '2';
-    ctx.lineCap     = 'round';
-    ctx.strokeStyle = color;
-    ctx.setLineDash([2, 6]);
+    const radius = 18;
 
     ctx.beginPath();
 
@@ -103,11 +97,15 @@ const radius = 18;
         );
     }
 
+    ctx.lineWidth   = '2';
+    ctx.lineCap     = 'round';
+    ctx.strokeStyle = color;
+    ctx.setLineDash(dashes);
     ctx.stroke();
     ctx.closePath();
 }
 
-export function drawAudioEnvelope(ctx, viewbox, valuebox, xscale, xmin, xmax, yscale, ymin, ymax, events, color) {
+export function drawAudioEnvelope(ctx, viewbox, valuebox, xscale, xmin, xmax, yscale, ymin, ymax, events, color, before) {
     // Draw lines / second
     const drawRate = samplesPerPixel * viewbox.width / valuebox.width;
     const offline  = new OfflineAudioContext(1, samplesPerPixel * viewbox.width, 22050);
@@ -141,9 +139,13 @@ export function drawAudioEnvelope(ctx, viewbox, valuebox, xscale, xmin, xmax, ys
     .then((buffer) => {
         // Only actually render the latest
         if (--ctx.activeRenders) { return; }
+
+        // Render the background again
+        before();
+
         const data = buffer.getChannelData(0).map((y) => yscale.normalise(ymin, ymax, y));
-        !ctx.cacheddata && drawCurvePositive(ctx, viewbox, samplesPerPixel, data, color);
-        !ctx.cacheddata && drawTargetLines(ctx, viewbox, events.map((event) => ({
+        drawCurvePositive(ctx, viewbox, samplesPerPixel, data, color);
+        drawTargetLines(ctx, viewbox, events.map((event) => ({
             x:        xscale.normalise(xmin, xmax, event.x),
             y:        yscale.normalise(ymin, ymax, event.y),
             type:     event.type,

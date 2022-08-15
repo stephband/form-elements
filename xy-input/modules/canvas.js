@@ -3,6 +3,8 @@
 //import Envelope from '../../soundstage/nodes/envelope.js';
 import { drawXLine, drawYLine, drawCurve, drawCurvePositive } from '../../../soundstage/modules/canvas.js';
 
+const lineDash = [];
+
 // Todo: in supported browsers, render the canvas directly to background
 // https://stackoverflow.com/questions/3397334/use-canvas-as-a-css-background
 /*
@@ -78,10 +80,6 @@ export function clear(ctx, box) {
 }
 
 export function drawXLines(ctx, box, lines, color) {
-    ctx.lineWidth   = '1';
-    ctx.lineCap     = 'round';
-    ctx.strokeStyle = color;
-
     ctx.beginPath();
 
     let n = -1;
@@ -90,15 +88,15 @@ export function drawXLines(ctx, box, lines, color) {
         ctx.lineTo(box.x + lines[n] * box.width, box.y + box.height);
     }
 
+    ctx.lineWidth   = '1';
+    ctx.lineCap     = 'round';
+    ctx.strokeStyle = color;
+    ctx.setLineDash(lineDash);
     ctx.stroke();
     ctx.closePath();
 }
 
 export function drawYLines(ctx, box, lines, color) {
-    ctx.lineWidth   = '1';
-    ctx.lineCap     = 'round';
-    ctx.strokeStyle = color;
-
     ctx.beginPath();
 
     let n = -1;
@@ -107,6 +105,10 @@ export function drawYLines(ctx, box, lines, color) {
         ctx.lineTo(box.x + box.width, box.y + (1 - lines[n]) * box.height);
     }
 
+    ctx.lineWidth   = '1';
+    ctx.lineCap     = 'round';
+    ctx.strokeStyle = color;
+    ctx.setLineDash(lineDash);
     ctx.stroke();
     ctx.closePath();
 }

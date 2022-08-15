@@ -238,7 +238,7 @@ export default {
 
         get: function() {
             const privates = Privates(this);
-            return Observer(privates.data.points);
+            return Observer(privates.state.value);
         },
 
         set: function(values) {

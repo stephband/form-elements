@@ -1,8 +1,8 @@
 
 import Privates          from '../../../fn/modules/privates.js';
 import { clamp }         from '../../../fn/modules/clamp.js';
-import Stream            from '../../../fn/modules/stream.js';
 import nothing           from '../../../fn/modules/nothing.js';
+import Stream            from '../../../fn/modules/stream.js';
 import create            from '../../../dom/modules/create.js';
 import delegate          from '../../../dom/modules/delegate.js';
 import events            from '../../../dom/modules/events.js';
@@ -21,6 +21,8 @@ import last        from '../../../fn/modules/last.js';
 import overload    from '../../../fn/modules/overload.js';
 import noop        from '../../../fn/modules/noop.js';
 import { remove }  from '../../../fn/modules/remove.js';
+
+import observe     from '../../../fn/observer/observe.js';
 import { Observer, notify } from '../../../fn/observer/observer.js';
 
 
@@ -28,9 +30,8 @@ import gestures    from '../../../dom/modules/gestures.js';
 import rect        from '../../../dom/modules/rect.js';
 import { px }      from '../../../dom/modules/parse-length.js';
 
-//import Literal      from '../../../literal/renderers/template-renderer.js';
 
-import { $state, maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';
+import { maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';
 
 //import Data        from './data.js';
 import { setFormValue } from './form.js';
@@ -42,6 +43,10 @@ import * as defaults   from '../../modules/defaults.js';
 
 const assign = Object.assign;
 
+
+function stop(stream) {
+    stream.stop();
+}
 
 /*
 toCoordinates()
@@ -102,8 +107,8 @@ function updateViewbox(host, style, computed, canvas, svg, data) {
 }
 
 function setXY(e, data) {
-    const box      = data.data.pxbox;
-    const valuebox = data.data.valuebox;
+    const box      = data.pxbox;
+    const valuebox = data.valuebox;
 
     // New pixel position of control, compensating for initial
     // mousedown offset on the control
@@ -111,8 +116,8 @@ function setXY(e, data) {
     const py = box.height - (e.clientY - box.y - data.offset.y);
 
     // Normalise to 0-1, allowing x position to extend beyond viewbox
-    data.x = clamp(valuebox.x, valuebox.x + valuebox.width,  data.data.toValueX(px / box.width));
-    data.y = clamp(valuebox.y, valuebox.y + valuebox.height, data.data.toValueY(py / box.height));
+    data.x = clamp(valuebox.x, valuebox.x + valuebox.width,  denormalise(valuebox.x, valuebox.x + valuebox.width, px / box.width));
+    data.y = clamp(valuebox.y, valuebox.y + valuebox.height, denormalise(valuebox.y, valuebox.y + valuebox.height, py / box.height));
 }
 
 const toCoordinates = overload((data, e) => e.type, {
@@ -200,7 +205,7 @@ const handle = delegate({
         default: noop
     }),
 
-    '.control-handle': overload((element, data) => data.type, {
+    '.control-handle': overload((target, data) => data.type, {
         'tap': function(element, data) {
             //const scope = getScope(data.target);
             //cycleType(scope);
@@ -231,17 +236,19 @@ const handle = delegate({
             return data;
         },
 
-        'move': function(element, gesture) {
-            const data = gesture.data;
-            const points = Observer(data.points);
+        'move': function(target, data) {
+            const { internals, formdata, events, host, value, x, y } = data;
+            const index = target.dataset.index;
 
-            points[element.dataset.index].x = gesture.x ;
-            points[element.dataset.index].y = gesture.y ;
+            // Render is handled by observers
+            const point = Observer(value[index]);
 
-            const host = gesture.host;
-            if (last(gesture.events).type !== 'pointermove') {
+            point.x = x;
+            point.y = y;
+
+            if (last(events).type !== 'pointermove') {
                 // internal, formdata, name, value
-                setFormValue(gesture.internal, gesture.formdata, host.name, data.points);
+                setFormValue(internals, formdata, host.name, value);
                 trigger('change', host);
             }
             else {
@@ -251,7 +258,7 @@ const handle = delegate({
             return data;
         },
 
-        default: function(element, data) {
+        default: function(data) {
             console.log('Untyped gesture', data);
         }
     }),
@@ -270,13 +277,6 @@ const handle = delegate({
         default: noop
     })
 });
-
-
-/* Update */
-
-function updateValue(data, state) {
-    return data;
-}
 
 
 /* Render */
@@ -326,7 +326,10 @@ function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata,
 
     points
     && points.length
-    && drawAudioEnvelope(ctx, viewbox, valuebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, points, plotColor) ;
+    && drawAudioEnvelope(ctx, viewbox, valuebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, points, plotColor, () =>
+        // Asynchronously render again once waveform data has been calculated
+        renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata)
+    );
 }
 
 function renderTick(buttons, tick, axis) {
@@ -339,6 +342,20 @@ function renderTick(buttons, tick, axis) {
     );
 
     return buttons;
+}
+
+function updateHandle(handle, rangebox, xscale, xmin, xmax, yscale, ymin, ymax, point, index) {
+    handle.setAttribute('transform', 'translate('
+        + denormalise(rangebox[0], rangebox[0] + rangebox[2], xscale.normalise(xmin, xmax, point.x))
+        + ' '
+        + denormalise(rangebox[1], rangebox[1] + rangebox[3], yscale.normalise(ymin, ymax, point.y))
+        + ')'
+    );
+
+    handle.firstElementChild.innerHTML = (point.label ? (point.label + ' ') : '')
+        + point.x + ', ' + point.y;
+
+    handle.dataset.index = index;
 }
 
 function renderHandle(rangebox, xscale, xmin, xmax, yscale, ymin, ymax, point, index) {
@@ -365,10 +382,28 @@ function renderHandle(rangebox, xscale, xmin, xmax, yscale, ymin, ymax, point, i
     });
 }
 
-function renderHandles(rangebox, xdata, ydata, points) {
-    return points.map((point, index) =>
-        renderHandle(rangebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, index)
-    );
+function renderHandles(handles, svg, rangebox, xdata, ydata, points) {
+    let n = -1;
+    let point, handle;
+
+    // Update or add handles for all points
+    while(point = points[++n]) {
+        if (handles[n]) {
+            handle = handles[n];
+            updateHandle(handle, rangebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, n);
+        }
+        else {
+            handle = renderHandle(rangebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, n);
+            handles.push(handle);
+            svg.append(handle);
+        }
+    }
+
+    // Remove any leftover handles
+    --n;
+    while(handle = handles[++n]) {
+        handle.remove();
+    }
 }
 
 function renderData(axis, style, scale, min, max, ticks, lines, buttons, marker) {
@@ -396,6 +431,7 @@ export default {
         const ylines  = [];
         const xticks  = [];
         const yticks  = [];
+        const handles = [];
 
         shadow.append(style, label, canvas, svg, xmarker, ymarker);
 
@@ -421,7 +457,7 @@ export default {
         privates.paddingbox = {};
         privates.contentbox = {};
         privates.rangebox   = [0, 6.75, 6.75, -6.75];
-        const valuebox = { x: 0, y: 0, width: 1, height: 1 };
+        privates.valuebox   = { x: 0, y: 0, width: 1, height: 1 };
 
         // Inputs
         privates.xscale   = Stream.of(defaults.scale);
@@ -439,13 +475,16 @@ export default {
         privates.ydisplay = Stream.of(defaults.display);
         privates.value    = Stream.of([{ x: 0, y: 0, type: 'step' }]);
 
-        privates.shadow.then(() => {
-            updateViewbox(this, hostStyle, computed, canvas, svg, privates);
-        });
+        const resizes = Stream
+        .merge(privates.shadow, events('resize', window))
+        .broadcast();
+
+        resizes.each(() =>
+            updateViewbox(this, hostStyle, computed, canvas, svg, privates)
+        );
 
         // Track attribute updates
-        const xattributes = Stream
-        .combine({
+        const xattributes = Stream.combine({
             shadow:  privates.shadow,
             scale:   privates.xscale.map(getScale),
             min:     privates.xmin.map(parseValue),
@@ -457,8 +496,7 @@ export default {
         .scan(updateData, {})
         .broadcast();
 
-        const yattributes = Stream
-        .combine({
+        const yattributes = Stream.combine({
             shadow:  privates.shadow,
             scale:   privates.yscale.map(getScale),
             min:     privates.ymin.map(parseValue),
@@ -470,15 +508,16 @@ export default {
         .scan(updateData, {})
         .broadcast();
 
+        const values = privates.value.broadcast();
+
         xattributes.each((data) => {
-            // Keep valuebox up-to-date
-            valuebox.x      = data.min;
-            valuebox.width  = data.max;
+            privates.valuebox.x      = data.min;
+            privates.valuebox.width  = data.max;
         });
 
         yattributes.each((data) => {
-            valuebox.y      = data.min;
-            valuebox.height = data.max;
+            privates.valuebox.y      = data.min;
+            privates.valuebox.height = data.max;
         });
 
         // Render DOM
@@ -490,38 +529,52 @@ export default {
 
         // Render canvas
         Stream
-        .combine({ xattributes, yattributes })
-        .each((state) => renderCanvas(canvas, ctx, computed, privates.contentbox, valuebox, state.xattributes, state.yattributes, data.value));
-
-        // Track value updates
-        Stream
-        .combine({
-            xattributes,
-            yattributes,
-            value: privates.value
-        })
+        .combine({ xattributes, yattributes, resizes, value: values })
         .each((state) => {
-            renderCanvas(canvas, ctx, computed, privates.contentbox, valuebox, state.xattributes, state.yattributes, state.value);
-            const handles = renderHandles(privates.rangebox, state.xattributes, state.yattributes, state.value);
-            svg.append.apply(svg, handles);
+            renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xattributes, state.yattributes, state.value);
+            renderHandles(handles, svg, privates.rangebox, state.xattributes, state.yattributes, state.value);
+            privates.state = state;
         });
 
-        gestures({ threshold: 1 }, shadow)
-        .reduce((previous, gesture) => {
-            // Is this necessary?
-            data.box = updateBoxes(this, computed, privates.pxbox, privates.paddingbox, privates.contentbox, privates.rangebox);
-            const state = assign({ previous, events: [] }, this[$state]);
+        // Observe points for mutations
+        const observers = values.reduce((observers, points) => {
+            // Stop previous observers
+            observers.forEach(stop);
 
+            // Push new observers
+            observers.push(observe('.', points, points).each(() => {
+                renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, privates.state.xattributes, privates.state.yattributes, privates.state.value);
+                renderHandles(handles, svg, privates.rangebox, privates.state.xattributes, privates.state.yattributes, privates.state.value);
+            }));
+
+            observers.push.apply(observers, points.map((point, index, points) =>
+                observe('.', point, point).each((point) => {
+                    const handle = svg.querySelectorAll('[part=handle]')[index];
+                    renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, privates.state.xattributes, privates.state.yattributes, points);
+                    updateHandle(handle, privates.rangebox, privates.state.xattributes.scale, privates.state.xattributes.min, privates.state.xattributes.max, privates.state.yattributes.scale, privates.state.yattributes.min, privates.state.yattributes.max, point, index);
+                })
+            ));
+
+            return observers;
+        }, []);
+
+        // Track gestures on handles
+        gestures({ select: '[part=handle]', threshold: 1 }, shadow)
+        .each((gesture) =>
             gesture
-            .scan(toCoordinates, state)
+            .scan(toCoordinates, {
+                handles,
+                internals,
+                host:       this,
+                pxbox:      privates.pxbox,
+                valuebox:   privates.valuebox,
+                formdata:   privates.formdata,
+                value:      privates.state.value,
+                events:     []
+            })
             .filter(get('type'))
-            .each(handle);
-
-            return state;
-        });
-
-        events('resize', window)
-        .each((e) => updateViewbox(this, hostStyle, computed, canvas, svg, privates));
+            .each(handle)
+        );
     },
 
     load: function(shadow) {
