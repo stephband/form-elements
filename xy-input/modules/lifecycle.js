@@ -2,7 +2,6 @@
 import Privates          from '../../../fn/modules/privates.js';
 import { clamp }         from '../../../fn/modules/clamp.js';
 import id                from '../../../fn/modules/id.js';
-import nothing           from '../../../fn/modules/nothing.js';
 import Stream            from '../../../fn/modules/stream.js';
 import create            from '../../../dom/modules/create.js';
 import delegate          from '../../../dom/modules/delegate.js';
@@ -11,9 +10,8 @@ import { trigger }       from '../../../dom/modules/trigger.js';
 import parseValue        from '../../modules/parse-value.js';
 import parseTicks        from '../../modules/parse-ticks.js';
 import { updateData }    from '../../modules/data.js';
-import { normalise, denormalise } from '../../modules/scales.js';
+import { getScale, normalise, denormalise } from '../../modules/scales.js';
 
-import { getScale }    from '../../modules/scales.js';
 import { toDisplay }   from '../../modules/display.js';
 import { nearestStep } from '../../modules/step.js';
 
@@ -45,14 +43,20 @@ import * as defaults   from '../../modules/defaults.js';
 const assign = Object.assign;
 
 
+
+/* Streams */
+
 function stop(stream) {
     stream.stop();
 }
 
-/*
-toCoordinates()
-Turn gesture positions into coordinates
-*/
+function toObserver(observer, object) {
+    observer && observer.stop();
+    return observe('.', object);
+}
+
+
+/* Coordinates */
 
 function updateBoxes(host, computed, pxbox, paddingbox, contentbox, rangebox) {
     const box           = rect(host);
@@ -280,7 +284,7 @@ const handle = delegate({
 });
 
 
-/* Render */
+/* Rendering */
 
 function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata, points) {
     const viewbox    = {
@@ -418,11 +422,8 @@ function renderData(axis, style, scale, min, max, ticks, lines, buttons, marker)
     marker.after.apply(marker, buttons);
 }
 
-function toObserver(observer, object) {
-    observer && observer.stop();
-    return observe('.', object);
-}
 
+/* Element */
 
 export default {
     construct: function(shadow, internals) {
@@ -490,7 +491,7 @@ export default {
         );
 
         // Track attribute updates
-        const xattributes = Stream.combine({
+        const xaxis = Stream.combine({
             shadow:  privates.shadow,
             scale:   privates.xscale.map(getScale),
             min:     privates.xmin.map(parseValue),
@@ -502,7 +503,7 @@ export default {
         .scan(updateData, {})
         .broadcast();
 
-        const yattributes = Stream.combine({
+        const yaxis = Stream.combine({
             shadow:  privates.shadow,
             scale:   privates.yscale.map(getScale),
             min:     privates.ymin.map(parseValue),
@@ -514,21 +515,21 @@ export default {
         .scan(updateData, {})
         .broadcast();
 
-        xattributes.each((data) => {
+        xaxis.each((data) => {
             privates.valuebox.x      = data.min;
             privates.valuebox.width  = data.max;
         });
 
-        yattributes.each((data) => {
+        yaxis.each((data) => {
             privates.valuebox.y      = data.min;
             privates.valuebox.height = data.max;
         });
 
         // Render DOM
-        xattributes
+        xaxis
         .each((data) => renderData('x', hostStyle, data.scale, data.min, data.max, data.ticks, xlines, xticks, xmarker));
 
-        yattributes
+        yaxis
         .each((data) => renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ylines, yticks, ymarker));
 
         // Track value and mutations of value
@@ -540,15 +541,15 @@ export default {
         // Render canvas
         Stream
         .combine({
-            xattributes,
-            yattributes,
+            xaxis,
+            yaxis,
             resizes,
             value: values
         })
         .each((state) => {
             privates.state = state;
-            renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xattributes, state.yattributes, state.value);
-            renderHandles(handles, svg, privates.rangebox, state.xattributes, state.yattributes, state.value);
+            renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xaxis, state.yaxis, state.value);
+            renderHandles(handles, svg, privates.rangebox, state.xaxis, state.yaxis, state.value);
         });
 
         // Track mutations to points inside value
@@ -560,8 +561,8 @@ export default {
             observers.push.apply(observers, value.map((point, index, points) =>
                 observe('.', point, point).each((point) => {
                     const handle = svg.querySelectorAll('[part=handle]')[index];
-                    renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, privates.state.xattributes, privates.state.yattributes, points);
-                    updateHandle(handle, privates.rangebox, privates.state.xattributes.scale, privates.state.xattributes.min, privates.state.xattributes.max, privates.state.yattributes.scale, privates.state.yattributes.min, privates.state.yattributes.max, point, index);
+                    renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, privates.state.xaxis, privates.state.yaxis, points);
+                    updateHandle(handle, privates.rangebox, privates.state.xaxis.scale, privates.state.xaxis.min, privates.state.xaxis.max, privates.state.yaxis.scale, privates.state.yaxis.min, privates.state.yaxis.max, point, index);
                 })
             ));
 
