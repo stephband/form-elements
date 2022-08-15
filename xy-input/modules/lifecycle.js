@@ -1,6 +1,7 @@
 
 import Privates          from '../../../fn/modules/privates.js';
 import { clamp }         from '../../../fn/modules/clamp.js';
+import id                from '../../../fn/modules/id.js';
 import nothing           from '../../../fn/modules/nothing.js';
 import Stream            from '../../../fn/modules/stream.js';
 import create            from '../../../dom/modules/create.js';
@@ -417,6 +418,11 @@ function renderData(axis, style, scale, min, max, ticks, lines, buttons, marker)
     marker.after.apply(marker, buttons);
 }
 
+function toObserver(observer, object) {
+    observer && observer.stop();
+    return observe('.', object);
+}
+
 
 export default {
     construct: function(shadow, internals) {
@@ -508,8 +514,6 @@ export default {
         .scan(updateData, {})
         .broadcast();
 
-        const values = privates.value.broadcast();
-
         xattributes.each((data) => {
             privates.valuebox.x      = data.min;
             privates.valuebox.width  = data.max;
@@ -527,27 +531,33 @@ export default {
         yattributes
         .each((data) => renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ylines, yticks, ymarker));
 
+        // Track value and mutations of value
+        const values = privates.value
+        .scan(toObserver, null)
+        .flatMap(id)
+        .broadcast();
+
         // Render canvas
         Stream
-        .combine({ xattributes, yattributes, resizes, value: values })
+        .combine({
+            xattributes,
+            yattributes,
+            resizes,
+            value: values
+        })
         .each((state) => {
+            privates.state = state;
             renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xattributes, state.yattributes, state.value);
             renderHandles(handles, svg, privates.rangebox, state.xattributes, state.yattributes, state.value);
-            privates.state = state;
         });
 
-        // Observe points for mutations
-        const observers = values.reduce((observers, points) => {
+        // Track mutations to points inside value
+        const observers = values.reduce((observers, value) => {
             // Stop previous observers
             observers.forEach(stop);
 
-            // Push new observers
-            observers.push(observe('.', points, points).each(() => {
-                renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, privates.state.xattributes, privates.state.yattributes, privates.state.value);
-                renderHandles(handles, svg, privates.rangebox, privates.state.xattributes, privates.state.yattributes, privates.state.value);
-            }));
-
-            observers.push.apply(observers, points.map((point, index, points) =>
+            // Register new observers for each point in value
+            observers.push.apply(observers, value.map((point, index, points) =>
                 observe('.', point, point).each((point) => {
                     const handle = svg.querySelectorAll('[part=handle]')[index];
                     renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, privates.state.xattributes, privates.state.yattributes, points);
@@ -560,7 +570,10 @@ export default {
 
         // Track gestures on handles
         gestures({ select: '[part=handle]', threshold: 1 }, shadow)
-        .each((gesture) =>
+        .each((gesture) => {
+            // Update boxes - we don't know the current scrolling position
+            updateBoxes(this, computed, privates.pxbox, privates.paddingbox, privates.contentbox, privates.rangebox);
+
             gesture
             .scan(toCoordinates, {
                 handles,
@@ -574,7 +587,7 @@ export default {
             })
             .filter(get('type'))
             .each(handle)
-        );
+        });
     },
 
     load: function(shadow) {
