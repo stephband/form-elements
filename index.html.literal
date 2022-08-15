@@ -6,6 +6,10 @@
 
     <script title="debug">
         window.DEBUG = true;
+        window.incrementControlStylesheet = './increment-control-shadow.css';
+        window.rangeInputStylesheet       = './range-input-shadow.css';
+        window.rotaryInputStylesheet      = './rotary-input-shadow.css';
+        window.xyInputStylesheet          = './xy-input-shadow.css';
     </script>
 
     <link rel="stylesheet" href="../bolt/module.css">
@@ -94,7 +98,7 @@
         <a class="link-button button" href="./xy-input/">Documentation</a>
     </div>
 
-    <xy-input class="x1 3x y5">Envelope</xy-input>
+    <xy-input class="x1 3x y5" value="0 0 step 0.75 1 linear" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>Envelope</xy-input>
 
     ${ include('../bolt/templates/scripts.html') }
 
