@@ -286,6 +286,11 @@ const handle = delegate({
 
 /* Rendering */
 
+function getPropertyColor(style, property) {
+    const color = style.getPropertyValue(property).trim();
+    return color === 'none' ? undefined : color ;
+}
+
 function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis, points, drawEnvelopeFlag = true) {
     const viewbox    = {
         x:      contentbox.x * 2,
@@ -294,41 +299,45 @@ function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis,
         height: contentbox.height * 2
     };
 
-    const xGridColor     = computed.getPropertyValue('--line-color-x').trim();
-    const yGridColor     = computed.getPropertyValue('--line-color-y').trim();
-    const plotColor      = computed.getPropertyValue('--envelope-color').trim();
-    const crosshairColor = computed.getPropertyValue('--crosshair-color').trim();
+    const xGridColor     = getPropertyColor(computed, '--line-color-x');
+    const yGridColor     = getPropertyColor(computed, '--line-color-y');
+    const crosshairColor = getPropertyColor(computed, '--crosshair-color');
+    const plotColor      = getPropertyColor(computed, '--envelope-color');
 
-    clear(ctx, { x: 0, y: 0, width: canvas.width, height: canvas.height }),
+    clear(ctx, { x: 0, y: 0, width: canvas.width, height: canvas.height });
 
-    drawXLines(ctx, viewbox, xaxis.ticks
-        .filter((line) => valuebox.x + valuebox.width >= line.value && line.value >= valuebox.x)
-        .map((line) => line.normalValue),
-        xGridColor
-    );
-
-    drawYLines(ctx, viewbox, yaxis.ticks
-        .filter((line) => valuebox.y + valuebox.height >= line.value && line.value >= valuebox.y)
-        .map((line) => line.normalValue),
-        yGridColor
-    );
-
-    if (plotColor && plotColor !== 'none' && drawEnvelopeFlag) {
-        points
-        && points.length
-        && drawAudioEnvelope(ctx, viewbox, valuebox, xaxis.scale, xaxis.min, xaxis.max, yaxis.scale, yaxis.min, yaxis.max, points, plotColor, () =>
-            // Asynchronously render again once waveform data has been calculated
-            renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis, points, false)
+    if (xGridColor) {
+        drawXLines(ctx, viewbox, xaxis.ticks
+            .filter((line) => valuebox.x + valuebox.width >= line.value && line.value >= valuebox.x)
+            .map((line) => line.normalValue),
+            xGridColor
         );
     }
 
-    if (crosshairColor && crosshairColor !== 'none') {
+    if (yGridColor) {
+        drawYLines(ctx, viewbox, yaxis.ticks
+            .filter((line) => valuebox.y + valuebox.height >= line.value && line.value >= valuebox.y)
+            .map((line) => line.normalValue),
+            yGridColor
+        );
+    }
+
+    if (crosshairColor) {
         points
         && points.length
         && points.forEach((point) => drawCrosshair(ctx, viewbox, 28, {
             x: xaxis.scale.normalise(xaxis.min, xaxis.max, point.x),
             y: yaxis.scale.normalise(yaxis.min, yaxis.max, point.y),
         }, crosshairColor))
+    }
+
+    if (plotColor && drawEnvelopeFlag) {
+        points
+        && points.length
+        && drawAudioEnvelope(ctx, viewbox, valuebox, xaxis.scale, xaxis.min, xaxis.max, yaxis.scale, yaxis.min, yaxis.max, points, plotColor, () =>
+            // Asynchronously render again once waveform data has been calculated
+            renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis, points, false)
+        );
     }
 }
 

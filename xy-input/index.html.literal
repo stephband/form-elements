@@ -18,7 +18,7 @@
         "./module.js",
         "./modules/lifecycle.js",
         "./modules/properties.js",
-        "./shadow.css"
+        "./css/host.css"
     )) }
 
     ${ include('../../bolt/templates/scripts.html') }

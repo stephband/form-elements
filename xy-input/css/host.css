@@ -1,17 +1,38 @@
 :host {
     padding: 0.3125rem;
 
-    /** --line-color **/
-    /** --line-color-x **/
-    /** --line-color-y **/
+    /**
+    --line-color
+    Colour of axis lines drawn on the graph background.
+    **/
+
+    /**
+    --line-color-x
+    Colour of vertical x-axis lines drawn on the graph background.
+    **/
+
+    /**
+    --line-color-y
+    Colour of horizontal y-axis lines drawn on the graph background.
+    **/
+
     --line-color: #cccccc;
     --line-color-x: var(--line-color);
     --line-color-y: var(--line-color);
 
-    /** --envelope-color **/
+    /**
+    --envelope-color
+    Colour of envelope plot. The envelope is rendered in WebAudio, and is
+    an accurate reflection of a WebAudio automation curve.
+    **/
+
     --envelope-color: #2487ae;
 
-    /** --crosshair-color **/
+    /**
+    --crosshair-color
+    Colour of crosshairs. Defaults to `none`.
+    **/
+
     --crosshair-color: none;
 
     --track-radius: 0.1875rem;
