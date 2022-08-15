@@ -85,10 +85,10 @@ function updateBoxes(host, computed, pxbox, paddingbox, contentbox, rangebox) {
     contentbox.width  = box.width  - borderLeft - paddingLeft - borderRight - paddingRight;
     contentbox.height = box.height - borderTop - paddingTop - borderBottom - paddingBottom;
 
-    rangebox[0] = 0;
-    rangebox[2] = contentbox.width / fontsize;
-    rangebox[1] = 0;
-    rangebox[3] = -contentbox.height / fontsize;
+    rangebox.x = 0;
+    rangebox.width = contentbox.width / fontsize;
+    rangebox.y = 0;
+    rangebox.height = -contentbox.height / fontsize;
 
     return box;
 }
@@ -99,15 +99,15 @@ function updateViewbox(host, style, computed, canvas, svg, data) {
     canvas.width  = data.paddingbox.width * 2;
     canvas.height = data.paddingbox.height * 2;
 
-    style.setProperty('--range-x',      data.rangebox[0]);
-    style.setProperty('--range-y',      data.rangebox[1]);
-    style.setProperty('--range-width',  data.rangebox[2]);
-    style.setProperty('--range-height', data.rangebox[3]);
+    style.setProperty('--range-x',      data.rangebox.x);
+    style.setProperty('--range-y',      data.rangebox.y);
+    style.setProperty('--range-width',  data.rangebox.width);
+    style.setProperty('--range-height', data.rangebox.height);
 
-    svg.setAttribute('viewBox', data.rangebox[0] + ' '
-        + (data.rangebox[1] + data.rangebox[3]) + ' '
-        + data.rangebox[2] + ' '
-        + (-data.rangebox[3])
+    svg.setAttribute('viewBox', data.rangebox.x + ' '
+        + (data.rangebox.y + data.rangebox.height) + ' '
+        + data.rangebox.width + ' '
+        + (-data.rangebox.height)
     );
 }
 
@@ -286,7 +286,7 @@ const handle = delegate({
 
 /* Rendering */
 
-function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata, points) {
+function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis, points, drawEnvelopeFlag = true) {
     const viewbox    = {
         x:      contentbox.x * 2,
         y:      contentbox.y * 2,
@@ -294,47 +294,42 @@ function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata,
         height: contentbox.height * 2
     };
 
-    const xGridColor = computed.getPropertyValue('--line-color-x').trim();
-    const yGridColor = computed.getPropertyValue('--line-color-y').trim();
-    const plotColor  = computed.getPropertyValue('--plot-color').trim();
+    const xGridColor     = computed.getPropertyValue('--line-color-x').trim();
+    const yGridColor     = computed.getPropertyValue('--line-color-y').trim();
+    const plotColor      = computed.getPropertyValue('--envelope-color').trim();
+    const crosshairColor = computed.getPropertyValue('--crosshair-color').trim();
 
     clear(ctx, { x: 0, y: 0, width: canvas.width, height: canvas.height }),
 
-    drawXLines(ctx, viewbox, xdata.ticks
+    drawXLines(ctx, viewbox, xaxis.ticks
         .filter((line) => valuebox.x + valuebox.width >= line.value && line.value >= valuebox.x)
         .map((line) => line.normalValue),
         xGridColor
     );
 
-    drawYLines(ctx, viewbox, ydata.ticks
+    drawYLines(ctx, viewbox, yaxis.ticks
         .filter((line) => valuebox.y + valuebox.height >= line.value && line.value >= valuebox.y)
         .map((line) => line.normalValue),
         yGridColor
     );
 
-    /*
-    data.xScale === 'linear' ?
-        data.points.forEach((point) => data.drawCrosshair(this.ctx, this.viewbox, 28, {
-            x: data.toRatioX(point.x),
-            y: data.toRatioY(point.y)
-        }, this.graphColor)) :
-        data.drawCurve(
-            this.ctx,
-            this.viewbox,
-            data.points.map((point, i) => ({
-                x: data.toRatioX(point.x),
-                y: data.toRatioY(point.y)
-            })).sort(by(get('x'))),
-            this.graphColor
-        ),
-    */
+    if (plotColor && plotColor !== 'none' && drawEnvelopeFlag) {
+        points
+        && points.length
+        && drawAudioEnvelope(ctx, viewbox, valuebox, xaxis.scale, xaxis.min, xaxis.max, yaxis.scale, yaxis.min, yaxis.max, points, plotColor, () =>
+            // Asynchronously render again once waveform data has been calculated
+            renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis, points, false)
+        );
+    }
 
-    points
-    && points.length
-    && drawAudioEnvelope(ctx, viewbox, valuebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, points, plotColor, () =>
-        // Asynchronously render again once waveform data has been calculated
-        renderCanvas(canvas, ctx, computed, contentbox, valuebox, xdata, ydata)
-    );
+    if (crosshairColor && crosshairColor !== 'none') {
+        points
+        && points.length
+        && points.forEach((point) => drawCrosshair(ctx, viewbox, 28, {
+            x: xaxis.scale.normalise(xaxis.min, xaxis.max, point.x),
+            y: yaxis.scale.normalise(yaxis.min, yaxis.max, point.y),
+        }, crosshairColor))
+    }
 }
 
 function renderTick(buttons, tick, axis) {
@@ -351,9 +346,9 @@ function renderTick(buttons, tick, axis) {
 
 function updateHandle(handle, rangebox, xscale, xmin, xmax, yscale, ymin, ymax, point, index) {
     handle.setAttribute('transform', 'translate('
-        + denormalise(rangebox[0], rangebox[0] + rangebox[2], xscale.normalise(xmin, xmax, point.x))
+        + denormalise(rangebox.x, rangebox.x + rangebox.width, xscale.normalise(xmin, xmax, point.x))
         + ' '
-        + denormalise(rangebox[1], rangebox[1] + rangebox[3], yscale.normalise(ymin, ymax, point.y))
+        + denormalise(rangebox.y, rangebox.y + rangebox.height, yscale.normalise(ymin, ymax, point.y))
         + ')'
     );
 
@@ -371,9 +366,9 @@ function renderHandle(rangebox, xscale, xmin, xmax, yscale, ymin, ymax, point, i
 
         // Position it
         transform: 'translate('
-            + denormalise(rangebox[0], rangebox[0] + rangebox[2], xscale.normalise(xmin, xmax, point.x))
+            + denormalise(rangebox.x, rangebox.x + rangebox.width, xscale.normalise(xmin, xmax, point.x))
             + ' '
-            + denormalise(rangebox[1], rangebox[1] + rangebox[3], yscale.normalise(ymin, ymax, point.y))
+            + denormalise(rangebox.y, rangebox.y + rangebox.height, yscale.normalise(ymin, ymax, point.y))
             + ')',
 
         // Hover tooltip contains "label x, y"
@@ -387,7 +382,7 @@ function renderHandle(rangebox, xscale, xmin, xmax, yscale, ymin, ymax, point, i
     });
 }
 
-function renderHandles(handles, svg, rangebox, xdata, ydata, points) {
+function renderHandles(handles, svg, rangebox, xaxis, yaxis, points) {
     let n = -1;
     let point, handle;
 
@@ -395,10 +390,10 @@ function renderHandles(handles, svg, rangebox, xdata, ydata, points) {
     while(point = points[++n]) {
         if (handles[n]) {
             handle = handles[n];
-            updateHandle(handle, rangebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, n);
+            updateHandle(handle, rangebox, xaxis.scale, xaxis.min, xaxis.max, yaxis.scale, yaxis.min, yaxis.max, point, n);
         }
         else {
-            handle = renderHandle(rangebox, xdata.scale, xdata.min, xdata.max, ydata.scale, ydata.min, ydata.max, point, n);
+            handle = renderHandle(rangebox, xaxis.scale, xaxis.min, xaxis.max, yaxis.scale, yaxis.min, yaxis.max, point, n);
             handles.push(handle);
             svg.append(handle);
         }
@@ -463,8 +458,8 @@ export default {
         privates.pxbox      = {};
         privates.paddingbox = {};
         privates.contentbox = {};
-        privates.rangebox   = [0, 6.75, 6.75, -6.75];
-        privates.valuebox   = { x: 0, y: 0, width: 1, height: 1 };
+        privates.rangebox   = { x: 0, y: 6.75, width: 6.75, height: -6.75 };
+        privates.valuebox   = { x: 0, y: 0,    width: 1,    height: 1 };
 
         // Inputs
         privates.xscale   = Stream.of(defaults.scale);
@@ -553,7 +548,7 @@ export default {
         });
 
         // Track mutations to points inside value
-        const observers = values.reduce((observers, value) => {
+        privates.valueObservers = values.reduce((observers, value) => {
             // Stop previous observers
             observers.forEach(stop);
 

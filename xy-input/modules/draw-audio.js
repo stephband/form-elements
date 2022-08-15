@@ -114,7 +114,10 @@ export function drawAudioEnvelope(ctx, viewbox, valuebox, xscale, xmin, xmax, ys
             // samples per pixel.
             event.type === 'target' ?
                 [event.x * drawRate / 22050, event.type, event.y, event.duration * drawRate / 22050] :
-                [event.x * drawRate / 22050, event.type, event.y]
+            event.type ?
+                [event.x * drawRate / 22050, event.type, event.y] :
+                // Default to type 'step' where type is not defined
+                [event.x * drawRate / 22050, 'step',     event.y]
         ))
     });
 

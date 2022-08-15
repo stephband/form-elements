@@ -8,8 +8,11 @@
     --line-color-x: var(--line-color);
     --line-color-y: var(--line-color);
 
-    /** --plot-color **/
-    --plot-color: #2487ae;
+    /** --envelope-color **/
+    --envelope-color: #2487ae;
+
+    /** --crosshair-color **/
+    --crosshair-color: none;
 
     --track-radius: 0.1875rem;
     --track-shadow:

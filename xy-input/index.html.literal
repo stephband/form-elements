@@ -11,7 +11,6 @@
 
     <link rel="stylesheet" href="../../bolt/module.css">
     ${ include('../../bolt/templates/style.html') }
-    ${ include('./templates/xy-input-template.html') }
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">

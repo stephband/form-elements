@@ -114,11 +114,6 @@ export function drawYLines(ctx, box, lines, color) {
 }
 
 export function drawCrosshair(ctx, box, radius, point, color) {
-    ctx.lineWidth   = '1';
-    ctx.lineCap     = 'round';
-    ctx.strokeStyle = color;
-    ctx.fillStyle   = color + '2b';
-
     ctx.beginPath();
 
     ctx.moveTo(0,                                    box.y + (1 - point.y) * box.height);
@@ -131,6 +126,10 @@ export function drawCrosshair(ctx, box, radius, point, color) {
     ctx.moveTo(box.x + point.x * box.width, box.y + (1 - point.y) * box.height + radius);
     ctx.lineTo(box.x + point.x * box.width, box.y + box.height + 100);
 
+    ctx.lineWidth   = '1';
+    ctx.lineCap     = 'round';
+    ctx.strokeStyle = color;
+    ctx.setLineDash(lineDash);
     ctx.stroke();
     ctx.closePath();
 }
