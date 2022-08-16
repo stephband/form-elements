@@ -218,15 +218,34 @@ export default {
     ordered: createBoolean('ordered'),
 
     /**
-    value=""
-    The initial value of the element.
+    value="0 0"
+    The initial value of the element. This is a series of space or comma
+    separated `x, y` values such as:
+
+    ```
+    value="0,0 1,0.5 2,0"
+    ```
+
+    Values may also be given an optional label.
+
+    ```
+    value="0,0 First 1,0 Second 2,0 Last"
+    ```
+
+    An `<xy-input>` supports WebAudio automation data. Labels must be one of
+    the types `'step'`, `'linear'`, `'exponential'` or `'target'`. The type
+    `'target'` must be followed by a fourth parameter duration:
+
+    ```
+    value="0,0 step 1,0 linear 2,0 target 0.2"
+    ```
     **/
 
     /**
     .value
-    The value of the element. Returns an array of data points. The array is a
-    live object. It changes in response to changes to the element, and the
-    element changes in response changes to the array or its data points.
+    The value of the element. Returns an array of objects representing each
+    point in the input. The array is a live object. Objects mutate in response
+    to handles being moved, and handles are moved if the objects are mutated.
 
     When submitted as part of a form the array is serialised to a formdata
     parameters.

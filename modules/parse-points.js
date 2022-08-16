@@ -21,12 +21,19 @@ parseCoordinates('0 0 step, 1 1 linear');
 function toPoints(points, value) {
     const point = points[points.length - 1];
 
+    // Second parameter must be y value
     if (point && point.y === undefined) {
         point.y = parseValue(value);
     }
+    // Support WebAudio automation 'target' type with fourth parameter 'duration'
+    else if (point && point.type === 'target' && point.duration === undefined) {
+        point.duration = parseValue(value);
+    }
+    // Where third parameter is text, this point has a type TODO: should be label?
     else if (point && !/^-?\d/.test(value)) {
         point.type = value;
     }
+    // First parameter must be x value
     else {
         points.push({
             x: parseValue(value)

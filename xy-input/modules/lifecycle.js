@@ -58,6 +58,16 @@ function toObserver(observer, object) {
 
 /* Coordinates */
 
+/**
+"input"
+Emitted from the element during the movement of an xy handle.
+**/
+
+/**
+"change"
+Emitted from the element when an xy handle has been moved.
+**/
+
 function updateBoxes(host, computed, pxbox, paddingbox, contentbox, rangebox) {
     const box           = rect(host);
     const fontsize      = px(computed['font-size']);

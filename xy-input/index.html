@@ -59,7 +59,7 @@ element and upgrades instances already in the DOM.</p>
     <span class="token punctuation">}</span>
 </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xy-input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0, 0.2 0.2 linear 0.6 1 exponential<span class="token punctuation">"</span></span> <span class="token attr-name">ymin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-0.5<span class="token punctuation">"</span></span> <span class="token attr-name">ymax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">yticks</span> <span class="token attr-name">xmin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">xmax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1.4<span class="token punctuation">"</span></span> <span class="token attr-name">xticks</span><span class="token punctuation">></span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xy-input</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xy-input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4<span class="token punctuation">"</span></span> <span class="token attr-name">ymin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-0.5<span class="token punctuation">"</span></span> <span class="token attr-name">ymax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">yticks</span> <span class="token attr-name">xmin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">xmax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1.4<span class="token punctuation">"</span></span> <span class="token attr-name">xticks</span><span class="token punctuation">></span></span>Envelope<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xy-input</span><span class="token punctuation">></span></span>
 <span class="token comment">&lt;!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB">&lt;/xy-input--></span></code></pre>
 
     
@@ -75,7 +75,7 @@ element and upgrades instances already in the DOM.</p>
     }
 </style>
 
-<xy-input value="0 0, 0.2 0.2 linear 0.6 1 exponential" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks></xy-input>
+<xy-input value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>Envelope</xy-input>
 <!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB"></xy-input-->
     <!-- for testing form submission values -->
     <input hidden class="button" type="submit" />
@@ -319,15 +319,20 @@ neighbours, keeping the order of points on the x axis constant.</p>
 </div>
 
  
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value">
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-value-2">
 <h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-value">
-        <code class="token language-html">value</code>
+    <a href="#attribute-value-2">
+        <code class="token language-html">value <span class="default">="<em>0 0</em>"</span></code>
     </a>
 </h3>
 
-<p>The initial value of the element.</p>
-
+<p>The initial value of the element. This is a series of space or comma
+separated <code>x, y</code> values such as:</p>
+<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 1,0.5 2,0"</span></code></pre><p>Values may also be given an optional label.</p>
+<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 First 1,0 Second 2,0 Last"</span></code></pre><p>An <code>&lt;xy-input&gt;</code> supports WebAudio automation data. Labels must be one of
+the types <code>&#39;step&#39;</code>, <code>&#39;linear&#39;</code>, <code>&#39;exponential&#39;</code> or <code>&#39;target&#39;</code>. The type
+<code>&#39;target&#39;</code> must be followed by a fourth parameter duration:</p>
+<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 step 1,0 linear 2,0 target 0.2"</span></code></pre>
 </div>
 
  
@@ -391,16 +396,16 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 </div>
 
  
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value">
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-value-2">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property|selector-value">
+    <a href="#property|selector-value-2">
         <code class="property language-js">.value</code>
     </a>
 </h3>
 
-<p>The value of the element. Returns an array of data points. The array is a
-live object. It changes in response to changes to the element, and the
-element changes in response changes to the array or its data points.</p>
+<p>The value of the element. Returns an array of objects representing each
+point in the input. The array is a live object. Objects mutate in response
+to handles being moved, and handles are moved if the objects are mutated.</p>
 <p>When submitted as part of a form the array is serialised to a formdata
 parameters.</p>
 
@@ -409,8 +414,32 @@ parameters.</p>
  
     
     
+    <h3 class="docs-text-03">Events</h3>
     
-    
+<div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-input">
+<h3 class="string-docs-text-05 docs-text-05">
+    <a href="#string-input">
+        <code class=" language-js">"input"</code>
+    </a>
+</h3>
+
+<p>Emitted from the element during the movement of an xy handle.</p>
+
+</div>
+
+ 
+<div class="string-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="string-change">
+<h3 class="string-docs-text-05 docs-text-05">
+    <a href="#string-change">
+        <code class=" language-js">"change"</code>
+    </a>
+</h3>
+
+<p>Emitted from the element when an xy handle has been moved.</p>
+
+</div>
+
+ 
 </div>
 
 <div class="x1 3x @1-x5 @1-2x @2-x6 x-stretch y-start">
