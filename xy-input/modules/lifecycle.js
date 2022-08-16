@@ -85,6 +85,7 @@ function updateBoxes(host, computed, pxbox, paddingbox, contentbox, rangebox) {
     contentbox.width  = box.width  - borderLeft - paddingLeft - borderRight - paddingRight;
     contentbox.height = box.height - borderTop - paddingTop - borderBottom - paddingBottom;
 
+    // rangebox is contentbox in ems with reversed y axis (+ve is up)
     rangebox.x = 0;
     rangebox.width = contentbox.width / fontsize;
     rangebox.y = 0;
@@ -521,12 +522,12 @@ export default {
 
         xaxis.each((data) => {
             privates.valuebox.x      = data.min;
-            privates.valuebox.width  = data.max;
+            privates.valuebox.width  = data.max - data.min;
         });
 
         yaxis.each((data) => {
             privates.valuebox.y      = data.min;
-            privates.valuebox.height = data.max;
+            privates.valuebox.height = data.max - data.min;
         });
 
         // Render DOM
@@ -551,6 +552,16 @@ export default {
             value: values
         })
         .each((state) => {
+            /*
+            console.table({
+                pxbox:      privates.pxbox,
+                paddingbox: privates.paddingbox,
+                contentbox: privates.contentbox,
+                rangebox:   privates.rangebox,
+                valuebox:   privates.valuebox
+            });
+            */
+
             privates.state = state;
             renderCanvas(canvas, ctx, computed, privates.contentbox, privates.valuebox, state.xaxis, state.yaxis, state.value);
             renderHandles(handles, svg, privates.rangebox, state.xaxis, state.yaxis, state.value);
