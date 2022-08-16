@@ -1,0 +1,67 @@
+
+@import '../../bolt/elements/html.css';
+@import '../../bolt/elements/svg.css';
+
+@import '../css/normalise.css';
+@import '../css/host.css';
+@import '../css/label.css';
+@import '../css/output.css';
+@import '../css/tick.css';
+
+@import './css/host.css';
+@import './css/handle.css';
+@import './css/line.css';
+@import './css/tick.css';
+
+
+.envelope-svg {
+    background: var(--track-background);
+    background-size: auto 100%;
+    background-position: bottom left;
+    box-shadow: var(--track-shadow);
+    border-radius: var(--track-radius);
+}
+/*
+.control-point {
+    fill: url(#handle-gradient);
+    stroke: inherit;
+    stroke-width: var(--handle-stroke-width);
+}
+*/
+.control-line {
+    stroke: inherit;
+    stroke-width: 3;
+}
+
+.thin-control-line {
+    display: none;
+    stroke-width: 1;
+    stroke-dasharray: 1 2;
+}
+/*
+.control {
+    stroke: #01181e;
+}
+*/
+.control:focus {
+    stroke: hsl(165, 31%, 53%);
+    outline: none;
+}
+
+.control:focus > .thin-control-line {
+    display: block;
+}
+
+
+/* Gradient stops */
+
+.stop-1 {
+    stop-color: hsla(192,0%,96.8%,0.8);
+}
+
+.stop-2 {
+    stop-color: hsla(192,0%,55%,0.8);
+}
+
+:host(:focus) .stop-1 { stop-color: hsl(192,0%,96.8%); }
+:host(:focus) .stop-2 { stop-color: hsl(192,0%,55%); }

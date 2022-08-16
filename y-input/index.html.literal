@@ -1,0 +1,34 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    ${ include('../../bolt/templates/head.literal', '../package.json') }
+
+    <script title="debug">
+        window.DEBUG = true;
+        window.xyInputStylesheet = '../xy-input-shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../bolt/module.css">
+    ${ include('../../bolt/templates/style.html') }
+</head>
+
+<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+    ${ include('../../bolt/templates/element.literal', comments(
+        "./module.js",
+        "./modules/lifecycle.js",
+        "./modules/properties.js",
+        "./css/host.css"
+    )) }
+
+    ${ include('../../bolt/templates/scripts.html') }
+
+    <script type="module">
+    import XYInput from './module.js';
+    //import XYInput from '../xy-input.js';
+    import events  from '../../dom/modules/events.js';
+
+    events('input change', document)
+    .each((e) => console.log(e.type, e.target.value));
+    </script>
+</body>

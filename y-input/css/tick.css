@@ -1,0 +1,39 @@
+
+[part$="tick"] {
+    font-size: inherit !important;
+    /* Try to avoid overlapping tick labels on the x axis */
+    line-height: 1em;
+
+    grid-column: 1;
+    grid-row: 1;
+    align-self: end;
+    justify-self: start;
+}
+
+[part$="tick"] > span {
+    font-size: 0.625em;
+}
+
+[part="x-tick tick"] {
+    text-align: center;
+    transform: translate3d(
+        calc((var(--normal-x) * var(--range-width) + var(--range-x)) * 1em - 50%),
+        1.5em,
+        0
+    );
+}
+
+[part="y-tick tick"] {
+    text-align: right;
+    min-width: 2em;
+    transform: translate3d(
+        -2.75em,
+        calc((var(--normal-y) * var(--range-height) + var(--range-y)) * 1em + 50%),
+        0
+    );
+}
+
+[part$="tick"]::before {
+    /* Remove the tick dot */
+    content: none;
+}
