@@ -107,9 +107,9 @@ function updateViewbox(host, style, computed, svg, data) {
     style.setProperty('--range-y',      data.rangebox.y);
     style.setProperty('--range-height', data.rangebox.height);
 
-    svg.setAttribute('viewBox', data.rangebox.x + ' '
+    svg.setAttribute('viewBox', 0 + ' '
         + (data.rangebox.y + data.rangebox.height) + ' '
-        + data.rangebox.width + ' '
+        + 1 + ' '
         + (-data.rangebox.height)
     );
 }
@@ -308,7 +308,7 @@ function renderTick(buttons, tick, axis) {
 
 function updateHandle(handle, rangebox, scale, min, max, point, index) {
     handle.setAttribute('transform', 'translate('
-        + 0
+        + 0.5
         + ' '
         + denormalise(rangebox.y, rangebox.y + rangebox.height, scale.normalise(min, max, point.y))
         + ')'
@@ -328,7 +328,7 @@ function renderHandle(rangebox, scale, min, max, point, index) {
 
         // Position it
         transform: 'translate('
-            + 0
+            + 0.5
             + ' '
             + denormalise(rangebox.y, rangebox.y + rangebox.height, scale.normalise(min, max, point.y))
             + ')',
@@ -387,13 +387,16 @@ export default {
         // DOM
         const style   = create('style', ':host {} :host > * { visibility: hidden; }');
         const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
+        const track   = create('div', { part: 'track' });
         const svg     = create('svg');
         const marker  = create('text', '');
+        const output  = create('input', { type: 'number', part: 'output' });
         const lines   = [];
         const ticks   = [];
         const handles = [];
 
-        shadow.append(style, label, svg, marker);
+        track.append(svg);
+        shadow.append(style, label, track, marker, output);
 
         // Components
         const privates   = Privates(this);

@@ -13,7 +13,7 @@ element and upgrades instances already in the DOM.
     }
 </style>
 
-<y-input value="0 1" min="-0.5" max="2" ticks>Envelope</xy-input>
+<y-input value="0 1" min="-0.5" max="2" ticks>Volume</y-input>
 ```
 **/
 

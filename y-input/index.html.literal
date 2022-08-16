@@ -6,7 +6,8 @@
 
     <script title="debug">
         window.DEBUG = true;
-        window.xyInputStylesheet = '../xy-input-shadow.css';
+        //window.yInputStylesheet = '../y-input-shadow.css';
+        window.yInputStylesheet = './shadow.css';
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">

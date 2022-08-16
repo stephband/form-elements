@@ -1,0 +1,9 @@
+
+[part="output"] {
+    width: 100%;
+    min-width: 0;
+    border-width: 0;
+    background-color: transparent;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
