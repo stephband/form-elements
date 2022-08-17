@@ -1,7 +1,7 @@
 
 import { Observer, getTarget } from '../../../fn/observer/observer.js';
-import Privates       from '../../../fn/modules/privates.js';
-import parsePoints    from '../../modules/parse-points.js';
+import Privates    from '../../../fn/modules/privates.js';
+import parseValues from '../../modules/parse-values.js';
 
 function createAttribute(name, defaultValue) {
     return {
@@ -188,7 +188,7 @@ export default {
             const privates = Privates(this);
             privates.value.push(
                 typeof values === 'string' ?
-                    parsePoints(values) :
+                    parseValues(values) :
                     getTarget(values)
             );
         },

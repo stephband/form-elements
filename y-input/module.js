@@ -1,5 +1,5 @@
 
-/** <xy-input>
+/** <y-input>
 
 Import `<y-input>` custom element. This also registers the custom
 element and upgrades instances already in the DOM.

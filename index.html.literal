@@ -10,6 +10,7 @@
         window.rangeInputStylesheet       = './range-input-shadow.css';
         window.rotaryInputStylesheet      = './rotary-input-shadow.css';
         window.xyInputStylesheet          = './xy-input-shadow.css';
+        window.yInputStylesheet           = './y-input-shadow.css';
     </script>
 
     <link rel="stylesheet" href="../bolt/module.css">
@@ -100,6 +101,16 @@
 
     <xy-input class="x1 3x y5" value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>Envelope</xy-input>
 
+    <div class="x1 3x @1-x3 @1-4x @2-x4">
+        <h2>&lt;y-input&gt;</h2>
+        <p>A vertical range input that contains one or more handles. Has
+        a <code>value</code> property that returns an array of values.</p>
+        <a class="link-button button" href="./y-input/">Documentation</a>
+    </div>
+
+    <y-input class="x1 3x y6" value="0 1" min="-0.5" max="2" ticks>Gain</y-input>
+
+
     ${ include('../bolt/templates/scripts.html') }
 
     <script type="module">
@@ -107,5 +118,6 @@
         import RangeInput  from './range-input.js';
         import RotaryInput from './rotary-input.js';
         import XYInput     from './xy-input.js';
+        import YInput      from './y-input.js';
     </script>
 </body>

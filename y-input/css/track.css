@@ -1,5 +1,5 @@
 [part="track"] {
-    padding: 0.25rem;
+    padding: 0.25em;
     background: #f8f8f8;
     border: 1px solid #cccccc;
     border-radius: var(--track-radius);

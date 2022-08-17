@@ -1,7 +1,7 @@
 DEBUG=
 
 # Tell make to ignore existing folders and allow overwriting existing files
-.PHONY: literal docs increment-control range-input rotary-input xy-input modules
+.PHONY: literal docs increment-control range-input rotary-input xy-input y-input modules
 
 # Must format with tabs not spaces
 literal:
@@ -32,8 +32,14 @@ xy-input:
 	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./xy-input.css ./xy-input/module.css
 	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./xy-input-shadow.css ./xy-input/shadow.css
 
+y-input:
+	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./y-input.js ./y-input/module.js
+	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./y-input.css ./y-input/module.css
+	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./y-input-shadow.css ./y-input/shadow.css
+
 modules:
 	make increment-control
 	make range-input
 	make rotary-input
 	make xy-input
+	make y-input

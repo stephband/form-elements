@@ -2,8 +2,16 @@
 [part="output"] {
     width: 100%;
     min-width: 0;
+    text-align: center;
+    padding-left: 0;
+    padding-right: 0;
     border-width: 0;
     background-color: transparent;
     -webkit-appearance: none;
     -moz-appearance: none;
+}
+
+[part="output"]::-webkit-inner-spin-button,
+[part="output"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
 }
