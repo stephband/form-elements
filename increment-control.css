@@ -1,6 +1,6 @@
 /* form-elements 
    0.0.4
    By Stephen Band
-   Built 2022-08-17 10:05 */
+   Built 2022-08-26 20:00 */
 
 increment-control:focus{outline:5px solid -webkit-focus-ring-color}increment-control:not(:defined)>[slot]{display:none!important}increment-control:defined>[type=number]::-webkit-inner-spin-button,increment-control:defined>[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}

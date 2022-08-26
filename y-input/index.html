@@ -272,11 +272,22 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
     </a>
 </h3>
 
-<p>The value of the element. Returns an array of objects representing each
-point in the input. The array is a live object. Objects mutate in response
-to handles being moved, and handles are moved if the objects are mutated.</p>
-<p>When submitted as part of a form the array is serialised to a formdata
-parameters.</p>
+<p>The value of the element, expressed as a string. When submitted as part of a
+form the array is serialised to a formdata parameters.</p>
+
+</div>
+
+ 
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-data">
+<h3 class="property-docs-text-05 docs-text-05">
+    <a href="#property|selector-data">
+        <code class="property language-js">.data</code>
+    </a>
+</h3>
+
+<p>The value of the element. Returns a live array of objects representing
+each value in the input. Objects mutate in response to handles being moved,
+and handles are moved when the object values are mutated.</p>
 
 </div>
 
