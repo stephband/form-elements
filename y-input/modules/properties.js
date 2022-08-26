@@ -1,7 +1,8 @@
 
 import { Observer, getTarget } from '../../../fn/observer/observer.js';
-import Privates    from '../../../fn/modules/privates.js';
-import parseValues from '../../modules/parse-values.js';
+import Privates        from '../../../fn/modules/privates.js';
+import parseValues     from '../../modules/parse-values.js';
+import stringifyValues from '../../modules/stringify-values.js';
 
 function createAttribute(name, defaultValue) {
     return {
@@ -167,12 +168,8 @@ export default {
 
     /**
     .value
-    The value of the element. Returns an array of objects representing each
-    point in the input. The array is a live object. Objects mutate in response
-    to handles being moved, and handles are moved if the objects are mutated.
-
-    When submitted as part of a form the array is serialised to a formdata
-    parameters.
+    The value of the element, expressed as a string. When submitted as part of a
+    form the array is serialised to a formdata parameters.
     **/
     value: {
         attribute: function(value) {
@@ -181,7 +178,7 @@ export default {
 
         get: function() {
             const privates = Privates(this);
-            return Observer(privates.state.value);
+            return stringifyValues(privates.state.value);
         },
 
         set: function(values) {
@@ -189,8 +186,30 @@ export default {
             privates.value.push(
                 typeof values === 'string' ?
                     parseValues(values) :
+                typeof values === 'number' ?
+                    [{ value: values }] :
                     getTarget(values)
             );
+        },
+
+        enumerable: true
+    },
+
+    /**
+    .data
+    The value of the element. Returns a live array of objects representing
+    each value in the input. Objects mutate in response to handles being moved,
+    and handles are moved when the object values are mutated.
+    **/
+    data: {
+        get: function() {
+            const privates = Privates(this);
+            return Observer(privates.state.value);
+        },
+
+        set: function(values) {
+            const privates = Privates(this);
+            privates.value.push(getTarget(values));
         },
 
         enumerable: true
