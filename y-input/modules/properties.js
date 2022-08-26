@@ -195,4 +195,22 @@ export default {
 
         enumerable: true
     },
+
+    data: {
+        get: function() {
+            const privates = Privates(this);
+            return Observer(privates.state.value);
+        },
+
+        set: function(values) {
+            const privates = Privates(this);
+            privates.value.push(
+                typeof values === 'string' ?
+                    parseValues(values) :
+                    getTarget(values)
+            );
+        },
+
+        enumerable: true
+    },
 };
