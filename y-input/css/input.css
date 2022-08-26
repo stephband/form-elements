@@ -1,0 +1,17 @@
+
+[type="number"] {
+    font-size: inherit;
+    text-align: center;
+    width: 5em;
+    clip-path: circle(1%);
+}
+
+[type="number"]:focus {
+    display: block;
+    clip-path: none;
+}
+
+[type="number"]::-webkit-inner-spin-button,
+[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+}

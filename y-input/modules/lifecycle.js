@@ -300,16 +300,17 @@ export default {
     construct: function(shadow, internals) {
         // DOM
         const style   = create('style', ':host {} :host > * { visibility: hidden; }');
-        const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
-        const track   = create('div', { part: 'track' });
+        const label   = create('label', { for: 'input', part: 'label', html: '<slot></slot>' });
+        const track   = create('div',   { part: 'track' });
         const svg     = create('svg');
         const marker  = create('text', '');
-        const output  = create('input', { type: 'number', part: 'output' });
+        const output  = create('output', { for: 'number', part: 'output' });
+        const input   = create('input', { type: 'number', id: 'number' });
         const ticks   = [];
         const handles = [];
 
         track.append(svg);
-        shadow.append(style, label, track, marker, output);
+        shadow.append(style, label, track, marker, output, input);
 
         // Components
         const privates   = Privates(this);
@@ -333,13 +334,13 @@ export default {
         privates.rangebox   = { y: 6.75, width: 6.75 };
         privates.valuebox   = { y: 0,    width: 1 };
 
-        privates.scale   = Stream.of(defaults.scale);
-        privates.min     = Stream.of(defaults.min);
-        privates.max     = Stream.of(defaults.max);
-        privates.step    = Stream.of(defaults.step);
-        privates.ticks   = Stream.of(null);
-        privates.display = Stream.of(defaults.display);
-        privates.value   = Stream.of([{ value: 0 }]);
+        privates.scale      = Stream.of(defaults.scale);
+        privates.min        = Stream.of(defaults.min);
+        privates.max        = Stream.of(defaults.max);
+        privates.step       = Stream.of(defaults.step);
+        privates.ticks      = Stream.of(null);
+        privates.display    = Stream.of(defaults.display);
+        privates.value      = Stream.of([{ value: 0 }]);
 
         const resizes = Stream
         .merge(privates.shadow, events('resize', window))
@@ -384,18 +385,9 @@ export default {
             value: values
         })
         .each((state) => {
-            /*
-            console.table({
-                pxbox:      privates.pxbox,
-                paddingbox: privates.paddingbox,
-                contentbox: privates.contentbox,
-                rangebox:   privates.rangebox,
-                valuebox:   privates.valuebox
-            });
-            */
-
             privates.state = state;
             renderHandles(handles, svg, privates.rangebox, state.axis, state.value);
+            updateOutput(output, state.value[0]);
         });
 
         // Track mutations to points inside value
@@ -411,6 +403,9 @@ export default {
                     updateOutput(output, point);
                 })
             ));
+
+            // Render initial value to output
+            updateOutput(output, value[0]);
 
             return observers;
         }, []);
@@ -435,6 +430,18 @@ export default {
             })
             .filter(get('type'))
             .each(handle)
+        });
+
+        // On double click focus the number input
+        events('pointerup', output)
+        .reduce((e1, e2) => {
+            if (e1 && (e2.timeStamp - e1.timeStamp < 800)) {
+                // Double tap!
+                input.focus();
+                return;
+            }
+
+            return e2;
         });
     },
 
