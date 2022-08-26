@@ -8,9 +8,9 @@
     --handle-stroke-width: 1px;
 
     display: inline-grid;
-    grid-template-rows: 2em 1fr 2em;
-    grid-template-columns: 2em auto 2em;
-    row-gap: 0;
+    grid-template-rows: min-content 1fr min-content;
+    grid-template-columns: 1fr min-content 1fr;
+    row-gap: 0.375em;
     column-gap: 0.375em;
 
     width: 5.25rem;
@@ -44,9 +44,18 @@
     text-align: center;
 }
 
-:host > [part="output"] {
+:host > [part="output"],
+:host > [type="number"] {
     grid-column: 1 / span 3;
     grid-row: 3;
-    justify-self: stretch;
-    align-self: end;
+    justify-self: center;
+    align-self: center;
+}
+
+:host > [part="output"] {
+    z-index: 1;
+}
+
+:host > [type="number"] {
+    z-index: 2;
 }

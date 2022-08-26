@@ -1,7 +1,8 @@
 
 import { Observer, getTarget } from '../../../fn/observer/observer.js';
-import Privates       from '../../../fn/modules/privates.js';
-import parsePoints    from '../../modules/parse-points.js';
+import Privates        from '../../../fn/modules/privates.js';
+import parsePoints     from '../../modules/parse-points.js';
+import stringifyPoints from '../../modules/stringify-points.js';
 
 function createAttribute(name, defaultValue) {
     return {
@@ -257,7 +258,7 @@ export default {
 
         get: function() {
             const privates = Privates(this);
-            return Observer(privates.state.value);
+            return stringifyPoints(privates.state.value);
         },
 
         set: function(values) {
@@ -267,6 +268,26 @@ export default {
                     parsePoints(values) :
                     getTarget(values)
             );
+        },
+
+        enumerable: true
+    },
+
+    /**
+    .data
+    The value of the element. Returns a live array of objects representing
+    each value in the input. Objects mutate in response to handles being moved,
+    and handles are moved when the object `x` and `y` values are mutated.
+    **/
+    data: {
+        get: function() {
+            const privates = Privates(this);
+            return Observer(privates.state.value);
+        },
+
+        set: function(values) {
+            const privates = Privates(this);
+            privates.value.push(getTarget(values));
         },
 
         enumerable: true
