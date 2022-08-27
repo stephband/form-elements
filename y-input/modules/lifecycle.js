@@ -81,6 +81,10 @@ function updateBoxes(track, computed, pxbox, paddingbox, contentbox, rangebox) {
 }
 
 function updateViewbox(track, style, computed, svg, data) {
+    // Make sure that automatic height of SVG does not affect measurements
+    svg.style.width = '';
+    svg.style.height = '0';
+
     data.box = updateBoxes(track, computed, data.pxbox, data.paddingbox, data.contentbox, data.rangebox);
 
     style.setProperty('--range-y',      data.rangebox.y);
@@ -91,6 +95,9 @@ function updateViewbox(track, style, computed, svg, data) {
         + 1 + ' '
         + (-data.rangebox.height)
     );
+
+    svg.style.width = '1em';
+    svg.style.height = -data.rangebox.height + 'em';
 }
 
 function setXY(e, data) {

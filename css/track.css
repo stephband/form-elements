@@ -1,0 +1,11 @@
+
+:host {
+    /** --track-background **/
+    --track-background: #eeeeee;
+
+    /** --track-padding
+    Make the range input slightly wider than the control to allow range thumb
+    to line up with label text.
+    **/
+    --track-padding: 0.3125em;
+}

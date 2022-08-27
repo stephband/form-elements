@@ -4,12 +4,13 @@
 
 @import '../css/normalise.css';
 @import '../css/host.css';
+@import '../css/track.css';
 @import '../css/label.css';
 @import '../css/output.css';
 @import '../css/tick.css';
 
 @import './css/host.css';
-@import './css/tick.css';
 @import './css/track.css';
+@import './css/tick.css';
 @import './css/handle.css';
 @import './css/label.css';

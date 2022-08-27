@@ -1,20 +1,21 @@
+
 [part="track"] {
-    padding: 0.25em;
+    width: 0.625em;
+    padding-top:    calc(var(--track-padding) - 1px);
+    padding-bottom: calc(var(--track-padding) - 1px);
     background: #f8f8f8;
     border: 1px solid #cccccc;
-    border-radius: var(--track-radius);
-    box-shadow:    var(--track-shadow);
+    border-radius:  var(--track-radius);
+    box-shadow:     var(--track-shadow);
 }
 
 [part="track"] > svg {
+    display: block;
     width: 1em;
-    margin-left: -0.5em;
+    margin-left: calc(50% - 0.5em);
     max-width: none;
-
-    /* Height must be auto (100% too big in Safari) and controlled by viewbox
-       to cover the area else shapes inside are not clickable. */
-    height: auto;
-
+    min-height: 1em;
+    max-height: none;
     overflow: visible;
     position: relative;
     z-index: 2;
