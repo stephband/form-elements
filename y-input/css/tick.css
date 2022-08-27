@@ -10,21 +10,16 @@
     justify-self: start;
 }
 
+[part$="tick"]::before {
+    /* Remove the tick dot */
+    content: none;
+}
+
 [part$="tick"] > span {
     font-size: 0.625em;
 }
 
-[part="y-tick tick"] {
+[part$="y-tick"] {
     text-align: right;
     min-width: 2em;
-    transform: translate3d(
-        0,
-        calc((var(--normal-y) * var(--range-height) + var(--range-y)) * 1em + 50%),
-        0
-    );
-}
-
-[part$="tick"]::before {
-    /* Remove the tick dot */
-    content: none;
 }

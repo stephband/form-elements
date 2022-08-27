@@ -23,9 +23,11 @@
     grid-row: 2;
     justify-self: start;
     align-self: stretch;
-    height: calc(100% + 0.625em);
-    margin-top:    calc(-1 * var(--track-padding));
-    margin-bottom: calc(-1 * var(--track-padding));
+    height: 100%;
+    /*
+    margin-top:    -0.3125em;
+    margin-bottom: -0.3125em;
+    */
 }
 
 :host > [part$="tick"] {
@@ -33,6 +35,11 @@
     grid-row: 2;
     justify-self: end;
     align-self: end;
+    transform: translate3d(
+        0,
+        calc((var(--normal-y) * var(--range-height) + var(--range-y)) * 1em + 50%),
+        0
+    );
 }
 
 :host > [part="label"] {

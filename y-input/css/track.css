@@ -1,8 +1,8 @@
 
 [part="track"] {
     width: 0.625em;
-    padding-top:    calc(var(--track-padding) - 1px);
-    padding-bottom: calc(var(--track-padding) - 1px);
+    padding-top:    0.25em;
+    padding-bottom: 0.25em;
     background: #f8f8f8;
     border: 1px solid #cccccc;
     border-radius:  var(--track-radius);

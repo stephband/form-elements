@@ -73,8 +73,9 @@ function updateBoxes(track, computed, pxbox, paddingbox, contentbox, rangebox) {
     contentbox.y      = paddingTop;
     contentbox.height = box.height - borderTop - paddingTop - borderBottom - paddingBottom;
 
-    // rangebox is contentbox in ems with reversed y axis (+ve is up)
-    rangebox.y = 0;
+    // rangebox is contentbox in ems with reversed y axis (+ve is up). All a bit
+    // confusing and ought to be cleaned up
+    rangebox.y = (0 - paddingBottom - borderBottom) / fontsize;
     rangebox.height = -contentbox.height / fontsize;
 
     return box;
