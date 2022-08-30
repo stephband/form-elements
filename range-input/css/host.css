@@ -30,7 +30,7 @@
 
     grid-template-areas:
         'label output plugs'
-        'input input input';
+        'track track track';
     grid-template-columns: 1fr min-content min-content;
     grid-template-rows:
         min-content
@@ -64,7 +64,7 @@
 }
 
 :host > [type="range"] {
-    grid-area: input;
+    grid-area: track;
     align-self: end;
 
     /* Make the range input slightly wider than the control
@@ -77,7 +77,7 @@
 }
 
 :host > button {
-    grid-area: input;
+    grid-area: track;
     position: relative;
     z-index: 0;
     align-self: start;
@@ -90,7 +90,7 @@
 }
 
 :host > span {
-    grid-area: input;
+    grid-area: track;
     background-color: yellow;
 }
 

@@ -9,6 +9,11 @@
     --handle-stroke-width: 1px;
 
     display: inline-grid;
+
+    grid-template-areas:
+        'label  label  label'
+        'ticks  input  .'
+        'output output output';
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 1fr min-content 1fr;
     row-gap: 0.375em;
