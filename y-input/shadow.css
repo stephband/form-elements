@@ -17,35 +17,8 @@
 @import './css/output.css';
 
 
-.envelope-svg {
-    background: var(--track-background);
-    background-size: auto 100%;
-    background-position: bottom left;
-    box-shadow: var(--track-shadow);
-    border-radius: var(--track-radius);
-}
-/*
-.control-point {
-    fill: url(#handle-gradient);
-    stroke: inherit;
-    stroke-width: var(--handle-stroke-width);
-}
-*/
-.control-line {
-    stroke: inherit;
-    stroke-width: 3;
-}
 
-.thin-control-line {
-    display: none;
-    stroke-width: 1;
-    stroke-dasharray: 1 2;
-}
-/*
-.control {
-    stroke: #01181e;
-}
-*/
+
 .control:focus {
     stroke: hsl(165, 31%, 53%);
     outline: none;
