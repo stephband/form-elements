@@ -3,6 +3,8 @@
     font-size: inherit;
     text-align: center;
     width: 4em;
+    margin-left: -1.5em;
+    margin-right: -1.5em;
     clip-path: circle(1%);
 }
 
