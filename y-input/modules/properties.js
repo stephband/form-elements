@@ -3,70 +3,35 @@ import { Observer, getTarget } from '../../../fn/observer/observer.js';
 import Privates        from '../../../fn/modules/privates.js';
 import parseValues     from '../../modules/parse-values.js';
 import stringifyValues from '../../modules/stringify-values.js';
-
-function createAttribute(name, defaultValue) {
-    return {
-        attribute: function(value) {
-            const privates = Privates(this);
-            privates[name].push(value || defaultValue);
-        }
-    };
-}
-
-function createAttributeProperty(name, defaultValue) {
-    return {
-        attribute: function(value) {
-            this[name] = value;
-        },
-
-        set: function(value) {
-            const privates = Privates(this);
-            privates[name].push(value === undefined ? defaultValue : value);
-        },
-
-        get: function() {
-            const privates = Privates(this);
-            return privates.data[name];
-        },
-
-        enumerable: true
-    };
-}
-
-function createBoolean(name) {
-    return {
-        attribute: function(value) {
-            const privates = Privates(this);
-            privates[name].push(!!value);
-        }
-    };
-}
+import { createAttribute, createAttributeProperty } from '../../modules/properties.js';
 
 export default {
     /**
     min="0"
-    Value at upper limit of fader. Can interpret string values with recognised
+    Value at upper limit of fader. Will interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
     /**
     .min
-    Value at upper limit of fader. Can interpret string values with recognised
+    Value at upper limit of fader. Will interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
+
     min: createAttributeProperty('min', 0),
 
     /**
     max="1"
-    Value at upper limit of fader. Can interpret string values with recognised
+    Value at upper limit of fader. Will interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
     /**
     .max
-    Value at upper limit of fader. Can interpret string values with recognised
+    Value at upper limit of fader. Will interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
+
     max: createAttributeProperty('max', 1),
 
     /**
@@ -84,6 +49,7 @@ export default {
     - `"log-60dB"`
     - `"log-96dB"`
     **/
+
     scale: createAttribute('scale', 'linear'),
 
     /**
@@ -96,6 +62,7 @@ export default {
     ticks="-48dB -36dB -24dB -12dB 0dB"
     ```
     **/
+
     ticks: createAttribute('ticks', ''),
 
     /**
@@ -105,6 +72,7 @@ export default {
     - The string `"tick"`. The values in the `ticks` attribute are used as step values
     - A space or comma separated list of values, written with or without units
     **/
+
     step: createAttribute('step'),
 
     /**
@@ -117,30 +85,8 @@ export default {
     - `"s"`
     - `"semitone"`
     **/
+
     display: createAttribute('display'),
-
-    /**
-    valuebox=""
-    Defines an `"x y width height"` box to use as the range of values that
-    map to the padding box of the `<xy-input>`. The origin is at the
-    bottom and y increases upwards.
-
-    Where not given, `valuebox` defaults to the limits of `min` and `max`.
-    Most often this is what you want, and the valuebox attribute is safe to
-    ignore.
-    **/
-    valuebox: {
-        attribute: function(value) {
-            // TODO: parse valuebox
-        }
-    },
-
-    /**
-    ordered=""
-    Boolean attribute. When set, data points may not overlap their
-    neighbours, keeping the order of points on the x axis constant.
-    **/
-    ordered: createBoolean('ordered'),
 
     /**
     value="0 0"
@@ -197,13 +143,13 @@ export default {
     },
 
     /**
-    .data
+    .state
     The value of the element. Returns a live array of objects representing
     each value in the input. Objects mutate in response to handles being moved,
     and handles are moved when the object values are mutated.
     **/
 
-    data: {
+    state: {
         get: function() {
             const privates = Privates(this);
             return Observer(privates.state.value);

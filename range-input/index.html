@@ -81,8 +81,8 @@ upgrades instances already in the DOM:</p>
     </a>
 </h3>
 
-<p>Value at lower limit of fader. Can interpret values with recognised units,
-eg. <code>&quot;0dB&quot;</code>.</p>
+<p>Value at upper limit of fader. Will interpret string values with recognised
+units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
 </div>
 
@@ -94,8 +94,8 @@ eg. <code>&quot;0dB&quot;</code>.</p>
     </a>
 </h3>
 
-<p>Value at upper limit of fader. Can interpret values with recognised units,
-eg. <code>&quot;0dB&quot;</code>.</p>
+<p>Value at upper limit of fader. Will interpret string values with recognised
+units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
 </div>
 
@@ -124,6 +124,21 @@ of the fader travel. Possible values are:</p>
 </div>
 
  
+<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ticks">
+<h3 class="attribute-docs-text-05 docs-text-05">
+    <a href="#attribute-ticks">
+        <code class="token language-html">ticks</code>
+    </a>
+</h3>
+
+<p>A space or comma separated list of values at which to display tick marks.
+Values may be listed with or without units, eg:</p>
+<pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
+ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
+
+</div>
+
+ 
 <div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-display">
 <h3 class="attribute-docs-text-05 docs-text-05">
     <a href="#attribute-display">
@@ -140,21 +155,6 @@ displayed in this unit. Possible values are:</p>
 <li><code>&quot;s&quot;</code></li>
 <li><code>&quot;semitone&quot;</code></li>
 </ul>
-
-</div>
-
- 
-<div class="attribute-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="attribute-ticks">
-<h3 class="attribute-docs-text-05 docs-text-05">
-    <a href="#attribute-ticks">
-        <code class="token language-html">ticks</code>
-    </a>
-</h3>
-
-<p>A space or comma separated list of values at which to display tick marks.
-Values may be listed with or without units, eg:</p>
-<pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
-ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 </div>
 
@@ -210,28 +210,28 @@ with native form elements, which all have a type).</p>
 </div>
 
  
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-min">
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-min">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-min">
+    <a href="#property|selector-min">
         <code class="property language-js">.min</code>
     </a>
 </h3>
 
-<p>0
-Value at lower limit of fader, as a number.</p>
+<p>Value at upper limit of fader. Will interpret string values with recognised
+units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
 </div>
 
  
-<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property-max">
+<div class="property-doc-toggle-block doc-toggle-block toggle-block block" data-toggleable id="property|selector-max">
 <h3 class="property-docs-text-05 docs-text-05">
-    <a href="#property-max">
+    <a href="#property|selector-max">
         <code class="property language-js">.max</code>
     </a>
 </h3>
 
-<p>1
-Value at upper limit of fader, as a number.</p>
+<p>Value at upper limit of fader. Will interpret string values with recognised
+units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
 </div>
 

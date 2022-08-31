@@ -2,6 +2,44 @@
 import Privates   from '../../fn/modules/privates.js';
 import parseValue from './parse-value.js';
 
+export function createAttribute(name, defaultValue) {
+    return {
+        attribute: function(value) {
+            const privates = Privates(this);
+            privates[name].push(value || defaultValue);
+        }
+    };
+}
+
+export function createAttributeProperty(name, defaultValue) {
+    return {
+        attribute: function(value) {
+            this[name] = value;
+        },
+
+        set: function(value) {
+            const privates = Privates(this);
+            privates[name].push(value === undefined ? defaultValue : value);
+        },
+
+        get: function() {
+            const privates = Privates(this);
+            return privates.data[name];
+        },
+
+        enumerable: true
+    };
+}
+
+export function createBoolean(name) {
+    return {
+        attribute: function(value) {
+            const privates = Privates(this);
+            privates[name].push(!!value);
+        }
+    };
+}
+
 export default {
     /**
     .type="number"
@@ -16,61 +54,31 @@ export default {
 
     /**
     min="0"
-    Value at lower limit of fader. Can interpret values with recognised units,
-    eg. `"0dB"`.
+    Value at upper limit of fader. Will interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
     /**
-    .min=0
-    Value at lower limit of fader, as a number.
+    .min
+    Value at upper limit of fader. Will interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
-    min: {
-        attribute: function(value) {
-            this.min = value;
-        },
-
-        set: function(value) {
-            const privates = Privates(this);
-            privates.min.push(value);
-        },
-
-        get: function() {
-            const privates = Privates(this);
-            return privates.data.min;
-        },
-
-        enumerable: true
-    },
+    min: createAttributeProperty('min', 0),
 
     /**
     max="1"
-    Value at upper limit of fader. Can interpret values with recognised units,
-    eg. `"0dB"`.
+    Value at upper limit of fader. Will interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
     /**
-    .max=1
-    Value at upper limit of fader, as a number.
+    .max
+    Value at upper limit of fader. Will interpret string values with recognised
+    units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
-    max: {
-        attribute: function(value) {
-            this.max = value;
-        },
-
-        set: function(value) {
-            const privates = Privates(this);
-            privates.max.push(value);
-        },
-
-        get: function() {
-            const privates = Privates(this);
-            return privates.data.max;
-        },
-
-        enumerable: true
-    },
+    max: createAttributeProperty('max', 1),
 
     /**
     scale="linear"
@@ -88,12 +96,20 @@ export default {
     - `"log-96dB"`
     **/
 
-    scale: {
-        attribute: function(string) {
-            const privates = Privates(this);
-            privates.scale.push(string || 'linear');
-        }
-    },
+    scale: createAttribute('scale', 'linear'),
+
+    /**
+    ticks=""
+    A space or comma separated list of values at which to display tick marks.
+    Values may be listed with or without units, eg:
+
+    ```html
+    ticks="0 0.2 0.4 0.6 0.8 1"
+    ticks="-48dB -36dB -24dB -12dB 0dB"
+    ```
+    **/
+
+    ticks: createAttribute('ticks', ''),
 
     /**
     display=""
@@ -114,24 +130,6 @@ export default {
     },
 
     /**
-    ticks=""
-    A space or comma separated list of values at which to display tick marks.
-    Values may be listed with or without units, eg:
-
-    ```html
-    ticks="0 0.2 0.4 0.6 0.8 1"
-    ticks="-48dB -36dB -24dB -12dB 0dB"
-    ```
-    **/
-
-    ticks: {
-        attribute: function(string) {
-            const privates = Privates(this);
-            privates.ticks.push(string);
-        }
-    },
-
-    /**
     step=""
     Step is either:
     - The string `"any"` (the default value)
@@ -139,12 +137,7 @@ export default {
     - A space or comma separated list of values, written with or without units
     **/
 
-    step: {
-        attribute: function(string) {
-            const privates = Privates(this);
-            privates.step.push(string);
-        }
-    },
+    step: createAttribute('step'),
 
     /**
     value=""
