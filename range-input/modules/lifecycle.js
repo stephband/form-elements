@@ -100,16 +100,18 @@ function getChildStyle(style) {
     return style.sheet.cssRules[1].style;
 }
 
+//var n = 0;
+
 export default {
     mode: 'closed',
-
     focusable: true,
 
     construct: function(shadow, internals) {
         // DOM
         const style   = create('style', ':host {} :host > * { visibility: hidden; }');
         const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
-        const input   = create('input', { type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any' });
+        // TODO: For some reason in Safari, the input does not get focus, with or without tabindex
+        const input   = create('input', { type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any', tabindex: '0' });
         const text    = create('text');
         const abbr    = create('abbr');
         const output  = create('output', { children: [text, abbr], part: 'output' });
@@ -158,6 +160,8 @@ export default {
         attributes
         .each((data) => renderData(getHostStyle(style), data.scale, data.min, data.max, data.ticks, buttons, marker));
 
+//this.nnn = ++n;
+//console.log('RANGE CONSTRUCT', this.nnn, document.body.contains(this));
         // Track value updates
         Stream
         .combine({
@@ -165,6 +169,7 @@ export default {
             value:   privates.value
         })
         .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
+//.map((d) => (console.log('RANGE RENDER', this.nnn, document.body.contains(this)), d))
         .each((data) => renderValue(getHostStyle(style), input, internals, text, abbr, data.display, data.value, data.normalValue)) ;
 
 
@@ -197,8 +202,17 @@ export default {
     },
 
     load: function(shadow) {
+        //console.log('RANGE LOAD', this.nnn, document.body.contains(this));
         const privates = Privates(this);
         getChildStyle(privates.style).visibility = '';
         privates.load(shadow);
+    },
+
+    connect: function() {
+        //console.log('RANGE CONNECT', this.nnn, document.body.contains(this));
+    },
+
+    disconnect: function() {
+        //console.log('RANGE DISCONNECT', this.nnn, document.body.contains(this));
     }
 };

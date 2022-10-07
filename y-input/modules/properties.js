@@ -7,6 +7,18 @@ import { createAttribute, createAttributeProperty } from '../../modules/properti
 
 export default {
     /**
+    .type="numbers"
+    A readonly property with the value `"numbers"`, provided for consistency
+    with native form elements, which all have a type, although `"numbers"` is
+    not a standard type.
+    **/
+
+    type: {
+        value: 'numbers',
+        enumerable: true
+    },
+
+    /**
     min="0"
     Value at upper limit of fader. Will interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
@@ -125,12 +137,12 @@ export default {
 
         get: function() {
             const privates = Privates(this);
-            return stringifyValues(privates.state.value);
+            return privates.state ? stringifyValues(privates.value) : '';
         },
 
         set: function(values) {
             const privates = Privates(this);
-            privates.value.push(
+            privates.values.push(
                 typeof values === 'string' ?
                     parseValues(values) :
                 typeof values === 'number' ?
@@ -143,21 +155,21 @@ export default {
     },
 
     /**
-    .state
+    .data
     The value of the element. Returns a live array of objects representing
     each value in the input. Objects mutate in response to handles being moved,
     and handles are moved when the object values are mutated.
     **/
 
-    state: {
+    data: {
         get: function() {
             const privates = Privates(this);
-            return Observer(privates.state.value);
+            return Observer(privates.value);
         },
 
         set: function(values) {
             const privates = Privates(this);
-            privates.value.push(getTarget(values));
+            privates.values.push(getTarget(values));
         },
 
         enumerable: true

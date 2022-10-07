@@ -243,6 +243,7 @@ function renderHandle(rangebox, scale, min, max, point, index) {
     return create('path', {
         part:  'handle',
         class: 'control control-handle control-point',
+        tabindex: '0',
         d:     'M 0 0, m -0.5 0, a 0.5 0.5 0 1 0 1 0, a 0.5 0.5 0 1 0 -1 0',
 
         // Position it
@@ -305,6 +306,9 @@ function updateOutput(output, point) {
 /* Element */
 
 export default {
+    mode: 'closed',
+    focusable: true,
+
     construct: function(shadow, internals) {
         // DOM
         const style   = create('style', ':host {} :host > * { visibility: hidden; }');
@@ -348,7 +352,7 @@ export default {
         privates.step       = Stream.of(defaults.step);
         privates.ticks      = Stream.of(null);
         privates.display    = Stream.of(defaults.display);
-        privates.value      = Stream.of([{ value: 0 }]);
+        privates.values     = Stream.of([{ value: 0 }]);
 
         const resizes = Stream
         .merge(privates.shadow, events('resize', window))
@@ -380,10 +384,12 @@ export default {
         .each((data) => renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ticks, marker));
 
         // Track value and mutations of value
-        const values = privates.value
+        const values = privates.values
         .scan(toObserver, null)
         .flatMap(id)
         .broadcast();
+
+        values.each((value) => privates.value = value);
 
         // Render canvas
         Stream
@@ -437,7 +443,9 @@ export default {
                 events:     []
             })
             .filter(get('type'))
-            .each(handle)
+            .each(handle);
+
+            this.focus();
         });
 
         // On double click focus the number input
