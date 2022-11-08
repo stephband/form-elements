@@ -322,7 +322,8 @@ export default {
         const handles = [];
 
         track.append(svg);
-        shadow.append(style, label, track, marker, output, input);
+        output.append(input);
+        shadow.append(style, label, track, marker, output);
 
         // Components
         const privates   = Privates(this);
