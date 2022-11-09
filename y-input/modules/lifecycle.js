@@ -243,8 +243,9 @@ function renderHandle(rangebox, scale, min, max, point, index) {
     return create('path', {
         part:  'handle',
         class: 'control control-handle control-point',
-        tabindex: '0',
+        // FF is a little sensitive about where commas occur, let's not use any
         d:     'M 0 0 m -0.5 0 a 0.5 0.5 0 1 0 1 0 a 0.5 0.5 0 1 0 -1 0',
+        tabindex: '0',
 
         // Position it
         transform: 'translate('
