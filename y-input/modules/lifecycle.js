@@ -244,7 +244,7 @@ function renderHandle(rangebox, scale, min, max, point, index) {
         part:  'handle',
         class: 'control control-handle control-point',
         tabindex: '0',
-        d:     'M 0 0, m -0.5 0, a 0.5 0.5 0 1 0 1 0, a 0.5 0.5 0 1 0 -1 0',
+        d:     'M 0 0 m -0.5 0 a 0.5 0.5 0 1 0 1 0 a 0.5 0.5 0 1 0 -1 0',
 
         // Position it
         transform: 'translate('

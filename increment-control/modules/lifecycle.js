@@ -1,13 +1,14 @@
 
-import Privates  from '../../../fn/modules/privates.js';
-import { clamp } from '../../../fn/modules/clamp.js';
-import get       from '../../../fn/modules/get.js';
-import noop      from '../../../fn/modules/noop.js';
-import overload  from '../../../fn/modules/overload.js';
-import create    from '../../../dom/modules/create.js';
-import delegate  from '../../../dom/modules/delegate.js';
-import events, { isPrimaryButton } from '../../../dom/modules/events.js';
-import trigger   from '../../../dom/modules/trigger.js';
+import Privates        from '../../../fn/modules/privates.js';
+import { clamp }       from '../../../fn/modules/clamp.js';
+import get             from '../../../fn/modules/get.js';
+import noop            from '../../../fn/modules/noop.js';
+import overload        from '../../../fn/modules/overload.js';
+import create          from '../../../dom/modules/create.js';
+import delegate        from '../../../dom/modules/delegate.js';
+import events          from '../../../dom/modules/events.js';
+import isPrimaryButton from '../../../dom/modules/is-primary-button.js';
+import trigger         from '../../../dom/modules/trigger.js';
 
 
 function getIncrement(min, max, step, shift) {
