@@ -76,17 +76,17 @@ export default {
     construct: function(shadow, internal) {
 
         /**
-        [slot="decrement-button"]
+        [slot="previous-button"]
         **/
 
         /**
-        [slot="increment-button"]
+        [slot="next-button"]
         **/
 
         const style     = create('style', ':host > * { visibility: hidden; }');
         const slot      = create('slot');
-        const decrement = create('button', { type: 'button', part: 'decrement-button', name: 'decrement', value: '-1', html: '<slot name="decrement-button">-</slot>' });
-        const increment = create('button', { type: 'button', part: 'increment-button', name: 'increment', value: '1', html: '<slot name="increment-button">+</slot>' });
+        const decrement = create('button', { type: 'button', part: 'previous-button', name: 'decrement', value: '-1', html: '<slot name="previous-button">Previous option</slot>' });
+        const increment = create('button', { type: 'button', part: 'next-button', name: 'increment', value: '1', html: '<slot name="next-button">Next option</slot>' });
 
         shadow.append(style, slot, decrement, increment);
 
@@ -94,22 +94,18 @@ export default {
         const privates      = Privates(this);
         privates.childStyle = style.sheet.cssRules[0].style;
 
-        // Where <increment-control> wraps an input, we enhance that with our
-        // decrement/increment logic, otherwise we use the internal input.
+        // Where <select-control> wraps an select, we enhance that with our
+        // previous/next logic, otherwise we use the internal input.
         // Todo: maybe we should just get rid of the internal input and treat
         // this custom element as a wrapper, it would simplify everything - no
         // need to setFormValue or any of that malarky
         events('slotchange', slot)
         .each((e) => {
-            const input = this.querySelector('[type="number"], [type="range"]');
-            privates.input = input;
+            const select = this.querySelector('select');
+            privates.select = select;
 
-            if (!input.value) {
-                input.value = clamp(
-                    input.min ? parseFloat(input.min) : -Infinity,
-                    input.max ? parseFloat(input.max) :  Infinity,
-                    0
-                );
+            if (!select.value) {
+                select.value = 0;
             }
         });
 
@@ -117,9 +113,9 @@ export default {
         events('pointerdown', shadow)
         .filter(isPrimaryButton)
         .each(delegate({
-            '[type="button"]':           (element, e) => incrementValue(this, internal, e, privates.input, parseFloat(element.value) *  (parseFloat(privates.input.step) || 1)),
-            '[slot="decrement-button"]': (element, e) => incrementValue(this, internal, e, privates.input, -1 * (parseFloat(privates.input.step) || 1)),
-            '[slot="increment-button"]': (element, e) => incrementValue(this, internal, e, privates.input, parseFloat(privates.input.step) || 1)
+            '[type="button"]':          (element, e) => incrementValue(this, internal, e, privates.input, parseFloat(element.value) *  (parseFloat(privates.input.step) || 1)),
+            '[slot="previous-button"]': (element, e) => incrementValue(this, internal, e, privates.input, -1 * (parseFloat(privates.input.step) || 1)),
+            '[slot="next-button"]':     (element, e) => incrementValue(this, internal, e, privates.input, parseFloat(privates.input.step) || 1)
         }));
 
         // Keep value between min < value < max

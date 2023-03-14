@@ -1,0 +1,11 @@
+
+
+select-control:focus {
+    /* This disnae work but why? */
+    outline: 5px solid -webkit-focus-ring-color;
+}
+
+select-control:not(:defined) > [slot] {
+    /* Hide all named slotted content until element is defined */
+    display: none !important;
+}

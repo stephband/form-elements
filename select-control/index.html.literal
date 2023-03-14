@@ -1,0 +1,73 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    ${ include('../../bolt/templates/head.literal', '../package.json') }
+
+    <script title="debug">
+        window.DEBUG = true;
+        window.selectControlStylesheet = './shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../bolt/module.css">
+    ${ include('../../bolt/templates/style.html') }
+
+    <style>
+        @import './module.css';
+
+        select-control {
+            align-self: start;
+        }
+
+        select-control + select-control {
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+    ${ include('../../bolt/templates/element.literal', comments(
+        "./module.js",
+        "./modules/lifecycle.js",
+        "./module.css",
+        "./shadow.css"
+    )) }
+
+    <select-control>
+        <select>
+            <option value="">Select one</option>
+            <option value="0">Option 0</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+        </select>
+    </select-control>
+
+    <select-control>
+        <select>
+            <option value="">Select one</option>
+            <option value="0">Option 0</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+        </select>
+    </select-control>
+
+    <select-control>
+        <span slot="previous-button">☚</span>
+        <span slot="next-button">☛</span>
+        <select>
+            <option value="">Select one</option>
+            <option value="0">Option 0</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+        </select>
+    </select-control>
+
+    ${ include('../../bolt/templates/scripts.html') }
+
+    <script type="module">
+    import SelectControl from './module.js';
+    import events        from '../../dom/modules/events.js';
+
+    events('input', document).each(console.log);
+    </script>
+</body>
