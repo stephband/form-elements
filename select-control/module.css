@@ -1,5 +1,4 @@
 
-
 select-control:focus {
     /* This disnae work but why? */
     outline: 5px solid -webkit-focus-ring-color;
@@ -8,4 +7,132 @@ select-control:focus {
 select-control:not(:defined) > [slot] {
     /* Hide all named slotted content until element is defined */
     display: none !important;
+}
+
+select-control {
+    /* Note that iOS Safari will zoom-in the site layout if the select's text
+       is less than 16px */
+    --font-size:     var(--input-font-size, inherit);
+    --size:          var(--input-height, 2.8125rem);
+    --line-height:   var(--input-line-height, 1.5rem);
+
+    --padding-left:  var(--input-padding-left, 0.5625rem);
+    --padding-right: var(--input-padding-right, 0.5625rem);
+
+    --border-width:  var(--input-border-width, 1px);
+    --border-radius: var(--input-border-radius, 0.3125rem);
+
+    --fg:            var(--input-border-color, #bbbbbb);
+    --bg:            var(--input-background);
+
+    display: block;
+    /* There should never be padding on select-button, it's padding is
+       managed on the select within. */
+    padding: 0 !important;
+
+    /* Compensate for border */
+    line-height: calc(var(--size) - 2 * var(--border-width));
+
+    color:      var(--input-color);
+    background: var(--bg) no-repeat;
+    box-shadow: var(--input-shadow);
+}
+
+select-control > select {
+    display: block;
+    max-width: none;
+
+    /* Inherit style form button rather than anything set on raw select */
+    font-size: inherit;
+    line-height: inherit;
+
+    /* This is the native select, we're making everything but the text invisible
+       so we can see the button styles in the wrapper. */
+    width: calc(100% + 2 * var(--border-width));
+    height: calc(100% + 2 * var(--border-width));
+    margin: calc(-1 * var(--border-width));
+    padding-top: 0;
+    padding-bottom: 0;
+    padding-left: calc(var(--padding-left) - var(--border-width));
+    padding-right: calc(var(--padding-left) - var(--border-width));
+    outline: none;
+    color: inherit;
+    border-width: var(--border-width);
+    border-radius: inherit;
+    box-sizing: border-box;
+}
+/*
+select-control::before {
+    content: '';
+    box-sizing: border-box;
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 2.4375rem;
+    height: 100%;
+    border-width: 0;
+    border-left-width: inherit;
+    border-style: inherit;
+    border-color: inherit;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-top-right-radius: inherit;
+    border-bottom-right-radius: inherit;
+    pointer-events: none;
+}
+*/
+
+/*
+select-control::after {
+    /* Custom arrow sits on top of the select - could be an image, SVG, icon
+       font, etc. or the arrow could just baked into the bg image on the select. */
+    /*content: "";
+    position: absolute;
+    top: 50%;
+    right: 0.875rem;
+    height: 0;
+    margin-top: -3px;
+    border-top: 6px solid currentcolor;
+    border-left: 6px solid rgba(0, 0, 0, 0);
+    border-right: 6px solid rgba(0, 0, 0, 0);
+    -webkit-transition: transform 200ms linear;
+    transition: transform 200ms linear;
+    z-index: 2;
+
+    /* These hacks make the select behind the arrow clickable in some browsers */
+    /*pointer-events: none;
+    display: none;
+    pointer-events: none;
+}*/
+
+/* Firefox <= 34 has a false positive on @supports( -moz-appearance: none )
+   @supports ( mask-type: alpha ) is Firefox 35+ */
+@supports ( -webkit-appearance: none )
+    or ( appearance: none )
+    or ( ( -moz-appearance: none ) and ( mask-type: alpha ) ) {
+    /* Show custom arrow */
+    /*select-control::after {
+        display: block;
+    }*/
+
+    /* Remove select styling */
+    select-control > select {
+        padding-right: 2.4375rem; /* Match-01 */
+        /* inside @supports so that iOS <= 8 display the native arrow */
+        background: none; /* Match-04 */
+        /* inside @supports so that Android <= 4.3 display the native arrow */
+        border-width: 1px; /* Match-05 */
+
+        -webkit-appearance: none;
+           -moz-appearance: none;
+                appearance: none;
+    }
+}
+
+input + select-control {
+    margin-top: var(--input-margin);
+}
+
+label + select-control {
+    margin-top: var(--label-input-margin);
 }

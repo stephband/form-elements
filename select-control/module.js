@@ -44,7 +44,7 @@ Replace default content of the increment button (`"+"`) with your own HTML.
 import element    from '../../dom/modules/element.js';
 import lifecycle  from './modules/lifecycle.js';
 
-const stylesheet = window.numberInputStylesheet
+const stylesheet = window.selectControlStylesheet
     || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'select-control-shadow.css';
 
 export default element('<select-control>', lifecycle, {}, stylesheet);

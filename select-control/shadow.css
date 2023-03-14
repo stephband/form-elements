@@ -2,9 +2,7 @@
 @import '../css/host.css';
 
 
-/*
-Host
-*/
+/* :host */
 
 /**
 --button-width: 1.5rem;
@@ -12,7 +10,7 @@ Width of decrement/increment buttons.
 **/
 
 :host {
-    --button-width: 1.5em;
+    --button-width: 1.875em;
 
     display: inline-block;
     position: relative;
@@ -22,15 +20,8 @@ Width of decrement/increment buttons.
     margin: 0;
 }
 
-:host > slot > [name="value"] {
-    width: 100%;
-    min-width: calc(2 * var(--button-width));
-    padding-left: var(--button-width);
-    padding-right: var(--button-width);
-}
-
-:host > [part="decrement-button"],
-:host > [part="increment-button"] {
+:host > [part="previous-button"],
+:host > [part="next-button"] {
     position: absolute;
     top: 0;
     bottom: 0;
@@ -39,28 +30,23 @@ Width of decrement/increment buttons.
     text-align: center;
 }
 
-:host > [part="decrement-button"] {
+:host > [part="previous-button"] {
     left: 0;
+    border-right: 1px solid black;
 }
 
-:host > [part="increment-button"] {
+:host > [part="next-button"] {
     right: 0;
+    border-left: 1px solid black;
 }
 
 
 /*
-Number
+select
 */
 
-[name="value"] {
-    padding: 0;
-    border-width: 0;
-    background: transparent;
-}
-
-[name="value"],
-::slotted([type="number"]),
-::slotted([type="range"]) {
+::slotted(select),
+::slotted(select) {
     display: block;
     box-sizing: border-box;
 
@@ -69,46 +55,27 @@ Number
             appearance: textfield;
 
     font-family: inherit;
-    font-size: inherit;
+    font-size:   inherit;
     font-weight: inherit;
     line-height: inherit;
 
     width: 100%;
     min-width: calc(2 * var(--button-width));
-    text-indent: 0 !important;
-    padding-left: var(--button-width) !important;
-    padding-right: var(--button-width) !important;
-
-    text-align: center;
-}
-
-/* This selector (and no combination that I can find) actually works
-::slotted(input::-webkit-inner-spin-button),
-::slotted(input::-webkit-outer-spin-button),
-Unfortunate. Put this style in the outer module.css. */
-
-[name="value"]::-webkit-inner-spin-button,
-[name="value"]::-webkit-outer-spin-button {
-    -webkit-appearance: none;
-}
-
-[name="value"]:focus {
-    /* Remove focus ring inside the component */
-    outline: none !important;
-    outline-width: 0 !important;
+    padding-left:  calc(var(--button-width) + var(--padding-left)) !important;
+    padding-right: calc(var(--button-width) + var(--padding-left)) !important;
 }
 
 
 /**
-::part(decrement-button)
+::part(previous-button)
 **/
 
 /**
-::part(increment-button)
+::part(next-button)
 **/
 
-[part="decrement-button"],
-[part="increment-button"] {
+[part="previous-button"],
+[part="next-button"] {
     display: block;
     box-sizing: border-box;
 

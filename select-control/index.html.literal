@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../bolt/templates/head.literal', '../package.json') }
+    ${ include('../../literal/includes/head.literal', '../package.json') }
 
     <script title="debug">
         window.DEBUG = true;
@@ -10,7 +10,7 @@
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">
-    ${ include('../../bolt/templates/style.html') }
+    ${ include('../../literal/includes/style.html') }
 
     <style>
         @import './module.css';
@@ -26,7 +26,7 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    ${ include('../../bolt/templates/element.literal', comments(
+    ${ include('../../literal/includes/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
         "./module.css",
@@ -62,7 +62,7 @@
         </select>
     </select-control>
 
-    ${ include('../../bolt/templates/scripts.html') }
+    ${ include('../../literal/includes/scripts.html') }
 
     <script type="module">
     import SelectControl from './module.js';
