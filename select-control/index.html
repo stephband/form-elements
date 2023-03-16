@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/select-control/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+<meta name="author" content="Stephen Band" />
+<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
+<meta name="viewport" content="width=device-width" />
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@stephband">
+<meta property="og:title" content="form-elements" />
+<meta property="og:description" content="A collection of advanced form controls published as custom elements" />
+<meta property="og:image" content="https://stephen.band/form-elements/card.png" />
+<meta property="og:url" content="https://stephen.band/form-elements/" />
+
+
+<title>form-elements</title>
+
+
+
+<script title="load">
+    document.documentElement.className += ' js loading';
+    // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+    // Wait for other load handlers to run first - Bolt does a few things on
+    // load (eg. targetable scrolls) and we want them to run before the loading
+    // class is removed
+    window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+</script>
+
+
+    <script title="debug">
+        window.DEBUG = true;
+        window.selectControlStylesheet = './shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../bolt/module.css">
+    undefined
+
+    <style>
+        @import './module.css';
+
+        select-control {
+            align-self: start;
+        }
+
+        select-control + select-control {
+            margin-top: 1.5rem;
+        }
+    </style>
+</head>
+
+<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+    undefined
+
+    <select-control>
+        <select>
+            <option value="">Select one</option>
+            <option value="0">Option 0</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+        </select>
+    </select-control>
+
+    <select-control>
+        <span slot="previous-button">☚</span>
+        <span slot="next-button">☛</span>
+        <select>
+            <option value="">Select one</option>
+            <option value="0">Option 0</option>
+            <option value="1">Option 1</option>
+            <option value="2">Option 2</option>
+        </select>
+    </select-control>
+
+    undefined
+
+    <script type="module">
+    import SelectControl from './module.js';
+    import events        from '../../dom/modules/events.js';
+
+    events('input', document).each(console.log);
+    </script>
+</body>
