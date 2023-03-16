@@ -13,11 +13,14 @@
 
     --track-top: 1rem;
 
+    /** --handle-size **/
+    --handle-size: 1.375rem;
+
     /** --handle-width **/
-    --handle-width: 1.375rem;
+    --handle-width: var(--handle-size);
 
     /** --handle-height **/
-    --handle-height: var(--handle-width);
+    --handle-height: var(--handle-size);
 
     /** --handle-shadow **/
     --handle-shadow: 0 0.125rem 0.25rem 0.0625rem rgba(0,0,0,0.16);

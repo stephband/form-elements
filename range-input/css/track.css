@@ -43,8 +43,8 @@
         to right,
         transparent 0%,
         transparent calc(min(var(--normal-value), var(--normal-zero)) * 100%),
-        var(--value-color) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
-        var(--value-color) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color-start) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color-end) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
         transparent calc(max(var(--normal-value), var(--normal-zero)) * 100%)
     );
     border: var(--track-border);
@@ -75,8 +75,8 @@
         to right,
         transparent 0%,
         transparent calc(min(var(--normal-value), var(--normal-zero)) * 100%),
-        var(--value-color) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
-        var(--value-color) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color-start) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color-end) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
         transparent calc(max(var(--normal-value), var(--normal-zero)) * 100%)
     );
     border: var(--track-border);
@@ -115,8 +115,8 @@
         to right,
         transparent 0%,
         transparent calc(min(var(--normal-value), var(--normal-zero)) * 100%),
-        var(--value-color) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
-        var(--value-color) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color-start) calc(min(var(--normal-value), var(--normal-zero)) * 100%),
+        var(--value-color-end) calc(max(var(--normal-value), var(--normal-zero)) * 100%),
         transparent calc(max(var(--normal-value), var(--normal-zero)) * 100%)
     );
 

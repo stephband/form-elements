@@ -2,6 +2,12 @@
     /** --value-color **/
     --value-color: #88deff;
 
+    /** --value-color-start **/
+    --value-color-start: var(--value-color);
+
+    /** --value-color-end **/
+    --value-color-end:   var(--value-color);
+
     /** --handle-color **/
     --handle-color: #4f6473;
 
