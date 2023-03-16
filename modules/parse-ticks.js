@@ -26,10 +26,11 @@ Values may optionally be followed by labels in square brackets:
 parseTicks('10ms [Short time]')    // { value: 0.01, label: 'Short time' }
 ```
 
-(Square brackets may be omitted where the label contains no numbers or spaces.)
+Square brackets may be omitted where the label starts with a non-digit and
+contains no spaces. It is recommended to use brackets anyway.
 **/
 
-const parseTicks = capture(/^([+\-]?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+\-]?\d+)?\w*)\s*(?:\[([^\]]+)\]|(\S+))?\s*/, {
+const parseTicks = capture(/^([+\-]?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+\-]?\d+)?\w*)\s*(?:\[([^\]]+)\]|([^\d\s]\S*))?\s*/, {
     // value and unit
     1: (ticks, captures) => {
         ticks.push({ value: parseValue(captures[1]) });
