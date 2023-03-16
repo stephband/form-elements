@@ -120,6 +120,15 @@ export default {
     - `"bpm"`
     - `"s"`
     - `"semitone"`
+    - `"hh:mm"` – and other time formats including any of the tokens `YMwdhms`
+
+    Display formatters may be added by importing the formatters object:
+
+    ```js
+    RangeInput.displayFormats['my-format'] = (format, value) => {
+        // Return an object of the form `{ value, unit }`
+    };
+    ```
     **/
 
     display: {

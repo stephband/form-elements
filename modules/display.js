@@ -1,6 +1,16 @@
 
-import overload from '../../fn/modules/overload.js';
-import todB     from '../../fn/modules/to-db.js';
+import overload       from '../../fn/modules/overload.js';
+import todB           from '../../fn/modules/to-db.js';
+import { formatTime } from '../../fn/modules/time.js';
+
+function outputMilli() {
+    return {
+        unit: value < 1 ? 'm' + unit : unit,
+        value: value < 0.001 ? (value * 1000).toFixed(2) :
+            value < 1 ? (value * 1000).toPrecision(3) :
+            value.toPrecision(3)
+    };
+}
 
 function outputMilliKilo(unit, value) {
     return {
@@ -14,7 +24,28 @@ function outputMilliKilo(unit, value) {
     };
 }
 
-export const toDisplay = overload((unit) => unit.toLowerCase(), {
+function outputMilliCentiKilo(unit, value) {
+    return {
+        unit: value < 0.01 ? 'm' + unit :
+            value < 1      ? 'c' + unit :
+            value >= 1000  ? 'k' + unit :
+            unit ,
+        value: value < 0.001 ? (value * 1000).toFixed(2) :
+            value < 0.01 ? (value * 1000).toPrecision(3) :
+            value < 1 ? (value * 100).toPrecision(3) :
+            value >= 1000 ? (value / 1000).toPrecision(3) :
+            value.toPrecision(3)
+    };
+}
+
+function outputTime(format) {
+    return (unit, value) => ({
+        unit: '',
+        value: formatTime(format)
+    });
+}
+
+export const formatters = {
     'pan': (unit, value) => ({
         unit: '',
         value: value === -1 ? '-1.00' :
@@ -52,7 +83,11 @@ export const toDisplay = overload((unit) => unit.toLowerCase(), {
                 '♯' + (value / 100).toFixed(2)
     }),
 
-    's': outputMilliKilo,
+    // seconds
+    's': outputMilli,
+
+    // metres
+    'm': outputMilliCentiKilo,
 
     // Input value is a frequency
     'bpm': (unit, value) => {
@@ -76,5 +111,14 @@ export const toDisplay = overload((unit) => unit.toLowerCase(), {
             value.toPrecision(3)
     }),
 
-    default: outputMilliKilo
-});
+    default: overload((unit) => (/[YMWwdhms]/.test(unit) ? 'time' : 'default'), {
+        time: (unit, value) => ({
+            unit: '',
+            value: formatTime(unit, value)
+        }),
+
+        default: outputMilliKilo
+    })
+};
+
+export const toDisplay = overload((unit) => unit.toLowerCase(), formatters);
