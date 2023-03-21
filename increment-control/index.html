@@ -3,15 +3,45 @@
 
 <html lang="en">
 <head>
-    undefined
+    <meta charset="utf-8" />
+<meta name="author" content="Stephen Band" />
+<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
+<meta name="viewport" content="width=device-width" />
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@stephband">
+<meta property="og:title" content="form-elements" />
+<meta property="og:description" content="A collection of advanced form controls published as custom elements" />
+<meta property="og:image" content="https://stephen.band/form-elements/card.png" />
+<meta property="og:url" content="https://stephen.band/form-elements/" />
+
+
+<title>form-elements</title>
+
+
+
+<script title="load">
+    document.documentElement.className += ' js loading';
+    // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+    // Wait for other load handlers to run first - Bolt does a few things on
+    // load (eg. targetable scrolls) and we want them to run before the loading
+    // class is removed
+    window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+</script>
+
+
+<script title="debug">
+    window.DEBUG = true;
+</script>
+
+<link rel="stylesheet" href="../../literal/documentation/module.css">
+
 
     <script title="debug">
-        window.DEBUG = true;
-        window.numberInputStylesheet = './shadow.css';
+        window.incrementControlStylesheet = './shadow.css';
     </script>
 
-    <link rel="stylesheet" href="../../bolt/module.css">
-    undefined
     <style>
         @import './module.css';
 
@@ -26,7 +56,124 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    undefined
+    
+
+<div class="x1 3x @1-x3 @1-4x @2-x3 @0-x-stretch">
+    <h2 class="doctext-02" id="increment-control"><code>&lt;increment-control&gt;</code></h2>
+    <p>Import and register the <code>&lt;increment-control&gt;</code> custom element, upgrading any
+<code>&lt;increment-control&gt;</code> elements already in the DOM:</p>
+<pre><code class="language-js"><span class="token keyword">import</span> NumberInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/increment-control.js'</span><span class="token punctuation">;</span></code></pre>
+<p>The <code>&lt;increment-control&gt;</code> element wraps an <code>&lt;input type=&quot;number&quot;&gt;</code>, augmenting it
+with styleable decrement/increment buttons and up/down arrow keyboard behaviour:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>increment-control</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>increment-control</span><span class="token punctuation">></span></span></code></pre>
+<p>Default content of decrement and increment buttons may be overridden with custom
+HTML:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>increment-control</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>decrement-button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>☚<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>increment-button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>☛<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>input</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>number<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">step</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0.1<span class="token punctuation">"</span></span> <span class="token punctuation">/></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>increment-control</span><span class="token punctuation">></span></span></code></pre>
+<p>Note that the element itself is not a form element. It has no <code>value</code> and does
+not set any form data in its internals.</p>
+
+</div>
+
+
+<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    <increment-control>
+    <input type="number" />
+</increment-control>
+    <input hidden class="button" type="submit" />
+</form-->
+
+<div class="x1 3x @2-x2 x-stretch y-start">
+    
+    <h3 class="doctext-03">Attributes</h3>
+    
+
+<details-toggle class="attribute-details-toggle" id="attribute-slot-2">
+    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+        <code class="token language-html">slot <span class="default">="<em>decrement-button</em>"</span></code>
+    </h4>
+
+    <p>Replace default content of the decrement button (<code>&quot;-&quot;</code>) with custom HTML.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="attribute-details-toggle" id="attribute-slot-3">
+    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+        <code class="token language-html">slot <span class="default">="<em>increment-button</em>"</span></code>
+    </h4>
+
+    <p>Replace default content of the increment button (<code>&quot;+&quot;</code>) with custom HTML.</p>
+
+</details-toggle>
+
+
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+</div>
+
+<div class="x1 3x @1-x4 @2-x5 x-stretch y-start">
+    
+    <h3 class="doctext-03">Parts</h3>
+    
+
+<details-toggle class="part-details-toggle" id="part-decrement-button">
+    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+        <code class=" language-css">::part(decrement-button)</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="part-details-toggle" id="part-increment-button">
+    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+        <code class=" language-css">::part(increment-button)</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+    
+    <h3 class="doctext-03">Variables</h3>
+    
+
+<details-toggle class="var-details-toggle" id="var-button-width-1">
+    <h4 class="var-docs-text-05 docs-text-05" slot="summary">
+        <code class=" language-css">--button-width</code>
+    </h4>
+
+    <p>.5rem;
+Width of decrement/increment buttons.</p>
+
+</details-toggle>
+
+
+</div>
+
 
     <increment-control>
         <input type="number" />
@@ -42,7 +189,10 @@
         <input type="number" name="number" min="0" max="100" step="2" value="20" />
     </increment-control>
 
-    undefined
+    <script type="module">
+import '../../literal/documentation/module.js';
+</script>
+
 
     <script type="module">
     import IncrementControl from './module.js';

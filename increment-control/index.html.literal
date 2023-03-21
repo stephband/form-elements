@@ -2,15 +2,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../bolt/templates/head.literal', '../package.json') }
+    ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
     <script title="debug">
-        window.DEBUG = true;
-        window.numberInputStylesheet = './shadow.css';
+        window.incrementControlStylesheet = './shadow.css';
     </script>
 
-    <link rel="stylesheet" href="../../bolt/module.css">
-    ${ include('../../bolt/templates/style.html') }
     <style>
         @import './module.css';
 
@@ -25,7 +22,7 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    ${ include('../../bolt/templates/element.literal', comments(
+    ${ include('../../literal/documentation/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
         "./module.css",
@@ -46,7 +43,7 @@
         <input type="number" name="number" min="0" max="100" step="2" value="20" />
     </increment-control>
 
-    ${ include('../../bolt/templates/scripts.html') }
+    ${ include('../../literal/documentation/templates/scripts.literal') }
 
     <script type="module">
     import IncrementControl from './module.js';

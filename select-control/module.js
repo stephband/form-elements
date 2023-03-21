@@ -27,18 +27,18 @@ assigned to the `previous-button` and `next-button` slots:
 </select-control>
 ```
 
-Note that the element itself is not a custom form element. It has no `value` and
-does not set any form data in its internals.
+Note that the element itself is not a custom form element (it has no `value` and
+does not set any form data in its internals).
 **/
 
 /**
 slot="previous-button"
-Replace default content of the decrement button (`"-"`) with your own HTML.
+Replace default content of the decrement button (`"◀"`) with custom HTML.
 **/
 
 /**
 slot="next-button"
-Replace default content of the increment button (`"+"`) with your own HTML.
+Replace default content of the increment button (`"▶"`) with custom HTML.
 **/
 
 import element    from '../../dom/modules/element.js';

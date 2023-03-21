@@ -34,12 +34,12 @@ not set any form data in its internals.
 
 /**
 slot="decrement-button"
-Replace default content of the decrement button (`"-"`) with your own HTML.
+Replace default content of the decrement button (`"-"`) with custom HTML.
 **/
 
 /**
 slot="increment-button"
-Replace default content of the increment button (`"+"`) with your own HTML.
+Replace default content of the increment button (`"+"`) with custom HTML.
 **/
 
 import element    from '../../dom/modules/element.js';

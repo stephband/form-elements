@@ -2,15 +2,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../literal/includes/head.literal', '../package.json') }
+    ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
-    <script title="debug">
-        window.DEBUG = true;
+    <script title="select-control">
         window.selectControlStylesheet = './shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    ${ include('../../literal/includes/style.html') }
 
     <style>
         @import './module.css';
@@ -26,7 +22,7 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    ${ include('../../literal/includes/element.literal', comments(
+    ${ include('../../literal/documentation/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
         "./module.css",
@@ -53,7 +49,7 @@
         </select>
     </select-control>
 
-    ${ include('../../literal/includes/scripts.html') }
+    ${ include('../../literal/documentation/templates/scripts.literal') }
 
     <script type="module">
     import SelectControl from './module.js';

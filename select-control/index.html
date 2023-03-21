@@ -31,13 +31,16 @@
 </script>
 
 
-    <script title="debug">
-        window.DEBUG = true;
+<script title="debug">
+    window.DEBUG = true;
+</script>
+
+<link rel="stylesheet" href="../../literal/documentation/module.css">
+
+
+    <script title="select-control">
         window.selectControlStylesheet = './shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    undefined
 
     <style>
         @import './module.css';
@@ -53,7 +56,123 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    undefined
+    
+
+<div class="x1 3x @1-x3 @1-4x @2-x3 @0-x-stretch">
+    <h2 class="doctext-02" id="select-control"><code>&lt;select-control&gt;</code></h2>
+    <p>Import and register the <code>&lt;select-control&gt;</code> custom element:</p>
+<pre><code class="language-js"><span class="token keyword">import</span> SelectControl <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/select-control.js'</span><span class="token punctuation">;</span></code></pre>
+<p>The <code>&lt;select-control&gt;</code> element wraps a <code>&lt;select&gt;</code>, augmenting it
+with styleable previous/next buttons and left/right arrow keyboard behaviour:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select-control</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select-control</span><span class="token punctuation">></span></span></code></pre>
+<p>Default content of previous and next buttons may be overridden with HTML
+assigned to the <code>previous-button</code> and <code>next-button</code> slots:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select-control</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>previous-button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>☚<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>span</span> <span class="token attr-name">slot</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>next-button<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>☛<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>span</span><span class="token punctuation">></span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>select</span><span class="token punctuation">></span></span>...<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>select-control</span><span class="token punctuation">></span></span></code></pre>
+<p>Note that the element itself is not a custom form element (it has no <code>value</code> and
+does not set any form data in its internals).</p>
+
+</div>
+
+
+<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    <select-control>
+    <select>...</select>
+</select-control>
+    <input hidden class="button" type="submit" />
+</form-->
+
+<div class="x1 3x @2-x2 x-stretch y-start">
+    
+    <h3 class="doctext-03">Attributes</h3>
+    
+
+<details-toggle class="attribute-details-toggle" id="attribute-slot">
+    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+        <code class="token language-html">slot <span class="default">="<em>previous-button</em>"</span></code>
+    </h4>
+
+    <p>Replace default content of the decrement button (<code>&quot;◀&quot;</code>) with custom HTML.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="attribute-details-toggle" id="attribute-slot-1">
+    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+        <code class="token language-html">slot <span class="default">="<em>next-button</em>"</span></code>
+    </h4>
+
+    <p>Replace default content of the increment button (<code>&quot;▶&quot;</code>) with custom HTML.</p>
+
+</details-toggle>
+
+
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+
+    
+    
+    
+</div>
+
+<div class="x1 3x @1-x4 @2-x5 x-stretch y-start">
+    
+    <h3 class="doctext-03">Parts</h3>
+    
+
+<details-toggle class="part-details-toggle" id="part-previous-button">
+    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+        <code class=" language-css">::part(previous-button)</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="part-details-toggle" id="part-next-button">
+    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+        <code class=" language-css">::part(next-button)</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+    
+    <h3 class="doctext-03">Variables</h3>
+    
+
+<details-toggle class="var-details-toggle" id="var-button-width">
+    <h4 class="var-docs-text-05 docs-text-05" slot="summary">
+        <code class=" language-css">--button-width</code>
+    </h4>
+
+    <p>.5rem;
+Width of decrement/increment buttons.</p>
+
+</details-toggle>
+
+
+</div>
+
 
     <select-control>
         <select>
@@ -75,7 +194,10 @@
         </select>
     </select-control>
 
-    undefined
+    <script type="module">
+import '../../literal/documentation/module.js';
+</script>
+
 
     <script type="module">
     import SelectControl from './module.js';

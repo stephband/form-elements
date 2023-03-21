@@ -3,7 +3,33 @@
 
 <html lang="en">
 <head>
-    undefined
+    <meta charset="utf-8" />
+<meta name="author" content="Stephen Band" />
+<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
+<meta name="viewport" content="width=device-width" />
+
+
+<meta name="twitter:card" content="summary">
+<meta name="twitter:site" content="@stephband">
+<meta property="og:title" content="form-elements" />
+<meta property="og:description" content="A collection of advanced form controls published as custom elements" />
+<meta property="og:image" content="https://stephen.band/form-elements/card.png" />
+<meta property="og:url" content="https://stephen.band/form-elements/" />
+
+
+<title>form-elements</title>
+
+
+
+<script title="load">
+    document.documentElement.className += ' js loading';
+    // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+    // Wait for other load handlers to run first - Bolt does a few things on
+    // load (eg. targetable scrolls) and we want them to run before the loading
+    // class is removed
+    window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+</script>
+
 
     <script title="debug">
         window.DEBUG = true;
@@ -16,7 +42,7 @@
 
     <link rel="stylesheet" href="../bolt/module.css">
 
-    undefined
+    <!--$ { include('../bolt/templates/style.html') }-->
 
     <link rel="stylesheet" href="./increment-control.css">
     <link rel="stylesheet" href="./range-input.css">
@@ -128,7 +154,7 @@
     <y-input class="x1 3x y6" value="0 1" min="-0.5" max="2" ticks>Gain</y-input>
 
 
-    undefined
+    <!--$ { include('../bolt/templates/scripts.html') }-->
 
     <script type="module">
         import IncrementControl from './increment-control.js';

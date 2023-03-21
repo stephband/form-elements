@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../bolt/templates/head.literal', './package.json') }
+    ${ include('../literal/templates/head.literal', './package.json') }
 
     <script title="debug">
         window.DEBUG = true;
@@ -15,7 +15,7 @@
 
     <link rel="stylesheet" href="../bolt/module.css">
 
-    ${ include('../bolt/templates/style.html') }
+    <!--$ { include('../bolt/templates/style.html') }-->
 
     <link rel="stylesheet" href="./increment-control.css">
     <link rel="stylesheet" href="./range-input.css">
@@ -127,7 +127,7 @@
     <y-input class="x1 3x y6" value="0 1" min="-0.5" max="2" ticks>Gain</y-input>
 
 
-    ${ include('../bolt/templates/scripts.html') }
+    <!--$ { include('../bolt/templates/scripts.html') }-->
 
     <script type="module">
         import IncrementControl from './increment-control.js';

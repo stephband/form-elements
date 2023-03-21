@@ -2,14 +2,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../bolt/templates/head.literal', '../package.json') }
+    ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
     <script title="debug">
         window.DEBUG = true;
     </script>
 
     <link rel="stylesheet" href="../../bolt/module.css">
-    ${ include('../../bolt/templates/style.html') }
+    <!--$ { include('../../bolt/templates/style.html') }-->
     <style>
         range-input + range-input {
             margin-top: 1.5rem;
@@ -18,7 +18,7 @@
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
-    ${ include('../../bolt/templates/element.literal', comments(
+    ${ include('../../literal/documentation/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
         "../modules/properties.js",
@@ -28,7 +28,7 @@
         "./shadow.css"
     )) }
 
-    ${ include('../../bolt/templates/scripts.html') }
+    ${ include('../../literal/documentation/templates/scripts.literal') }
 
     <script type="module">
     import RangeInput from '../range-input.js';
