@@ -71,13 +71,13 @@ element and upgrades instances already in the DOM.</p>
 </div>
 
 
-<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+<form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
     <script type="module" src="../../literal/documentation/templates/rotary-input.js"></script>
 <rotary-input name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1">Pan</rotary-input>
 <rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" scale="log-48dB" display="dB" value="-6dB">Volume</rotary-input>
 <rotary-input name="frequency" min="20" max="20000" ticks="20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz" scale="log" display="Hz" value="1000">Frequency</rotary-input>
     <input hidden class="button" type="submit" />
-</form-->
+</form>
 
 <div class="x1 3x @2-x2 x-stretch y-start">
     
@@ -154,10 +154,10 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 displayed in this unit. Possible values are:</p>
 <ul>
 <li><code>&quot;dB&quot;</code> – <code>0-1</code> is displayed as <code>-∞dB</code> to <code>0dB</code></li>
-<li><code>&quot;Hz&quot;</code></li>
-<li><code>&quot;bpm&quot;</code></li>
-<li><code>&quot;s&quot;</code></li>
-<li><code>&quot;semitone&quot;</code></li>
+<li><code>&quot;Hz&quot;</code> - frequency in <code>Hz</code> and <code>kHz</code></li>
+<li><code>&quot;bpm&quot;</code> - displays rates in Hz as bpm</li>
+<li><code>&quot;s&quot;</code> - time in <code>ms</code> and <code>s</code></li>
+<li><code>&quot;semitone&quot;</code> - without units</li>
 <li><code>&quot;hh:mm&quot;</code> – and other time formats including any of the tokens <code>YMwdhms</code></li>
 </ul>
 <p>Display formatters may be added by importing the formatters object:</p>
@@ -190,7 +190,7 @@ displayed in this unit. Possible values are:</p>
         <code class="token language-html">value</code>
     </h4>
 
-    <p>The initial value of the <code>&lt;rotary-input&gt;</code>.</p>
+    <p>The initial value of the input.</p>
 
 </details-toggle>
 
@@ -246,7 +246,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class="property language-js">.value</code>
     </h4>
 
-    <p>Current value of the <code>&lt;rotary-input&gt;</code> as a number.</p>
+    <p>Current value of the input.</p>
 
 </details-toggle>
 
@@ -303,6 +303,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
     
     
 </div>
+
 
 
     <script type="module">

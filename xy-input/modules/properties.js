@@ -1,46 +1,13 @@
 
 import { Observer, getTarget } from '../../../fn/observer/observer.js';
-import Privates        from '../../../fn/modules/privates.js';
+import Privates                from '../../../fn/modules/privates.js';
+import { createAttribute, createAttributeProperty, createBoolean } from '../../modules/attributes.js';
 import parsePoints     from '../../modules/parse-points.js';
 import stringifyPoints from '../../modules/stringify-points.js';
+import { getScale }    from '../../modules/scales.js';
+import parseValue      from '../../modules/parse-value.js';
+import parseTicks      from '../../modules/parse-ticks.js';
 
-function createAttribute(name, defaultValue) {
-    return {
-        attribute: function(value) {
-            const privates = Privates(this);
-            privates[name].push(value || defaultValue);
-        }
-    };
-}
-
-function createAttributeProperty(name, defaultValue) {
-    return {
-        attribute: function(value) {
-            this[name] = value;
-        },
-
-        set: function(value) {
-            const privates = Privates(this);
-            privates[name].push(value === undefined ? defaultValue : value);
-        },
-
-        get: function() {
-            const privates = Privates(this);
-            return privates.data[name];
-        },
-
-        enumerable: true
-    };
-}
-
-function createBoolean(name) {
-    return {
-        attribute: function(value) {
-            const privates = Privates(this);
-            privates[name].push(!!value);
-        }
-    };
-}
 
 export default {
     /**
@@ -54,7 +21,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
-    xmin: createAttributeProperty('xmin', 0),
+    xmin: createAttributeProperty('xmin', 0, parseValue),
 
     /**
     xmax="1"
@@ -67,7 +34,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
-    xmax: createAttributeProperty('xmax', 1),
+    xmax: createAttributeProperty('xmax', 1, parseValue),
 
     /**
     ymin="0"
@@ -80,7 +47,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
-    ymin: createAttributeProperty('ymin', 0),
+    ymin: createAttributeProperty('ymin', 0, parseValue),
 
     /**
     ymax="1"
@@ -93,7 +60,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
-    ymax: createAttributeProperty('ymax', 1),
+    ymax: createAttributeProperty('ymax', 1, parseValue),
 
     /**
     xscale="linear"
@@ -110,7 +77,7 @@ export default {
     - `"log-60dB"`
     - `"log-96dB"`
     **/
-    xscale: createAttribute('xscale', 'linear'),
+    xscale: createAttribute('xscale', 'linear', getScale),
 
     /**
     yscale="linear"
@@ -127,7 +94,7 @@ export default {
     - `"log-60dB"`
     - `"log-96dB"`
     **/
-    yscale: createAttribute('yscale', 'linear'),
+    yscale: createAttribute('yscale', 'linear', getScale),
 
     /**
     xticks=""
@@ -139,7 +106,7 @@ export default {
     xticks="-48dB -36dB -24dB -12dB 0dB"
     ```
     **/
-    xticks: createAttribute('xticks', ''),
+    xticks: createAttribute('xticks', '', parseTicks),
 
     /**
     yticks=""
@@ -151,7 +118,7 @@ export default {
     yticks="-48dB -36dB -24dB -12dB 0dB"
     ```
     **/
-    yticks: createAttribute('yticks', ''),
+    yticks: createAttribute('yticks', '', parseTicks),
 
     /**
     xstep=""

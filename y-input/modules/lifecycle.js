@@ -3,33 +3,29 @@ import Privates          from '../../../fn/modules/privates.js';
 import { clamp }         from '../../../fn/modules/clamp.js';
 import id                from '../../../fn/modules/id.js';
 import Stream            from '../../../fn/modules/stream.js';
+import get               from '../../../fn/modules/get.js';
+import last              from '../../../fn/modules/last.js';
+import overload          from '../../../fn/modules/overload.js';
+import observe           from '../../../fn/observer/observe.js';
+import { Observer }      from '../../../fn/observer/observer.js';
 import create            from '../../../dom/modules/create.js';
 import delegate          from '../../../dom/modules/delegate.js';
 import events            from '../../../dom/modules/events.js';
 import { trigger }       from '../../../dom/modules/trigger.js';
-import parseValue        from '../../modules/parse-value.js';
-import parseTicks        from '../../modules/parse-ticks.js';
-import { updateData }    from '../../modules/data.js';
-import { getScale, normalise, denormalise } from '../../modules/scales.js';
-
-import { toDisplay }     from '../../modules/display.js';
-import { nearestStep }   from '../../modules/step.js';
-
-import get               from '../../../fn/modules/get.js';
-import last              from '../../../fn/modules/last.js';
-import overload          from '../../../fn/modules/overload.js';
-
-import observe           from '../../../fn/observer/observe.js';
-import { Observer }      from '../../../fn/observer/observer.js';
-
 import gestures          from '../../../dom/modules/gestures.js';
 import rect              from '../../../dom/modules/rect.js';
 import { px }            from '../../../dom/modules/parse-length.js';
 
+import parseValue        from '../../modules/parse-value.js';
+import { updateData }    from '../../modules/data.js';
+import { normalise, denormalise } from '../../modules/scales.js';
+import { toDisplay }     from '../../modules/display.js';
+import { nearestStep }   from '../../modules/step.js';
 import { maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';
+import * as defaults     from '../../modules/defaults.js';
 
 import { setFormValue }  from './form.js';
-import * as defaults     from '../../modules/defaults.js';
+
 
 
 /* Streams */
@@ -366,10 +362,10 @@ export default {
 
         const axis = Stream.combine({
             shadow:  privates.shadow,
-            scale:   privates.scale.map(getScale),
-            min:     privates.min.map(parseValue),
-            max:     privates.max.map(parseValue),
-            ticks:   privates.ticks.map(parseTicks),
+            scale:   privates.scale,
+            min:     privates.min,
+            max:     privates.max,
+            ticks:   privates.ticks,
             step:    privates.step,
             display: privates.display
         })

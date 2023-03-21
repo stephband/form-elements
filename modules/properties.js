@@ -1,44 +1,9 @@
 
-import Privates   from '../../fn/modules/privates.js';
-import parseValue from './parse-value.js';
+import { createAttribute, createAttributeProperty, createBoolean } from './attributes.js';
+import { getScale } from './scales.js';
+import parseValue   from './parse-value.js';
+import parseTicks   from './parse-ticks.js';
 
-export function createAttribute(name, defaultValue) {
-    return {
-        attribute: function(value) {
-            const privates = Privates(this);
-            privates[name].push(value || defaultValue);
-        }
-    };
-}
-
-export function createAttributeProperty(name, defaultValue) {
-    return {
-        attribute: function(value) {
-            this[name] = value;
-        },
-
-        set: function(value) {
-            const privates = Privates(this);
-            privates[name].push(value === undefined ? defaultValue : value);
-        },
-
-        get: function() {
-            const privates = Privates(this);
-            return privates.data[name];
-        },
-
-        enumerable: true
-    };
-}
-
-export function createBoolean(name) {
-    return {
-        attribute: function(value) {
-            const privates = Privates(this);
-            privates[name].push(!!value);
-        }
-    };
-}
 
 export default {
     /**
@@ -64,7 +29,7 @@ export default {
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
-    min: createAttributeProperty('min', 0),
+    min: createAttributeProperty('min', 0, parseValue),
 
     /**
     max="1"
@@ -78,7 +43,7 @@ export default {
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
-    max: createAttributeProperty('max', 1),
+    max: createAttributeProperty('max', 1, parseValue),
 
     /**
     scale="linear"
@@ -96,7 +61,7 @@ export default {
     - `"log-96dB"`
     **/
 
-    scale: createAttribute('scale', 'linear'),
+    scale: createAttribute('scale', 'linear', getScale),
 
     /**
     ticks=""
@@ -109,17 +74,17 @@ export default {
     ```
     **/
 
-    ticks: createAttribute('ticks', ''),
+    ticks: createAttribute('ticks', '', parseTicks),
 
     /**
     display=""
     The units to display the value in. The output value and all ticks are
     displayed in this unit. Possible values are:
     - `"dB"` – `0-1` is displayed as `-∞dB` to `0dB`
-    - `"Hz"`
-    - `"bpm"`
-    - `"s"`
-    - `"semitone"`
+    - `"Hz"` - frequency in `Hz` and `kHz`
+    - `"bpm"` - displays rates in Hz as bpm
+    - `"s"` - time in `ms` and `s`
+    - `"semitone"` - without units
     - `"hh:mm"` – and other time formats including any of the tokens `YMwdhms`
 
     Display formatters may be added by importing the formatters object:
@@ -131,12 +96,7 @@ export default {
     ```
     **/
 
-    display: {
-        attribute: function(string) {
-            const privates = Privates(this);
-            privates.display.push(string || '');
-        }
-    },
+    display: createAttribute('display'),
 
     /**
     step=""
@@ -150,28 +110,13 @@ export default {
 
     /**
     value=""
-    The initial value of the `<rotary-input>`.
+    The initial value of the input.
     **/
 
     /**
     .value
-    Current value of the `<rotary-input>` as a number.
+    Current value of the input.
     **/
 
-    value: {
-        attribute: function(value) {
-            this.value = value;
-        },
-
-        get: function() {
-            return Privates(this).data.value;
-        },
-
-        set: function(value) {
-            const privates = Privates(this);
-            privates.value.push(parseValue(value));
-        },
-
-        enumerable: true
-    }
+    value: createAttributeProperty('value', parseValue)
 };

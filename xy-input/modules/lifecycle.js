@@ -1,44 +1,33 @@
 
-import Privates          from '../../../fn/modules/privates.js';
-import { clamp }         from '../../../fn/modules/clamp.js';
-import id                from '../../../fn/modules/id.js';
-import Stream            from '../../../fn/modules/stream.js';
-import create            from '../../../dom/modules/create.js';
-import delegate          from '../../../dom/modules/delegate.js';
-import events            from '../../../dom/modules/events.js';
-import { trigger }       from '../../../dom/modules/trigger.js';
-import parseValue        from '../../modules/parse-value.js';
-import parseTicks        from '../../modules/parse-ticks.js';
-import { updateData }    from '../../modules/data.js';
-import { getScale, normalise, denormalise } from '../../modules/scales.js';
-
-import { toDisplay }   from '../../modules/display.js';
-import { nearestStep } from '../../modules/step.js';
-
-import get         from '../../../fn/modules/get.js';
-import last        from '../../../fn/modules/last.js';
-import overload    from '../../../fn/modules/overload.js';
-import noop        from '../../../fn/modules/noop.js';
-import { remove }  from '../../../fn/modules/remove.js';
-
-import observe     from '../../../fn/observer/observe.js';
+import Privates             from '../../../fn/modules/privates.js';
+import { clamp }            from '../../../fn/modules/clamp.js';
+import id                   from '../../../fn/modules/id.js';
+import Stream               from '../../../fn/modules/stream.js';
+import get                  from '../../../fn/modules/get.js';
+import last                 from '../../../fn/modules/last.js';
+import overload             from '../../../fn/modules/overload.js';
+import noop                 from '../../../fn/modules/noop.js';
+import { remove }           from '../../../fn/modules/remove.js';
+import observe              from '../../../fn/observer/observe.js';
 import { Observer, notify } from '../../../fn/observer/observer.js';
+import create               from '../../../dom/modules/create.js';
+import delegate             from '../../../dom/modules/delegate.js';
+import events               from '../../../dom/modules/events.js';
+import { trigger }          from '../../../dom/modules/trigger.js';
+import gestures             from '../../../dom/modules/gestures.js';
+import rect                 from '../../../dom/modules/rect.js';
+import { px }               from '../../../dom/modules/parse-length.js';
 
-
-import gestures    from '../../../dom/modules/gestures.js';
-import rect        from '../../../dom/modules/rect.js';
-import { px }      from '../../../dom/modules/parse-length.js';
-
-
+import { updateData }       from '../../modules/data.js';
+import { normalise, denormalise } from '../../modules/scales.js';
+import { toDisplay }        from '../../modules/display.js';
+import { nearestStep }      from '../../modules/step.js';
 import { maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';
+import * as defaults        from '../../modules/defaults.js';
 
-//import Data        from './data.js';
 import { setFormValue } from './form.js';
-
 import { requestDrawCurve, clear, drawXLines, drawYLines, drawCrosshair } from './canvas.js';
 import { drawAudioEnvelope } from './draw-audio.js';
-
-import * as defaults   from '../../modules/defaults.js';
 
 const assign = Object.assign;
 
@@ -509,10 +498,10 @@ export default {
         // Track attribute updates
         const xaxis = Stream.combine({
             shadow:  privates.shadow,
-            scale:   privates.xscale.map(getScale),
-            min:     privates.xmin.map(parseValue),
-            max:     privates.xmax.map(parseValue),
-            ticks:   privates.xticks.map(parseTicks),
+            scale:   privates.xscale,
+            min:     privates.xmin,
+            max:     privates.xmax,
+            ticks:   privates.xticks,
             step:    privates.xstep,
             display: privates.xdisplay
         })
@@ -521,10 +510,10 @@ export default {
 
         const yaxis = Stream.combine({
             shadow:  privates.shadow,
-            scale:   privates.yscale.map(getScale),
-            min:     privates.ymin.map(parseValue),
-            max:     privates.ymax.map(parseValue),
-            ticks:   privates.yticks.map(parseTicks),
+            scale:   privates.yscale,
+            min:     privates.ymin,
+            max:     privates.ymax,
+            ticks:   privates.yticks,
             step:    privates.ystep,
             display: privates.ydisplay
         })

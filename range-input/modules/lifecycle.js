@@ -14,9 +14,7 @@ import create          from '../../../dom/modules/create.js';
 import events          from '../../../dom/modules/events.js';
 import { trigger }     from '../../../dom/modules/trigger.js';
 import parseValue      from '../../modules/parse-value.js';
-import parseTicks      from '../../modules/parse-ticks.js';
 import { updateData, updateValue } from '../../modules/data.js';
-import { getScale }    from '../../modules/scales.js';
 import { toDisplay }   from '../../modules/display.js';
 import { nearestStep } from '../../modules/step.js';
 import { toKeyValue }  from '../../modules/key.js';
@@ -147,10 +145,10 @@ export default {
         const attributes = Stream
         .combine({
             shadow:  privates.shadow,
-            scale:   privates.scale.map(getScale),
-            min:     privates.min.map(parseValue),
-            max:     privates.max.map(parseValue),
-            ticks:   privates.ticks.map(parseTicks),
+            scale:   privates.scale,
+            min:     privates.min,
+            max:     privates.max,
+            ticks:   privates.ticks,
             display: privates.display,
             step:    privates.step
         })
