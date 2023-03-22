@@ -1,16 +1,9 @@
 
+import normalise   from '../../fn/modules/normalise.js';
+import denormalise from '../../fn/modules/denormalise.js';
 import { dB24, dB30, dB36, dB48, dB60, dB66, dB72, dB96 } from './constants.js';
 
 const assign = Object.assign;
-
-
-export function normalise(min, max, value) {
-    return (value - min) / (max - min);
-}
-
-export function denormalise(min, max, ratio) {
-    return min + ratio * (max - min);
-}
 
 
 /*

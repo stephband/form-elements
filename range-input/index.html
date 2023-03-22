@@ -38,12 +38,6 @@
 <link rel="stylesheet" href="../../literal/documentation/module.css">
 
 
-    <script title="debug">
-        window.DEBUG = true;
-    </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
     <style>
         range-input + range-input {
             margin-top: 1.5rem;
@@ -54,11 +48,20 @@
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 @0-x-stretch">
-    <h2 class="doctext-02" id="range-input"><code>&lt;range-input&gt;</code></h2>
-    <p>Import the <code>&lt;range-input&gt;</code> custom element. This registers the custom element and
-upgrades instances already in the DOM:</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>range-input.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span></code></pre>
+<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
+    <h1 class="docs-text-01" id="range-input"><span class="tag-brace">&lt;</span>range-input<span class="tag-brace">&gt;</span></h1>
+    <p>A horizontal slide input with scaling, ticks, support for various units and
+formatted output display.</p>
+<range-input name="">
+    Range
+</range-input>
+
+
+<h2 id="import">Import</h2>
+<p>Import and register the <code>&lt;range-input&gt;</code> custom element, upgrading any
+instances already in the DOM:</p>
+<pre><code class="language-js"><span class="token keyword">import</span> RangeInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/range-input.js'</span><span class="token punctuation">;</span></code></pre>
+<h2 id="use">Use</h2>
 <p>You can now write <code>&lt;range-input&gt;</code> elements in your HTML:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ratio<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Scale<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-input</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gain<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-48dB<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0dB<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB<span class="token punctuation">"</span></span> <span class="token attr-name">scale</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log-60dB<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dB<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-6dB<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-input</span><span class="token punctuation">></span></span>
@@ -68,10 +71,11 @@ upgrades instances already in the DOM:</p>
 </div>
 
 
-<form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    <script type="module" src="range-input.js"></script>
+
+<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    $ { data[0].examples[0] }
     <input hidden class="button" type="submit" />
-</form>
+</form-->
 
 <div class="x1 3x @2-x2 x-stretch y-start">
     

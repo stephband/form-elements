@@ -4,20 +4,16 @@
 <head>
     ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
-    <script title="debug">
-        window.DEBUG = true;
-        //window.yInputStylesheet = '../y-input-shadow.css';
+    <script title="element">
         window.yInputStylesheet = './shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     ${ include('../../literal/documentation/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
+        "../modules/properties.js",
         "./modules/properties.js",
         "./css/host.css"
     )) }

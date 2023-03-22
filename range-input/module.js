@@ -1,12 +1,25 @@
 /**
 <range-input>
 
-Import the `<range-input>` custom element. This registers the custom element and
-upgrades instances already in the DOM:
+A horizontal slide input with scaling, ticks, support for various units and
+formatted output display.
 
-```html
-<script type="module" src="range-input.js"></script>
+<range-input name="">
+    Range
+</range-input>
+
+
+## Import
+
+Import and register the `<range-input>` custom element, upgrading any
+instances already in the DOM:
+
+```js
+import RangeInput from './range-input.js';
 ```
+
+
+## Use
 
 You can now write `<range-input>` elements in your HTML:
 

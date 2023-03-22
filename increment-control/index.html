@@ -58,11 +58,19 @@
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 @0-x-stretch">
-    <h2 class="doctext-02" id="increment-control"><code>&lt;increment-control&gt;</code></h2>
-    <p>Import and register the <code>&lt;increment-control&gt;</code> custom element, upgrading any
+<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
+    <h1 class="docs-text-01" id="increment-control"><span class="tag-brace">&lt;</span>increment-control<span class="tag-brace">&gt;</span></h1>
+    <p>A wrapper element that augments a <code>&lt;input type=&quot;number&quot;&gt;</code> with extra controls.</p>
+<increment-control>
+    <input type="number" />
+</increment-control>
+
+
+<h2 id="import">Import</h2>
+<p>Import and register the <code>&lt;increment-control&gt;</code> custom element, upgrading any
 <code>&lt;increment-control&gt;</code> elements already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> NumberInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/increment-control.js'</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="language-js"><span class="token keyword">import</span> IncrementControl <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/increment-control.js'</span><span class="token punctuation">;</span></code></pre>
+<h2 id="use">Use</h2>
 <p>The <code>&lt;increment-control&gt;</code> element wraps an <code>&lt;input type=&quot;number&quot;&gt;</code>, augmenting it
 with styleable decrement/increment buttons and up/down arrow keyboard behaviour:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>increment-control</span><span class="token punctuation">></span></span>
@@ -81,12 +89,11 @@ not set any form data in its internals.</p>
 </div>
 
 
-<form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    <increment-control>
-    <input type="number" />
-</increment-control>
+
+<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    $ { data[0].examples[0] }
     <input hidden class="button" type="submit" />
-</form>
+</form-->
 
 <div class="x1 3x @2-x2 x-stretch y-start">
     

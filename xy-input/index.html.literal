@@ -4,13 +4,9 @@
 <head>
     ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
-    <script title="debug">
-        window.DEBUG = true;
+    <script title="element">
         window.xyInputStylesheet = '../xy-input-shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">

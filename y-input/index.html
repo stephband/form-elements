@@ -38,55 +38,54 @@
 <link rel="stylesheet" href="../../literal/documentation/module.css">
 
 
-    <script title="debug">
-        window.DEBUG = true;
-        //window.yInputStylesheet = '../y-input-shadow.css';
+    <script title="element">
         window.yInputStylesheet = './shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 @0-x-stretch">
-    <h2 class="doctext-02" id="y-input"><code>&lt;y-input&gt;</code></h2>
-    <p>Import <code>&lt;y-input&gt;</code> custom element. This also registers the custom
-element and upgrades instances already in the DOM.</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./module.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
+    <h1 class="docs-text-01" id="y-input"><span class="tag-brace">&lt;</span>y-input<span class="tag-brace">&gt;</span></h1>
+    <p>A vertical sliders input with scaling, ticks, support for various units, output
+display and multiple handles:</p>
+<y-input value="0" ticks="0 0.2 0.4 0.6 0.8 1">
+    Value
+</y-input>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
-    <span class="token selector">y-input</span> <span class="token punctuation">{</span>
-        <span class="token property">height</span><span class="token punctuation">:</span> 10rem<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
+<y-input min="0" max="2" scale="log-24dB" ticks="0 -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
+    Gain
+</y-input>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>y-input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 1<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-0.5<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>y-input</span><span class="token punctuation">></span></span></code></pre>
+<y-input min="-1" max="1" value="-0.5 0.5" ticks="-1 -0.5 0 0.5 1">
+    Range
+</y-input>
+
+
+<h2 id="import">Import</h2>
+<p>Import and register the <code>&lt;y-input&gt;</code> custom element, upgrading any
+instances already in the DOM:</p>
+<pre><code class="language-js"><span class="token keyword">import</span> YInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/y-input.js'</span><span class="token punctuation">;</span></code></pre>
+<h2 id="use">Use</h2>
+<p>Author vertical sliders:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>y-input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 1<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-0.5<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>y-input</span><span class="token punctuation">></span></span></code></pre>
 
 </div>
 
 
-<form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    <script type="module" src="../../literal/documentation/templates/module.js"></script>
 
-<style>
-    y-input {
-        height: 10rem;
-    }
-</style>
-
-<y-input value="0 1" min="-0.5" max="2" ticks>Volume</y-input>
+<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    $ { data[0].examples[0] }
     <input hidden class="button" type="submit" />
-</form>
+</form-->
 
 <div class="x1 3x @2-x2 x-stretch y-start">
     
     <h3 class="doctext-03">Attributes</h3>
     
 
-<details-toggle class="attribute-details-toggle" id="attribute-min-2">
+<details-toggle class="attribute-details-toggle" id="attribute-min-1">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
     </h4>
@@ -98,7 +97,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-max-2">
+<details-toggle class="attribute-details-toggle" id="attribute-max-1">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
     </h4>
@@ -110,22 +109,22 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-scale-2">
+<details-toggle class="attribute-details-toggle" id="attribute-scale-1">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">scale <span class="default">="<em>linear</em>"</span></code>
     </h4>
 
-    <p>Scale on the y axis. This is the name of a transform to be applied over the
-y range of the fader travel. Possible values are:</p>
+    <p>Fader scale. This is the name of a transform to be applied over the range
+of the fader travel. Possible values are:</p>
 <ul>
 <li><code>&quot;linear&quot;</code></li>
-<li><code>&quot;pow-2&quot;</code></li>
-<li><code>&quot;pow-3&quot;</code></li>
-<li><code>&quot;pow-4&quot;</code></li>
+<li><code>&quot;quadratic&quot;</code></li>
+<li><code>&quot;cubic&quot;</code></li>
 <li><code>&quot;log&quot;</code></li>
 <li><code>&quot;log-24dB&quot;</code></li>
 <li><code>&quot;log-48dB&quot;</code></li>
 <li><code>&quot;log-60dB&quot;</code></li>
+<li><code>&quot;log-72dB&quot;</code></li>
 <li><code>&quot;log-96dB&quot;</code></li>
 </ul>
 
@@ -133,7 +132,7 @@ y range of the fader travel. Possible values are:</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-ticks-2">
+<details-toggle class="attribute-details-toggle" id="attribute-ticks-1">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">ticks</code>
     </h4>
@@ -147,7 +146,31 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-step-2">
+<details-toggle class="attribute-details-toggle" id="attribute-display-1">
+    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+        <code class="token language-html">display</code>
+    </h4>
+
+    <p>The units to display the value in. The output value and all ticks are
+displayed in this unit. Possible values are:</p>
+<ul>
+<li><code>&quot;dB&quot;</code> – <code>0-1</code> is displayed as <code>-∞dB</code> to <code>0dB</code></li>
+<li><code>&quot;Hz&quot;</code> - frequency in <code>Hz</code> and <code>kHz</code></li>
+<li><code>&quot;bpm&quot;</code> - displays rates in Hz as bpm</li>
+<li><code>&quot;s&quot;</code> - time in <code>ms</code> and <code>s</code></li>
+<li><code>&quot;semitone&quot;</code> - without units</li>
+<li><code>&quot;hh:mm&quot;</code> – and other time formats including any of the tokens <code>YMwdhms</code></li>
+</ul>
+<p>Display formatters may be added by importing the formatters object:</p>
+<pre><code class="language-js">RangeInput<span class="token punctuation">.</span>displayFormats<span class="token punctuation">[</span><span class="token string">'my-format'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">format<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
+    <span class="token comment">// Return an object of the form `{ value, unit }`</span>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+
+</details-toggle>
+
+
+
+<details-toggle class="attribute-details-toggle" id="attribute-step-1">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">step</code>
     </h4>
@@ -163,26 +186,18 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-display-2">
+<details-toggle class="attribute-details-toggle" id="attribute-value-1">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">display</code>
+        <code class="token language-html">value</code>
     </h4>
 
-    <p>The units to display the value in. The output value and all ticks are
-displayed in this unit. Possible values are:</p>
-<ul>
-<li><code>&quot;dB&quot;</code> – <code>0-1</code> is displayed as <code>-∞dB</code> to <code>0dB</code></li>
-<li><code>&quot;Hz&quot;</code></li>
-<li><code>&quot;bpm&quot;</code></li>
-<li><code>&quot;s&quot;</code></li>
-<li><code>&quot;semitone&quot;</code></li>
-</ul>
+    <p>The initial value of the input.</p>
 
 </details-toggle>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-value-2">
+<details-toggle class="attribute-details-toggle" id="attribute-value-3">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">value <span class="default">="<em>0 0</em>"</span></code>
     </h4>
@@ -206,21 +221,20 @@ the types <code>&#39;step&#39;</code>, <code>&#39;linear&#39;</code>, <code>&#39
     <h3 class="doctext-03">Properties</h3>
     
 
-<details-toggle class="property-details-toggle" id="property-type-2">
+<details-toggle class="property-details-toggle" id="property-type-1">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.type</code>
     </h4>
 
-    <p>“numbers”
-A readonly property with the value <code>&quot;numbers&quot;</code>, provided for consistency
-with native form elements, which all have a type, although <code>&quot;numbers&quot;</code> is
-not a standard type.</p>
+    <p>“number”
+A readonly property with the value <code>&quot;number&quot;</code> (provided for consistency
+with native form elements, which all have a type).</p>
 
 </details-toggle>
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-min-2">
+<details-toggle class="property-details-toggle" id="property|selector-min-1">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.min</code>
     </h4>
@@ -232,7 +246,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-max-2">
+<details-toggle class="property-details-toggle" id="property|selector-max-1">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.max</code>
     </h4>
@@ -244,7 +258,18 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-value-2">
+<details-toggle class="property-details-toggle" id="property|selector-value-1">
+    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+        <code class="property language-js">.value</code>
+    </h4>
+
+    <p>Current value of the input.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="property-details-toggle" id="property|selector-value-3">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>

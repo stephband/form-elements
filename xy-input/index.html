@@ -38,25 +38,30 @@
 <link rel="stylesheet" href="../../literal/documentation/module.css">
 
 
-    <script title="debug">
-        window.DEBUG = true;
+    <script title="element">
         window.xyInputStylesheet = '../xy-input-shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 @0-x-stretch">
-    <h2 class="doctext-02" id="xy-input"><code>&lt;xy-input&gt;</code></h2>
-    <p>Import <code>&lt;xy-input&gt;</code> custom element. This also registers the custom
-element and upgrades instances already in the DOM.</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./module.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
+<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
+    <h1 class="docs-text-01" id="xy-input"><span class="tag-brace">&lt;</span>xy-input<span class="tag-brace">&gt;</span></h1>
+    <p>A graph input with two axis scaling and ticks, support for various units, output
+display and multiple handles:</p>
+<xy-input>
+    XY Input
+</xy-input>
 
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
+
+<h2 id="import">Import</h2>
+<p>Import and register the <code>&lt;xy-input&gt;</code> custom element, upgrading any
+instances already in the DOM:</p>
+<pre><code class="language-js"><span class="token keyword">import</span> XYInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/xy-input.js'</span><span class="token punctuation">;</span></code></pre>
+<h2 id="use">Use</h2>
+<p>The <code>&lt;xy-input&gt;</code> element may now be written in your HTML:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
     <span class="token selector">xy-input</span> <span class="token punctuation">{</span>
         <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
         <span class="token property">height</span><span class="token punctuation">:</span> 10rem<span class="token punctuation">;</span>
@@ -69,20 +74,11 @@ element and upgrades instances already in the DOM.</p>
 </div>
 
 
-<form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    <script type="module" src="../../literal/documentation/templates/module.js"></script>
 
-<style>
-    xy-input {
-        width: 100%;
-        height: 10rem;
-    }
-</style>
-
-<xy-input value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>Envelope</xy-input>
-<!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB"></xy-input-->
+<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    $ { data[0].examples[0] }
     <input hidden class="button" type="submit" />
-</form>
+</form-->
 
 <div class="x1 3x @2-x2 x-stretch y-start">
     
@@ -309,7 +305,7 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-value-3">
+<details-toggle class="attribute-details-toggle" id="attribute-value-4">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">value <span class="default">="<em>0 0</em>"</span></code>
     </h4>
@@ -381,7 +377,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-value-3">
+<details-toggle class="property-details-toggle" id="property|selector-value-4">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>

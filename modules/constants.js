@@ -1,20 +1,22 @@
 
-export const dB6  = 0.5;
-export const dB12 = 0.25;
-export const dB18 = 0.125;
-export const dB24 = 0.0625;
-export const dB30 = 0.03125;
-export const dB36 = 0.015625;
-export const dB42 = 0.0078125;
-export const dB48 = 0.00390625;
-export const dB54 = 0.001953125;
-export const dB60 = 0.0009765625;
-export const dB66 = 0.00048828125;
-export const dB72 = 0.000244140625;
-export const dB78 = 0.0001220703125;
-export const dB84 = 0.00006103515625;
-export const dB90 = 0.00003051757812;
-export const dB96 = 0.00001525878906;
+import toGain from '../../fn/modules/to-gain.js';
+
+export const dB6  = toGain(-6);
+export const dB12 = toGain(-12);
+export const dB18 = toGain(-18);
+export const dB24 = toGain(-24);
+export const dB30 = toGain(-30);
+export const dB36 = toGain(-36);
+export const dB42 = toGain(-42);
+export const dB48 = toGain(-48);
+export const dB54 = toGain(-54);
+export const dB60 = toGain(-60);
+export const dB66 = toGain(-66);
+export const dB72 = toGain(-72);
+export const dB78 = toGain(-78);
+export const dB84 = toGain(-84);
+export const dB90 = toGain(-90);
+export const dB96 = toGain(-96);
 
 export const maxTapDuration = 0.25;
 export const maxDoubleTapDuration = 0.4;

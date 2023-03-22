@@ -1,18 +1,37 @@
 
 /** <y-input>
 
-Import `<y-input>` custom element. This also registers the custom
-element and upgrades instances already in the DOM.
+A vertical sliders input with scaling, ticks, support for various units, output
+display and multiple handles:
+
+<y-input value="0" ticks="0 0.2 0.4 0.6 0.8 1">
+    Value
+</y-input>
+
+<y-input min="0" max="2" scale="log-24dB" ticks="0 -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
+    Gain
+</y-input>
+
+<y-input min="-1" max="1" value="-0.5 0.5" ticks="-1 -0.5 0 0.5 1">
+    Range
+</y-input>
+
+
+## Import
+
+Import and register the `<y-input>` custom element, upgrading any
+instances already in the DOM:
+
+```js
+import YInput from './y-input.js';
+```
+
+
+## Use
+
+Author vertical sliders:
 
 ```html
-<script type="module" src="./module.js"></script>
-
-<style>
-    y-input {
-        height: 10rem;
-    }
-</style>
-
 <y-input value="0 1" min="-0.5" max="2" ticks>Volume</y-input>
 ```
 **/

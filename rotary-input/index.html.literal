@@ -4,12 +4,9 @@
 <head>
     ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
-    <script title="debug">
-        window.DEBUG = true;
+    <script title="element">
+        window.rotaryInputStylesheet = './shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
 
     <style>
         rotary-input {
@@ -36,10 +33,11 @@
     ${ include('../../literal/documentation/templates/scripts.literal') }
 
     <script type="module">
-    import RotaryInput from '../rotary-input.js';
+    import RotaryInput from './module.js';
     import events      from '../../dom/modules/events.js';
 
-    //events('input change', document)
-    //.each((e) => console.log(e.type, e.target.value));
+    // Test
+    events('input change', document)
+    .each((e) => console.log(e.type, e.target.value));
     </script>
 </body>

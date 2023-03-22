@@ -1,12 +1,24 @@
 /**
 <increment-control>
 
+A wrapper element that augments a `<input type="number">` with extra controls.
+
+<increment-control>
+    <input type="number" />
+</increment-control>
+
+
+## Import
+
 Import and register the `<increment-control>` custom element, upgrading any
 `<increment-control>` elements already in the DOM:
 
 ```js
-import NumberInput from './increment-control.js';
+import IncrementControl from './increment-control.js';
 ```
+
+
+## Use
 
 The `<increment-control>` element wraps an `<input type="number">`, augmenting it
 with styleable decrement/increment buttons and up/down arrow keyboard behaviour:

@@ -4,12 +4,6 @@
 <head>
     ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
-    <script title="debug">
-        window.DEBUG = true;
-    </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
     <style>
         range-input + range-input {
             margin-top: 1.5rem;

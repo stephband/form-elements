@@ -1,12 +1,29 @@
 
 /** <xy-input>
 
-Import `<xy-input>` custom element. This also registers the custom
-element and upgrades instances already in the DOM.
+A graph input with two axis scaling and ticks, support for various units, output
+display and multiple handles:
+
+<xy-input>
+    XY Input
+</xy-input>
+
+
+## Import
+
+Import and register the `<xy-input>` custom element, upgrading any
+instances already in the DOM:
+
+```js
+import XYInput from './xy-input.js';
+```
+
+
+## Use
+
+The `<xy-input>` element may now be written in your HTML:
 
 ```html
-<script type="module" src="./module.js"></script>
-
 <style>
     xy-input {
         width: 100%;

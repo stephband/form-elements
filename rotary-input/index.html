@@ -38,12 +38,9 @@
 <link rel="stylesheet" href="../../literal/documentation/module.css">
 
 
-    <script title="debug">
-        window.DEBUG = true;
+    <script title="element">
+        window.rotaryInputStylesheet = './shadow.css';
     </script>
-
-    <link rel="stylesheet" href="../../bolt/module.css">
-    <!--$ { include('../../bolt/templates/style.html') }-->
 
     <style>
         rotary-input {
@@ -59,32 +56,36 @@
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 @0-x-stretch">
-    <h2 class="doctext-02" id="rotary-input"><code>&lt;rotary-input&gt;</code></h2>
-    <p>Import <code>&lt;rotary-input&gt;</code> custom element. This also registers the custom
-element and upgrades instances already in the DOM.</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span> <span class="token attr-name">type</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>module<span class="token punctuation">"</span></span> <span class="token attr-name">src</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>./rotary-input.js<span class="token punctuation">"</span></span><span class="token punctuation">></span></span><span class="token script"></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pan<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Pan<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
+<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
+    <h1 class="docs-text-01" id="rotary-input"><span class="tag-brace">&lt;</span>rotary-input<span class="tag-brace">&gt;</span></h1>
+    <p>A rotating knob form input with scaling, ticks, support for various units and
+formatted output display.</p>
+<p><rotary-input></rotary-input></p>
+<h2 id="import">Import</h2>
+<p>Import and register the <code>&lt;rotary-input&gt;</code> custom element, upgrading any
+instances already in the DOM:</p>
+<pre><code class="language-js"><span class="token keyword">import</span> RotaryInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/rotary-input.js'</span><span class="token punctuation">;</span></code></pre>
+<h2 id="use">Use</h2>
+<p>You can now author rotating knobs in forms:</p>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pan<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Pan<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gain<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB<span class="token punctuation">"</span></span> <span class="token attr-name">scale</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log-48dB<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dB<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-6dB<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>frequency<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20000<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz<span class="token punctuation">"</span></span> <span class="token attr-name">scale</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Hz<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Frequency<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span></code></pre>
 
 </div>
 
 
-<form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    <script type="module" src="../../literal/documentation/templates/rotary-input.js"></script>
-<rotary-input name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1">Pan</rotary-input>
-<rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" scale="log-48dB" display="dB" value="-6dB">Volume</rotary-input>
-<rotary-input name="frequency" min="20" max="20000" ticks="20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz" scale="log" display="Hz" value="1000">Frequency</rotary-input>
+
+<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
+    $ { data[0].examples[0] }
     <input hidden class="button" type="submit" />
-</form>
+</form-->
 
 <div class="x1 3x @2-x2 x-stretch y-start">
     
     <h3 class="doctext-03">Attributes</h3>
     
 
-<details-toggle class="attribute-details-toggle" id="attribute-min-1">
+<details-toggle class="attribute-details-toggle" id="attribute-min-2">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
     </h4>
@@ -96,7 +97,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-max-1">
+<details-toggle class="attribute-details-toggle" id="attribute-max-2">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
     </h4>
@@ -108,7 +109,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-scale-1">
+<details-toggle class="attribute-details-toggle" id="attribute-scale-2">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">scale <span class="default">="<em>linear</em>"</span></code>
     </h4>
@@ -131,7 +132,7 @@ of the fader travel. Possible values are:</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-ticks-1">
+<details-toggle class="attribute-details-toggle" id="attribute-ticks-2">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">ticks</code>
     </h4>
@@ -145,7 +146,7 @@ ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-display-1">
+<details-toggle class="attribute-details-toggle" id="attribute-display-2">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">display</code>
     </h4>
@@ -169,7 +170,7 @@ displayed in this unit. Possible values are:</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-step-1">
+<details-toggle class="attribute-details-toggle" id="attribute-step-2">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">step</code>
     </h4>
@@ -185,7 +186,7 @@ displayed in this unit. Possible values are:</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-value-1">
+<details-toggle class="attribute-details-toggle" id="attribute-value-2">
     <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
         <code class="token language-html">value</code>
     </h4>
@@ -204,7 +205,7 @@ displayed in this unit. Possible values are:</p>
     <h3 class="doctext-03">Properties</h3>
     
 
-<details-toggle class="property-details-toggle" id="property-type-1">
+<details-toggle class="property-details-toggle" id="property-type-2">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.type</code>
     </h4>
@@ -217,7 +218,7 @@ with native form elements, which all have a type).</p>
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-min-1">
+<details-toggle class="property-details-toggle" id="property|selector-min-2">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.min</code>
     </h4>
@@ -229,7 +230,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-max-1">
+<details-toggle class="property-details-toggle" id="property|selector-max-2">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.max</code>
     </h4>
@@ -241,7 +242,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-value-1">
+<details-toggle class="property-details-toggle" id="property|selector-value-2">
     <h4 class="property-docs-text-05 docs-text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>
@@ -312,10 +313,11 @@ import '../../literal/documentation/module.js';
 
 
     <script type="module">
-    import RotaryInput from '../rotary-input.js';
+    import RotaryInput from './module.js';
     import events      from '../../dom/modules/events.js';
 
-    //events('input change', document)
-    //.each((e) => console.log(e.type, e.target.value));
+    // Test
+    events('input change', document)
+    .each((e) => console.log(e.type, e.target.value));
     </script>
 </body>

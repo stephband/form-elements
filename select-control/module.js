@@ -1,11 +1,27 @@
 /**
 <select-control>
 
-Import and register the `<select-control>` custom element:
+A wrapper element that augments a `<select>` with extra controls.
+
+<select-control>
+    <select>
+        <option value="">Select one</option>
+        <option value="0">Option 0</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+    </select>
+</select-control>
+
+## Import
+
+Import and register the `<select-control>` custom element, upgrading any
+instances already in the DOM:
 
 ```js
 import SelectControl from './select-control.js';
 ```
+
+## Use
 
 The `<select-control>` element wraps a `<select>`, augmenting it
 with styleable previous/next buttons and left/right arrow keyboard behaviour:
@@ -27,8 +43,8 @@ assigned to the `previous-button` and `next-button` slots:
 </select-control>
 ```
 
-Note that the element itself is not a custom form element (it has no `value` and
-does not set any form data in its internals).
+Note that the element itself is not a custom form element (it has no `value`
+property and does not set any form data in its internals).
 **/
 
 /**

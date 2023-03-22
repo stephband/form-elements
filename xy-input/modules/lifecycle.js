@@ -8,6 +8,8 @@ import last                 from '../../../fn/modules/last.js';
 import overload             from '../../../fn/modules/overload.js';
 import noop                 from '../../../fn/modules/noop.js';
 import { remove }           from '../../../fn/modules/remove.js';
+import normalise            from '../../../fn/modules/normalise.js';
+import denormalise          from '../../../fn/modules/denormalise.js';
 import observe              from '../../../fn/observer/observe.js';
 import { Observer, notify } from '../../../fn/observer/observer.js';
 import create               from '../../../dom/modules/create.js';
@@ -19,7 +21,6 @@ import rect                 from '../../../dom/modules/rect.js';
 import { px }               from '../../../dom/modules/parse-length.js';
 
 import { updateData }       from '../../modules/data.js';
-import { normalise, denormalise } from '../../modules/scales.js';
 import { toDisplay }        from '../../modules/display.js';
 import { nearestStep }      from '../../modules/step.js';
 import { maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';

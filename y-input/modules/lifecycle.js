@@ -5,6 +5,8 @@ import id                from '../../../fn/modules/id.js';
 import Stream            from '../../../fn/modules/stream.js';
 import get               from '../../../fn/modules/get.js';
 import last              from '../../../fn/modules/last.js';
+import normalise         from '../../../fn/modules/normalise.js';
+import denormalise       from '../../../fn/modules/denormalise.js';
 import overload          from '../../../fn/modules/overload.js';
 import observe           from '../../../fn/observer/observe.js';
 import { Observer }      from '../../../fn/observer/observer.js';
@@ -18,7 +20,6 @@ import { px }            from '../../../dom/modules/parse-length.js';
 
 import parseValue        from '../../modules/parse-value.js';
 import { updateData }    from '../../modules/data.js';
-import { normalise, denormalise } from '../../modules/scales.js';
 import { toDisplay }     from '../../modules/display.js';
 import { nearestStep }   from '../../modules/step.js';
 import { maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';

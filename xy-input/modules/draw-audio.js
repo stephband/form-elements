@@ -3,6 +3,7 @@
 import by      from '../../../fn/modules/by.js';
 import get     from '../../../fn/modules/get.js';
 
+// TODO: remove dependency on Soundstage
 import Envelope from '../../../soundstage/nodes/envelope.js';
 
 // Oversampling produces graphs with fewer audio aliasing artifacts

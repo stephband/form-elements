@@ -106,7 +106,7 @@ export default {
     - A space or comma separated list of values, written with or without units
     **/
 
-    step: createAttribute('step'),
+    step: createAttribute('step', 'any'),
 
     /**
     value=""
@@ -118,5 +118,5 @@ export default {
     Current value of the input.
     **/
 
-    value: createAttributeProperty('value', parseValue)
+    value: createAttributeProperty('value', 0, parseValue)
 };

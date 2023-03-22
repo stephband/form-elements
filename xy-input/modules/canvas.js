@@ -1,6 +1,5 @@
 
 
-//import Envelope from '../../soundstage/nodes/envelope.js';
 import { drawXLine, drawYLine, drawCurve, drawCurvePositive } from '../../../soundstage/modules/canvas.js';
 
 const lineDash = [];
