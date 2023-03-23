@@ -30,10 +30,14 @@ Square brackets may be omitted where the label starts with a non-digit and
 contains no spaces. It is recommended to use brackets anyway.
 **/
 
-const parseTicks = capture(/^([+\-]?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+\-]?\d+)?\w*)\s*(?:\[([^\]]+)\]|([^\d\s]\S*))?\s*/, {
+const parseTicks = capture(/^([+\-]?(?:0|[1-9]\d*|∞)(?:\.\d+)?(?:[eE][+\-]?\d+)?\w*)\s*(?:\[([^\]]+)\]|([^\d\s-]\S*))?\s*/, {
     // value and unit
     1: (ticks, captures) => {
-        ticks.push({ value: parseValue(captures[1]) });
+        const value = parseValue(captures[1]);
+        ticks.push({
+            value: value,
+            label: captures[1]
+        });
         return ticks;
     },
 
@@ -53,7 +57,7 @@ const parseTicks = capture(/^([+\-]?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+\-]?\d+)?\w
     done: (ticks, captures) => parseTicks(ticks, captures),
 
     // No more ticks
-    catch: (ticks, captures) => ticks
+    catch: id
 });
 
 export default overload(toType, {

@@ -54,7 +54,7 @@ display and multiple handles:</p>
     Value
 </y-input>
 
-<y-input min="0" max="2" scale="log-24dB" ticks="0 -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
+<y-input min="0" max="2" scale="log-30dB" ticks="-∞dB -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
     Gain
 </y-input>
 
@@ -141,6 +141,9 @@ of the fader travel. Possible values are:</p>
 Values may be listed with or without units, eg:</p>
 <pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
 ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
+<p>Ticks may optionally be given labels that are displayed in lieu of the tick
+value. Labels are written in square brackets following the tick value:</p>
+<pre><code class="language-html">ticks=&quot;0 [None] 0.5 [Half] 1 [Full]&quot;</code></pre>
 
 </details-toggle>
 

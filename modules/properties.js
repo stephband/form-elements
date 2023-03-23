@@ -70,7 +70,17 @@ export default {
 
     ```html
     ticks="0 0.2 0.4 0.6 0.8 1"
-    ticks="-48dB -36dB -24dB -12dB 0dB"
+    ticks="-∞dB -48dB -36dB -24dB -12dB 0dB"
+    ```
+
+    Note that the unicode `∞` infinity character is interpreted as `Infinity`
+    (after unit conversion `-∞dB` is `0` and `0dB` is 1).
+
+    Ticks may optionally be given labels, displayed in lieu of the tick value.
+    Labels are written in square brackets following the tick value:
+
+    ```html
+    ticks="0 [None] 0.5 [Half] 1 [Full]"
     ```
     **/
 
@@ -80,6 +90,7 @@ export default {
     display=""
     The units to display the value in. The output value and all ticks are
     displayed in this unit. Possible values are:
+
     - `"dB"` – `0-1` is displayed as `-∞dB` to `0dB`
     - `"Hz"` - frequency in `Hz` and `kHz`
     - `"bpm"` - displays rates in Hz as bpm
@@ -93,6 +104,12 @@ export default {
     RangeInput.displayFormats['my-format'] = (format, value) => {
         // Return an object of the form `{ value, unit }`
     };
+    ```
+
+    This format may now be used by declaring the display attribute:
+
+    ```html
+    display="my-format"
     ```
     **/
 

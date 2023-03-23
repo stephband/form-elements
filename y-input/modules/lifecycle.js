@@ -28,6 +28,8 @@ import * as defaults     from '../../modules/defaults.js';
 import { setFormValue }  from './form.js';
 
 
+const mutable = { mutable: true };
+
 
 /* Streams */
 
@@ -98,16 +100,18 @@ function updateViewbox(track, style, computed, svg, data) {
     svg.style.height = -data.rangebox.height + 'em';
 }
 
-function setXY(e, data) {
+function setY(e, data) {
+    const axis     = data.axis;
+    const scale    = axis.scale;
     const box      = data.pxbox;
-    const valuebox = data.valuebox;
 
     // New pixel position of control, compensating for initial
     // mousedown offset on the control
     const py = box.height - (e.clientY - box.y - data.offset.y);
 
-    // Normalise to 0-1, allowing x position to extend beyond viewbox
-    data.y = clamp(valuebox.y, valuebox.y + valuebox.height, denormalise(valuebox.y, valuebox.y + valuebox.height, py / box.height));
+    // Denormalise to min-max
+    const value  = scale.denormalise(axis.min, axis.max, py / box.height);
+    data.y = clamp(axis.min, axis.max, value);
 }
 
 const toCoordinates = overload((data, e) => e.type, {
@@ -155,8 +159,7 @@ const toCoordinates = overload((data, e) => e.type, {
         }
 
         data.type = 'move';
-        setXY(e, data);
-
+        setY(e, data);
         return data;
     },
 
@@ -191,6 +194,7 @@ const handle = delegate({
 
             if (last(events).type !== 'pointermove') {
                 // internal, formdata, name, value
+
                 setFormValue(internals, formdata, host.name, value);
                 trigger('change', host);
             }
@@ -369,7 +373,7 @@ export default {
             ticks:   privates.ticks,
             step:    privates.step,
             display: privates.display
-        })
+        }, mutable)
         .scan(updateData, {})
         .broadcast();
 
@@ -379,8 +383,9 @@ export default {
         });
 
         // Render DOM
-        axis
-        .each((data) => renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ticks, marker));
+        axis.each((data) =>
+            renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ticks, marker)
+        );
 
         // Track value and mutations of value
         const values = privates.values
@@ -392,11 +397,7 @@ export default {
 
         // Render canvas
         Stream
-        .combine({
-            axis,
-            resizes,
-            value: values
-        })
+        .combine({ axis, resizes, value: values }, mutable)
         .each((state) => {
             privates.state = state;
             renderHandles(handles, svg, privates.rangebox, state.axis, state.value);
@@ -423,23 +424,25 @@ export default {
             return observers;
         }, []);
 
-        // Track gestures on handles
-        gestures({ select: '[part=handle]', threshold: 1 }, shadow)
-        .each((gesture) => {
+        Stream.combine({
+            axis:    axis,
+            gesture: gestures({ select: '[part=handle]', threshold: 1 }, shadow)
+        }, mutable)
+        .each(({ axis, gesture }) => {
             // Update boxes - we don't know the current scrolling position
             updateBoxes(track, computed, privates.pxbox, privates.paddingbox, privates.contentbox, privates.rangebox);
 
             gesture
             .scan(toCoordinates, {
+                axis,
                 handles,
                 internals,
-                host:       this,
+                host:     this,
                 track,
-                pxbox:      privates.pxbox,
-                valuebox:   privates.valuebox,
-                formdata:   privates.formdata,
-                value:      privates.state.value,
-                events:     []
+                pxbox:    privates.pxbox,
+                formdata: privates.formdata,
+                value:    privates.state.value,
+                events:   []
             })
             .filter(get('type'))
             .each(handle);

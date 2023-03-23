@@ -8,7 +8,7 @@ display and multiple handles:
     Value
 </y-input>
 
-<y-input min="0" max="2" scale="log-24dB" ticks="0 -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
+<y-input min="0" max="2" scale="log-30dB" ticks="-∞dB -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
     Gain
 </y-input>
 
