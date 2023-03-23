@@ -2,11 +2,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
+    ${ include('../../literal/documentation/templates/head.literal', './package.json') }
 
     <script title="element">
         window.yInputStylesheet = './shadow.css';
     </script>
+
+    <style>
+    y-input + y-input {
+        margin-left: var(--x-gap);
+    }
+    </style>
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">

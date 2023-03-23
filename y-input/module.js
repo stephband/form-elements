@@ -1,14 +1,14 @@
 
 /** <y-input>
 
-A vertical sliders input with scaling, ticks, support for various units, output
-display and multiple handles:
+A vertical slider input with scaling, ticks, units, output display and
+multiple values.
 
 <y-input value="0" ticks="0 0.2 0.4 0.6 0.8 1">
     Value
 </y-input>
 
-<y-input min="0" max="2" scale="log-30dB" ticks="-∞dB -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
+<y-input min="0" max="2" scale="log-30dB" ticks="-∞dB -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0dB">
     Gain
 </y-input>
 
@@ -32,7 +32,7 @@ import YInput from './y-input.js';
 Author vertical sliders:
 
 ```html
-<y-input value="0 1" min="-0.5" max="2" ticks>Volume</y-input>
+<y-input>Volume</y-input>
 ```
 **/
 

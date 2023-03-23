@@ -3,21 +3,21 @@
 
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <title>y-input</title>
+
+<meta charset="utf-8" />
 <meta name="author" content="Stephen Band" />
-<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
+<meta name="description" content="A vertical slider input with scaling, ticks, units, output display and multiple values" />
 <meta name="viewport" content="width=device-width" />
 
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@stephband">
-<meta property="og:title" content="form-elements" />
-<meta property="og:description" content="A collection of advanced form controls published as custom elements" />
-<meta property="og:image" content="https://stephen.band/form-elements/card.png" />
+<meta property="og:title" content="y-input" />
+<meta property="og:description" content="A vertical slider input with scaling, ticks, units, output display and multiple values" />
+<meta property="og:image" content="https://stephen.band/form-elements/y-input/images/card.png" />
 <meta property="og:url" content="https://stephen.band/form-elements/" />
 
-
-<title>form-elements</title>
 
 
 
@@ -41,6 +41,12 @@
     <script title="element">
         window.yInputStylesheet = './shadow.css';
     </script>
+
+    <style>
+    y-input + y-input {
+        margin-left: var(--x-gap);
+    }
+    </style>
 </head>
 
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
@@ -48,13 +54,13 @@
 
 <div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
     <h1 class="docs-text-01" id="y-input"><span class="tag-brace">&lt;</span>y-input<span class="tag-brace">&gt;</span></h1>
-    <p>A vertical sliders input with scaling, ticks, support for various units, output
-display and multiple handles:</p>
+    <p>A vertical slider input with scaling, ticks, units, output display and
+multiple values.</p>
 <y-input value="0" ticks="0 0.2 0.4 0.6 0.8 1">
     Value
 </y-input>
 
-<y-input min="0" max="2" scale="log-30dB" ticks="-∞dB -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0">
+<y-input min="0" max="2" scale="log-30dB" ticks="-∞dB -24dB -18dB -12dB -6dB 0dB 6dB" display="dB" value="0dB">
     Gain
 </y-input>
 
@@ -69,7 +75,7 @@ instances already in the DOM:</p>
 <pre><code class="language-js"><span class="token keyword">import</span> YInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/y-input.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>Author vertical sliders:</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>y-input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 1<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-0.5<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>y-input</span><span class="token punctuation">></span></span></code></pre>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>y-input</span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>y-input</span><span class="token punctuation">></span></span></code></pre>
 
 </div>
 
@@ -140,9 +146,11 @@ of the fader travel. Possible values are:</p>
     <p>A space or comma separated list of values at which to display tick marks.
 Values may be listed with or without units, eg:</p>
 <pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
-ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
-<p>Ticks may optionally be given labels that are displayed in lieu of the tick
-value. Labels are written in square brackets following the tick value:</p>
+ticks=&quot;-∞dB -48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
+<p>Note that the unicode <code>∞</code> infinity character is interpreted as <code>Infinity</code>
+(after unit conversion <code>-∞dB</code> is <code>0</code> and <code>0dB</code> is 1).</p>
+<p>Ticks may optionally be given labels, displayed in lieu of the tick value.
+Labels are written in square brackets following the tick value:</p>
 <pre><code class="language-html">ticks=&quot;0 [None] 0.5 [Half] 1 [Full]&quot;</code></pre>
 
 </details-toggle>
@@ -168,6 +176,8 @@ displayed in this unit. Possible values are:</p>
 <pre><code class="language-js">RangeInput<span class="token punctuation">.</span>displayFormats<span class="token punctuation">[</span><span class="token string">'my-format'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">format<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
     <span class="token comment">// Return an object of the form `{ value, unit }`</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>This format may now be used by declaring the display attribute:</p>
+<pre><code class="language-html">display=&quot;my-format&quot;</code></pre>
 
 </details-toggle>
 

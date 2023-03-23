@@ -3,9 +3,11 @@
 
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
+    <title>form-elements</title>
+
+<meta charset="utf-8" />
 <meta name="author" content="Stephen Band" />
-<meta name="description" content="Documentation for form-elements. A collection of advanced form controls published as custom elements" />
+<meta name="description" content="A collection of advanced form controls published as custom elements" />
 <meta name="viewport" content="width=device-width" />
 
 
@@ -16,8 +18,6 @@
 <meta property="og:image" content="https://stephen.band/form-elements/card.png" />
 <meta property="og:url" content="https://stephen.band/form-elements/" />
 
-
-<title>form-elements</title>
 
 
 
@@ -137,9 +137,11 @@ of the fader travel. Possible values are:</p>
     <p>A space or comma separated list of values at which to display tick marks.
 Values may be listed with or without units, eg:</p>
 <pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
-ticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
-<p>Ticks may optionally be given labels that are displayed in lieu of the tick
-value. Labels are written in square brackets following the tick value:</p>
+ticks=&quot;-∞dB -48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
+<p>Note that the unicode <code>∞</code> infinity character is interpreted as <code>Infinity</code>
+(after unit conversion <code>-∞dB</code> is <code>0</code> and <code>0dB</code> is 1).</p>
+<p>Ticks may optionally be given labels, displayed in lieu of the tick value.
+Labels are written in square brackets following the tick value:</p>
 <pre><code class="language-html">ticks=&quot;0 [None] 0.5 [Half] 1 [Full]&quot;</code></pre>
 
 </details-toggle>
@@ -165,6 +167,8 @@ displayed in this unit. Possible values are:</p>
 <pre><code class="language-js">RangeInput<span class="token punctuation">.</span>displayFormats<span class="token punctuation">[</span><span class="token string">'my-format'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">format<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
     <span class="token comment">// Return an object of the form `{ value, unit }`</span>
 <span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
+<p>This format may now be used by declaring the display attribute:</p>
+<pre><code class="language-html">display=&quot;my-format&quot;</code></pre>
 
 </details-toggle>
 

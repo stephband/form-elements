@@ -6,10 +6,10 @@ Style the display of the output value.
 /* Value display */
 
 [part="output"] {
-    font-family: 'Fira Mono', 'Andale Mono', monospace;
+    font-family: 'Andale Mono', Monaco, Lucida, monospace;
     font-size: 0.75rem;
     line-height: 1rem;
-    letter-spacing: -0.04em;
+    letter-spacing: -0.0333em;
     color: #46789a;
     height: auto;
     white-space: pre;

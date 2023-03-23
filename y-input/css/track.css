@@ -1,12 +1,36 @@
 
 [part="track"] {
-    width: 0.625em;
+    width: 0.5625em;
     padding-top:    0.25em;
     padding-bottom: 0.25em;
-    background: #f8f8f8;
-    border: 1px solid #cccccc;
-    border-radius:  var(--track-radius);
-    box-shadow:     var(--track-shadow);
+    border:     var(--track-border);
+    border-radius: var(--track-radius);
+    box-shadow: var(--track-shadow);
+    background: var(--track-background) linear-gradient(
+        to top,
+        transparent 0%,
+        transparent              calc(min(var(--normal-value-1), var(--normal-zero)) * 100%),
+        var(--value-color-start) calc(min(var(--normal-value-1), var(--normal-zero)) * 100%),
+        var(--value-color-end)   calc(max(var(--normal-value-1), var(--normal-zero)) * 100%),
+        transparent              calc(max(var(--normal-value-1), var(--normal-zero)) * 100%)
+    );
+}
+
+[part="track"]:has([part="handle"] + [part="handle"]) {
+    /* Background when there are two handles */
+    background: var(--track-background) linear-gradient(
+        to top,
+        transparent 0%,
+        transparent              calc(min(var(--normal-value-1), var(--normal-value-2)) * 100%),
+        var(--value-color-start) calc(min(var(--normal-value-1), var(--normal-value-2)) * 100%),
+        var(--value-color-end)   calc(max(var(--normal-value-1), var(--normal-value-2)) * 100%),
+        transparent              calc(max(var(--normal-value-1), var(--normal-value-2)) * 100%)
+    );
+}
+
+[part="track"]:has([part="handle"] + [part="handle"] + [part="handle"]) {
+    /* Background when there are more than two handles */
+    background: var(--track-background);
 }
 
 [part="track"] > svg {

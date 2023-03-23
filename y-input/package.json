@@ -1,0 +1,29 @@
+{
+    "title":   "y-input",
+    "name":    "@stephband/form-elements",
+    "version": "0.0.4",
+    "description": "A vertical slider input with scaling, ticks, units, output display and multiple values",
+    "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
+    "author": {
+        "name": "Stephen Band",
+        "twitter": "@stephband",
+        "email": "stephband@cruncher.ch"
+    },
+    "card": {
+        "image": "https://stephen.band/form-elements/y-input/images/card.png"
+    },
+    "homepage": "https://stephen.band/form-elements/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/stephband/form-elements.git"
+    },
+    "bugs": {
+        "url": "https://github.com/stephband/form-elements/issues"
+    },
+    "funding": {
+        "github": "https://github.com/sponsors/stephband"
+    },
+    "license" : "GPL-3.0",
+    "type": "module",
+    "browser": "./build/form-elements.js"
+}

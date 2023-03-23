@@ -226,47 +226,40 @@ function renderTick(buttons, tick, axis) {
     return buttons;
 }
 
-function updateHandle(handle, rangebox, scale, min, max, point, index) {
+function updateHandle(handle, style, rangebox, scale, min, max, point, index) {
+    const normalValue = scale.normalise(min, max, point.value);
+
+    // Transform position of the handle
     handle.setAttribute('transform', 'translate('
         + 0.5
         + ' '
-        + denormalise(rangebox.y, rangebox.y + rangebox.height, scale.normalise(min, max, point.value))
+        + denormalise(rangebox.y, rangebox.y + rangebox.height, normalValue)
         + ')'
     );
 
+    // Fill the <title> inside the path with 'label value'
     handle.firstElementChild.innerHTML = (point.label ? (point.label + ' ') : '')
         + point.value;
 
+    // Keep a note of the handles index
     handle.dataset.index = index;
+
+    // Set CSS normals
+    style.setProperty('--normal-value-' + (index + 1), normalValue);
 }
 
 function renderHandle(rangebox, scale, min, max, point, index) {
+    // FF is a little sensitive about commas in <path> data, so don't use any
     return create('path', {
-        part:  'handle',
-        class: 'control control-handle control-point',
-        // FF is a little sensitive about where commas occur, let's not use any
-        d:     'M 0 0 m -0.5 0 a 0.5 0.5 0 1 0 1 0 a 0.5 0.5 0 1 0 -1 0',
+        part:     'handle',
+        class:    'control control-handle control-point',
+        d:        'M 0 0 m -0.5 0 a 0.5 0.5 0 1 0 1 0 a 0.5 0.5 0 1 0 -1 0',
         tabindex: '0',
-
-        // Position it
-        transform: 'translate('
-            + 0.5
-            + ' '
-            + denormalise(rangebox.y, rangebox.y + rangebox.height, scale.normalise(min, max, point.value))
-            + ')',
-
-        // Hover tooltip contains "label x, y"
-        html: '<title>'
-            + (point.label ? (point.label + ' ') : '')
-            + point.value
-            + '</title>',
-
-        // Keep a track of which point this path is from
-        data:  { index: index }
+        html:     '<title></title>'
     });
 }
 
-function renderHandles(handles, svg, rangebox, axis, points) {
+function renderHandles(handles, style, svg, rangebox, axis, points) {
     let n = -1;
     let point, handle;
 
@@ -274,10 +267,11 @@ function renderHandles(handles, svg, rangebox, axis, points) {
     while(point = points[++n]) {
         if (handles[n]) {
             handle = handles[n];
-            updateHandle(handle, rangebox, axis.scale, axis.min, axis.max, point, n);
+            updateHandle(handle, style, rangebox, axis.scale, axis.min, axis.max, point, n);
         }
         else {
             handle = renderHandle(rangebox, axis.scale, axis.min, axis.max, point, n);
+            updateHandle(handle, style, rangebox, axis.scale, axis.min, axis.max, point, n);
             handles.push(handle);
             svg.append(handle);
         }
@@ -292,7 +286,7 @@ function renderHandles(handles, svg, rangebox, axis, points) {
 
 function renderData(axis, style, scale, min, max, ticks, buttons, marker) {
     // Style
-    style.setProperty('--' + axis + '-normal-zero', scale.normalise(min, max, 0));
+    style.setProperty('--normal-zero', scale.normalise(min, max, 0));
 
     // Ticks
     buttons.forEach((node) => node.remove());
@@ -400,7 +394,7 @@ export default {
         .combine({ axis, resizes, value: values }, mutable)
         .each((state) => {
             privates.state = state;
-            renderHandles(handles, svg, privates.rangebox, state.axis, state.value);
+            renderHandles(handles, hostStyle, svg, privates.rangebox, state.axis, state.value);
             updateOutput(output, state.value[0]);
         });
 
@@ -413,7 +407,7 @@ export default {
             observers.push.apply(observers, value.map((point, index, points) =>
                 observe('.', point, point).each((point) => {
                     const handle = svg.querySelectorAll('[part=handle]')[index];
-                    updateHandle(handle, privates.rangebox, privates.state.axis.scale, privates.state.axis.min, privates.state.axis.max, point, index);
+                    updateHandle(handle, hostStyle, privates.rangebox, privates.state.axis.scale, privates.state.axis.min, privates.state.axis.max, point, index);
                     updateOutput(output, point);
                 })
             ));
