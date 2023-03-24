@@ -7,4 +7,6 @@
     /* Unfortunately Safari does not support d as CSS */
     /*d: path('M 0 0 m -0.5 0, a 0.5 0.5 0 1 0 1 0, a 0.5 0.5 0 1 0 -1 0'),*/
     cursor: pointer;
+    /* Prevent scrolling */
+    touch-action: none;
 }
