@@ -52,7 +52,7 @@ function renderTick(buttons, tick) {
             part: 'tick',
             name: 'value',
             value: tick.value,
-            style: '--normal-value: ' + tick.normalValue + ';',
+            style: '--normal-value: ' + tick.normal + ';',
             text: tick.label
         })
     );
@@ -71,10 +71,10 @@ function renderData(style, scale, min, max, ticks, buttons, marker) {
     marker.after.apply(marker, buttons);
 }
 
-function renderValue(style, input, internals, outputText, outputAbbr, unit, value, normalValue) {
+function renderValue(style, input, internals, outputText, outputAbbr, unit, value, normal) {
     // Render handle position
-    style.setProperty('--normal-value', normalValue);
-    input.value = normalValue;
+    style.setProperty('--normal-value', normal);
+    input.value = normal;
 
     // Render display
     const display = toDisplay(unit, value);
@@ -166,9 +166,9 @@ export default {
             data:    attributes,
             value:   privates.value
         })
-        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
+        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.data.step, state.value), data)
 //.map((d) => (console.log('RANGE RENDER', this.nnn, document.body.contains(this)), d))
-        .each((data) => renderValue(getHostStyle(style), input, internals, text, abbr, data.display, data.value, data.normalValue)) ;
+        .each((data) => renderValue(getHostStyle(style), input, internals, text, abbr, data.display, data.value, data.normal)) ;
 
 
 
@@ -184,15 +184,15 @@ export default {
         // Track input changes
         events('input', shadow)
         .each((e) => {
-            const normalValue = parseFloat(e.target.value);
-            const value       = data.scale.denormalise(data.min, data.max, normalValue);
+            const normal = parseFloat(e.target.value);
+            const value       = data.scale.denormalise(data.min, data.max, normal);
             privates.value.push(value);
         });
 
         // While this is focused allow up and down arrows to change value
         events('keydown', this)
         .filter(() => document.activeElement === this || this.contains(document.activeElement))
-        .map((e) => toKeyValue(e, data.scale, data.min, data.max, data.step, data.normalValue))
+        .map((e) => toKeyValue(e, data.scale, data.min, data.max, data.step, data.normal))
         .each((value) => {
             privates.value.push(value);
             trigger('input', this);

@@ -118,12 +118,14 @@ export default {
     /**
     step=""
     Step is either:
-    - The string `"any"` (the default value)
-    - The string `"tick"`. The values in the `ticks` attribute are used as step values
+
+    - `"any"` (the default value)
+    - `"ticks"`. The values in the `ticks` attribute are used as step values
     - A space or comma separated list of values, written with or without units
+
     **/
 
-    step: createAttribute('step', 'any'),
+    step: createAttributeProperty('step', 'any'),
 
     /**
     value=""

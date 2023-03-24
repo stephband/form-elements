@@ -1,33 +1,34 @@
 
-import Privates          from '../../../fn/modules/privates.js';
-import { clamp }         from '../../../fn/modules/clamp.js';
-import id                from '../../../fn/modules/id.js';
-import Stream            from '../../../fn/modules/stream.js';
-import get               from '../../../fn/modules/get.js';
-import last              from '../../../fn/modules/last.js';
-import normalise         from '../../../fn/modules/normalise.js';
-import denormalise       from '../../../fn/modules/denormalise.js';
-import overload          from '../../../fn/modules/overload.js';
-import observe           from '../../../fn/observer/observe.js';
-import { Observer }      from '../../../fn/observer/observer.js';
-import create            from '../../../dom/modules/create.js';
-import delegate          from '../../../dom/modules/delegate.js';
-import events            from '../../../dom/modules/events.js';
-import { trigger }       from '../../../dom/modules/trigger.js';
-import gestures          from '../../../dom/modules/gestures.js';
-import rect              from '../../../dom/modules/rect.js';
-import { px }            from '../../../dom/modules/parse-length.js';
+import Privates           from '../../../fn/modules/privates.js';
+import { clamp }          from '../../../fn/modules/clamp.js';
+import id                 from '../../../fn/modules/id.js';
+import Stream             from '../../../fn/modules/stream.js';
+import get                from '../../../fn/modules/get.js';
+import last               from '../../../fn/modules/last.js';
+import normalise          from '../../../fn/modules/normalise.js';
+import denormalise        from '../../../fn/modules/denormalise.js';
+import overload           from '../../../fn/modules/overload.js';
+import observe            from '../../../fn/observer/observe.js';
+import { Observer }       from '../../../fn/observer/observer.js';
+import create             from '../../../dom/modules/create.js';
+import delegate           from '../../../dom/modules/delegate.js';
+import events             from '../../../dom/modules/events.js';
+import { trigger }        from '../../../dom/modules/trigger.js';
+import gestures           from '../../../dom/modules/gestures.js';
+import rect               from '../../../dom/modules/rect.js';
+import { px }             from '../../../dom/modules/parse-length.js';
 
-import parseValue        from '../../modules/parse-value.js';
-import { updateData }    from '../../modules/data.js';
-import { toDisplay }     from '../../modules/display.js';
-import { nearestStep }   from '../../modules/step.js';
+import { loads, resizes } from '../../modules/window.js';
+import parseValue         from '../../modules/parse-value.js';
+import { assignNormal, updateData, valueFromNormal } from '../../modules/data.js';
+import { toDisplay }      from '../../modules/display.js';
+import { nearestStep }    from '../../modules/step.js';
 import { maxTapDuration, maxDoubleTapDuration } from '../../modules/constants.js';
-import * as defaults     from '../../modules/defaults.js';
+import * as defaults      from '../../modules/defaults.js';
 
-import { setFormValue }  from './form.js';
+import { setFormValue }   from './form.js';
 
-
+const assign  = Object.assign;
 const mutable = { mutable: true };
 
 
@@ -63,8 +64,8 @@ function updateBoxes(track, computed, pxbox, paddingbox, contentbox, rangebox) {
     const paddingTop    = px(computed.paddingTop) || 0;
     const paddingBottom = px(computed.paddingBottom) || 0;
 
-    pxbox.y      = box.y + borderTop + paddingTop;
-    pxbox.height = box.height - borderTop - paddingTop - borderBottom - paddingBottom;
+    pxbox.y           = box.y + borderTop + paddingTop;
+    pxbox.height      = box.height - borderTop - paddingTop - borderBottom - paddingBottom;
 
     paddingbox.y      = 0;
     paddingbox.height = box.height - borderTop - borderBottom;
@@ -74,8 +75,8 @@ function updateBoxes(track, computed, pxbox, paddingbox, contentbox, rangebox) {
 
     // rangebox is contentbox in ems with reversed y axis (+ve is up). All a bit
     // confusing and ought to be cleaned up
-    rangebox.y = (0 - paddingBottom - borderBottom) / fontsize;
-    rangebox.height = -contentbox.height / fontsize;
+    rangebox.y        = (0 - paddingBottom - borderBottom) / fontsize;
+    rangebox.height   = -contentbox.height / fontsize;
 
     return box;
 }
@@ -100,18 +101,17 @@ function updateViewbox(track, style, computed, svg, data) {
     svg.style.height = -data.rangebox.height + 'em';
 }
 
-function setY(e, data) {
+function setNormal(e, data) {
     const axis     = data.axis;
     const scale    = axis.scale;
     const box      = data.pxbox;
 
-    // New pixel position of control, compensating for initial
-    // mousedown offset on the control
+    // Pixel position of control, compensating for initial mousedown offset on
+    // the control
     const py = box.height - (e.clientY - box.y - data.offset.y);
 
-    // Denormalise to min-max
-    const value  = scale.denormalise(axis.min, axis.max, py / box.height);
-    data.y = clamp(axis.min, axis.max, value);
+    // Normalised position, unclamped
+    data.normal = py / box.height;
 }
 
 const toCoordinates = overload((data, e) => e.type, {
@@ -159,7 +159,7 @@ const toCoordinates = overload((data, e) => e.type, {
         }
 
         data.type = 'move';
-        setY(e, data);
+        setNormal(e, data);
         return data;
     },
 
@@ -172,43 +172,46 @@ const toCoordinates = overload((data, e) => e.type, {
         if (!data.type && (data.duration < maxTapDuration)) {
             data.type = 'tap';
         }
+        else if (data.type === 'move') {
+            data.type = 'moveend';
+        }
 
         return data;
     }
 });
 
-const handle = delegate({
-    '.control-handle': overload((target, data) => data.type, {
-        'double-tap': function(element, data) {
-            // TODO: return to 0
-            return data;
-        },
+const handle = overload((data) => data.type, {
+    'double-tap': function(data) {
+        console.log('TODO: Implement double tap to reset to default');
+    },
 
-        'move': function(target, data) {
-            const { internals, formdata, events, host, value, y } = data;
-            const index = target.dataset.index;
-            const point = value[index];
+    'move': function(data) {
+        const { target, axis, host, value: points, y, normal } = data;
+        const index = target.dataset.index;
+        const point = points[index];
+        const step  = valueFromNormal(axis.scale, axis.min, axis.max, axis.step, normal);
 
-            // If value has not changed do nothing
-            if (point.value === y) { return; }
+        // If value has not changed do nothing
+        if (point.value === step.value) { return; }
 
-            // Render is handled by mutation observers
-            Observer(point).value = y;
+        // Rendering is handled by mutation observers
+        const observer = Observer(point);
+        observer.value  = step.value;
+        observer.normal = step.normal;
 
-            if (last(events).type !== 'pointermove') {
-                // internal, formdata, name, value
-                setFormValue(internals, formdata, host.name, value);
-                trigger('change', host);
-            }
-            else {
-                trigger('input', host);
-            }
-        },
+        // Notify UI
+        trigger('input', host);
+    },
 
-        default: function(data) {
-            console.log('Untyped gesture', data);
-        }
-    })
+    'moveend': function(data) {
+        const { internals, formdata, host, value: points } = data;
+        setFormValue(internals, formdata, host.name, points);
+        trigger('change', host);
+    },
+
+    default: function(data) {
+        console.log('Untyped gesture, shouldnt happen', data);
+    }
 });
 
 
@@ -218,7 +221,7 @@ function renderTick(buttons, tick, axis) {
     buttons.push(
         create('label', {
             part:  axis + '-tick tick',
-            style: '--normal-' + axis + ': ' + tick.normalValue + ';',
+            style: '--normal-' + axis + ': ' + tick.normal + ';',
             html:  '<span>' + tick.label + '</span>'
         })
     );
@@ -227,25 +230,23 @@ function renderTick(buttons, tick, axis) {
 }
 
 function updateHandle(handle, style, rangebox, scale, min, max, point, index) {
-    const normalValue = scale.normalise(min, max, point.value);
-
     // Transform position of the handle
     handle.setAttribute('transform', 'translate('
         + 0.5
         + ' '
-        + denormalise(rangebox.y, rangebox.y + rangebox.height, normalValue)
+        + denormalise(rangebox.y, rangebox.y + rangebox.height, point.normal)
         + ')'
     );
 
     // Fill the <title> inside the path with 'label value'
-    handle.firstElementChild.innerHTML = (point.label ? (point.label + ' ') : '')
+    handle.firstElementChild.textContent = (point.label ? (point.label + ' ') : '')
         + point.value;
 
     // Keep a note of the handles index
     handle.dataset.index = index;
 
     // Set CSS normals
-    style.setProperty('--normal-value-' + (index + 1), normalValue);
+    style.setProperty('--normal-value-' + (index + 1), point.normal);
 }
 
 function renderHandle(rangebox, scale, min, max, point, index) {
@@ -323,75 +324,72 @@ export default {
 
         // Components
         const privates   = Privates(this);
-        const data       = { value: [] };
         const computed   = getComputedStyle(track);
         const hostStyle  = style.sheet.cssRules[0].style;
         const childStyle = style.sheet.cssRules[1].style;
-        const formdata   = new FormData();
 
         privates.host       = this;
-        privates.hostStyle  = hostStyle;
         privates.childStyle = childStyle;
         privates.internals  = internals;
-        privates.data       = data;
-        privates.formdata   = formdata;
-        privates.shadow     = new Promise((resolve) => privates.load = resolve);
+        privates.data       = { value: [] };
+        privates.formdata   = new FormData();
+        privates.load       = new Promise((resolve) => privates.resolveLoad = resolve);
 
         privates.pxbox      = {};
         privates.paddingbox = {};
         privates.contentbox = {};
         privates.rangebox   = { y: 6.75, width: 6.75 };
-        privates.valuebox   = { y: 0,    width: 1 };
 
         privates.scale      = Stream.of(defaults.scale);
         privates.min        = Stream.of(defaults.min);
         privates.max        = Stream.of(defaults.max);
         privates.step       = Stream.of(defaults.step);
-        privates.ticks      = Stream.of(null);
+        privates.ticks      = Stream.of(defaults.ticks);
         privates.display    = Stream.of(defaults.display);
-        privates.values     = Stream.of([{ value: 0 }]);
+        privates.values     = Stream.of([{ value: 0, normal: 0 }]);
 
-        const resizes = Stream
-        .merge(privates.shadow, events('resize', window))
-        .broadcast();
+        const reflows = Stream
+            .merge(privates.load, loads, resizes)
+            .broadcast();
 
-        resizes.each(() =>
+        const axis = Stream.combine({
+                load:    privates.load,
+                scale:   privates.scale,
+                min:     privates.min,
+                max:     privates.max,
+                ticks:   privates.ticks,
+                step:    privates.step,
+                display: privates.display
+            }, mutable)
+            .scan(updateData, {})
+            .broadcast();
+
+        // Track value and mutations of value
+        const values = Stream
+            // Wait for axis scale, min and max
+            .combine({ axis, points: privates.values }, mutable)
+            // Update points with normals
+            .map(({ axis, points }) => {
+                points.forEach((point) => assignNormal(point, axis.scale, axis.min, axis.max, point.value));
+                return points;
+            })
+            // Convert to stream that outputs whenever points are added or removed (I think... TODO check)
+            .scan(toObserver, null)
+            .flatMap(id)
+            .broadcast();
+
+        reflows.each(() =>
             updateViewbox(track, hostStyle, computed, svg, privates)
         );
 
-        const axis = Stream.combine({
-            shadow:  privates.shadow,
-            scale:   privates.scale,
-            min:     privates.min,
-            max:     privates.max,
-            ticks:   privates.ticks,
-            step:    privates.step,
-            display: privates.display
-        }, mutable)
-        .scan(updateData, {})
-        .broadcast();
-
-        axis.each((data) => {
-            privates.valuebox.y      = data.min;
-            privates.valuebox.height = data.max - data.min;
-        });
-
         // Render DOM
-        axis.each((data) =>
-            renderData('y', hostStyle, data.scale, data.min, data.max, data.ticks, ticks, marker)
+        axis.each((axis) =>
+            renderData('y', hostStyle, axis.scale, axis.min, axis.max, axis.ticks, ticks, marker)
         );
-
-        // Track value and mutations of value
-        const values = privates.values
-        .scan(toObserver, null)
-        .flatMap(id)
-        .broadcast();
-
-        values.each((value) => privates.value = value);
 
         // Render canvas
         Stream
-        .combine({ axis, resizes, value: values }, mutable)
+        .combine({ axis, reflows, value: values }, mutable)
         .each((state) => {
             privates.state = state;
             renderHandles(handles, hostStyle, svg, privates.rangebox, state.axis, state.value);
@@ -444,7 +442,7 @@ export default {
             this.focus();
         });
 
-        // On double click focus the number input
+        // On double click on output focus the number input
         events('pointerup', output)
         .reduce((e1, e2) => {
             if (e1 && (e2.timeStamp - e1.timeStamp < 800)) {
@@ -460,6 +458,6 @@ export default {
     load: function(shadow) {
         const privates = Privates(this);
         privates.childStyle.visibility = '';
-        privates.load(shadow);
+        privates.resolveLoad();
     }
 };

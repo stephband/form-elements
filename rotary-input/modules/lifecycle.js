@@ -40,7 +40,7 @@ const toGestureValue = overload((pointer, e) => e.type, {
         max:   data.max,
         e0:    e,
         y0:    e.clientY,
-        y:     data.normalValue,
+        y:     data.normal,
         value: data.value,
         touchRange: parseLength(getComputedStyle(e.target).getPropertyValue('--touch-range'))
     }),
@@ -48,8 +48,8 @@ const toGestureValue = overload((pointer, e) => e.type, {
     default: (data, e) => {
         const { scale, min, max, y, y0, touchRange } = data;
         const dy        = y0 - e.clientY;
-        const normalValue = clamp(0, 1, y + dy / touchRange);
-        const value     = scale.denormalise(min, max, normalValue) ;
+        const normal = clamp(0, 1, y + dy / touchRange);
+        const value     = scale.denormalise(min, max, normal) ;
         data.value = value;
         return data;
     }
@@ -67,11 +67,11 @@ function renderTick(buttons, tick) {
             part: 'tick',
             name: 'value',
             value: tick.value,
-            style: '--normal-value: ' + tick.normalValue + ';',
+            style: '--normal-value: ' + tick.normal + ';',
             children: [
                 create('span', {
                     text: tick.label,
-                    style: 'transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (var(--rotation-start) + ' + tick.normalValue + ' * var(--rotation-range)))) translate3d(calc(' + Math.sin(tick.normalValue * 6.28318531) + ' * -33%), 0, 0);'
+                    style: 'transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (var(--rotation-start) + ' + tick.normal + ' * var(--rotation-range)))) translate3d(calc(' + Math.sin(tick.normal * 6.28318531) + ' * -33%), 0, 0);'
                 })
             ]
         })
@@ -80,9 +80,9 @@ function renderTick(buttons, tick) {
     return buttons;
 }
 
-function renderValue(style, internals, outputText, outputAbbr, unit, value, normalValue) {
+function renderValue(style, internals, outputText, outputAbbr, unit, value, normal) {
     // Render handle position
-    style.setProperty('--normal-value', normalValue);
+    style.setProperty('--normal-value', normal);
 
     // Render display
     const display = toDisplay(unit, value);
@@ -179,8 +179,8 @@ export default {
             data:    attributes,
             value:   privates.value
         })
-        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.value), data)
-        .each((data) => renderValue(hostStyle, internals, text, abbr, data.display, data.value, data.normalValue)) ;
+        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.data.step, state.value), data)
+        .each((data) => renderValue(hostStyle, internals, text, abbr, data.display, data.value, data.normal)) ;
 
         // Track pointer on ticks and update value
         events({ type: 'pointerdown', select: '[name="value"]' }, shadow)
@@ -199,7 +199,7 @@ export default {
         // While this is focused allow up and down arrows to change value
         events('keydown', this)
         .filter(() => document.activeElement === this || this.contains(document.activeElement))
-        .map((e) => toKeyValue(e, data.scale, data.min, data.max, data.step, data.normalValue))
+        .map((e) => toKeyValue(e, data.scale, data.min, data.max, data.step, data.normal))
         .each(pushValue);
     },
 

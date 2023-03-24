@@ -44,7 +44,7 @@ export default Object.assign({}, properties, {
 
         get: function() {
             const privates = Privates(this);
-            return privates.state ? stringifyValues(privates.value) : '';
+            return privates.state ? stringifyValues(privates.state.value) : '';
         },
 
         set: function(values) {

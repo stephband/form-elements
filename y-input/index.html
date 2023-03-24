@@ -56,7 +56,7 @@
     <h1 class="docs-text-01" id="y-input"><span class="tag-brace">&lt;</span>y-input<span class="tag-brace">&gt;</span></h1>
     <p>A vertical slider input with scaling, ticks, units, output display and
 multiple values.</p>
-<y-input value="0" ticks="0 0.2 0.4 0.6 0.8 1">
+<y-input ticks="0 0.2 0.4 0.6 0.8 1">
     Value
 </y-input>
 
@@ -64,7 +64,7 @@ multiple values.</p>
     Gain
 </y-input>
 
-<y-input min="-1" max="1" value="-0.5 0.5" ticks="-1 -0.5 0 0.5 1">
+<y-input min="-1.2" max="1.2" step="0.2" value="-0.5 0.5" ticks="-1.2 -0.8 -0.4 0 0.4 0.8 1.2">
     Range
 </y-input>
 
@@ -190,8 +190,8 @@ displayed in this unit. Possible values are:</p>
 
     <p>Step is either:</p>
 <ul>
-<li>The string <code>&quot;any&quot;</code> (the default value)</li>
-<li>The string <code>&quot;tick&quot;</code>. The values in the <code>ticks</code> attribute are used as step values</li>
+<li><code>&quot;any&quot;</code> (the default value)</li>
+<li><code>&quot;ticks&quot;</code>. The values in the <code>ticks</code> attribute are used as step values</li>
 <li>A space or comma separated list of values, written with or without units</li>
 </ul>
 

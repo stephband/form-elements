@@ -3,16 +3,18 @@
 import nothing           from '../../fn/modules/nothing.js';
 import { clamp }         from '../../fn/modules/clamp.js';
 import parseTicks        from './parse-ticks.js';
-import { nearestStep }   from './step.js';
+import parseValue        from './parse-value.js';
+import { createSteps, nearestStep } from './step.js';
 import { generateTicks } from './ticks.js';
 
-function assignNormalValue(object, scale, min, max) {
-    object.normalValue = scale.normalise(min, max, object.value);
-    return object;
+export function assignNormal(data, scale, min, max, value) {
+    data.normal = scale.normalise(min, max, value);
+    return data;
 }
 
-export function updateData(data, state) {
-    const { scale, min, max, ticks, step, display } = state;
+export function updateData(data, axis) {
+    const { scale, min, max, step, ticks, display } = axis;
+
     data.scale = scale;
     data.min   = min;
     data.max   = max;
@@ -23,31 +25,63 @@ export function updateData(data, state) {
         nothing)
         // Filter to ticks within range min-max
         .filter((tick) => tick.value >= data.min && tick.value <= data.max)
-        .map((tick) => assignNormalValue(tick, scale, min, max)) ;
+        .map((tick) => assignNormal(tick, scale, min, max, tick.value)) ;
 
     data.step =
+        // "any"
         step === 'any' ? undefined :
-        step === 'tick' ? data.ticks :
-        parseTicks(step)
-        .filter((step) => step.value >= data.min && step.value <= data.max)
-        .map((step) => assignNormalValue(step, scale, min, max)) ;
+        // "ticks"
+        step === 'ticks' ? data.ticks :
+        // Multiple values
+        /\s|,/.test(step) ? parseTicks(step)
+            .filter((step) => step.value >= data.min && step.value <= data.max)
+            .map((step) => assignNormal(step, scale, min, max, step.value)) :
+        // Generate from a single step value
+        createSteps(min, max, parseValue(step))
+        .map((step) => assignNormal(step, scale, min, max, step.value)) ;
 
     data.display = display;
+
     return data;
 }
 
-export function updateValue(data, scale, min, max, value) {
-    //if (value === data.value) { console.log('REPEAT VALUE SET - ARE WE BOTHERED?', value); }
-    data.value       = clamp(min, max, value);
-    data.normalValue = scale.normalise(min, max, data.value);
+export function updateValue(data, scale, min, max, step, value) {
+    console.error('updateValue deprecated in favour of getValue');
 
-    // Round to nearest step
-    if (data.step) {
-        // We find the nearest visually by getting nearest to normalValue
-        const step = nearestStep(data.step, data.normalValue);
-        data.value       = step.value;
-        data.normalValue = step.normalValue;
+    //if (value === data.value) { console.log('REPEAT VALUE SET - ARE WE BOTHERED?', value); }
+    data.value  = clamp(min, max, value);
+    data.normal = scale.normalise(min, max, data.value);
+
+    // Round to nearest step by normal value, as that is visually the nearest
+    if (step) {
+        const nearest = nearestStep(step, data.normal);
+        data.value  = nearest.value;
+        data.normal = nearest.normal;
     }
 
     return data;
+}
+
+const point = {};
+
+export function valueFromValue(scale, min, max, step, value) {
+    point.value  = clamp(min, max, value);
+    point.normal = scale.normalise(min, max, point.value);
+
+    return step ?
+        // Round to nearest step by normal value, as that is visually the nearest
+        nearestStep(step, point.normal) :
+        // Return point data
+        point ;
+}
+
+export function valueFromNormal(scale, min, max, step, normal) {
+    point.normal = clamp(0, 1, normal);
+    point.value  = scale.denormalise(min, max, point.normal);
+
+    return step ?
+        // Round to nearest step by normal value, as that is visually the nearest
+        nearestStep(step, point.normal) :
+        // Return point data
+        point ;
 }

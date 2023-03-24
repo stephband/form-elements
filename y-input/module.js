@@ -4,7 +4,7 @@
 A vertical slider input with scaling, ticks, units, output display and
 multiple values.
 
-<y-input value="0" ticks="0 0.2 0.4 0.6 0.8 1">
+<y-input ticks="0 0.2 0.4 0.6 0.8 1">
     Value
 </y-input>
 
@@ -12,7 +12,7 @@ multiple values.
     Gain
 </y-input>
 
-<y-input min="-1" max="1" value="-0.5 0.5" ticks="-1 -0.5 0 0.5 1">
+<y-input min="-1.2" max="1.2" step="0.2" value="-0.5 0.5" ticks="-1.2 -0.8 -0.4 0 0.4 0.8 1.2">
     Range
 </y-input>
 

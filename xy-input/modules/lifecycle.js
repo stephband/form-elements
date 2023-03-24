@@ -310,7 +310,7 @@ function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis,
     if (xGridColor) {
         drawXLines(ctx, viewbox, xaxis.ticks
             .filter((line) => valuebox.x + valuebox.width >= line.value && line.value >= valuebox.x)
-            .map((line) => line.normalValue),
+            .map((line) => line.normal),
             xGridColor
         );
     }
@@ -318,7 +318,7 @@ function renderCanvas(canvas, ctx, computed, contentbox, valuebox, xaxis, yaxis,
     if (yGridColor) {
         drawYLines(ctx, viewbox, yaxis.ticks
             .filter((line) => valuebox.y + valuebox.height >= line.value && line.value >= valuebox.y)
-            .map((line) => line.normalValue),
+            .map((line) => line.normal),
             yGridColor
         );
     }
@@ -346,7 +346,7 @@ function renderTick(buttons, tick, axis) {
     buttons.push(
         create('label', {
             part:  axis + '-tick tick',
-            style: '--normal-' + axis + ': ' + tick.normalValue + ';',
+            style: '--normal-' + axis + ': ' + tick.normal + ';',
             html:  '<span>' + tick.label + '</span>'
         })
     );
