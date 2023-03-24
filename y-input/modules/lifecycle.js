@@ -187,22 +187,22 @@ const handle = delegate({
         'move': function(target, data) {
             const { internals, formdata, events, host, value, y } = data;
             const index = target.dataset.index;
+            const point = value[index];
 
-            // Render is handled by observers
-            const point = Observer(value[index]);
-            point.value = y;
+            // If value has not changed do nothing
+            if (point.value === y) { return; }
+
+            // Render is handled by mutation observers
+            Observer(point).value = y;
 
             if (last(events).type !== 'pointermove') {
                 // internal, formdata, name, value
-
                 setFormValue(internals, formdata, host.name, value);
                 trigger('change', host);
             }
             else {
                 trigger('input', host);
             }
-
-            return data;
         },
 
         default: function(data) {
@@ -420,7 +420,7 @@ export default {
 
         Stream.combine({
             axis:    axis,
-            gesture: gestures({ select: '[part=handle]', threshold: 1 }, shadow)
+            gesture: gestures({ select: '[part=handle]', threshold: 0 }, shadow)
         }, mutable)
         .each(({ axis, gesture }) => {
             // Update boxes - we don't know the current scrolling position

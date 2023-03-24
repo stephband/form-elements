@@ -9,3 +9,11 @@
     **/
     --track-padding: 0.3125em;
 }
+
+[part="track"] {
+    /* Prevent the browser sending pointercancel half-way through a gesture. We
+       apply this to the track rather than the handles, as in some elements
+       handles are SVG paths, and they don't seem to respond to these rules. */
+    touch-action: none;
+    -webkit-touch-action:  none;
+}

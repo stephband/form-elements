@@ -1,3 +1,6 @@
+
+@import '../../css/host.css';
+
 :host {
     --track-border: none;
     --track-radius: 0.25em;
@@ -18,7 +21,7 @@
     row-gap: 0.375em;
     column-gap: 0.375em;
 
-    height: 9.375em;
+    height: 10em;
     min-height: 1em;
 }
 
@@ -28,10 +31,6 @@
     justify-self: start;
     align-self: stretch;
     height: 100%;
-    /*
-    margin-top:    -0.3125em;
-    margin-bottom: -0.3125em;
-    */
 }
 
 :host > [part$="tick"] {

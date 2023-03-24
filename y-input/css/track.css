@@ -1,4 +1,6 @@
 
+@import '../../css/track.css';
+
 [part="track"] {
     width: 0.5625em;
     padding-top:    0.25em;

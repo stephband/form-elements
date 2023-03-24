@@ -1,4 +1,6 @@
 
+@import '../../css/output.css';
+
 [part="output"] {
     position: relative;
     width: 100%;

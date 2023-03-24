@@ -1,4 +1,6 @@
 
+@import '../../css/tick.css';
+
 [part$="tick"] {
     font-size: inherit !important;
     /* Try to avoid overlapping tick labels on the x axis */

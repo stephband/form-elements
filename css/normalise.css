@@ -1,4 +1,7 @@
 
+@import '../../bolt/elements/html.css';
+@import '../../bolt/elements/svg.css';
+
 :host, *, *::before, *::after {
     box-sizing: border-box;
 }
