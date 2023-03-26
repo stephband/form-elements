@@ -301,15 +301,15 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-value-4">
+<details-toggle class="attribute-details-toggle" id="attribute-value-1">
     <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">value <span class="default-text">="<em>0 0</em>"</span></code>
     </h4>
 
     <p>The initial value of the element. This is a series of space or comma
-separated <code>x, y</code> values such as:</p>
+separated <code>x,y</code> values such as:</p>
 <pre><code>value<span class="token operator">=</span><span class="token string">"0,0 1,0.5 2,0"</span></code></pre><p>Values may also be given an optional label.</p>
-<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 First 1,0 Second 2,0 Last"</span></code></pre><p>An <code>&lt;xy-input&gt;</code> supports WebAudio automation data. Labels must be one of
+<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 [First] 1,0 [Second] 2,0 [Last]"</span></code></pre><p>An <code>&lt;xy-input&gt;</code> supports WebAudio automation data. Labels must be one of
 the types <code>&#39;step&#39;</code>, <code>&#39;linear&#39;</code>, <code>&#39;exponential&#39;</code> or <code>&#39;target&#39;</code>. The type
 <code>&#39;target&#39;</code> must be followed by a fourth parameter duration:</p>
 <pre><code>value<span class="token operator">=</span><span class="token string">"0,0 step 1,0 linear 2,0 target 0.2"</span></code></pre>
@@ -373,7 +373,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-value-4">
+<details-toggle class="property-details-toggle" id="property|selector-value-1">
     <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>
@@ -388,14 +388,14 @@ parameters.</p>
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-data-1">
+<details-toggle class="property-details-toggle" id="property|selector-data">
     <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.data</code>
     </h4>
 
-    <p>The value of the element. Returns a live array of objects representing
-each value in the input. Objects mutate in response to handles being moved,
-and handles are moved when the object <code>x</code> and <code>y</code> values are mutated.</p>
+    <p>The value of the element as an array of objects representing the values of
+the input. The array is ‘live’ – objects mutate in response to moved handles,
+and handles move when the object values are set.</p>
 
 </details-toggle>
 

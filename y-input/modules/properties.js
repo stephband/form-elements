@@ -10,24 +10,18 @@ export default Object.assign({}, properties, {
     /**
     value="0 0"
     The initial value of the element. This is a series of space or comma
-    separated `x, y` values such as:
+    separated values such as:
 
     ```
-    value="0,0 1,0.5 2,0"
+    value="0 1 2"
     ```
 
-    Values may also be given an optional label.
+    Values may also be given an optional label which appears as a handle's
+    title (it is announced to screen readers, and appears when hovering
+    on a handle):
 
     ```
-    value="0,0 First 1,0 Second 2,0 Last"
-    ```
-
-    An `<xy-input>` supports WebAudio automation data. Labels must be one of
-    the types `'step'`, `'linear'`, `'exponential'` or `'target'`. The type
-    `'target'` must be followed by a fourth parameter duration:
-
-    ```
-    value="0,0 step 1,0 linear 2,0 target 0.2"
+    value="0 [First] 1 [Second] 2 [Last]"
     ```
     **/
 
@@ -61,17 +55,16 @@ export default Object.assign({}, properties, {
         enumerable: true
     },
 
-    /**
+    /*
     .data
-    The value of the element. Returns a live array of objects representing
-    each value in the input. Objects mutate in response to handles being moved,
-    and handles are moved when the object values are mutated.
-    **/
+    The value of the element as an array of objects representing the values of
+    the input. The array is 'live' – objects mutate in response to moved handles,
+    and handles move when the object values are set.
 
     data: {
         get: function() {
             const privates = Privates(this);
-            return Observer(privates.value);
+            return Observer(privates.data);
         },
 
         set: function(values) {
@@ -80,5 +73,6 @@ export default Object.assign({}, properties, {
         },
 
         enumerable: true
-    },
+    }
+    */
 });

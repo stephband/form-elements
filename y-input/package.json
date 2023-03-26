@@ -5,9 +5,10 @@
     "description": "A vertical slider input with scaling, ticks, units, output display and multiple values",
     "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
     "author": {
-        "name": "Stephen Band",
+        "name":    "Stephen Band",
+        "url":     "https://stephen.band/",
         "twitter": "@stephband",
-        "email": "stephband@cruncher.ch"
+        "email":   "stephband@cruncher.ch"
     },
     "card": {
         "image": "https://stephen.band/form-elements/y-input/images/card.png"

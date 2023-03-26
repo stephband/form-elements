@@ -34,7 +34,8 @@
         "./css/tick.css"
     )) }
 
-    ${ include('../../literal/documentation/templates/scripts.literal') }
+    ${ include('../../literal/documentation/templates/footer.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
     import XYInput from './module.js';

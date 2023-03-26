@@ -66,7 +66,7 @@ multiple values.</p>
     Gain
 </y-input>
 
-<y-input min="-1.2" max="1.2" step="0.2" value="-0.5 0.5" ticks="-1.2 -0.8 -0.4 0 0.4 0.8 1.2">
+<y-input min="-1.2" max="1.2" step="0.2" value="-0.5 [Minimum] 0.5 [Maximum]" ticks="-1.2 -0.8 -0.4 0 0.4 0.8 1.2">
     Range
 </y-input>
 
@@ -195,29 +195,17 @@ displayed in this unit. Possible values are:</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-value-1">
-    <h4 class="attribute-text text-05" slot="summary">
-        <code class="token language-html">value</code>
-    </h4>
-
-    <p>The initial value of the input.</p>
-
-</details-toggle>
-
-
-
-<details-toggle class="attribute-details-toggle" id="attribute-value-3">
+<details-toggle class="attribute-details-toggle" id="attribute-value">
     <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">value <span class="default-text">="<em>0 0</em>"</span></code>
     </h4>
 
     <p>The initial value of the element. This is a series of space or comma
-separated <code>x, y</code> values such as:</p>
-<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 1,0.5 2,0"</span></code></pre><p>Values may also be given an optional label.</p>
-<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 First 1,0 Second 2,0 Last"</span></code></pre><p>An <code>&lt;xy-input&gt;</code> supports WebAudio automation data. Labels must be one of
-the types <code>&#39;step&#39;</code>, <code>&#39;linear&#39;</code>, <code>&#39;exponential&#39;</code> or <code>&#39;target&#39;</code>. The type
-<code>&#39;target&#39;</code> must be followed by a fourth parameter duration:</p>
-<pre><code>value<span class="token operator">=</span><span class="token string">"0,0 step 1,0 linear 2,0 target 0.2"</span></code></pre>
+separated values such as:</p>
+<pre><code>value<span class="token operator">=</span><span class="token string">"0 1 2"</span></code></pre><p>Values may also be given an optional label which appears as a handle’s
+title (it is announced to screen readers, and appears when hovering
+on a handle):</p>
+<pre><code>value<span class="token operator">=</span><span class="token string">"0 [First] 1 [Second] 2 [Last]"</span></code></pre>
 </details-toggle>
 
 
@@ -267,37 +255,13 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-<details-toggle class="property-details-toggle" id="property|selector-value-1">
-    <h4 class="property-text text-05" slot="summary">
-        <code class="property language-js">.value</code>
-    </h4>
-
-    <p>Current value of the input.</p>
-
-</details-toggle>
-
-
-
-<details-toggle class="property-details-toggle" id="property|selector-value-3">
+<details-toggle class="property-details-toggle" id="property|selector-value">
     <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>
 
     <p>The value of the element, expressed as a string. When submitted as part of a
 form the array is serialised to a formdata parameters.</p>
-
-</details-toggle>
-
-
-
-<details-toggle class="property-details-toggle" id="property|selector-data">
-    <h4 class="property-text text-05" slot="summary">
-        <code class="property language-js">.data</code>
-    </h4>
-
-    <p>The value of the element. Returns a live array of objects representing
-each value in the input. Objects mutate in response to handles being moved,
-and handles are moved when the object values are mutated.</p>
 
 </details-toggle>
 
@@ -470,6 +434,24 @@ to line up with label text.</p>
 </div>
 
 
+
+    <hr class="x1 4x @1-6x @2-7x @3-x2"/>
+
+<footer class="x1 4x @3-x2 footer-block block">
+    <small class="block">
+        <p class="text-10">
+        Built by <a href="https://stephen.band/">Stephen Band</a> at
+        <a href="https://cruncher.ch"><img style="width: 1.366666667em; display: inline-block; vertical-align: bottom; margin-top: -0.1em; margin-bottom: -0.1em;" src="https://cruncher.ch/static/images/logo.svg" alt="Cruncher logo"/> Cruncher</a>.
+        </p>
+
+        <p class="text-10">
+        This documentation set in <a href="https://www.swisstypefaces.com/fonts/euclid/">Euclid</a>
+        and <a href="https://github.com/evilmartians/mono">Martian Mono</a>. Fonts
+        used for documentation not included as part of the license covering the
+        use of the <code>y-input</code> element.
+        </p>
+    </small>
+</footer>
 
     <script type="module" src="https://stephen.band/literal/documentation/build/module.js"></script>
 

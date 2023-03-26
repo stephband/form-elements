@@ -125,17 +125,5 @@ export default {
 
     **/
 
-    step: createAttributeProperty('step', 'any'),
-
-    /**
-    value=""
-    The initial value of the input.
-    **/
-
-    /**
-    .value
-    Current value of the input.
-    **/
-
-    value: createAttributeProperty('value', 0, parseValue)
+    step: createAttributeProperty('step', 'any')
 };

@@ -188,7 +188,7 @@ export default {
     /**
     value="0 0"
     The initial value of the element. This is a series of space or comma
-    separated `x, y` values such as:
+    separated `x,y` values such as:
 
     ```
     value="0,0 1,0.5 2,0"
@@ -197,7 +197,7 @@ export default {
     Values may also be given an optional label.
 
     ```
-    value="0,0 First 1,0 Second 2,0 Last"
+    value="0,0 [First] 1,0 [Second] 2,0 [Last]"
     ```
 
     An `<xy-input>` supports WebAudio automation data. Labels must be one of
@@ -242,21 +242,22 @@ export default {
 
     /**
     .data
-    The value of the element. Returns a live array of objects representing
-    each value in the input. Objects mutate in response to handles being moved,
-    and handles are moved when the object `x` and `y` values are mutated.
+    The value of the element as an array of objects representing the values of
+    the input. The array is 'live' – objects mutate in response to moved handles,
+    and handles move when the object values are set.
     **/
+
     data: {
         get: function() {
             const privates = Privates(this);
-            return Observer(privates.state.value);
+            return Observer(privates.data);
         },
 
         set: function(values) {
             const privates = Privates(this);
-            privates.value.push(getTarget(values));
+            privates.values.push(getTarget(values));
         },
 
         enumerable: true
-    },
+    }
 };

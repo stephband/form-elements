@@ -32,7 +32,7 @@ You can now author rotating knobs in forms:
 
 import element    from '../../dom/modules/element.js';
 import lifecycle  from './modules/lifecycle.js';
-import properties from '../modules/properties.js';
+import properties from './modules/properties.js';
 
 const stylesheet = window.rotaryInputStylesheet
     || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'rotary-input-shadow.css';

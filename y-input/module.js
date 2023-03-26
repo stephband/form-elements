@@ -12,7 +12,7 @@ multiple values.
     Gain
 </y-input>
 
-<y-input min="-1.2" max="1.2" step="0.2" value="-0.5 0.5" ticks="-1.2 -0.8 -0.4 0 0.4 0.8 1.2">
+<y-input min="-1.2" max="1.2" step="0.2" value="-0.5 [Minimum] 0.5 [Maximum]" ticks="-1.2 -0.8 -0.4 0 0.4 0.8 1.2">
     Range
 </y-input>
 

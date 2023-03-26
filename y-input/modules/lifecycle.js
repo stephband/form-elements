@@ -331,7 +331,6 @@ export default {
         privates.host       = this;
         privates.childStyle = childStyle;
         privates.internals  = internals;
-        privates.data       = { value: [] };
         privates.formdata   = new FormData();
         privates.load       = new Promise((resolve) => privates.resolveLoad = resolve);
 
@@ -386,6 +385,12 @@ export default {
         axis.each((axis) =>
             renderData('y', hostStyle, axis.scale, axis.min, axis.max, axis.ticks, ticks, marker)
         );
+
+        // Expose data so it may be read by the .data property
+        values.each((data) => {
+            console.log('DATA', data);
+            privates.data = data
+        });
 
         // Render canvas
         Stream
