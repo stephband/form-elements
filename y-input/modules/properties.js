@@ -8,17 +8,16 @@ import properties      from '../../modules/properties.js';
 
 export default Object.assign({}, properties, {
     /**
-    value="0 0"
-    The initial value of the element. This is a series of space or comma
-    separated values such as:
+    value="0"
+    The initial value of the element. As a `<y-input>` can handle any number of
+    values, this may be series of space or comma separated values such as:
 
     ```
     value="0 1 2"
     ```
 
-    Values may also be given an optional label which appears as a handle's
-    title (it is announced to screen readers, and appears when hovering
-    on a handle):
+    Values may also be given an optional label, rendered as a handle's title
+    which is announced to screen readers and appears when hovering on a handle:
 
     ```
     value="0 [First] 1 [Second] 2 [Last]"
@@ -27,8 +26,10 @@ export default Object.assign({}, properties, {
 
     /**
     .value
-    The value of the element, expressed as a string. When submitted as part of a
-    form the array is serialised to a formdata parameters.
+    The value of the element, expressed as a string.
+
+    (Note that the value string is not the same as the serialized form data that
+    is submitted when the `<y-input>` is part of a form.)
     **/
 
     value: {
@@ -55,11 +56,14 @@ export default Object.assign({}, properties, {
         enumerable: true
     },
 
-    /*
+    /**
     .data
-    The value of the element as an array of objects representing the values of
-    the input. The array is 'live' – objects mutate in response to moved handles,
-    and handles move when the object values are set.
+    The value of the element as an array of objects.
+
+    Objects represent the values of the input. The array and objects are 'live'
+    – they mutate in response to moved handles, and handles move when object
+    values are changed.
+    **/
 
     data: {
         get: function() {

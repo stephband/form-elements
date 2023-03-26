@@ -197,14 +197,13 @@ displayed in this unit. Possible values are:</p>
 
 <details-toggle class="attribute-details-toggle" id="attribute-value">
     <h4 class="attribute-text text-05" slot="summary">
-        <code class="token language-html">value <span class="default-text">="<em>0 0</em>"</span></code>
+        <code class="token language-html">value <span class="default-text">="<em>0</em>"</span></code>
     </h4>
 
-    <p>The initial value of the element. This is a series of space or comma
-separated values such as:</p>
-<pre><code>value<span class="token operator">=</span><span class="token string">"0 1 2"</span></code></pre><p>Values may also be given an optional label which appears as a handle’s
-title (it is announced to screen readers, and appears when hovering
-on a handle):</p>
+    <p>The initial value of the element. As a <code>&lt;y-input&gt;</code> can handle any number of
+values, this may be series of space or comma separated values such as:</p>
+<pre><code>value<span class="token operator">=</span><span class="token string">"0 1 2"</span></code></pre><p>Values may also be given an optional label, rendered as a handle’s title
+which is announced to screen readers and appears when hovering on a handle:</p>
 <pre><code>value<span class="token operator">=</span><span class="token string">"0 [First] 1 [Second] 2 [Last]"</span></code></pre>
 </details-toggle>
 
@@ -260,8 +259,23 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class="property language-js">.value</code>
     </h4>
 
-    <p>The value of the element, expressed as a string. When submitted as part of a
-form the array is serialised to a formdata parameters.</p>
+    <p>The value of the element, expressed as a string.</p>
+<p>(Note that the value string is not the same as the serialized form data that
+is submitted when the <code>&lt;y-input&gt;</code> is part of a form.)</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="property-details-toggle" id="property|selector-data">
+    <h4 class="property-text text-05" slot="summary">
+        <code class="property language-js">.data</code>
+    </h4>
+
+    <p>The value of the element as an array of objects.</p>
+<p>Objects represent the values of the input. The array and objects are ‘live’
+– they mutate in response to moved handles, and handles move when object
+values are changed.</p>
 
 </details-toggle>
 
