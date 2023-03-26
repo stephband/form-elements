@@ -3,8 +3,8 @@
 /**
 <rotary-input>
 
-A rotating knob form input with scaling, ticks, support for various units and
-formatted output display.
+A rotating knob form input with scaling, ticks, units and formatted output
+display.
 
 <rotary-input></rotary-input>
 

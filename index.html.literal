@@ -48,7 +48,7 @@
     </style>
 </head>
 
-<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid" style="align-content: start;">
+<body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid" style="align-content: start;">
     <header class="x1 3x @1-x3 @1-4x @2-x4">
         <h1>Form elements</h1>
         <p>A collection of advanced form controls published as custom elements.

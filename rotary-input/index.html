@@ -55,13 +55,13 @@
     </style>
 </head>
 
-<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+<body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
     
 
 <div class="x1 4x @3-x2 x-stretch y-start documentation-block block">
     <h1 id="rotary-input"><span class="tag-brace">&lt;</span>rotary-input<span class="tag-brace">&gt;</span></h1>
-    <p>A rotating knob form input with scaling, ticks, support for various units and
-formatted output display.</p>
+    <p>A rotating knob form input with scaling, ticks, units and formatted output
+display.</p>
 <p><rotary-input></rotary-input></p>
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;rotary-input&gt;</code> custom element, upgrading any
@@ -189,6 +189,17 @@ displayed in this unit. Possible values are:</p>
 
 
 
+<details-toggle class="attribute-details-toggle" id="attribute-value-1">
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">value</code>
+    </h4>
+
+    <p>The initial value of the input.</p>
+
+</details-toggle>
+
+
+
     
     
     
@@ -229,6 +240,17 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
     <p>Value at upper limit of fader. Will interpret string values with recognised
 units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="property-details-toggle" id="property|selector-value-1">
+    <h4 class="property-text text-05" slot="summary">
+        <code class="property language-js">.value</code>
+    </h4>
+
+    <p>Current value of the input.</p>
 
 </details-toggle>
 
@@ -282,11 +304,196 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
     
+    <h3>Variables</h3>
     
+
+<details-toggle class="var-details-toggle" id="var-value-color-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--value-color</code>
+    </h4>
+
     
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-value-color-start-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--value-color-start</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-value-color-end-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--value-color-end</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-color-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-color</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-background-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-background</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-border-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-border</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-output-color-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--output-color</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-track-background-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--track-background</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-track-padding-1">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--track-padding</code>
+    </h4>
+
+    <p>Make the range input slightly wider than the control to allow range thumb
+to line up with label text.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-width">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-width</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-shadow">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-shadow</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-track-width">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--track-width</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-track-shadow">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--track-shadow</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-rotation-start">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--rotation-start</code>
+    </h4>
+
+    <p>Angle (clockwise from south) at which to start rotational travel.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-rotation-range">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--rotation-range</code>
+    </h4>
+
+    <p>Angle (clockwise from south) through which handle travels.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-touch-range">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--touch-range</code>
+    </h4>
+
+    <p>Vertical distance of mouse or touch movement that results in one
+full range of rotation of the handle. Cannot be specified as a <code>%</code> length,
+other length units accepted..</p>
+
+</details-toggle>
+
+
 </div>
 
 
+
+    <hr class="x1 4x @3-x2"/>
+
+<footer class="x1 4x @3-x2 footer-block block">
+    <small class="block">
+        <p class="text-10">
+        Built by <a href="https://stephen.band/">Stephen Band</a> for
+        <a href="https://cruncher.ch"><img style="width: 1.366666667em; display: inline-block; vertical-align: bottom; margin-top: -0.1em; margin-bottom: -0.1em;" src="https://cruncher.ch/static/images/logo.svg" alt="Cruncher logo"/> Cruncher</a>.
+        </p>
+
+        <p class="text-10">
+        This documentation set in <a href="https://www.swisstypefaces.com/fonts/euclid/">Euclid</a>
+        and <a href="https://github.com/evilmartians/mono">Martian Mono</a>. Fonts
+        used for documentation not included as part of the license covering the
+        use of the <code>rotary-input</code> element.
+        </p>
+    </small>
+</footer>
 
     <script type="module" src="https://stephen.band/literal/documentation/build/module.js"></script>
 

@@ -1,0 +1,29 @@
+{
+    "title":   "rotary-input",
+    "name":    "@stephband/form-elements/rotary-input",
+    "version": "0.0.5",
+    "description": "A rotating knob form input with scaling, ticks, units and formatted output display",
+    "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
+    "author": {
+        "name":    "Stephen Band",
+        "url":     "https://stephen.band/",
+        "twitter": "@stephband",
+        "email":   "stephband@cruncher.ch"
+    },
+    "card": {
+        "image": "https://stephen.band/form-elements/rotary-input/images/card.png"
+    },
+    "homepage": "https://stephen.band/form-elements/",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/stephband/form-elements.git"
+    },
+    "bugs": {
+        "url": "https://github.com/stephband/form-elements/issues"
+    },
+    "funding": {
+        "github": "https://github.com/sponsors/stephband"
+    },
+    "license" : "GPL-3.0",
+    "type": "module"
+}

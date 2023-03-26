@@ -9,7 +9,7 @@
     </script>
 </head>
 
-<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+<body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
     ${ include('../../literal/documentation/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
