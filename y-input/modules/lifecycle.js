@@ -386,11 +386,10 @@ export default {
             renderData('y', hostStyle, axis.scale, axis.min, axis.max, axis.ticks, ticks, marker)
         );
 
-        // Expose data so it may be read by the .data property
-        values.each((data) => {
-            console.log('DATA', data);
+        // Expose data so it may be got by the .data property
+        values.each((data) =>
             privates.data = data
-        });
+        );
 
         // Render canvas
         Stream
