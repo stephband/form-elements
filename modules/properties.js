@@ -19,13 +19,13 @@ export default {
 
     /**
     min="0"
-    Value at upper limit of fader. Will interpret string values with recognised
+    Value at lower limit of fader. Will interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
     /**
     .min
-    Value at upper limit of fader. Will interpret string values with recognised
+    Value at lower limit of fader. Will interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 

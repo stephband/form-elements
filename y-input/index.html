@@ -92,7 +92,7 @@ instances already in the DOM:</p>
         <code class="token language-html">min <span class="default-text">="<em>0</em>"</span></code>
     </h4>
 
-    <p>Value at upper limit of fader. Will interpret string values with recognised
+    <p>Value at lower limit of fader. Will interpret string values with recognised
 units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
 </details-toggle>
@@ -203,7 +203,7 @@ displayed in this unit. Possible values are:</p>
     <p>The initial value of the element. As a <code>&lt;y-input&gt;</code> can handle any number of
 values, this may be series of space or comma separated values such as:</p>
 <pre><code>value<span class="token operator">=</span><span class="token string">"0 1 2"</span></code></pre><p>Values may also be given an optional label, rendered as a handle’s title
-which is announced to screen readers and appears when hovering on a handle:</p>
+(a title is announced to screen readers and appears when hovering on a handle):</p>
 <pre><code>value<span class="token operator">=</span><span class="token string">"0 [First] 1 [Second] 2 [Last]"</span></code></pre>
 </details-toggle>
 
@@ -235,7 +235,7 @@ with native form elements, which all have a type).</p>
         <code class="property language-js">.min</code>
     </h4>
 
-    <p>Value at upper limit of fader. Will interpret string values with recognised
+    <p>Value at lower limit of fader. Will interpret string values with recognised
 units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
 </details-toggle>
@@ -259,9 +259,9 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class="property language-js">.value</code>
     </h4>
 
-    <p>The value of the element, expressed as a string.</p>
-<p>(Note that the value string is not the same as the serialized form data that
-is submitted when the <code>&lt;y-input&gt;</code> is part of a form.)</p>
+    <p>The value of the element expressed as a string of space-separated numbers.</p>
+<p>(Note that the value string is not the same as the serialized form data
+submitted when the <code>&lt;y-input&gt;</code> is part of a form.)</p>
 
 </details-toggle>
 
@@ -454,7 +454,7 @@ to line up with label text.</p>
 <footer class="x1 4x @3-x2 footer-block block">
     <small class="block">
         <p class="text-10">
-        Built by <a href="https://stephen.band/">Stephen Band</a> at
+        Built by <a href="https://stephen.band/">Stephen Band</a> for
         <a href="https://cruncher.ch"><img style="width: 1.366666667em; display: inline-block; vertical-align: bottom; margin-top: -0.1em; margin-bottom: -0.1em;" src="https://cruncher.ch/static/images/logo.svg" alt="Cruncher logo"/> Cruncher</a>.
         </p>
 

@@ -17,7 +17,7 @@ export default Object.assign({}, properties, {
     ```
 
     Values may also be given an optional label, rendered as a handle's title
-    which is announced to screen readers and appears when hovering on a handle:
+    (a title is announced to screen readers and appears when hovering on a handle):
 
     ```
     value="0 [First] 1 [Second] 2 [Last]"
@@ -26,10 +26,10 @@ export default Object.assign({}, properties, {
 
     /**
     .value
-    The value of the element, expressed as a string.
+    The value of the element expressed as a string of space-separated numbers.
 
-    (Note that the value string is not the same as the serialized form data that
-    is submitted when the `<y-input>` is part of a form.)
+    (Note that the value string is not the same as the serialized form data
+    submitted when the `<y-input>` is part of a form.)
     **/
 
     value: {
@@ -78,5 +78,4 @@ export default Object.assign({}, properties, {
 
         enumerable: true
     }
-    */
 });
