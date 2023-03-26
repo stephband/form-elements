@@ -33,9 +33,11 @@
 
 <script title="debug">
     window.DEBUG = true;
+    window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css">
+<link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
 
     <script title="element">
@@ -49,11 +51,11 @@
     </style>
 </head>
 
-<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+<body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
-    <h1 class="docs-text-01" id="y-input"><span class="tag-brace">&lt;</span>y-input<span class="tag-brace">&gt;</span></h1>
+<div class="x1 4x @3-x2 x-stretch y-start documentation-block block">
+    <h1 id="y-input"><span class="tag-brace">&lt;</span>y-input<span class="tag-brace">&gt;</span></h1>
     <p>A vertical slider input with scaling, ticks, units, output display and
 multiple values.</p>
 <y-input ticks="0 0.2 0.4 0.6 0.8 1">
@@ -80,20 +82,14 @@ instances already in the DOM:</p>
 </div>
 
 
-
-<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    $ { data[0].examples[0] }
-    <input hidden class="button" type="submit" />
-</form-->
-
-<div class="x1 3x @2-x2 x-stretch y-start">
+<div class="x1 4x @1-3x @3-x2 x-stretch y-start">
     
-    <h3 class="doctext-03">Attributes</h3>
+    <h3>Attributes</h3>
     
 
 <details-toggle class="attribute-details-toggle" id="attribute-min-1">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">min <span class="default-text">="<em>0</em>"</span></code>
     </h4>
 
     <p>Value at upper limit of fader. Will interpret string values with recognised
@@ -104,8 +100,8 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-max-1">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">max <span class="default-text">="<em>1</em>"</span></code>
     </h4>
 
     <p>Value at upper limit of fader. Will interpret string values with recognised
@@ -116,8 +112,8 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-scale-1">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">scale <span class="default">="<em>linear</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">scale <span class="default-text">="<em>linear</em>"</span></code>
     </h4>
 
     <p>Fader scale. This is the name of a transform to be applied over the range
@@ -139,7 +135,7 @@ of the fader travel. Possible values are:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-ticks-1">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">ticks</code>
     </h4>
 
@@ -158,7 +154,7 @@ Labels are written in square brackets following the tick value:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-display-1">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">display</code>
     </h4>
 
@@ -184,7 +180,7 @@ displayed in this unit. Possible values are:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-step-1">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">step</code>
     </h4>
 
@@ -200,7 +196,7 @@ displayed in this unit. Possible values are:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-value-1">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">value</code>
     </h4>
 
@@ -211,8 +207,8 @@ displayed in this unit. Possible values are:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-value-3">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">value <span class="default">="<em>0 0</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">value <span class="default-text">="<em>0 0</em>"</span></code>
     </h4>
 
     <p>The initial value of the element. This is a series of space or comma
@@ -231,11 +227,11 @@ the types <code>&#39;step&#39;</code>, <code>&#39;linear&#39;</code>, <code>&#39
     
 
     
-    <h3 class="doctext-03">Properties</h3>
+    <h3>Properties</h3>
     
 
 <details-toggle class="property-details-toggle" id="property-type-1">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.type</code>
     </h4>
 
@@ -248,7 +244,7 @@ with native form elements, which all have a type).</p>
 
 
 <details-toggle class="property-details-toggle" id="property|selector-min-1">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.min</code>
     </h4>
 
@@ -260,7 +256,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="property-details-toggle" id="property|selector-max-1">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.max</code>
     </h4>
 
@@ -272,7 +268,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="property-details-toggle" id="property|selector-value-1">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>
 
@@ -283,7 +279,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="property-details-toggle" id="property|selector-value-3">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>
 
@@ -295,7 +291,7 @@ form the array is serialised to a formdata parameters.</p>
 
 
 <details-toggle class="property-details-toggle" id="property|selector-data">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.data</code>
     </h4>
 
@@ -312,11 +308,11 @@ and handles are moved when the object values are mutated.</p>
     
 
     
-    <h3 class="doctext-03">Events</h3>
+    <h3>Events</h3>
     
 
 <details-toggle class="string-details-toggle" id="string-input">
-    <h4 class="string-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="string-text text-05" slot="summary">
         <code class=" language-js">"input"</code>
     </h4>
 
@@ -327,7 +323,7 @@ and handles are moved when the object values are mutated.</p>
 
 
 <details-toggle class="string-details-toggle" id="string-change">
-    <h4 class="string-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="string-text text-05" slot="summary">
         <code class=" language-js">"change"</code>
     </h4>
 
@@ -338,21 +334,144 @@ and handles are moved when the object values are mutated.</p>
 
 </div>
 
-<div class="x1 3x @1-x4 @2-x5 x-stretch y-start">
+<div class="x1 4x @1-x4 @1-3x @3-x5 x-stretch y-start">
     
-    
+    <h3>Parts</h3>
     
 
+<details-toggle class="part-details-toggle" id="part-label-1">
+    <h4 class="part-text text-05" slot="summary">
+        <code class=" language-css">::part(label)</code>
+    </h4>
+
+    <p>Style the label.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="part-details-toggle" id="part-tick-1">
+    <h4 class="part-text text-05" slot="summary">
+        <code class=" language-css">::part(tick)</code>
+    </h4>
+
+    <p>Style the tick marks.</p>
+
+</details-toggle>
+
+
+
+<details-toggle class="part-details-toggle" id="part-output-1">
+    <h4 class="part-text text-05" slot="summary">
+        <code class=" language-css">::part(output)</code>
+    </h4>
+
+    <p>Style the display of the output value.</p>
+
+</details-toggle>
+
+
+
     
+    <h3>Variables</h3>
     
+
+<details-toggle class="var-details-toggle" id="var-value-color">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--value-color</code>
+    </h4>
+
     
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-value-color-start">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--value-color-start</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-value-color-end">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--value-color-end</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-color">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-color</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-background">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-background</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-handle-border">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-border</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-output-color">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--output-color</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-track-background">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--track-background</code>
+    </h4>
+
+    
+</details-toggle>
+
+
+
+<details-toggle class="var-details-toggle" id="var-track-padding">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--track-padding</code>
+    </h4>
+
+    <p>Make the range input slightly wider than the control to allow range thumb
+to line up with label text.</p>
+
+</details-toggle>
+
+
 </div>
 
 
 
-    <script type="module">
-import '../../literal/documentation/module.js';
-</script>
+    <script type="module" src="https://stephen.band/literal/documentation/build/module.js"></script>
 
 
     <script type="module">

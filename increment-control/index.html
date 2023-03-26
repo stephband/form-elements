@@ -33,9 +33,11 @@
 
 <script title="debug">
     window.DEBUG = true;
+    window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css">
+<link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
 
     <script title="debug">
@@ -58,8 +60,8 @@
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
-    <h1 class="docs-text-01" id="increment-control"><span class="tag-brace">&lt;</span>increment-control<span class="tag-brace">&gt;</span></h1>
+<div class="x1 4x @3-x2 x-stretch y-start documentation-block block">
+    <h1 id="increment-control"><span class="tag-brace">&lt;</span>increment-control<span class="tag-brace">&gt;</span></h1>
     <p>A wrapper element that augments a <code>&lt;input type=&quot;number&quot;&gt;</code> with extra controls.</p>
 <increment-control>
     <input type="number" />
@@ -89,20 +91,14 @@ not set any form data in its internals.</p>
 </div>
 
 
-
-<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    $ { data[0].examples[0] }
-    <input hidden class="button" type="submit" />
-</form-->
-
-<div class="x1 3x @2-x2 x-stretch y-start">
+<div class="x1 4x @1-3x @3-x2 x-stretch y-start">
     
-    <h3 class="doctext-03">Attributes</h3>
+    <h3>Attributes</h3>
     
 
 <details-toggle class="attribute-details-toggle" id="attribute-slot-2">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">slot <span class="default">="<em>decrement-button</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">slot <span class="default-text">="<em>decrement-button</em>"</span></code>
     </h4>
 
     <p>Replace default content of the decrement button (<code>&quot;-&quot;</code>) with custom HTML.</p>
@@ -112,8 +108,8 @@ not set any form data in its internals.</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-slot-3">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">slot <span class="default">="<em>increment-button</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">slot <span class="default-text">="<em>increment-button</em>"</span></code>
     </h4>
 
     <p>Replace default content of the increment button (<code>&quot;+&quot;</code>) with custom HTML.</p>
@@ -139,13 +135,13 @@ not set any form data in its internals.</p>
     
 </div>
 
-<div class="x1 3x @1-x4 @2-x5 x-stretch y-start">
+<div class="x1 4x @1-x4 @1-3x @3-x5 x-stretch y-start">
     
-    <h3 class="doctext-03">Parts</h3>
+    <h3>Parts</h3>
     
 
 <details-toggle class="part-details-toggle" id="part-decrement-button">
-    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(decrement-button)</code>
     </h4>
 
@@ -155,7 +151,7 @@ not set any form data in its internals.</p>
 
 
 <details-toggle class="part-details-toggle" id="part-increment-button">
-    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(increment-button)</code>
     </h4>
 
@@ -165,11 +161,11 @@ not set any form data in its internals.</p>
 
 
     
-    <h3 class="doctext-03">Variables</h3>
+    <h3>Variables</h3>
     
 
 <details-toggle class="var-details-toggle" id="var-button-width-1">
-    <h4 class="var-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--button-width</code>
     </h4>
 
@@ -197,9 +193,7 @@ Width of decrement/increment buttons.</p>
         <input type="number" name="number" min="0" max="100" step="2" value="20" />
     </increment-control>
 
-    <script type="module">
-import '../../literal/documentation/module.js';
-</script>
+    <script type="module" src="https://stephen.band/literal/documentation/build/module.js"></script>
 
 
     <script type="module">

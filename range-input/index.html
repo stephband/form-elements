@@ -33,9 +33,11 @@
 
 <script title="debug">
     window.DEBUG = true;
+    window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css">
+<link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
 
     <style>
@@ -48,8 +50,8 @@
 <body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
     
 
-<div class="x1 3x @1-x3 @1-4x @2-x3 x-stretch y-start docs-block block">
-    <h1 class="docs-text-01" id="range-input"><span class="tag-brace">&lt;</span>range-input<span class="tag-brace">&gt;</span></h1>
+<div class="x1 4x @3-x2 x-stretch y-start documentation-block block">
+    <h1 id="range-input"><span class="tag-brace">&lt;</span>range-input<span class="tag-brace">&gt;</span></h1>
     <p>A horizontal slide input with scaling, ticks, support for various units and
 formatted output display.</p>
 <range-input name="">
@@ -71,20 +73,14 @@ instances already in the DOM:</p>
 </div>
 
 
-
-<!--form class="@0-x1 @0-3x @1-x1 @1-2x @2-x1 @2-3x x-stretch y-start">
-    $ { data[0].examples[0] }
-    <input hidden class="button" type="submit" />
-</form-->
-
-<div class="x1 3x @2-x2 x-stretch y-start">
+<div class="x1 4x @1-3x @3-x2 x-stretch y-start">
     
-    <h3 class="doctext-03">Attributes</h3>
+    <h3>Attributes</h3>
     
 
 <details-toggle class="attribute-details-toggle" id="attribute-min">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">min <span class="default">="<em>0</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">min <span class="default-text">="<em>0</em>"</span></code>
     </h4>
 
     <p>Value at upper limit of fader. Will interpret string values with recognised
@@ -95,8 +91,8 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-max">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">max <span class="default">="<em>1</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">max <span class="default-text">="<em>1</em>"</span></code>
     </h4>
 
     <p>Value at upper limit of fader. Will interpret string values with recognised
@@ -107,8 +103,8 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-scale">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
-        <code class="token language-html">scale <span class="default">="<em>linear</em>"</span></code>
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">scale <span class="default-text">="<em>linear</em>"</span></code>
     </h4>
 
     <p>Fader scale. This is the name of a transform to be applied over the range
@@ -130,7 +126,7 @@ of the fader travel. Possible values are:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-ticks">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">ticks</code>
     </h4>
 
@@ -149,7 +145,7 @@ Labels are written in square brackets following the tick value:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-display">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">display</code>
     </h4>
 
@@ -175,7 +171,7 @@ displayed in this unit. Possible values are:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-step">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">step</code>
     </h4>
 
@@ -191,7 +187,7 @@ displayed in this unit. Possible values are:</p>
 
 
 <details-toggle class="attribute-details-toggle" id="attribute-value">
-    <h4 class="attribute-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">value</code>
     </h4>
 
@@ -206,11 +202,11 @@ displayed in this unit. Possible values are:</p>
     
 
     
-    <h3 class="doctext-03">Properties</h3>
+    <h3>Properties</h3>
     
 
 <details-toggle class="property-details-toggle" id="property-type">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.type</code>
     </h4>
 
@@ -223,7 +219,7 @@ with native form elements, which all have a type).</p>
 
 
 <details-toggle class="property-details-toggle" id="property|selector-min">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.min</code>
     </h4>
 
@@ -235,7 +231,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="property-details-toggle" id="property|selector-max">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.max</code>
     </h4>
 
@@ -247,7 +243,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="property-details-toggle" id="property|selector-value">
-    <h4 class="property-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.value</code>
     </h4>
 
@@ -266,13 +262,13 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
     
 </div>
 
-<div class="x1 3x @1-x4 @2-x5 x-stretch y-start">
+<div class="x1 4x @1-x4 @1-3x @3-x5 x-stretch y-start">
     
-    <h3 class="doctext-03">Parts</h3>
+    <h3>Parts</h3>
     
 
 <details-toggle class="part-details-toggle" id="part-label">
-    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(label)</code>
     </h4>
 
@@ -283,7 +279,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="part-details-toggle" id="part-tick">
-    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(tick)</code>
     </h4>
 
@@ -294,7 +290,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 <details-toggle class="part-details-toggle" id="part-output">
-    <h4 class="part-docs-text-05 docs-text-05" slot="summary">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(output)</code>
     </h4>
 
@@ -311,9 +307,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-    <script type="module">
-import '../../literal/documentation/module.js';
-</script>
+    <script type="module" src="https://stephen.band/literal/documentation/build/module.js"></script>
 
 
     <script type="module">

@@ -15,13 +15,23 @@
     </style>
 </head>
 
-<body class="docs-grid grid 3x-grid @1-6x-grid @2-9x-grid">
+<body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
     ${ include('../../literal/documentation/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
         "../modules/properties.js",
         "./modules/properties.js",
-        "./css/host.css"
+        "../css/host.css",
+        "../css/label.css",
+        "../css/track.css",
+        "../css/handle.css",
+        "../css/tick.css",
+        "../css/output.css",
+        "./css/host.css",
+        "./css/label.css",
+        "./css/track.css",
+        "./css/handle.css",
+        "./css/tick.css"
     )) }
 
     ${ include('../../literal/documentation/templates/scripts.literal') }
