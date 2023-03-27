@@ -36,6 +36,6 @@ import lifecycle  from './modules/lifecycle.js';
 import properties from './modules/properties.js';
 
 const stylesheet = window.rangeInputStylesheet
-    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'range-input-shadow.css';
+    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css';
 
 export default element('<range-input>', lifecycle, properties, stylesheet);

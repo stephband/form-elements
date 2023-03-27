@@ -81,6 +81,6 @@ import element    from '../../dom/modules/element.js';
 import lifecycle  from './modules/lifecycle.js';
 
 const stylesheet = window.selectControlStylesheet
-    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'select-control-shadow.css';
+    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css';
 
 export default element('<select-control>', lifecycle, {}, stylesheet);

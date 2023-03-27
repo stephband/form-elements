@@ -44,6 +44,6 @@ import lifecycle  from './modules/lifecycle.js';
 import properties from './modules/properties.js';
 
 const stylesheet = window.rotaryInputStylesheet
-    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'rotary-input-shadow.css';
+    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css';
 
 export default element('<rotary-input>', lifecycle, properties, stylesheet);

@@ -59,6 +59,6 @@ import element    from '../../dom/modules/element.js';
 import lifecycle  from './modules/lifecycle.js';
 
 const stylesheet = window.numberControlStylesheet
-    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'number-control-shadow.css';
+    || import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/') + 'shadow.css';
 
 export default element('<number-control>', lifecycle, {}, stylesheet);
