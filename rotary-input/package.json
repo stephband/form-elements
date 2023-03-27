@@ -2,7 +2,7 @@
     "title":   "rotary-input",
     "name":    "@stephband/form-elements/rotary-input",
     "version": "0.0.5",
-    "description": "A rotating knob form input with scaling, ticks, units and formatted output display",
+    "description": "A rotating knob input that can be dragged vertically, with scaling, step, ticks, units and formatted output display.",
     "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
     "author": {
         "name":    "Stephen Band",

@@ -1,8 +1,8 @@
 
 /** <y-input>
 
-A vertical slider input with scaling, ticks, units, output display and
-multiple values.
+A vertical slider input with scaling, step, ticks, units, output display and
+multiple value handles.
 
 <y-input ticks="0 0.2 0.4 0.6 0.8 1">
     Value

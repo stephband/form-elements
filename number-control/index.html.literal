@@ -11,11 +11,11 @@
     <style>
         @import './module.css';
 
-        increment-control {
+        number-control {
             align-self: start;
         }
 
-        increment-control + increment-control {
+        number-control + number-control {
             margin-top: 1.5rem;
         }
     </style>
@@ -29,24 +29,27 @@
         "./shadow.css"
     )) }
 
-    <increment-control>
+    <number-control>
         <input type="number" />
-    </increment-control>
+    </number-control>
 
-    <increment-control>
+    <number-control>
         <input type="number" name="number" min="-1" max="1" value="0" />
-    </increment-control>
+    </number-control>
 
-    <increment-control>
+    <number-control>
         <span slot="decrement-button">☚</span>
         <span slot="increment-button">☛</span>
         <input type="number" name="number" min="0" max="100" step="2" value="20" />
-    </increment-control>
+    </number-control>
 
-    ${ include('../../literal/documentation/templates/scripts.literal') }
+    ${ include('../../literal/documentation/templates/contribute.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/credit.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/footer.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-    import IncrementControl from './module.js';
+    import NumberControl from './module.js';
     import events      from '../../dom/modules/events.js';
 
     events('input', document).each(console.log);

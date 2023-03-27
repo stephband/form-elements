@@ -29,33 +29,14 @@
         "./shadow.css"
     )) }
 
-    <select-control>
-        <select>
-            <option value="">Select one</option>
-            <option value="0">Option 0</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-        </select>
-    </select-control>
-
-    <select-control>
-        <span slot="previous-button">☚</span>
-        <span slot="next-button">☛</span>
-        <select>
-            <option value="">Select one</option>
-            <option value="0">Option 0</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-        </select>
-    </select-control>
-
-    ${ include('../../literal/documentation/templates/contribute.literal', '../package.json') }
-    ${ include('../../literal/documentation/templates/scripts.literal', '../package.json') }
+    ${ include('../../literal/documentation/templates/contribute.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/credit.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/footer.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
     import SelectControl from './module.js';
     import events        from '../../dom/modules/events.js';
-
     events('input', document).each(console.log);
     </script>
 </body>

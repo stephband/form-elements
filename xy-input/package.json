@@ -1,8 +1,8 @@
 {
-    "title":   "y-input",
-    "name":    "@stephband/form-elements",
-    "version": "0.0.4",
-    "description": "A vertical slider input with scaling, steps, ticks, units, output display and multiple value handles.",
+    "title":   "xy-input",
+    "name":    "@stephband/form-elements/xy-input",
+    "version": "0.1.0",
+    "description": "A two-axis input with scaling, step, ticks, units and multiple value handles.",
     "keywords": ["form", "control", "input", "web", "component", "custom", "element"],
     "author": {
         "name":    "Stephen Band",
@@ -11,7 +11,7 @@
         "email":   "stephband@cruncher.ch"
     },
     "card": {
-        "image": "https://stephen.band/form-elements/y-input/images/card.png"
+        "image": "https://stephen.band/form-elements/xy-input/images/card.png"
     },
     "homepage": "https://stephen.band/form-elements/",
     "repository": {
@@ -25,6 +25,5 @@
         "github": "https://github.com/sponsors/stephband"
     },
     "license" : "GPL-3.0",
-    "type": "module",
-    "browser": "./build/form-elements.js"
+    "type": "module"
 }

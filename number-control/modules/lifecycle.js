@@ -94,7 +94,7 @@ export default {
         const privates      = Privates(this);
         privates.childStyle = style.sheet.cssRules[0].style;
 
-        // Where <increment-control> wraps an input, we enhance that with our
+        // Where <number-control> wraps an input, we enhance that with our
         // decrement/increment logic, otherwise we use the internal input.
         // Todo: maybe we should just get rid of the internal input and treat
         // this custom element as a wrapper, it would simplify everything - no

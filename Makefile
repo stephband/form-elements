@@ -1,7 +1,7 @@
 DEBUG=
 
 # Tell make to ignore existing folders and allow overwriting existing files
-.PHONY: literal docs increment-control select-control range-input rotary-input xy-input y-input modules
+.PHONY: literal docs number-control select-control range-input rotary-input xy-input y-input modules
 
 # Must format with tabs not spaces
 literal:
@@ -12,10 +12,10 @@ docs:
 	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js docs/docs.css ./docs/module.css
 	make literal
 
-increment-control:
-	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./increment-control.js ./increment-control/module.js
-	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./increment-control.css ./increment-control/module.css
-	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./increment-control-shadow.css ./increment-control/shadow.css
+number-control:
+	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./number-control.js ./number-control/module.js
+	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./number-control.css ./number-control/module.css
+	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./number-control-shadow.css ./number-control/shadow.css
 
 select-control:
 	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./select-control.js ./select-control/module.js
@@ -43,7 +43,7 @@ y-input:
 	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./y-input-shadow.css ./y-input/shadow.css
 
 modules:
-	make increment-control
+	make number-control
 	make range-input
 	make rotary-input
 	make xy-input

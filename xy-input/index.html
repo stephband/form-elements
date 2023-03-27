@@ -50,8 +50,7 @@
 
 <div class="x1 4x @3-x2 x-stretch y-start documentation-block block">
     <h1 id="xy-input"><span class="tag-brace">&lt;</span>xy-input<span class="tag-brace">&gt;</span></h1>
-    <p>A graph input with two axis scaling and ticks, support for various units, output
-display and multiple handles:</p>
+    <p>A two axis input with scaling, ticks, units and multiple handles.</p>
 <xy-input>
     XY Input
 </xy-input>
@@ -175,34 +174,6 @@ y range of the fader travel. Possible values are:</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-xticks">
-    <h4 class="attribute-text text-05" slot="summary">
-        <code class="token language-html">xticks</code>
-    </h4>
-
-    <p>A space or comma separated list of values at which to display tick marks.
-Values may be listed with or without units, eg:</p>
-<pre><code class="language-html">xticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
-xticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
-
-</details-toggle>
-
-
-
-<details-toggle class="attribute-details-toggle" id="attribute-yticks">
-    <h4 class="attribute-text text-05" slot="summary">
-        <code class="token language-html">yticks</code>
-    </h4>
-
-    <p>A space or comma separated list of values at which to display tick marks.
-Values may be listed with or without units, eg:</p>
-<pre><code class="language-html">yticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
-yticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
-
-</details-toggle>
-
-
-
 <details-toggle class="attribute-details-toggle" id="attribute-xstep">
     <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">xstep</code>
@@ -230,6 +201,34 @@ yticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 <li>The string <code>&quot;tick&quot;</code>. The values in the <code>ticks</code> attribute are used as step values</li>
 <li>A space or comma separated list of values, written with or without units</li>
 </ul>
+
+</details-toggle>
+
+
+
+<details-toggle class="attribute-details-toggle" id="attribute-xticks">
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">xticks</code>
+    </h4>
+
+    <p>A space or comma separated list of values at which to display tick marks.
+Values may be listed with or without units, eg:</p>
+<pre><code class="language-html">xticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
+xticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
+
+</details-toggle>
+
+
+
+<details-toggle class="attribute-details-toggle" id="attribute-yticks">
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">yticks</code>
+    </h4>
+
+    <p>A space or comma separated list of values at which to display tick marks.
+Values may be listed with or without units, eg:</p>
+<pre><code class="language-html">yticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
+yticks=&quot;-48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 
 </details-toggle>
 
@@ -273,22 +272,6 @@ displayed in this unit. Possible values are:</p>
 
 
 
-<details-toggle class="attribute-details-toggle" id="attribute-valuebox">
-    <h4 class="attribute-text text-05" slot="summary">
-        <code class="token language-html">valuebox</code>
-    </h4>
-
-    <p>Defines an <code>&quot;x y width height&quot;</code> box to use as the range of values that
-map to the padding box of the <code>&lt;xy-input&gt;</code>. The origin is at the
-bottom and y increases upwards.</p>
-<p>Where not given, <code>valuebox</code> defaults to the limits of <code>min</code> and <code>max</code>.
-Most often this is what you want, and the valuebox attribute is safe to
-ignore.</p>
-
-</details-toggle>
-
-
-
 <details-toggle class="attribute-details-toggle" id="attribute-ordered">
     <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">ordered</code>
@@ -303,7 +286,7 @@ neighbours, keeping the order of points on the x axis constant.</p>
 
 <details-toggle class="attribute-details-toggle" id="attribute-value-2">
     <h4 class="attribute-text text-05" slot="summary">
-        <code class="token language-html">value <span class="default-text">="<em>0 0</em>"</span></code>
+        <code class="token language-html">value <span class="default-text">="<em>0,0</em>"</span></code>
     </h4>
 
     <p>The initial value of the element. This is a series of space or comma
@@ -409,7 +392,7 @@ and handles move when the object values are set.</p>
     <h3>Events</h3>
     
 
-<details-toggle class="string-details-toggle" id="string-input-1">
+<details-toggle class="string-details-toggle" id="string-input-2">
     <h4 class="string-text text-05" slot="summary">
         <code class=" language-js">"input"</code>
     </h4>
@@ -420,7 +403,7 @@ and handles move when the object values are set.</p>
 
 
 
-<details-toggle class="string-details-toggle" id="string-change-1">
+<details-toggle class="string-details-toggle" id="string-change-2">
     <h4 class="string-text text-05" slot="summary">
         <code class=" language-js">"change"</code>
     </h4>
@@ -499,6 +482,59 @@ an accurate reflection of a WebAudio automation curve.</p>
 </div>
 
 
+
+    
+<section class="x1 4x @3-x2 x-stretch y-start">
+    <h2 class="docs-text-02">Contribute</h2>
+    <p>
+        Support development:
+        <a aria-label="Sponsor @stephband" href="https://github.com/sponsors/stephband" class="githubsponsor-button button">
+            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" class="fill octicon octicon-heart icon-sponsor mr-1 v-align-middle color-fg-sponsors anim-pulse-in">
+                <path fill-rule="evenodd" d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5zM8 14.25l-.345.666-.002-.001-.006-.003-.018-.01a7.643 7.643 0 01-.31-.17 22.075 22.075 0 01-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.08 22.08 0 01-3.744 2.584l-.018.01-.006.003h-.002L8 14.25zm0 0l.345.666a.752.752 0 01-.69 0L8 14.25z"></path>
+            </svg>
+            <span class="v-align-middle">Sponsor</span>
+        </a>
+    </p>
+    <ul>
+        <li>Contribute to the repo: <a href="https://github.com/stephband/form-elements"><code>github.com/stephband/form-elements</code></a></li>
+        <li>Report a problem: <a href="https://github.com/stephband/form-elements/issues"><code>github.com/stephband/form-elements/issues</code></a></li>
+    </ul>
+</section>
+
+
+
+    
+<hr class="x1 4x @3-x2 x-stretch" />
+
+<div class="x1 4x @3-x2 x-stretch y-start">
+    <p class="text-10">
+    Built by <a href="https://stephen.band/">Stephen Band</a> for
+    <a href="https://cruncher.ch"><img style="width: 1.366666667em; display: inline-block; vertical-align: bottom; margin-top: -0.1em; margin-bottom: -0.1em;" src="https://cruncher.ch/static/images/logo.svg" alt="Cruncher logo"/> Cruncher</a>.
+    </p>
+
+    <p class="text-10">
+    Documentation set in <a href="https://www.swisstypefaces.com/fonts/euclid/">Euclid</a>
+    and <a href="https://github.com/evilmartians/mono">Martian Mono</a>. Fonts
+    used for documentation not included as part of the license covering the
+    use of <code>xy-input</code>.
+    </p>
+</div>
+
+    
+<footer class="x1 4x @1-6x @2-7x @3-9x 4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid grid footer">
+    <div class="x1 4x @3-x2 x-stretch y-start">
+        <h3>Elements</h3>
+        <a class="block" href="https://stephen.band/slide-show/"><code class="lang-html">&lt;slide-show&gt;</code></a>
+        <a class="block" href="https://stephen.band/details-toggle/"><code class="lang-html">&lt;details-toggle&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/rotary-input/"><code class="lang-html">&lt;rotary-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/range-input/"><code class="lang-html">&lt;range-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/y-input/"><code class="lang-html">&lt;y-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/xy-input/"><code class="lang-html">&lt;xy-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/number-control/"><code class="lang-html">&lt;number-control&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/select-control/"><code class="lang-html">&lt;select-control&gt;</code></a>
+        <a class="block" href="https://stephen.band/literal/"><code class="lang-html">&lt;literal-element&gt;</code></a>
+    </div>
+</footer>
 
     <script type="module" src="https://stephen.band/literal/documentation/build/module.js"></script>
 

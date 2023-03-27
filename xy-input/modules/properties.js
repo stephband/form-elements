@@ -21,6 +21,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
+
     xmin: createAttributeProperty('xmin', 0, parseValue),
 
     /**
@@ -34,6 +35,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
+
     xmax: createAttributeProperty('xmax', 1, parseValue),
 
     /**
@@ -47,6 +49,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
+
     ymin: createAttributeProperty('ymin', 0, parseValue),
 
     /**
@@ -60,6 +63,7 @@ export default {
     Value at upper limit of fader. Can interpret string values with recognised
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
+
     ymax: createAttributeProperty('ymax', 1, parseValue),
 
     /**
@@ -77,6 +81,7 @@ export default {
     - `"log-60dB"`
     - `"log-96dB"`
     **/
+
     xscale: createAttribute('xscale', 'linear', getScale),
 
     /**
@@ -94,7 +99,28 @@ export default {
     - `"log-60dB"`
     - `"log-96dB"`
     **/
+
     yscale: createAttribute('yscale', 'linear', getScale),
+
+    /**
+    xstep=""
+    Step is either:
+    - The string `"any"` (the default value)
+    - The string `"tick"`. The values in the `ticks` attribute are used as step values
+    - A space or comma separated list of values, written with or without units
+    **/
+
+    xstep: createAttribute('xstep'),
+
+    /**
+    ystep=""
+    Step is either:
+    - The string `"any"` (the default value)
+    - The string `"tick"`. The values in the `ticks` attribute are used as step values
+    - A space or comma separated list of values, written with or without units
+    **/
+
+    ystep: createAttribute('ystep'),
 
     /**
     xticks=""
@@ -106,6 +132,7 @@ export default {
     xticks="-48dB -36dB -24dB -12dB 0dB"
     ```
     **/
+
     xticks: createAttribute('xticks', '', parseTicks),
 
     /**
@@ -118,25 +145,8 @@ export default {
     yticks="-48dB -36dB -24dB -12dB 0dB"
     ```
     **/
+
     yticks: createAttribute('yticks', '', parseTicks),
-
-    /**
-    xstep=""
-    Step is either:
-    - The string `"any"` (the default value)
-    - The string `"tick"`. The values in the `ticks` attribute are used as step values
-    - A space or comma separated list of values, written with or without units
-    **/
-    xstep: createAttribute('xstep'),
-
-    /**
-    ystep=""
-    Step is either:
-    - The string `"any"` (the default value)
-    - The string `"tick"`. The values in the `ticks` attribute are used as step values
-    - A space or comma separated list of values, written with or without units
-    **/
-    ystep: createAttribute('ystep'),
 
     /**
     xdisplay=""
@@ -148,6 +158,7 @@ export default {
     - `"s"`
     - `"semitone"`
     **/
+
     xdisplay: createAttribute('xdisplay'),
 
     /**
@@ -160,33 +171,19 @@ export default {
     - `"s"`
     - `"semitone"`
     **/
+
     ydisplay: createAttribute('ydisplay'),
-
-    /**
-    valuebox=""
-    Defines an `"x y width height"` box to use as the range of values that
-    map to the padding box of the `<xy-input>`. The origin is at the
-    bottom and y increases upwards.
-
-    Where not given, `valuebox` defaults to the limits of `min` and `max`.
-    Most often this is what you want, and the valuebox attribute is safe to
-    ignore.
-    **/
-    valuebox: {
-        attribute: function(value) {
-            // TODO: parse valuebox
-        }
-    },
 
     /**
     ordered=""
     Boolean attribute. When set, data points may not overlap their
     neighbours, keeping the order of points on the x axis constant.
     **/
+
     ordered: createBoolean('ordered'),
 
     /**
-    value="0 0"
+    value="0,0"
     The initial value of the element. This is a series of space or comma
     separated `x,y` values such as:
 
@@ -218,6 +215,7 @@ export default {
     When submitted as part of a form the array is serialised to a formdata
     parameters.
     **/
+
     value: {
         attribute: function(value) {
             this.value = value;

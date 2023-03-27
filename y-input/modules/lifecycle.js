@@ -48,12 +48,12 @@ function toObserver(observer, object) {
 
 /**
 "input"
-Emitted from the element during the movement of an xy handle.
+Emitted from the element during the movement of a handle.
 **/
 
 /**
 "change"
-Emitted from the element when an xy handle has been moved.
+Emitted from the element when a handle has been moved.
 **/
 
 function updateBoxes(track, computed, pxbox, paddingbox, contentbox, rangebox) {

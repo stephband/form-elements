@@ -11,6 +11,7 @@
     --handle-stroke-width: 1px;
 
     display: inline-grid;
+    width: max-content;
 
     grid-template-areas:
         'label  label  label'

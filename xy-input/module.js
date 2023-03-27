@@ -1,8 +1,7 @@
 
 /** <xy-input>
 
-A graph input with two axis scaling and ticks, support for various units, output
-display and multiple handles:
+A two axis input with scaling, ticks, units and multiple handles.
 
 <xy-input>
     XY Input

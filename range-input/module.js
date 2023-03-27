@@ -1,8 +1,8 @@
 /**
 <range-input>
 
-A horizontal slide input with scaling, ticks, support for various units and
-formatted output display.
+A horizontal slide input with scaling, steps, ticks, support for various units
+and formatted output display.
 
 <range-input name="">
     Range

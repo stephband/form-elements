@@ -1,24 +1,30 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../literal/templates/head.literal', './package.json') }
+    ${ include('../literal/documentation/templates/head.literal', './package.json') }
+
+    <link rel="stylesheet" href="./number-control/module.css">
+    <link rel="stylesheet" href="./select-control/module.css">
+    <link rel="stylesheet" href="./range-input/module.css">
+    <link rel="stylesheet" href="./rotary-input/module.css">
+    <link rel="stylesheet" href="./xy-input/module.css">
+    <link rel="stylesheet" href="./y-input/module.css">
 
     <script title="debug">
-        window.incrementControlStylesheet = './increment-control-shadow.css';
-        window.selectControlStylesheet    = './select-control-shadow.css';
-        window.rangeInputStylesheet       = './range-input-shadow.css';
-        window.rotaryInputStylesheet      = './rotary-input-shadow.css';
-        window.xyInputStylesheet          = './xy-input-shadow.css';
-        window.yInputStylesheet           = './y-input-shadow.css';
+        window.incrementControlStylesheet = './number-control/shadow.css';
+        window.selectControlStylesheet    = './select-control/shadow.css';
+        window.rangeInputStylesheet       = './range-input/shadow.css';
+        window.rotaryInputStylesheet      = './rotary-input/shadow.css';
+        window.xyInputStylesheet          = './xy-input/shadow.css';
+        window.yInputStylesheet           = './y-input/shadow.css';
     </script>
 
-    <link rel="stylesheet" href="./increment-control.css">
-    <link rel="stylesheet" href="./select-control.css">
-    <link rel="stylesheet" href="./range-input.css">
-    <link rel="stylesheet" href="./rotary-input.css">
-    <link rel="stylesheet" href="./xy-input.css">
-    <link rel="stylesheet" href="./y-input.css">
+    <link rel="prefetch" as="style" href="./number-control/module.css">
+    <link rel="prefetch" as="style" href="./select-control/shadow.css">
+    <link rel="prefetch" as="style" href="./range-input/shadow.css">
+    <link rel="prefetch" as="style" href="./rotary-input/shadow.css">
+    <link rel="prefetch" as="style" href="./xy-input/shadow.css">
+    <link rel="prefetch" as="style" href="./y-input/shadow.css">
 
     <style>
     rotary-input {
@@ -49,8 +55,9 @@
 </head>
 
 <body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid" style="align-content: start;">
-    <header class="x1 3x @1-x3 @1-4x @2-x4">
+    <header class="x1 4x @3-x2 x-stretch y-start">
         <h1>Form elements</h1>
+
         <p>A collection of advanced form controls published as custom elements.
         Ranges of these elements can be scaled with linear, logarithm, or
         exponential curves, values and tickmarks can by expressed in dB, Hz,
@@ -59,79 +66,99 @@
         </p>
     </header>
 
-    <div class="x1 3x @1-x3 @1-4x @2-x4">
-        <h2>&lt;increment-control&gt;</h2>
-        <p>A wrapper for <code>&lt;input type="number"&gt;</code> inputs
-        providing styleable decrement/increment buttons, decrement/increment
-        key bindings and reliable constraints on text input.</p>
-        <a class="link-button button" href="./increment-control/">Documentation</a>
-    </div>
-
-    <increment-control class="x3 1x y2 y-start">
-        <input type="number" name="number" min="-10" max="10" value="0" />
-    </increment-control>
-
-    <div class="x1 3x @1-x3 @1-4x @2-x4">
-        <h2>&lt;select-control&gt;</h2>
-        <p>A wrapper for <code>&lt;select&gt;</code> providing styleable
-        previous/next buttons and left/right key bindings.</p>
-        <a class="link-button button" href="./select-control/">Documentation</a>
-    </div>
-
-    <select-control class="x3 1x y2 y-start">
-        <select name="selection">
-            <option value="">Select one</option>
-            <option value="0">Option 0</option>
-            <option value="1">Option 1</option>
-            <option value="2">Option 2</option>
-        </select>
-    </select-control>
-
-    <div class="x1 3x @1-x3 @1-4x @2-x4">
-        <h2>&lt;range-input&gt;</h2>
-        <p>A horizontal slider with an <code>&lt;input type="range"&gt;</code>
-        at its core, clickable tick marks, and a live value readout.</p>
-        <a class="link-button button" href="./range-input/">Documentation</a>
-    </div>
-
-    <range-input class="x1 3x y3" name="scale" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1" value="-0.4">Scale</range-input>
-
-    <div class="x1 3x @1-x3 @1-4x @2-x4">
+    <section class="x1 4x @1-3x @3-x2 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;rotary-input&gt;</h2>
-        <p>A rotating knob that can be dragged vertically, with clickable tick
-        marks and live value readout.</p>
-        <a class="link-button button" href="./rotary-input/">Documentation</a>
-    </div>
 
-    <rotary-input class="x2 2x y4" name="gain" min="0" max="2" ticks="-∞dB -60dB -54dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" scale="log-60dB" display="dB" value="-6dB">Volume</rotary-input>
+        <p>A rotating knob input that can be dragged vertically, with scaling,
+        step, ticks, units and formatted output display.</p>
 
-    <div class="x1 3x @1-x3 @1-4x @2-x4">
-        <h2>&lt;xy-input&gt;</h2>
-        <p>An input that contains a series of one or more x/y handles and an
-        (optional) background plot. Both axes may be scaled, and the element has
-        a <code>value</code> property that returns an array of coordinates.</p>
-        <a class="link-button button" href="./xy-input/">Documentation</a>
-    </div>
+        <rotary-input name="gain" min="0" max="2" ticks="-∞dB -60dB -54dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" scale="log-60dB" display="dB" value="-6dB">
+            Volume
+        </rotary-input>
 
-    <xy-input class="x1 3x y5" value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>Envelope</xy-input>
+        <a class="link-button button x-start" href="./rotary-input/">Documentation</a>
+    </section>
 
-    <div class="x1 3x @1-x3 @1-4x @2-x4">
+    <section class="x1 4x @1-3x @1-x4 @3-x5 x-stretch y-stretch documentation-flex flex">
+        <h2>&lt;range-input&gt;</h2>
+
+        <p>A horizontal slider input built around an <code>&lt;input type="range"&gt;</code>
+        augmented with scaling, step, ticks, units and formatted output display.</p>
+
+        <range-input name="scale" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1" value="-0.4">
+            Scale
+        </range-input>
+
+        <a class="link-button button x-start" href="./range-input/">Documentation</a>
+    </section>
+
+    <section class="x1 4x @1-3x @3-x2 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;y-input&gt;</h2>
-        <p>A vertical range input that contains one or more handles. Has
-        a <code>value</code> property that returns an array of values.</p>
-        <a class="link-button button" href="./y-input/">Documentation</a>
-    </div>
 
-    <y-input class="x1 3x y6" value="0 1" min="-0.5" max="2" ticks>Gain</y-input>
+        <p>A vertical slider input with scaling, step, ticks, units, output display
+        and multiple values.</p>
 
+        <y-input class="x1 3x y6" value="0 1" min="-0.5" max="2" ticks>
+            Range
+        </y-input>
 
-    <!--$ { include('../bolt/templates/scripts.html') }-->
+        <a class="link-button button x-start" href="./y-input/">Documentation</a>
+    </section>
+
+    <section class="x1 4x @1-3x @1-x4 @3-x5 x-stretch y-stretch documentation-flex flex">
+        <h2>&lt;xy-input&gt;</h2>
+
+        <p>A two-axis input with scaling, step, ticks, units and multiple value handles.</p>
+
+        <xy-input value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>
+            Envelope
+        </xy-input>
+
+        <a class="link-button button x-start" href="./xy-input/">Documentation</a>
+    </section>
+
+    <section class="x1 4x @1-3x @3-x2 x-stretch y-stretch documentation-flex flex">
+        <h2>&lt;number-control&gt;</h2>
+
+        <p>A wrapper element that augments an <code>&lt;input type="number"&gt;</code>
+        with increment/decrement controls.</p>
+
+        <number-control>
+            <input type="number" name="number" min="-10" max="10" value="0" />
+        </number-control>
+
+        <a class="link-button button x-start" href="./number-control/">Documentation</a>
+    </section>
+
+    <section class="x1 4x @1-3x @1-x4 @3-x5 x-stretch y-stretch documentation-flex flex">
+        <h2>&lt;select-control&gt;</h2>
+
+        <p>A wrapper element that augments a <code>&lt;select&gt;</code> with
+        previous/next controls.</p>
+
+        <select-control>
+            <select name="selection">
+                <option value="">Select one</option>
+                <option value="0">Option 0</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+            </select>
+        </select-control>
+
+        <a class="link-button button x-start" href="./select-control/">Documentation</a>
+    </section>
+
+    ${ include('../literal/documentation/templates/contribute.literal', './package.json') }
+    ${ include('../literal/documentation/templates/credit.literal', './package.json') }
+    ${ include('../literal/documentation/templates/footer.literal', './package.json') }
+    ${ include('../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-        import IncrementControl from './increment-control.js';
-        import RangeInput  from './range-input.js';
-        import RotaryInput from './rotary-input.js';
-        import XYInput     from './xy-input.js';
-        import YInput      from './y-input.js';
+        import NumberControl from './number-control.js';
+        import SelectControl    from './select-control.js';
+        import RangeInput       from './range-input.js';
+        import RotaryInput      from './rotary-input.js';
+        import XYInput          from './xy-input.js';
+        import YInput           from './y-input.js';
     </script>
 </body>

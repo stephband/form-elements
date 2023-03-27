@@ -1,7 +1,7 @@
 /**
 <select-control>
 
-A wrapper element that augments a `<select>` with extra controls.
+A wrapper element that augments a `<select>` with previous/next controls.
 
 <select-control>
     <select>
@@ -32,6 +32,15 @@ with styleable previous/next buttons and left/right arrow keyboard behaviour:
 </select-control>
 ```
 
+<select-control>
+    <select>
+        <option value="">Select one</option>
+        <option value="0">Option 0</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+    </select>
+</select-control>
+
 Default content of previous and next buttons may be overridden with HTML
 assigned to the `previous-button` and `next-button` slots:
 
@@ -42,6 +51,17 @@ assigned to the `previous-button` and `next-button` slots:
     <select>...</select>
 </select-control>
 ```
+
+<select-control>
+    <span slot="previous-button">☚</span>
+    <span slot="next-button">☛</span>
+    <select>
+        <option value="">Select one</option>
+        <option value="0">Option 0</option>
+        <option value="1">Option 1</option>
+        <option value="2">Option 2</option>
+    </select>
+</select-control>
 
 Note that the element itself is not a custom form element (it has no `value`
 property and does not set any form data in its internals).

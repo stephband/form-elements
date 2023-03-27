@@ -7,14 +7,14 @@
 
 <meta charset="utf-8" />
 <meta name="author" content="Stephen Band" />
-<meta name="description" content="A vertical slider input with scaling, ticks, units, output display and multiple values" />
+<meta name="description" content="A vertical slider input with scaling, steps, ticks, units, output display and multiple value handles." />
 <meta name="viewport" content="width=device-width" />
 
 
 <meta name="twitter:card" content="summary">
 <meta name="twitter:site" content="@stephband">
 <meta property="og:title" content="y-input" />
-<meta property="og:description" content="A vertical slider input with scaling, ticks, units, output display and multiple values" />
+<meta property="og:description" content="A vertical slider input with scaling, steps, ticks, units, output display and multiple value handles." />
 <meta property="og:image" content="https://stephen.band/form-elements/y-input/images/card.png" />
 <meta property="og:url" content="https://stephen.band/form-elements/" />
 
@@ -56,8 +56,8 @@
 
 <div class="x1 4x @3-x2 x-stretch y-start documentation-block block">
     <h1 id="y-input"><span class="tag-brace">&lt;</span>y-input<span class="tag-brace">&gt;</span></h1>
-    <p>A vertical slider input with scaling, ticks, units, output display and
-multiple values.</p>
+    <p>A vertical slider input with scaling, step, ticks, units, output display and
+multiple value handles.</p>
 <y-input ticks="0 0.2 0.4 0.6 0.8 1">
     Value
 </y-input>
@@ -294,7 +294,7 @@ values are changed.</p>
         <code class=" language-js">"input"</code>
     </h4>
 
-    <p>Emitted from the element during the movement of an xy handle.</p>
+    <p>Emitted from the element during the movement of a handle.</p>
 
 </details-toggle>
 
@@ -305,7 +305,7 @@ values are changed.</p>
         <code class=" language-js">"change"</code>
     </h4>
 
-    <p>Emitted from the element when an xy handle has been moved.</p>
+    <p>Emitted from the element when a handle has been moved.</p>
 
 </details-toggle>
 
@@ -449,22 +449,57 @@ to line up with label text.</p>
 
 
 
-    <hr class="x1 4x @3-x2"/>
+    
+<section class="x1 4x @3-x2 x-stretch y-start">
+    <h2 class="docs-text-02">Contribute</h2>
+    <p>
+        Support development:
+        <a aria-label="Sponsor @stephband" href="https://github.com/sponsors/stephband" class="githubsponsor-button button">
+            <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" class="fill octicon octicon-heart icon-sponsor mr-1 v-align-middle color-fg-sponsors anim-pulse-in">
+                <path fill-rule="evenodd" d="M4.25 2.5c-1.336 0-2.75 1.164-2.75 3 0 2.15 1.58 4.144 3.365 5.682A20.565 20.565 0 008 13.393a20.561 20.561 0 003.135-2.211C12.92 9.644 14.5 7.65 14.5 5.5c0-1.836-1.414-3-2.75-3-1.373 0-2.609.986-3.029 2.456a.75.75 0 01-1.442 0C6.859 3.486 5.623 2.5 4.25 2.5zM8 14.25l-.345.666-.002-.001-.006-.003-.018-.01a7.643 7.643 0 01-.31-.17 22.075 22.075 0 01-3.434-2.414C2.045 10.731 0 8.35 0 5.5 0 2.836 2.086 1 4.25 1 5.797 1 7.153 1.802 8 3.02 8.847 1.802 10.203 1 11.75 1 13.914 1 16 2.836 16 5.5c0 2.85-2.045 5.231-3.885 6.818a22.08 22.08 0 01-3.744 2.584l-.018.01-.006.003h-.002L8 14.25zm0 0l.345.666a.752.752 0 01-.69 0L8 14.25z"></path>
+            </svg>
+            <span class="v-align-middle">Sponsor</span>
+        </a>
+    </p>
+    <ul>
+        <li>Contribute to the repo: <a href="https://github.com/stephband/form-elements"><code>github.com/stephband/form-elements</code></a></li>
+        <li>Report a problem: <a href="https://github.com/stephband/form-elements/issues"><code>github.com/stephband/form-elements/issues</code></a></li>
+    </ul>
+</section>
 
-<footer class="x1 4x @3-x2 footer-block block">
-    <small class="block">
-        <p class="text-10">
-        Built by <a href="https://stephen.band/">Stephen Band</a> for
-        <a href="https://cruncher.ch"><img style="width: 1.366666667em; display: inline-block; vertical-align: bottom; margin-top: -0.1em; margin-bottom: -0.1em;" src="https://cruncher.ch/static/images/logo.svg" alt="Cruncher logo"/> Cruncher</a>.
-        </p>
 
-        <p class="text-10">
-        This documentation set in <a href="https://www.swisstypefaces.com/fonts/euclid/">Euclid</a>
-        and <a href="https://github.com/evilmartians/mono">Martian Mono</a>. Fonts
-        used for documentation not included as part of the license covering the
-        use of the <code>y-input</code> element.
-        </p>
-    </small>
+
+    
+<hr class="x1 4x @3-x2 x-stretch" />
+
+<div class="x1 4x @3-x2 x-stretch y-start">
+    <p class="text-10">
+    Built by <a href="https://stephen.band/">Stephen Band</a> for
+    <a href="https://cruncher.ch"><img style="width: 1.366666667em; display: inline-block; vertical-align: bottom; margin-top: -0.1em; margin-bottom: -0.1em;" src="https://cruncher.ch/static/images/logo.svg" alt="Cruncher logo"/> Cruncher</a>.
+    </p>
+
+    <p class="text-10">
+    Documentation set in <a href="https://www.swisstypefaces.com/fonts/euclid/">Euclid</a>
+    and <a href="https://github.com/evilmartians/mono">Martian Mono</a>. Fonts
+    used for documentation not included as part of the license covering the
+    use of <code>y-input</code>.
+    </p>
+</div>
+
+    
+<footer class="x1 4x @1-6x @2-7x @3-9x 4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid grid footer">
+    <div class="x1 4x @3-x2 x-stretch y-start">
+        <h3>Elements</h3>
+        <a class="block" href="https://stephen.band/slide-show/"><code class="lang-html">&lt;slide-show&gt;</code></a>
+        <a class="block" href="https://stephen.band/details-toggle/"><code class="lang-html">&lt;details-toggle&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/rotary-input/"><code class="lang-html">&lt;rotary-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/range-input/"><code class="lang-html">&lt;range-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/y-input/"><code class="lang-html">&lt;y-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/xy-input/"><code class="lang-html">&lt;xy-input&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/number-control/"><code class="lang-html">&lt;number-control&gt;</code></a>
+        <a class="block" href="https://stephen.band/form-elements/select-control/"><code class="lang-html">&lt;select-control&gt;</code></a>
+        <a class="block" href="https://stephen.band/literal/"><code class="lang-html">&lt;literal-element&gt;</code></a>
+    </div>
 </footer>
 
     <script type="module" src="https://stephen.band/literal/documentation/build/module.js"></script>

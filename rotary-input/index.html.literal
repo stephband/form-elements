@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
+    ${ include('../../literal/documentation/templates/head.literal', './package.json') }
 
     <script title="element">
         window.rotaryInputStylesheet = './shadow.css';
@@ -14,7 +14,7 @@
         }
 
         rotary-input + rotary-input {
-            margin-top: 2rem;
+            margin-left: var(--x-gap);
         }
     </style>
 </head>
@@ -39,6 +39,8 @@
         "./css/output.css"
     )) }
 
+    ${ include('../../literal/documentation/templates/contribute.literal', './package.json') }
+    ${ include('../../literal/documentation/templates/credit.literal', './package.json') }
     ${ include('../../literal/documentation/templates/footer.literal', './package.json') }
     ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
