@@ -51,8 +51,8 @@
 <div class="x1 4x @3-x2 x-stretch y-start documentation-block block">
     <h1 id="xy-input"><span class="tag-brace">&lt;</span>xy-input<span class="tag-brace">&gt;</span></h1>
     <p>A two axis input with scaling, ticks, units and multiple handles.</p>
-<xy-input>
-    XY Input
+<xy-input value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>
+    Envelope
 </xy-input>
 
 
@@ -62,15 +62,9 @@ instances already in the DOM:</p>
 <pre><code class="language-js"><span class="token keyword">import</span> XYInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/xy-input.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>The <code>&lt;xy-input&gt;</code> element may now be written in your HTML:</p>
-<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">></span></span><span class="token style"><span class="token language-css">
-    <span class="token selector">xy-input</span> <span class="token punctuation">{</span>
-        <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
-        <span class="token property">height</span><span class="token punctuation">:</span> 10rem<span class="token punctuation">;</span>
-    <span class="token punctuation">}</span>
-</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">></span></span>
-
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xy-input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4<span class="token punctuation">"</span></span> <span class="token attr-name">ymin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-0.5<span class="token punctuation">"</span></span> <span class="token attr-name">ymax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">yticks</span> <span class="token attr-name">xmin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">xmax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1.4<span class="token punctuation">"</span></span> <span class="token attr-name">xticks</span><span class="token punctuation">></span></span>Envelope<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xy-input</span><span class="token punctuation">></span></span>
-<span class="token comment">&lt;!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB">&lt;/xy-input--></span></code></pre>
+<pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>xy-input</span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4<span class="token punctuation">"</span></span> <span class="token attr-name">ymin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-0.5<span class="token punctuation">"</span></span> <span class="token attr-name">ymax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">yticks</span> <span class="token attr-name">xmin</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">xmax</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1.4<span class="token punctuation">"</span></span> <span class="token attr-name">xticks</span><span class="token punctuation">></span></span>
+    Envelope
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>xy-input</span><span class="token punctuation">></span></span></code></pre>
 
 </div>
 
@@ -301,10 +295,6 @@ the types <code>&#39;step&#39;</code>, <code>&#39;linear&#39;</code>, <code>&#39
 
 
     
-    
-    
-
-    
     <h3>Properties</h3>
     
 
@@ -479,6 +469,10 @@ an accurate reflection of a WebAudio automation curve.</p>
 </details-toggle>
 
 
+
+    
+    
+    
 </div>
 
 
@@ -501,8 +495,6 @@ an accurate reflection of a WebAudio automation curve.</p>
     </ul>
 </section>
 
-
-
     
 <hr class="x1 4x @3-x2 x-stretch" />
 
@@ -522,7 +514,7 @@ an accurate reflection of a WebAudio automation curve.</p>
 
     
 <footer class="x1 4x @1-6x @2-7x @3-9x 4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid grid footer">
-    <div class="x1 4x @3-x2 x-stretch y-start">
+    <div class="x1 4x @1-2x @3-x2 x-stretch y-start">
         <h3>Elements</h3>
         <a class="block" href="https://stephen.band/slide-show/"><code class="lang-html">&lt;slide-show&gt;</code></a>
         <a class="block" href="https://stephen.band/details-toggle/"><code class="lang-html">&lt;details-toggle&gt;</code></a>
@@ -533,6 +525,11 @@ an accurate reflection of a WebAudio automation curve.</p>
         <a class="block" href="https://stephen.band/form-elements/number-control/"><code class="lang-html">&lt;number-control&gt;</code></a>
         <a class="block" href="https://stephen.band/form-elements/select-control/"><code class="lang-html">&lt;select-control&gt;</code></a>
         <a class="block" href="https://stephen.band/literal/"><code class="lang-html">&lt;literal-element&gt;</code></a>
+    </div>
+
+    <div class="x1 4x @1-2x @1-x3 @3-x4 x-stretch y-start">
+        <h3>Tools</h3>
+        <a class="block" href="https://stephen.band/font-size/">Font-size calculator</a>
     </div>
 </footer>
 

@@ -3,8 +3,8 @@
 
 A two axis input with scaling, ticks, units and multiple handles.
 
-<xy-input>
-    XY Input
+<xy-input value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>
+    Envelope
 </xy-input>
 
 
@@ -23,15 +23,9 @@ import XYInput from './xy-input.js';
 The `<xy-input>` element may now be written in your HTML:
 
 ```html
-<style>
-    xy-input {
-        width: 100%;
-        height: 10rem;
-    }
-</style>
-
-<xy-input value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>Envelope</xy-input>
-<!--xy-input name="points" value="100 0dB one 200 6dB two 2000 -6dB three" ymin="-18dB" ymax="18dB" xmin="20" xmax="20000" xlaw="logarithmic-96dB" ylaw="logarithmic-48dB" xaxis="Hz" yaxis="dB"></xy-input-->
+<xy-input value="0 0, 0.2 0.4 step 0.4 1.5 exponential 0.6 1 linear 0.8 0 target 0.4" ymin="-0.5" ymax="2" yticks xmin="0" xmax="1.4" xticks>
+    Envelope
+</xy-input>
 ```
 **/
 
