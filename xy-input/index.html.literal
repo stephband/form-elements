@@ -23,7 +23,7 @@
     ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-    import XYInput from './module.js';
+    import XYInput from './build/module.js';
     //import XYInput from '../xy-input.js';
     import events  from '../../dom/modules/events.js';
 

@@ -9,7 +9,7 @@
     </script>
 
     <style>
-        @import './module.css';
+        @import './build/module.css';
 
         number-control {
             align-self: start;
@@ -49,7 +49,7 @@
     ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-    import NumberControl from './module.js';
+    import NumberControl from './build/module.js';
     import events      from '../../dom/modules/events.js';
 
     events('input', document).each(console.log);

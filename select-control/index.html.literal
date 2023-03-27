@@ -9,7 +9,7 @@
     </script>
 
     <style>
-        @import './module.css';
+        @import './build/module.css';
 
         select-control {
             align-self: start;
@@ -35,7 +35,7 @@
     ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-    import SelectControl from './module.js';
+    import SelectControl from './build/module.js';
     import events        from '../../dom/modules/events.js';
     events('input', document).each(console.log);
     </script>

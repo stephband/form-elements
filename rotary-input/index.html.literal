@@ -45,7 +45,7 @@
     ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-    import RotaryInput from './module.js';
+    import RotaryInput from './build/module.js';
     import events      from '../../dom/modules/events.js';
 
     // Test
