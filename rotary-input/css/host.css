@@ -56,7 +56,7 @@ smaller.
     --focus-shadow: inset 0 0 0.9375rem hsla(200, 100%, 80%, 0.4);
 
     display: inline-grid;
-    width: 160px;
+    min-width: 7.5em;
     grid-template-areas:
         'handle handle'
         'label plugs';
