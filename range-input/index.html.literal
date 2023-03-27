@@ -4,6 +4,10 @@
 <head>
     ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
+    <script title="debug">
+        window.rangeInputStylesheet = './build/shadow.css';
+    </script>
+
     <style>
         range-input + range-input {
             margin-top: 1.5rem;

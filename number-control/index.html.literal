@@ -5,7 +5,7 @@
     ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
     <script title="debug">
-        window.incrementControlStylesheet = './shadow.css';
+        window.incrementControlStylesheet = './build/shadow.css';
     </script>
 
     <style>

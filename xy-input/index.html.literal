@@ -5,7 +5,7 @@
     ${ include('../../literal/documentation/templates/head.literal', '../package.json') }
 
     <script title="element">
-        window.xyInputStylesheet = '../xy-input-shadow.css';
+        window.xyInputStylesheet = './build/shadow.css';
     </script>
 </head>
 
