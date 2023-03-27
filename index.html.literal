@@ -154,11 +154,11 @@
     ${ include('../literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-        import NumberControl from './number-control.js';
-        import SelectControl    from './select-control.js';
-        import RangeInput       from './range-input.js';
-        import RotaryInput      from './rotary-input.js';
-        import XYInput          from './xy-input.js';
-        import YInput           from './y-input.js';
+        import NumberControl    from './number-control/build/module.js';
+        import SelectControl    from './select-control/build/module.js';
+        import RangeInput       from './range-input/build/module.js';
+        import RotaryInput      from './rotary-input/build/module.js';
+        import XYInput          from './xy-input/build/module.js';
+        import YInput           from './y-input/build/module.js';
     </script>
 </body>
