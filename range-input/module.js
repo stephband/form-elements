@@ -4,8 +4,8 @@
 A horizontal slide input with scaling, steps, ticks, support for various units
 and formatted output display.
 
-<range-input name="">
-    Range
+<range-input name="frequency" min="20" max="20000" ticks="20 40 60 100 200 400 1000 2000 4000 10000 20000" scale="log" display="Hz">
+    Frequency
 </range-input>
 
 
