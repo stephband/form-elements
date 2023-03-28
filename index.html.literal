@@ -55,7 +55,7 @@
 </head>
 
 <body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid" style="align-content: start;">
-    <header class="x1 4x @3-x2 x-stretch y-start">
+    <header class="x1 4x @2-x2 x-stretch y-start">
         <h1>Form elements</h1>
 
         <p>A collection of advanced form controls published as custom elements.
@@ -66,7 +66,7 @@
         </p>
     </header>
 
-    <section class="x1 4x @1-3x @3-x2 x-stretch y-stretch documentation-flex flex">
+    <section class="x1 4x @1-3x @2-x2 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;rotary-input&gt;</h2>
 
         <p>A rotating knob input that can be dragged vertically, with scaling,
@@ -79,7 +79,7 @@
         <a class="link-button button x-start" href="./rotary-input/">Documentation</a>
     </section>
 
-    <section class="x1 4x @1-3x @1-x4 @3-x5 x-stretch y-stretch documentation-flex flex">
+    <section class="x1 4x @1-3x @1-x4 @2-x5 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;range-input&gt;</h2>
 
         <p>A horizontal slider input built around an <code>&lt;input type="range"&gt;</code>
@@ -92,7 +92,7 @@
         <a class="link-button button x-start" href="./range-input/">Documentation</a>
     </section>
 
-    <section class="x1 4x @1-3x @3-x2 x-stretch y-stretch documentation-flex flex">
+    <section class="x1 4x @1-3x @2-x2 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;y-input&gt;</h2>
 
         <p>A vertical slider input with scaling, step, ticks, units, output display
@@ -105,7 +105,7 @@
         <a class="link-button button x-start" href="./y-input/">Documentation</a>
     </section>
 
-    <section class="x1 4x @1-3x @1-x4 @3-x5 x-stretch y-stretch documentation-flex flex">
+    <section class="x1 4x @1-3x @1-x4 @2-x5 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;xy-input&gt;</h2>
 
         <p>A two-axis input with scaling, step, ticks, units and multiple value handles.</p>
@@ -117,7 +117,7 @@
         <a class="link-button button x-start" href="./xy-input/">Documentation</a>
     </section>
 
-    <section class="x1 4x @1-3x @3-x2 x-stretch y-stretch documentation-flex flex">
+    <section class="x1 4x @1-3x @2-x2 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;number-control&gt;</h2>
 
         <p>A wrapper element that augments an <code>&lt;input type="number"&gt;</code>
@@ -130,7 +130,7 @@
         <a class="link-button button x-start" href="./number-control/">Documentation</a>
     </section>
 
-    <section class="x1 4x @1-3x @1-x4 @3-x5 x-stretch y-stretch documentation-flex flex">
+    <section class="x1 4x @1-3x @1-x4 @2-x5 x-stretch y-stretch documentation-flex flex">
         <h2>&lt;select-control&gt;</h2>
 
         <p>A wrapper element that augments a <code>&lt;select&gt;</code> with
