@@ -158,8 +158,6 @@ export default {
         attributes
         .each((data) => renderData(getHostStyle(style), data.scale, data.min, data.max, data.ticks, buttons, marker));
 
-//this.nnn = ++n;
-//console.log('RANGE CONSTRUCT', this.nnn, document.body.contains(this));
         // Track value updates
         Stream
         .combine({
@@ -167,11 +165,7 @@ export default {
             value:   privates.value
         })
         .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.data.step, state.value), data)
-//.map((d) => (console.log('RANGE RENDER', this.nnn, document.body.contains(this)), d))
         .each((data) => renderValue(getHostStyle(style), input, internals, text, abbr, data.display, data.value, data.normal)) ;
-
-
-
 
         // Track pointer on ticks and update value
         events({ type: 'pointerdown', select: '[name="value"]' }, shadow)

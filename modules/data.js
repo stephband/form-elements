@@ -45,23 +45,6 @@ export function updateData(data, axis) {
     return data;
 }
 
-export function updateValue(data, scale, min, max, step, value) {
-    console.error('updateValue deprecated in favour of getValue');
-
-    //if (value === data.value) { console.log('REPEAT VALUE SET - ARE WE BOTHERED?', value); }
-    data.value  = clamp(min, max, value);
-    data.normal = scale.normalise(min, max, data.value);
-
-    // Round to nearest step by normal value, as that is visually the nearest
-    if (step) {
-        const nearest = nearestStep(step, data.normal);
-        data.value  = nearest.value;
-        data.normal = nearest.normal;
-    }
-
-    return data;
-}
-
 const point = {};
 
 export function valueFromValue(scale, min, max, step, value) {
@@ -84,4 +67,11 @@ export function valueFromNormal(scale, min, max, step, normal) {
         nearestStep(step, point.normal) :
         // Return point data
         point ;
+}
+
+export function updateValue(data, scale, min, max, step, value) {
+    const state = valueFromValue(scale, min, max, step, value);
+    data.value  = state.value;
+    data.normal = state.normal;
+    return data;
 }

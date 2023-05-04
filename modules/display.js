@@ -105,11 +105,15 @@ export const formatters = {
         value: Math.round(value)
     }),
 
-    '': (unit, value) => ({
-        unit: '',
-        value: value > -1 && value < 1 ? value.toFixed(2) :
-            value.toPrecision(3)
-    }),
+    '': (unit, value) => {
+        const abs = Math.abs(value);
+        return {
+            unit: '',
+            value: abs < 1 ? value.toFixed(2) :
+                abs < 1000 ? value.toPrecision(3) :
+                Math.round(value)
+        };
+    },
 
     default: overload((unit) => (/[YMWwdhms]/.test(unit) ? 'time' : 'default'), {
         time: (unit, value) => ({
