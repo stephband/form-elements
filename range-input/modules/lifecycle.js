@@ -107,12 +107,12 @@ export default {
     construct: function(shadow, internals) {
         // DOM
         const style   = create('style', ':host {} :host > * { visibility: hidden; }');
-        const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
+        const label   = create('label', { part: 'label', for: 'input', html: '<slot></slot>' });
         // TODO: For some reason in Safari, the input does not get focus, with or without tabindex
-        const input   = create('input', { type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any', tabindex: '0' });
+        const input   = create('input', { part: 'input', type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any', tabindex: '0' });
         const text    = create('text');
         const abbr    = create('abbr');
-        const output  = create('output', { children: [text, abbr], part: 'output' });
+        const output  = create('output', { part: 'output', children: [text, abbr] });
         const marker  = create('text', '');
         const buttons = [];
 
