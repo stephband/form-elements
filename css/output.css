@@ -10,7 +10,7 @@ Style the display of the output value.
     font-size: 0.75em;
     line-height: 1em;
     letter-spacing: -0.0333em;
-    color: #46789a;
+    color: var(--output-color);
     height: auto;
     white-space: pre;
 }
