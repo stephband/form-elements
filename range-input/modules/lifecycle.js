@@ -20,15 +20,13 @@ import { nearestStep } from '../../modules/step.js';
 import { toKeyValue }  from '../../modules/key.js';
 import * as defaults   from '../../modules/defaults.js';
 
-const DEBUG = true;
 
+const DEBUG  = true;
 const assign = Object.assign;
 const define = Object.defineProperties;
 
 // Get path to dir of this module
 const path   = import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/');
-
-
 
 
 /*
@@ -119,16 +117,14 @@ export default {
         shadow.append(style, label, input, output, marker);
 
         // Components
-        const privates   = Privates(this);
-        const data       = {};
+        const privates     = Privates(this);
+        const data         = {};
 
-        privates.host       = this;
-        privates.shadow     = shadow;
-        privates.style      = style;
-        privates.internals  = internals;
-        privates.data       = data;
-
-        // Inputs
+        privates.host      = this;
+        privates.shadow    = shadow;
+        privates.style     = style;
+        privates.internals = internals;
+        privates.data      = data;
         privates.shadow    = new Promise((resolve) => privates.load = resolve);
         privates.scale     = Stream.of(defaults.scale);
         privates.min       = Stream.of(defaults.min);
@@ -137,9 +133,6 @@ export default {
         privates.ticks     = Stream.of(defaults.ticks);
         privates.display   = Stream.of(defaults.display);
         privates.value     = Stream.of(defaults.value);
-
-
-
 
         // Track attribute updates
         const attributes = Stream
@@ -179,7 +172,7 @@ export default {
         events('input', shadow)
         .each((e) => {
             const normal = parseFloat(e.target.value);
-            const value       = data.scale.denormalise(data.min, data.max, normal);
+            const value  = data.scale.denormalise(data.min, data.max, normal);
             privates.value.push(value);
         });
 
