@@ -44,16 +44,14 @@ Render
 */
 
 function renderTick(buttons, tick) {
-    buttons.push(
-        create('button', {
-            type: 'button',
-            part: 'tick',
-            name: 'value',
-            value: tick.value,
-            style: '--normal-value: ' + tick.normal + ';',
-            text: tick.label
-        })
-    );
+    buttons.push(create('button', {
+        type: 'button',
+        part: 'tick',
+        name: 'value',
+        value: tick.value,
+        style: '--normal-value: ' + tick.normal + ';',
+        text: tick.label
+    }));
 
     return buttons;
 }
@@ -71,6 +69,8 @@ function renderData(style, scale, min, max, ticks, buttons, marker) {
 
 function renderValue(style, input, internals, outputText, outputAbbr, unit, value, normal) {
     // Render handle position
+    // TODO: Safari (of course) is not updating style consistently, set this way,
+    // we may need to devise another strategy
     style.setProperty('--normal-value', normal);
     input.value = normal;
 
