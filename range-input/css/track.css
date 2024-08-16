@@ -59,6 +59,10 @@
 
     /* Subtle shading around track to give embossed effect */
     box-shadow: var(--track-shadow);
+
+    /* Safari is really bad at updating the background-image dynamically.
+       Unfortunately, this does not help at all. Thanks, Safari. */
+    will-change: background-image;
 }
 
 /*
