@@ -1,6 +1,6 @@
 
 import { Observer, getTarget } from '../../../fn/observer/observer.js';
-import Privates                from '../../../fn/modules/privates.js';
+import Privates                from 'fn/privates.js';
 import { createAttribute, createAttributeProperty, createBoolean } from '../../modules/attributes.js';
 import parsePoints     from '../../modules/parse-points.js';
 import stringifyPoints from '../../modules/stringify-points.js';

@@ -1,15 +1,15 @@
 
-import Privates             from '../../../fn/modules/privates.js';
-import { clamp }            from '../../../fn/modules/clamp.js';
-import id                   from '../../../fn/modules/id.js';
-import Stream               from '../../../fn/modules/stream.js';
-import get                  from '../../../fn/modules/get.js';
-import last                 from '../../../fn/modules/last.js';
-import overload             from '../../../fn/modules/overload.js';
-import noop                 from '../../../fn/modules/noop.js';
-import { remove }           from '../../../fn/modules/remove.js';
-import normalise            from '../../../fn/modules/normalise.js';
-import denormalise          from '../../../fn/modules/denormalise.js';
+import Privates             from 'fn/privates.js';
+import { clamp }            from 'fn/clamp.js';
+import id                   from 'fn/id.js';
+import Stream               from 'fn/stream.js';
+import get                  from 'fn/get.js';
+import last                 from 'fn/last.js';
+import overload             from 'fn/overload.js';
+import noop                 from 'fn/noop.js';
+import { remove }           from 'fn/remove.js';
+import normalise            from 'fn/normalise.js';
+import denormalise          from 'fn/denormalise.js';
 import observe              from '../../../fn/observer/observe.js';
 import { Observer, notify } from '../../../fn/observer/observer.js';
 import create               from '../../../dom/modules/create.js';

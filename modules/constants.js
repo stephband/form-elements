@@ -1,5 +1,5 @@
 
-import toGain from '../../fn/modules/to-gain.js';
+import toGain from 'fn/to-gain.js';
 
 export const dB6  = toGain(-6);
 export const dB12 = toGain(-12);

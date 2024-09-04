@@ -1,7 +1,7 @@
 
-import overload       from '../../fn/modules/overload.js';
-import todB           from '../../fn/modules/to-db.js';
-import { formatTime } from '../../fn/modules/time.js';
+import overload       from 'fn/overload.js';
+import todB           from 'fn/to-db.js';
+import { formatTime } from 'fn/time.js';
 
 function outputMilli() {
     return {

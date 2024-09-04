@@ -8,11 +8,11 @@ tallest element. If there are no ticks the component will collapse a bit
 smaller.
 */
 
-import get             from '../../../fn/modules/get.js';
-import overload        from '../../../fn/modules/overload.js';
-import Privates        from '../../../fn/modules/privates.js';
-import { clamp }       from '../../../fn/modules/clamp.js';
-import Stream          from '../../../fn/modules/stream.js';
+import get             from 'fn/get.js';
+import overload        from 'fn/overload.js';
+import Privates        from 'fn/privates.js';
+import { clamp }       from 'fn/clamp.js';
+import Stream          from 'fn/stream.js';
 import create          from '../../../dom/modules/create.js';
 import events          from '../../../dom/modules/events.js';
 import gestures        from '../../../dom/modules/gestures.js';

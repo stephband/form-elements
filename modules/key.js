@@ -1,7 +1,7 @@
 
-import get      from '../../fn/modules/get.js';
-import noop     from '../../fn/modules/noop.js';
-import overload from '../../fn/modules/overload.js';
+import get      from 'fn/get.js';
+import noop     from 'fn/noop.js';
+import overload from 'fn/overload.js';
 
 import { previousStep, nextStep } from './step.js';
 

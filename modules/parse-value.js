@@ -1,5 +1,5 @@
 
-import toGain from '../../fn/modules/to-gain.js';
+import toGain from 'fn/to-gain.js';
 
 /**
 parseValue(string)

@@ -1,6 +1,6 @@
 
 import { Observer, getTarget } from '../../../fn/observer/observer.js';
-import Privates        from '../../../fn/modules/privates.js';
+import Privates        from 'fn/privates.js';
 import parseValues     from '../../modules/parse-values.js';
 import stringifyValues from '../../modules/stringify-values.js';
 import properties      from '../../modules/properties.js';

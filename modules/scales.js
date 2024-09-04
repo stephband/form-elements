@@ -1,6 +1,6 @@
 
-import normalise   from '../../fn/modules/normalise.js';
-import denormalise from '../../fn/modules/denormalise.js';
+import normalise   from 'fn/normalise.js';
+import denormalise from 'fn/denormalise.js';
 import { dB24, dB30, dB36, dB48, dB60, dB66, dB72, dB96 } from './constants.js';
 
 const assign = Object.assign;

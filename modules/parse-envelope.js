@@ -19,8 +19,8 @@ Into a nested array of the form:
 ```
 **/
 
-import capture from '../../fn/modules/capture.js';
-import noop    from '../../fn/modules/noop.js';
+import capture from 'fn/capture.js';
+import noop    from 'fn/noop.js';
 
 const defaultTargetEventDuration = 0.4;
 
