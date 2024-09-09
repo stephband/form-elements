@@ -10,9 +10,9 @@ https://github.com/material-components/material-components-web-components/issues
 import Privates        from 'fn/privates.js';
 import { clamp }       from 'fn/clamp.js';
 import Stream          from 'fn/stream.js';
-import create          from '../../../dom/modules/create.js';
-import events          from '../../../dom/modules/events.js';
-import { trigger }     from '../../../dom/modules/trigger.js';
+import create          from 'dom/create.js';
+import events          from 'dom/events.js';
+import { trigger }     from 'dom/trigger.js';
 import parseValue      from '../../modules/parse-value.js';
 import { updateData, updateValue } from '../../modules/data.js';
 import { toDisplay }   from '../../modules/display.js';

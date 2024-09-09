@@ -36,7 +36,7 @@
     window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="literal/documentation/module.css">
 <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
 <link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
@@ -67,7 +67,7 @@ and formatted output display.</p>
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;range-input&gt;</code> custom element, upgrading any
 instances already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> RangeInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/range-input.js'</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="language-js"><span class="token keyword">import</span> RangeInput <span class="token keyword">from</span> <span class="token string">'literal/documentation/templates/range-input.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>You can now write <code>&lt;range-input&gt;</code> elements in your HTML:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>range-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>ratio<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Scale<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>range-input</span><span class="token punctuation">></span></span>
@@ -352,7 +352,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
     <script type="module">
     import RangeInput from './build/module.js';
-    import events     from '../../dom/modules/events.js';
+    import events     from 'dom/events.js';
 
     //events('input change', document)
     //.each((e) => console.log(e.type, e.target.value));

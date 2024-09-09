@@ -36,7 +36,7 @@
     window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="literal/documentation/module.css">
 <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
 <link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
@@ -76,7 +76,7 @@
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;select-control&gt;</code> custom element, upgrading any
 instances already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> SelectControl <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/select-control.js'</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="language-js"><span class="token keyword">import</span> SelectControl <span class="token keyword">from</span> <span class="token string">'literal/documentation/templates/select-control.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>The <code>&lt;select-control&gt;</code> element wraps a <code>&lt;select&gt;</code>, augmenting it
 with styleable previous/next buttons and left/right arrow keyboard behaviour:</p>
@@ -266,7 +266,7 @@ Width of decrement/increment buttons.</p>
 
     <script type="module">
     import SelectControl from './build/module.js';
-    import events        from '../../dom/modules/events.js';
+    import events        from 'dom/events.js';
     events('input', document).each(console.log);
     </script>
 </body>

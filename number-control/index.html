@@ -36,7 +36,7 @@
     window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="literal/documentation/module.css">
 <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
 <link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
@@ -73,7 +73,7 @@ controls.</p>
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;number-control&gt;</code> custom element, upgrading any
 <code>&lt;number-control&gt;</code> elements already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> NumberControl <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/number-control.js'</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="language-js"><span class="token keyword">import</span> NumberControl <span class="token keyword">from</span> <span class="token string">'literal/documentation/templates/number-control.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>The <code>&lt;number-control&gt;</code> element wraps an <code>&lt;input type=&quot;number&quot;&gt;</code>, augmenting it
 with styleable decrement/increment buttons and up/down arrow keyboard behaviour:</p>
@@ -257,7 +257,7 @@ Width of decrement/increment buttons.</p>
 
     <script type="module">
     import NumberControl from './build/module.js';
-    import events      from '../../dom/modules/events.js';
+    import events      from 'dom/events.js';
 
     events('input', document).each(console.log);
     </script>

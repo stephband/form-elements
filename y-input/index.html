@@ -36,7 +36,7 @@
     window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="literal/documentation/module.css">
 <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
 <link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
@@ -75,7 +75,7 @@ multiple value handles.</p>
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;y-input&gt;</code> custom element, upgrading any
 instances already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> YInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/y-input.js'</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="language-js"><span class="token keyword">import</span> YInput <span class="token keyword">from</span> <span class="token string">'literal/documentation/templates/y-input.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>Author vertical sliders:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>y-input</span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>y-input</span><span class="token punctuation">></span></span></code></pre>
@@ -512,7 +512,7 @@ to line up with label text.</p>
 
     <script type="module">
     import XYInput from './build/module.js';
-    import events  from '../../dom/modules/events.js';
+    import events  from 'dom/events.js';
 
     events('input change', document)
     .each((e) => console.log(e.type, e.target.value));

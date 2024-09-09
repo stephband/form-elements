@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../literal/documentation/templates/head.literal', './package.json') }
+    ${ include('literal/documentation/templates/head.literal', './package.json') }
 
     <link rel="stylesheet" href="./number-control/build/module.css">
     <link rel="stylesheet" href="./select-control/build/module.css">
@@ -53,7 +53,15 @@
     }
     </style>
 
-    ${ include('../literal/documentation/templates/scripts.literal', './package.json') }
+    ${ include('literal/documentation/templates/scripts.literal', './package.json') }
+
+    <script type="importmap">{
+        "dom/":        "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/",
+        "fn/":         "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/",
+        "bolt/":       "https://cdn.jsdelivr.net/gh/stephband/bolt-2@main/",
+        "literal/":    "https://cdn.jsdelivr.net/gh/stephband/literal@main/",
+        "slide-show/": "https://cdn.jsdelivr.net/gh/stephband/slide-show@main/"
+    }</script>
 
     <script type="module">
         import NumberControl    from './number-control/build/module.js';
@@ -159,7 +167,7 @@
         <a class="link-button button x-start" href="./select-control/">Documentation</a>
     </section>
 
-    ${ include('../literal/documentation/templates/contribute.literal', './package.json') }
-    ${ include('../literal/documentation/templates/credit.literal', './package.json') }
-    ${ include('../literal/documentation/templates/footer.literal', './package.json') }
+    ${ include('literal/documentation/templates/contribute.literal', './package.json') }
+    ${ include('literal/documentation/templates/credit.literal', './package.json') }
+    ${ include('literal/documentation/templates/footer.literal', './package.json') }
 </body>

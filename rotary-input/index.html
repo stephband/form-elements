@@ -36,7 +36,7 @@
     window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-<link rel="stylesheet" href="../../literal/documentation/module.css">
+<link rel="stylesheet" href="literal/documentation/module.css">
 <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
 <link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
@@ -79,7 +79,7 @@ display.</p>
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;rotary-input&gt;</code> custom element, upgrading any
 instances already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> RotaryInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/rotary-input.js'</span><span class="token punctuation">;</span></code></pre>
+<pre><code class="language-js"><span class="token keyword">import</span> RotaryInput <span class="token keyword">from</span> <span class="token string">'literal/documentation/templates/rotary-input.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>You can now author rotating knobs in forms:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pan<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Pan<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
@@ -574,7 +574,7 @@ other length units accepted..</p>
 
     <script type="module">
     import RotaryInput from './build/module.js';
-    import events      from '../../dom/modules/events.js';
+    import events      from 'dom/events.js';
 
     // Test
     events('input change', document)

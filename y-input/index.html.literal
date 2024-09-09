@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    ${ include('../../literal/documentation/templates/head.literal', './package.json') }
+    ${ include('literal/documentation/templates/head.literal', './package.json') }
 
     <script title="element">
         window.yInputStylesheet = './build/shadow.css';
@@ -16,7 +16,7 @@
 </head>
 
 <body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
-    ${ include('../../literal/documentation/templates/element.literal', comments(
+    ${ include('literal/documentation/templates/element.literal', comments(
         "./module.js",
         "./modules/lifecycle.js",
         "../modules/properties.js",
@@ -34,14 +34,14 @@
         "./css/tick.css"
     )) }
 
-    ${ include('../../literal/documentation/templates/contribute.literal', './package.json') }
-    ${ include('../../literal/documentation/templates/credit.literal', './package.json') }
-    ${ include('../../literal/documentation/templates/footer.literal', './package.json') }
-    ${ include('../../literal/documentation/templates/scripts.literal', './package.json') }
+    ${ include('literal/documentation/templates/contribute.literal', './package.json') }
+    ${ include('literal/documentation/templates/credit.literal', './package.json') }
+    ${ include('literal/documentation/templates/footer.literal', './package.json') }
+    ${ include('literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
     import XYInput from './build/module.js';
-    import events  from '../../dom/modules/events.js';
+    import events  from 'dom/events.js';
 
     events('input change', document)
     .each((e) => console.log(e.type, e.target.value));
