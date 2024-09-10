@@ -1,7 +1,7 @@
 /* Canvas */
 
-import by      from '../../../fn/modules/by.js';
-import get     from '../../../fn/modules/get.js';
+import by      from 'fn/by.js';
+import get     from 'fn/get.js';
 
 // TODO: remove dependency on Soundstage
 import Envelope from '../../../soundstage/nodes/envelope.js';

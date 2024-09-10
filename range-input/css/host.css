@@ -31,6 +31,9 @@
     position: relative;
     display: grid;
 
+    align-content: start;
+    justify-content: stretch;
+
     grid-template-areas:
         'label output plugs'
         'track track track';

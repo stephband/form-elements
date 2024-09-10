@@ -1,9 +1,9 @@
 
-import capture    from '../../fn/modules/capture.js';
-import id         from '../../fn/modules/id.js';
-import last       from '../../fn/modules/last.js';
-import overload   from '../../fn/modules/overload.js';
-import toType     from '../../fn/modules/to-type.js';
+import capture    from 'fn/capture.js';
+import id         from 'fn/id.js';
+import last       from 'fn/last.js';
+import overload   from 'fn/overload.js';
+import toType     from 'fn/to-type.js';
 import parseValue from './parse-value.js';
 
 const rfloat = /^[+\-]?(?:0|[1-9]\d*)(?:\.\d+)?(?:[eE][+\-]?\d+)?/;

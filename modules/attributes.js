@@ -1,6 +1,6 @@
 
-import id       from '../../fn/modules/id.js';
-import Privates from '../../fn/modules/privates.js';
+import id       from 'fn/id.js';
+import Privates from 'fn/privates.js';
 
 
 export function createAttribute(name, defaultValue, parse = id) {

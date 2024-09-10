@@ -191,7 +191,7 @@
     console.log(xyInput);
 
     // Log events
-    import events from '../../dom/modules/events.js';
+    import events from 'dom/events.js';
     events('input change', document)
     .each((e) => console.log(e.type, JSON.stringify(e.target.value)));
     </script>

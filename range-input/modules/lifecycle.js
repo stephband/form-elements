@@ -7,12 +7,12 @@ Safari 14 crashes when clicking on elements with delegateFocus:
 https://github.com/material-components/material-components-web-components/issues/1720
 */
 
-import Privates        from '../../../fn/modules/privates.js';
-import { clamp }       from '../../../fn/modules/clamp.js';
-import Stream          from '../../../fn/modules/stream.js';
-import create          from '../../../dom/modules/create.js';
-import events          from '../../../dom/modules/events.js';
-import { trigger }     from '../../../dom/modules/trigger.js';
+import Privates        from 'fn/privates.js';
+import { clamp }       from 'fn/clamp.js';
+import Stream          from 'fn/stream.js';
+import create          from 'dom/create.js';
+import events          from 'dom/events.js';
+import { trigger }     from 'dom/trigger.js';
 import parseValue      from '../../modules/parse-value.js';
 import { updateData, updateValue } from '../../modules/data.js';
 import { toDisplay }   from '../../modules/display.js';
@@ -20,15 +20,13 @@ import { nearestStep } from '../../modules/step.js';
 import { toKeyValue }  from '../../modules/key.js';
 import * as defaults   from '../../modules/defaults.js';
 
-const DEBUG = true;
 
+const DEBUG  = true;
 const assign = Object.assign;
 const define = Object.defineProperties;
 
 // Get path to dir of this module
 const path   = import.meta.url.replace(/\/[^\/]*([?#].*)?$/, '/');
-
-
 
 
 /*
@@ -46,16 +44,14 @@ Render
 */
 
 function renderTick(buttons, tick) {
-    buttons.push(
-        create('button', {
-            type: 'button',
-            part: 'tick',
-            name: 'value',
-            value: tick.value,
-            style: '--normal-value: ' + tick.normal + ';',
-            text: tick.label
-        })
-    );
+    buttons.push(create('button', {
+        type: 'button',
+        part: 'tick',
+        name: 'value',
+        value: tick.value,
+        style: '--normal-value: ' + tick.normal + ';',
+        text: tick.label
+    }));
 
     return buttons;
 }
@@ -73,6 +69,8 @@ function renderData(style, scale, min, max, ticks, buttons, marker) {
 
 function renderValue(style, input, internals, outputText, outputAbbr, unit, value, normal) {
     // Render handle position
+    // TODO: Safari (of course) is not updating style consistently, set this way,
+    // we may need to devise another strategy
     style.setProperty('--normal-value', normal);
     input.value = normal;
 
@@ -107,9 +105,9 @@ export default {
     construct: function(shadow, internals) {
         // DOM
         const style   = create('style', ':host {} :host > * { visibility: hidden; }');
-        const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
+        const label   = create('label', { part: 'label', for: 'input', html: '<slot></slot>' });
         // TODO: For some reason in Safari, the input does not get focus, with or without tabindex
-        const input   = create('input', { type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any', tabindex: '0' });
+        const input   = create('input', { part: 'input', type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any', tabindex: '0' });
         const text    = document.createTextNode();
         const abbr    = create('abbr');
         const output  = create('output', { children: [text, abbr], part: 'output' });
@@ -119,16 +117,14 @@ export default {
         shadow.append(style, label, input, output, marker);
 
         // Components
-        const privates   = Privates(this);
-        const data       = {};
+        const privates     = Privates(this);
+        const data         = {};
 
-        privates.host       = this;
-        privates.shadow     = shadow;
-        privates.style      = style;
-        privates.internals  = internals;
-        privates.data       = data;
-
-        // Inputs
+        privates.host      = this;
+        privates.shadow    = shadow;
+        privates.style     = style;
+        privates.internals = internals;
+        privates.data      = data;
         privates.shadow    = new Promise((resolve) => privates.load = resolve);
         privates.scale     = Stream.of(defaults.scale);
         privates.min       = Stream.of(defaults.min);
@@ -137,9 +133,6 @@ export default {
         privates.ticks     = Stream.of(defaults.ticks);
         privates.display   = Stream.of(defaults.display);
         privates.value     = Stream.of(defaults.value);
-
-
-
 
         // Track attribute updates
         const attributes = Stream
@@ -158,8 +151,6 @@ export default {
         attributes
         .each((data) => renderData(getHostStyle(style), data.scale, data.min, data.max, data.ticks, buttons, marker));
 
-//this.nnn = ++n;
-//console.log('RANGE CONSTRUCT', this.nnn, document.body.contains(this));
         // Track value updates
         Stream
         .combine({
@@ -167,11 +158,7 @@ export default {
             value:   privates.value
         })
         .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.data.step, state.value), data)
-//.map((d) => (console.log('RANGE RENDER', this.nnn, document.body.contains(this)), d))
         .each((data) => renderValue(getHostStyle(style), input, internals, text, abbr, data.display, data.value, data.normal)) ;
-
-
-
 
         // Track pointer on ticks and update value
         events({ type: 'pointerdown', select: '[name="value"]' }, shadow)
@@ -185,7 +172,7 @@ export default {
         events('input', shadow)
         .each((e) => {
             const normal = parseFloat(e.target.value);
-            const value       = data.scale.denormalise(data.min, data.max, normal);
+            const value  = data.scale.denormalise(data.min, data.max, normal);
             privates.value.push(value);
         });
 

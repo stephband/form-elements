@@ -8,18 +8,18 @@ tallest element. If there are no ticks the component will collapse a bit
 smaller.
 */
 
-import get             from '../../../fn/modules/get.js';
-import overload        from '../../../fn/modules/overload.js';
-import Privates        from '../../../fn/modules/privates.js';
-import { clamp }       from '../../../fn/modules/clamp.js';
-import Stream          from '../../../fn/modules/stream.js';
-import create          from '../../../dom/modules/create.js';
-import events          from '../../../dom/modules/events.js';
-import gestures        from '../../../dom/modules/gestures.js';
-import { trigger }     from '../../../dom/modules/trigger.js';
-import parseLength     from '../../../dom/modules/parse-length.js';
+import get             from 'fn/get.js';
+import overload        from 'fn/overload.js';
+import Privates        from 'fn/privates.js';
+import { clamp }       from 'fn/clamp.js';
+import Stream          from 'fn/stream.js';
+import create          from 'dom/create.js';
+import events          from 'dom/events.js';
+import gestures        from 'dom/gestures.js';
+import { trigger }     from 'dom/trigger.js';
+import parseLength     from 'dom/parse-length.js';
 import parseValue      from '../../modules/parse-value.js';
-import { updateData, valueFromValue } from '../../modules/data.js';
+import { updateData, updateValue } from '../../modules/data.js';
 import { toDisplay }   from '../../modules/display.js';
 import { toKeyValue }  from '../../modules/key.js';
 import * as defaults   from '../../modules/defaults.js';
@@ -78,13 +78,6 @@ function renderTick(buttons, tick) {
     );
 
     return buttons;
-}
-
-function updateValue(data, scale, min, max, step, value) {
-    const state = valueFromValue(scale, min, max, step, value);
-    data.value  = state.value;
-    data.normal = state.normal;
-    return data;
 }
 
 function renderValue(style, internals, outputText, outputAbbr, unit, value, normal) {

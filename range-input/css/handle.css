@@ -20,7 +20,7 @@
     border: var(--handle-border);
 
     /* Constrain background image */
-    background-clip: content-box;
+    background-clip: padding-box;
     background-origin: padding-box;
     background: var(--handle-background);
 
@@ -53,7 +53,7 @@
     border: var(--handle-border);
 
     /* Constrain background image */
-    background-clip: content-box;
+    background-clip: padding-box;
     background-origin: padding-box;
     background: var(--handle-background);
 
@@ -82,7 +82,7 @@
     border: var(--handle-border);
 
     /* Constrain background image */
-    background-clip: content-box;
+    background-clip: padding-box;
     background-origin: padding-box;
     background: var(--handle-background);
 
