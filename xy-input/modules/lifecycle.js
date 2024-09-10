@@ -438,8 +438,8 @@ export default {
         const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
         const canvas  = create('canvas');
         const svg     = create('svg');
-        const xmarker = create('text', '');
-        const ymarker = create('text', '');
+        const xmarker = document.createTextNode();
+        const ymarker = document.createTextNode();
         const xlines  = [];
         const ylines  = [];
         const xticks  = [];

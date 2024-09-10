@@ -110,10 +110,10 @@ export default {
         const label   = create('label', { for: 'input', html: '<slot></slot>', part: 'label' });
         // TODO: For some reason in Safari, the input does not get focus, with or without tabindex
         const input   = create('input', { type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any', tabindex: '0' });
-        const text    = create('text');
+        const text    = document.createTextNode();
         const abbr    = create('abbr');
         const output  = create('output', { children: [text, abbr], part: 'output' });
-        const marker  = create('text', '');
+        const marker  = document.createTextNode();
         const buttons = [];
 
         shadow.append(style, label, input, output, marker);
