@@ -1,6 +1,6 @@
 
-@import 'https://cdn.jsdelivr.net/gh/stephband/bolt-2@main/elements/html.css';
-@import 'https://cdn.jsdelivr.net/gh/stephband/bolt-2@main/elements/svg.css';
+@import './html.css';
+@import './svg.css';
 
 :host, *, *::before, *::after {
     box-sizing: border-box;
