@@ -129,10 +129,10 @@ export default {
         const style   = create('style', ':host {} :host > * { visibility: hidden; }');
         const label   = create('label', { for: 'input', part: 'label', html: '<slot></slot>' });
         const handle  = create('div', { class: 'handle' });
-        const text    = document.createTextNode();
+        const text    = document.createTextNode('');
         const abbr    = create('abbr');
         const output  = create('output', { children: [text, abbr], part: 'output' });
-        const marker  = document.createTextNode();
+        const marker  = document.createTextNode('');
         const buttons = [];
 
         shadow.append(style, label, handle, output, marker);

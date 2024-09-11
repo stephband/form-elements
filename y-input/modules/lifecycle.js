@@ -312,7 +312,7 @@ export default {
         const label   = create('label', { for: 'input', part: 'label', html: '<slot></slot>' });
         const track   = create('div',   { part: 'track' });
         const svg     = create('svg');
-        const marker  = document.createTextNode();
+        const marker  = document.createTextNode('');
         const output  = create('output', { for: 'number', part: 'output' });
         const input   = create('input', { type: 'number', id: 'number' });
         const ticks   = [];
