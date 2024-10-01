@@ -1,0 +1,32 @@
+{
+  "version": "3",
+  "remote": {
+    "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/assign.js": "c41f48f4c38e5c1a11b4dcd020bb4a01c9fb922a2d45ef455247f583bdfbc755",
+    "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/create.js": "88c3e04e7b37676ce3f0ee6efbffc8a0c9101d308b39fcd752859aa55e5af1dc",
+    "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/delegate.js": "bf8b5c0331d87a1e48b2f59a3aa39aedb6c973de1a988b776f52edd8db3038ce",
+    "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/events.js": "068f9e12baf9a0e8ecf5b833a10164ea631000edd11d9a548792df34cce40a36",
+    "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/trigger.js": "4076f396d9b2493f80bcc5fc9201459c091025d0fb56778728931cf2f669191c",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/arg.js": "8886e09cb323fe28f0018ab831780a8cf7089afdcd95ad71e3060031ba28f447",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/cache.js": "879ee2b7ea4d0d749d6e8f359aee960a5814e4eeff83a7158bf70e3a25851db0",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/curry.js": "b65b5d09c6b82430a9c0e4feb5d31f638cdc46a1ed90192e67c512bad5c5c211",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/data.js": "37169875bdd6214058455d7331890ecf177e42b84f294a57e0cd9f401d1b0198",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/get.js": "e7c7d9d3eb4d4e74185b1c29feb8559c65466a03545237c20e38630132add474",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/id.js": "9c90e26a082d67afdeb83fb64bd795c469f317dca5850c404d6a6f0aa82331dc",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/is-iterable.js": "6ad6dfcbbb29bc0d9efeac0eb77bd4a17c5dabef1440f581afea140974a96d20",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/noop.js": "3be7f93ead642d9f6bc860649ba683cf6d47e37fe7c63c6c8e17c3187140ba96",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/nothing.js": "a630a4e99485f66dceef4f6bcadf2ba933fa7b43968ee6467ddfd34445460be1",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/overload.js": "92a50c40abda323cc5bcbbeb8b69845c11fcc6606bc0dcd8fc914787e2f41891",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/self.js": "c0208917a31ade85516ce45834e5bde94688f28f1bf821c867fd7f863a14af68",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/signal.js": "29c22f5b57225f1ced1facfe1d4e8d07e2ef5a373a760199d8f48b75ecd18fef",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream.js": "6c41edf06a496e083bc03275947a939ca86f6627a0423e960e1a2acba9cf0dda",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/buffer-stream.js": "8a1e8057a7aab8fa4dd723897e7fe51dd9c6c061dcd9cd42807bc3a70c3c2c0f",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/clock-stream.js": "bbd343bc14fd062fc151bff8859bef217b698169a4358f57cb74af74cb5e7083",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/combine-stream.js": "752ab6c8f95398de6edfc43c85218098cd4fb76663df4951d96f38b799e6e5d8",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/merge-stream.js": "d5f0f0967ad9ef81493c9255677245c2ab54b0ea428c5578e65b14b19f9a2071",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/promise-stream.js": "0a1ea5b376b6d2cdbf0b7718d4c67a1fb394019f7603d33c4683e1e5003a29b9",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/signal-stream.js": "34c24a59b83ab5d27f7ab12b745b314fa421d6adbe732db8316de532370257d1",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/stream.js": "bf247a4a21e9cfbd0bb5267d52c28aaead4a269efd66b78c8323b584d2e15679",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/stream/throttle-stream.js": "993c8b48dfceb531bad90e0f50fa81f157bdcda4c374b554b53979a5e012332a",
+    "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/to-type.js": "35fcde240d7038eb7fea1d7c76f614f14dfa3e6caf99975a37ca85c047ad28ea"
+  }
+}
