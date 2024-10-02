@@ -1,40 +1,40 @@
 /**
-<storage-select>
+<file-menu>
 
 A select menu for saving data to localStorage.
 
 ## Import
 
-Import and register the `<storage-select>` custom element, upgrading any
+Import and register the `<file-menu>` custom element, upgrading any
 instances already in the DOM:
 
 ```js
-import RangeInput from './build/storage-select.js';
+import RangeInput from './build/file-menu.js';
 ```
 
 ## Use
 
-You can now author `<storage-select>` elements in your HTML. By default the
+You can now author `<file-menu>` elements in your HTML. By default the
 element shows a menu of all data contained in localStorage:
 
 ```html
-<storage-select></storage-select>
+<file-menu></file-menu>
 ```
 
-The `prefix` attribute makes `<storage-select>` show only data whose `localStorage`
+The `prefix` attribute makes `<file-menu>` show only data whose `localStorage`
 key begins with the given prefix:
 
 ```html
-<storage-select prefix="setting/"></storage-select>
+<file-menu prefix="setting/"></file-menu>
 ```
 
 The title attribute is reflected as the name of the default option:
 
 ```html
-<storage-select prefix="setting/" title="Settings"></storage-select>
+<file-menu prefix="setting/" title="Settings"></file-menu>
 ```
 
-When an item in the menu is selected `<storage-select>` emits a `"change"` event,
+When an item in the menu is selected `<file-menu>` emits a `"change"` event,
 its `.value` property is the (unprefixed) key and its `.data` property is the
 corresponding data read from localStorage and parsed as JSON.
 **/
@@ -96,7 +96,7 @@ async function saveAs(filename, data, id) {
     await writable.close();
 }
 
-export default element('storage-select', {
+export default element('<file-menu>', {
     shadow: `
         <link rel="stylesheet" href="${ stylesheet }"/>
 
@@ -135,10 +135,10 @@ export default element('storage-select', {
                 '': noop,
 
                 '$store': (select, e) => {
-                    // If there is no current name open the Save As dialog
-                    if (!this.value) return dialog.showModal();
+                    // If there is no current name open the Store As dialog
+                    if (!internals.filename) return dialog.showModal();
                     // Compose name
-                    const key = this.prefix + this.value;
+                    const key = this.prefix + internals.filename;
                     // Save under the current name
                     localStorage.setItem(key, JSON.stringify(this.data));
                     // Reselect the current option
@@ -151,23 +151,23 @@ export default element('storage-select', {
                 },
 
                 '$delete': (select, e) => {
-                    const key = this.prefix + this.value;
+                    const key = this.prefix + internals.filename;
                     // Remove data from localStorage
                     localStorage.removeItem(key);
                     // Remove option
                     select.querySelector('[value="' + key + '"]').remove();
                     // Select default option
-                    this.value = select.value = '';
+                    internals.filename = select.value = '';
                 },
 
                 '$save-as': async (select, e) => {
                     // Use the FileSystem API if available
                     if (isTopWindow && window.showSaveFilePicker) {
-                        saveAs(this.value + '.json', this.data, this.prefix);
+                        saveAs(internals.filename + '.json', this.data, this.prefix);
                     }
                     // Fall back to an automatically clicked download link
                     else {
-                        downloadAs(this.value + '.json', this.data);
+                        downloadAs(internals.filename + '.json', this.data);
                     }
                 },
 
@@ -176,7 +176,7 @@ export default element('storage-select', {
                     const data = JSON.parse(json);
 
                     // If that worked update state
-                    this.value = select.value.slice(this.prefix.length);
+                    internals.filename = select.value.slice(this.prefix.length);
                     this.data  = data;
 
                     // Change events do not cross the shadow boundary. Emulate
@@ -201,7 +201,7 @@ export default element('storage-select', {
 
                 // Update state and close dialog
                 select.value = key;
-                this.value = name;
+                internals.filename = name;
                 dialog.close();
 
                 // Emit change event to outer DOM
@@ -238,7 +238,7 @@ export default element('storage-select', {
                 marker.after.apply(marker, options);
 
                 // Select default option and update state
-                this.value = select.value = '';
+                internals.filename = select.value = '';
                 this.data  = {};
 
                 // Emit change event
@@ -252,11 +252,25 @@ export default element('storage-select', {
     }
 }, {
     // Declare title property to make it an observable signal
-    title:  { type: 'string' },
+    title: { type: 'string' },
     // Reserve the prefix '$' for internal use
     prefix: { type: 'string', pattern: /^(?!$\/)/ },
-    // Value contains unprefixed key of storage data
-    value:  { type: 'string' },
+    // Declare title property to make it an observable signal
+    filename: { type: 'string' },
     // Data is the parsed data object from storage
-    data:   { value: {}, enumerable: true, writable: true }
-}, 'stephen.band/form-elements/storage-select/');
+    data:  { value: {}, enumerable: true, writable: true },
+    // Value is the JSON of data, it need not be a signal property
+    value: {
+        attribute: function(json) {
+            this.value = json;
+        },
+
+        get: function() {
+            return JSON.stringify(this.data);
+        },
+
+        set: function(json) {
+            this.data = JSON.parse(json);
+        }
+    }
+}, 'stephen.band/form-elements/file-menu/');
