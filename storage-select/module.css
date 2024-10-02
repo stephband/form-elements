@@ -1,0 +1,45 @@
+@import '../../bolt/elements/html.css';
+
+:host {
+    position: relative;
+    display: inline-block;
+    line-height: 1.5rem;
+    border: 1px solid black;
+    border-radius: 0.1875rem;
+    background-color: white;
+}
+
+:host > select {
+    line-height: inherit;
+    margin-left: -1px;
+    margin-right: -1px;
+    margin-top: -1px;
+    margin-bottom: -1px;
+    max-width: none;
+}
+
+:host > svg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    left: auto;
+    width: auto;
+    pointer-events: none;
+    fill: currentcolor;
+}
+
+select {
+    display: block;
+
+    -webkit-appearance: none;
+       -moz-appearance: none;
+            appearance: none;
+
+    padding-left: 0.3125rem;
+    padding-right: 2.4375rem;
+    background: none;
+    border-width: 0;
+    border-radius: 0;
+}

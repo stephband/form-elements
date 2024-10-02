@@ -49,64 +49,66 @@ import events   from 'dom/events.js';
 import trigger  from 'dom/trigger.js';
 import element, { render }  from 'dom/element-2.js';
 
+//const stylesheet = new URL('./shadow.css', import.meta.url);
+const stylesheet = import.meta.url.replace(/js$/, 'css');
+const isTopWindow = (() => {
+    // Test that we are not running in an iframe
+    try { return window.self === window.top; }
+    catch(e) { return false; }
+})();
+
 function stop(object) {
     object.stop();
 }
 
+function downloadAs(filename, data) {
+    // Create blob from json
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+
+    // Create the blob URL
+    const url = URL.createObjectURL(blob);
+
+    // Create the `<a download>` element and append it invisibly.
+    const a = document.createElement('a');
+    a.href     = url;
+    a.download = filename;
+    a.hidden   = true;
+    document.body.append(a);
+
+    // Programmatically click the element.
+    a.click();
+
+    // Revoke the blob URL and remove the element.
+    setTimeout(() => {
+        URL.revokeObjectURL(url);
+        a.remove();
+    }, 1000);
+}
+
+async function saveAs(filename, data, id) {
+    // create a new handle
+    const file = await window.showSaveFilePicker({ id, suggestedName: filename });
+    // create a FileSystemWritableFileStream to write to
+    const writable = await file.createWritable();
+    // write to file
+    await writable.write(JSON.stringify(data, null, 2));
+    // close the file and write the contents to disk.
+    await writable.close();
+}
+
 export default element('storage-select', {
     shadow: `
-        <style>
-            :host {
-                position: relative;
-                display: inline-block;
-                line-height: 1.5rem;
-                border: 1px solid black;
-                border-radius: 0.1875rem;
-            }
-
-            :host > select {
-                line-height: inherit;
-                margin-left: -1px;
-                margin-right: -1px;
-                margin-top: -1px;
-                margin-bottom: -1px;
-                max-width: none;
-            }
-
-            :host > svg {
-                position: absolute;
-                top: 0;
-                right: 0;
-                bottom: 0;
-                height: 100%;
-                left: auto;
-                width: auto;
-                pointer-events: none;
-                fill: currentcolor;
-            }
-
-            select {
-                display: block;
-
-                -webkit-appearance: none;
-                   -moz-appearance: none;
-                        appearance: none;
-
-                padding-left: 0.3125rem;
-                padding-right: 2.4375rem;
-                background: none;
-                border-width: 0;
-                border-radius: 0;
-            }
-        </style>
+        <link rel="stylesheet" href="${ stylesheet }"/>
 
         <select name="setting">
             <option value selected disabled id="default-option">Settings</option>
             <hr id="marker"/>
             <hr/>
-            <option value="$save">Save</option>
-            <option value="$save-as">Save as</option>
+            <option value="$store">Store</option>
+            <option value="$store-as">Store As</option>
             <option value="$delete">Delete</option>
+            <hr/>
+            <option value="$save-as">Save as</option>
         </select>
 
         <svg viewbox="0 0 24 24">
@@ -132,7 +134,7 @@ export default element('storage-select', {
             '[name="setting"]': overload(get('value'), {
                 '': noop,
 
-                '$save': (select, e) => {
+                '$store': (select, e) => {
                     // If there is no current name open the Save As dialog
                     if (!this.value) return dialog.showModal();
                     // Compose name
@@ -143,7 +145,7 @@ export default element('storage-select', {
                     select.value = key;
                 },
 
-                '$save-as': (select, e) => {
+                '$store-as': (select, e) => {
                     // Open the Save As dialog
                     dialog.showModal();
                 },
@@ -156,6 +158,17 @@ export default element('storage-select', {
                     select.querySelector('[value="' + key + '"]').remove();
                     // Select default option
                     this.value = select.value = '';
+                },
+
+                '$save-as': async (select, e) => {
+                    // Use the FileSystem API if available
+                    if (isTopWindow && window.showSaveFilePicker) {
+                        saveAs(this.value + '.json', this.data, this.prefix);
+                    }
+                    // Fall back to an automatically clicked download link
+                    else {
+                        downloadAs(this.value + '.json', this.data);
+                    }
                 },
 
                 default: (select, e) => {
@@ -239,11 +252,11 @@ export default element('storage-select', {
     }
 }, {
     // Declare title property to make it an observable signal
-    value:  { type: 'title' },
+    title:  { type: 'string' },
     // Reserve the prefix '$' for internal use
     prefix: { type: 'string', pattern: /^(?!$\/)/ },
     // Value contains unprefixed key of storage data
     value:  { type: 'string' },
     // Data is the parsed data object from storage
     data:   { value: {}, enumerable: true, writable: true }
-});
+}, 'stephen.band/form-elements/storage-select/');
