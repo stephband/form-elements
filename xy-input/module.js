@@ -29,7 +29,7 @@ The `<xy-input>` element may now be written in your HTML:
 ```
 **/
 
-import element    from 'dom/element.js';
+import element    from 'dom/element-1.js';
 import lifecycle  from './modules/lifecycle.js';
 import properties from './modules/properties.js';
 

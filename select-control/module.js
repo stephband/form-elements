@@ -77,7 +77,7 @@ slot="next-button"
 Replace default content of the increment button (`"▶"`) with custom HTML.
 **/
 
-import element    from 'dom/element.js';
+import element    from 'dom/element-1.js';
 import lifecycle  from './modules/lifecycle.js';
 
 const stylesheet = window.selectControlStylesheet

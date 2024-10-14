@@ -76,6 +76,7 @@ function renderValue(style, input, internals, outputText, outputAbbr, unit, valu
 
     // Render display
     const display = toDisplay(unit, value);
+console.log(unit, value);
     outputText.textContent = display.value;
     outputAbbr.textContent = display.unit;
 

@@ -39,7 +39,7 @@ You can now author rotating knobs in forms:
 
 **/
 
-import element    from 'dom/element.js';
+import element    from 'dom/element-1.js';
 import lifecycle  from './modules/lifecycle.js';
 import properties from './modules/properties.js';
 

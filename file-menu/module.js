@@ -43,23 +43,20 @@ corresponding data read from localStorage and parsed as JSON.
 import get      from 'fn/get.js';
 import noop     from 'fn/noop.js';
 import overload from 'fn/overload.js';
+import Signal   from 'fn/signal.js';
 import create   from 'dom/create.js';
 import delegate from 'dom/delegate.js';
 import events   from 'dom/events.js';
 import trigger  from 'dom/trigger.js';
-import element, { render }  from 'dom/element-2.js';
+import element  from 'dom/element.js';
+import createObjectProperty from 'dom/element/create-object-property.js';
+import createStringProperty from 'dom/element/create-string-property.js';
 
-//const stylesheet = new URL('./shadow.css', import.meta.url);
-const stylesheet = import.meta.url.replace(/js$/, 'css');
 const isTopWindow = (() => {
     // Test that we are not running in an iframe
     try { return window.self === window.top; }
     catch(e) { return false; }
 })();
-
-function stop(object) {
-    object.stop();
-}
 
 function downloadAs(filename, data) {
     // Create blob from json
@@ -98,7 +95,7 @@ async function saveAs(filename, data, id) {
 
 export default element('<file-menu>', {
     shadow: `
-        <link rel="stylesheet" href="${ stylesheet }"/>
+        <link rel="stylesheet" href="${ window.fileMenuStylesheet || import.meta.url.replace(/js$/, 'css') }"/>
 
         <select name="setting">
             <option value selected disabled id="default-option">Settings</option>
@@ -209,6 +206,8 @@ export default element('<file-menu>', {
             },
 
             '[name="close"]': (button, e) => {
+                const key = this.prefix + internals.filename;
+                select.value = key;
                 dialog.close();
             }
         }))
@@ -219,13 +218,13 @@ export default element('<file-menu>', {
         const marker = shadow.getElementById('marker');
 
         // Declare render signals
-        internals.renderers = [
-            render(() => {
+        return [
+            Signal.frame(() => {
                 const defaultOption = shadow.getElementById('default-option');
                 defaultOption.textContent = this.title || 'Storage';
             }),
 
-            render(() => {
+            Signal.frame(() => {
                 const prefix = this.prefix;
                 const options = Object.keys(localStorage)
                     .filter((key) => key.startsWith(prefix))
@@ -239,27 +238,25 @@ export default element('<file-menu>', {
 
                 // Select default option and update state
                 internals.filename = select.value = '';
-                this.data  = {};
+                this.data = null;
 
                 // Emit change event
                 trigger('change', this);
             })
         ];
-    },
-
-    disconnect: function(shadow, internals) {
-        internals.renderers.forEach(stop);
     }
 }, {
     // Declare title property to make it an observable signal
-    title: { type: 'string' },
+    title:    createStringProperty(),
     // Reserve the prefix '$' for internal use
-    prefix: { type: 'string', pattern: /^(?!$\/)/ },
+    prefix:   createStringProperty(/^(?!$\/)/),
     // Declare title property to make it an observable signal
-    filename: { type: 'string' },
+    filename: createStringProperty(),
     // Data is the parsed data object from storage
-    data:  { value: {}, enumerable: true, writable: true },
-    // Value is the JSON of data, it need not be a signal property
+    data:     createObjectProperty(),
+    // Value is the JSON of data, it need not be a signal property. Don't make
+    // it enumerable, if we JSON.stringify() the element it ought not be included?
+    // TODO: dont need thais AND 'data' property
     value: {
         attribute: function(json) {
             this.value = json;

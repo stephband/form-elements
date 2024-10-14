@@ -1,21 +1,23 @@
 @import '../../bolt/elements/html.css';
 
 :host {
+    --border-width:  1px;
+    --padding-left:  0.3125rem;
+    --padding-right: 2.4375rem;
+
     position: relative;
     display: inline-block;
     line-height: 1.5rem;
-    border: 1px solid black;
+    border: var(--border-width) solid black;
     border-radius: 0.1875rem;
     background-color: white;
 }
 
 :host > select {
     line-height: inherit;
-    margin-left: -1px;
-    margin-right: -1px;
-    margin-top: -1px;
-    margin-bottom: -1px;
+    margin: calc(-1 * var(--border-width));
     max-width: none;
+    color: inherit;
 }
 
 :host > svg {
@@ -30,6 +32,10 @@
     fill: currentcolor;
 }
 
+:host > svg * {
+    pointer-events: none;
+}
+
 select {
     display: block;
 
@@ -37,8 +43,8 @@ select {
        -moz-appearance: none;
             appearance: none;
 
-    padding-left: 0.3125rem;
-    padding-right: 2.4375rem;
+    padding-left: var(--padding-left, 0.3125rem);
+    padding-right: var(--padding-right, 2.4375rem);
     background: none;
     border-width: 0;
     border-radius: 0;
