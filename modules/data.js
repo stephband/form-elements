@@ -13,6 +13,7 @@ export function assignNormal(data, scale, min, max, value) {
 }
 
 export function updateData(data, axis) {
+console.log('UPDATE data', data, axis);
     const { scale, min, max, step, ticks, display } = axis;
 
     data.scale = scale;
