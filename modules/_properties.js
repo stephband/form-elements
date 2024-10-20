@@ -1,6 +1,5 @@
 
-import { createAttribute, createNumberAttribute, createStringAttribute } from 'dom/element/create-attribute.js';
-
+import { createAttribute, createAttributeProperty, createBoolean } from './attributes.js';
 import { getScale } from './scales.js';
 import parseValue   from './parse-value.js';
 import parseTicks   from './parse-ticks.js';
@@ -30,7 +29,7 @@ export default {
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
-    min: createNumberAttribute('min', 0, -Infinity, Infinity, parseValue),
+    min: createAttributeProperty('min', 0, parseValue),
 
     /**
     max="1"
@@ -44,7 +43,7 @@ export default {
     units, eg. `"0dB"` or `"200Hz"`, or numbers.
     **/
 
-    max: createNumberAttribute('max', 1, -Infinity, Infinity, parseValue),
+    max: createAttributeProperty('max', 1, parseValue),
 
     /**
     scale="linear"
@@ -114,15 +113,17 @@ export default {
     ```
     **/
 
-    display: createStringAttribute('display'),
+    display: createAttribute('display'),
 
     /**
     step=""
     Step is either:
-    - `"any"`, the default value
-    - `"ticks"`, the values in the `ticks` attribute are used as step values
-    - A space or comma separated list of values, with or without units
+
+    - `"any"` (the default value)
+    - `"ticks"`. The values in the `ticks` attribute are used as step values
+    - A space or comma separated list of values, written with or without units
+
     **/
 
-    step: createStringAttribute('any')
+    step: createAttributeProperty('step', 'any')
 };

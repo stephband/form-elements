@@ -4,12 +4,12 @@ import Privates from 'fn/privates.js';
 
 
 export function createAttribute(name, defaultValue, parse = id) {
-    console.log(name, defaultValue);
+console.log(name, defaultValue);
     return {
         attribute: function(value) {
             const privates = Privates(this);
             const parsed   = parse(value === null ? defaultValue : value.trim());
-            console.log(name, 'SET', parsed);
+console.log(name, 'SET', parsed);
             privates[name].push(parsed);
         }
     };

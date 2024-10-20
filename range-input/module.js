@@ -39,20 +39,22 @@ Safari 14 crashes when clicking on elements with delegateFocus:
 https://github.com/material-components/material-components-web-components/issues/1720
 */
 
-import Privates                    from 'fn/privates.js';
+//import Privates                    from 'fn/privates.js';
 import { clamp }                   from 'fn/clamp.js';
-import Stream                      from 'fn/stream/stream.js';
+import nothing                     from 'fn/nothing.js';
+import Signal                      from 'fn/signal.js';
 import create                      from 'dom/create.js';
-import element                     from 'dom/element.js';
+import element, { getInternals }   from 'dom/element.js';
+//import { createAttributeProperty } from 'dom/element/create-attribute.js';
 import events                      from 'dom/events.js';
 import { trigger }                 from 'dom/trigger.js';
 import parseValue                  from '../modules/parse-value.js';
-import { updateData, updateValue } from '../modules/data.js';
+import { getScale }                from '../modules/scales.js';
+//import { updateData, updateValue } from '../modules/data.js';
 import { toDisplay }               from '../modules/display.js';
 import { nearestStep }             from '../modules/step.js';
 import { toKeyValue }              from '../modules/key.js';
-import * as defaults               from '../modules/defaults.js';
-import { createAttributeProperty } from '../modules/attributes.js';
+//import * as defaults               from '../modules/defaults.js';
 import properties                  from '../modules/properties.js';
 
 
@@ -60,61 +62,6 @@ const DEBUG  = true;
 const assign = Object.assign;
 const define = Object.defineProperties;
 
-
-/*
-Events
-*/
-
-function toTickValue(e) {
-    const target = e.target.closest('[name="value"]');
-    return parseFloat(target.value);
-}
-
-
-/*
-Render
-*/
-
-function renderTick(buttons, tick) {
-    buttons.push(create('button', {
-        type: 'button',
-        part: 'tick',
-        name: 'value',
-        value: tick.value,
-        style: '--normal-value: ' + tick.normal + ';',
-        text: tick.label
-    }));
-
-    return buttons;
-}
-
-function renderData(style, scale, min, max, ticks, buttons, marker) {
-    // Style
-    style.setProperty('--normal-zero', scale.normalise(min, max, 0));
-
-    // Ticks
-    buttons.forEach((node) => node.remove());
-    buttons.length = 0;
-    buttons = ticks.reduce(renderTick, buttons);
-    marker.after.apply(marker, buttons);
-}
-
-function renderValue(style, input, internals, outputText, outputAbbr, unit, value, normal) {
-    // Render handle position
-    // TODO: Safari (of course) is not updating style consistently, set this way,
-    // we may need to devise another strategy
-    style.setProperty('--normal-value', normal);
-    input.value = normal;
-
-    // Render display
-    const display = toDisplay(unit, value);
-console.log(unit, value);
-    outputText.textContent = display.value;
-    outputAbbr.textContent = display.unit;
-
-    // Render form data
-    internals.setFormValue(value);
-}
 
 
 /*
@@ -137,7 +84,6 @@ export default element('<range-input>', {
         // DOM
         const style   = shadow.querySelector('style');
         const label   = create('label', { part: 'label', for: 'input', html: '<slot></slot>' });
-        // TODO: For some reason in Safari, the input does not get focus, with or without tabindex
         const input   = create('input', { part: 'input', type: 'range', id: 'input', name: 'unit-value', min: '0', max: '1', step: 'any', tabindex: '0' });
         const text    = document.createTextNode('');
         const abbr    = create('abbr');
@@ -147,87 +93,180 @@ export default element('<range-input>', {
 
         shadow.append(label, input, output, marker);
 
-        // Components
-        const privates     = Privates(this);
-        const data         = {};
+        internals.style    = style;
+        internals.buttons  = buttons;
+        internals.input    = input;
+        internals.abbr     = abbr;
+        internals.text     = text;
+        internals.marker   = marker;
+        internals.$loaded  = Signal.of(false);
+        internals.$display = Signal.of('');
+        internals.$scale   = Signal.of(getScale('linear'));
+        internals.$step    = Signal.of('any');
+        internals.$ticksin = Signal.of('');
+        internals.$min     = Signal.of(0);
+        internals.$max     = Signal.of(1);
+        internals.$valuein = Signal.of(0);
 
-        privates.host      = this;
-        privates.shadow    = shadow;
-        privates.internals = internals;
-        privates.data      = data;
-        privates.shadow    = new Promise((resolve) => privates.load = resolve);
-        privates.scale     = Stream.of(defaults.scale);
-        privates.min       = Stream.of(defaults.min);
-        privates.max       = Stream.of(defaults.max);
-        privates.step      = Stream.of(defaults.step);
-        privates.ticks     = Stream.of(defaults.ticks);
-        privates.display   = Stream.of(defaults.display);
-        privates.value     = Stream.of(defaults.value);
-console.log(Stream.combine);
-        // Track attribute updates
-        const attributes = Stream
-        .combine({
-            shadow:  privates.shadow,
-            scale:   privates.scale,
-            min:     privates.min,
-            max:     privates.max,
-            ticks:   privates.ticks,
-            display: privates.display,
-            step:    privates.step
-        })
-        .scan(updateData, data);
+        internals.$value   = Signal.compute(() => {
+            const {
+                $min:     { value: min },
+                $max:     { value: max },
+                $valuein: { value: value }
+            } = internals ;
 
-        attributes
-        .each((data) => renderData(getHostStyle(style), data.scale, data.min, data.max, data.ticks, buttons, marker));
+            return clamp(min, max, value);
+        });
 
-        // Track value updates
-        Stream
-        .combine({
-            data:    attributes,
-            value:   privates.value
-        })
-        .scan((data, state) => updateValue(data, state.data.scale, state.data.min, state.data.max, state.data.step, state.value), data)
-        .each((data) => renderValue(getHostStyle(style), input, internals, text, abbr, data.display, data.value, data.normal)) ;
+        internals.$normal = Signal.compute(() => {
+            const {
+                $scale: { value: scale },
+                $min:   { value: min },
+                $max:   { value: max },
+                $value: { value: value }
+            } = internals ;
+
+            return scale.normalise(min, max, value);
+        });
+
+        internals.$ticks = Signal.compute(() => {
+            const {
+                $scale:   { value: scale },
+                $ticksin: { value: ticks },
+                $min:     { value: min },
+                $max:     { value: max },
+                $value:   { value: value }
+            } = internals ;
+
+            return (ticks ?
+                ticks.length ? ticks :
+                generateTicks(internals.$display.value, min, max) :
+            nothing)
+            // Filter to ticks within range min-max inclusive
+            .filter((tick) => tick.value >= min && tick.value <= max)
+            .map((tick) => tick.normal = scale.normalise(min, max, tick.value)) ;
+        });
+
+        internals.$step = Signal.compute(() =>
+            // "any"
+            step === 'any' ? undefined :
+            // "ticks"
+            step === 'ticks' ? data.ticks :
+            // Multiple values
+            /\s|,/.test(step) ? parseTicks(step)
+                .filter((step) => step.value >= data.min && step.value <= data.max)
+                .map((step) => assignNormal(step, scale, min, max, step.value)) :
+            // Generate from a single step value
+            createSteps(min, max, parseValue(step))
+            .map((step) => assignNormal(step, scale, min, max, step.value))
+        );
 
         // Track pointer on ticks and update value
         events({ type: 'pointerdown', select: '[name="value"]' }, shadow)
-        .map(toTickValue)
-        .each((value) => {
-            privates.value.push(value);
+        .each((e) => {
+            this.value = parseFloat(e.target.value);
             trigger('input', this);
         });
 
         // Track input changes
         events('input', shadow)
         .each((e) => {
+            const {
+                $min:   { value: min },
+                $max:   { value: max },
+                $scale: { value: scale }
+            } = internals ;
+
             const normal = parseFloat(e.target.value);
-            const value  = data.scale.denormalise(data.min, data.max, normal);
-            privates.value.push(value);
+            this.value = scale.denormalise(min, max, normal);
         });
 
         // While this is focused allow up and down arrows to change value
         events('keydown', this)
         .filter(() => document.activeElement === this || this.contains(document.activeElement))
-        .map((e) => toKeyValue(e, data.scale, data.min, data.max, data.step, data.normal))
-        .each((value) => {
-            privates.value.push(value);
+        .each((e) => {
+            const {
+                $min:    { value: min },
+                $max:    { value: max },
+                $normal: { value: normal },
+                $scale:  { value: scale },
+                $step:   { value: step }
+            } = internals ;
+
+            this.value = toKeyValue(e, scale, min, max, step, normal);
             trigger('input', this);
         });
     },
 
     load: function(shadow) {
-        const privates = Privates(this);
-        privates.load(shadow);
+        const internals = getInternals(this);
+        internals.$loaded.value = true;
     },
 
     connect: function() {
-        //console.log('RANGE CONNECT', this.nnn, document.body.contains(this));
-    },
+        const internals = getInternals(this);
+        const style     = getHostStyle(internals.style);
+        const { text, abbr, input, buttons, marker } = internals;
 
-    disconnect: function() {
-        //console.log('RANGE DISCONNECT', this.nnn, document.body.contains(this));
+        return [
+            // Form data
+            Signal.tick(() => internals.setFormValue(internals.$value.value)),
+
+            // Normal 0
+            Signal.frame(() => {
+                const {
+                    $scale: { value: scale },
+                    $min:   { value: min },
+                    $max:   { value: max }
+                } = internals ;
+
+                style.setProperty('--normal-zero', scale.normalise(min, max, 0));
+            }),
+
+            // Normal value
+            Signal.frame(() => {
+                const normal = internals.$normal.value;
+                style.setProperty('--normal-value', normal);
+                if (input.getRootNode().activeElement !== input) input.value = normal;
+            }),
+
+            // Ticks
+            Signal.frame(() => {
+                if (!internals.$loaded.value) return;
+                const ticks = internals.$ticks.value ;
+                buttons.forEach((node) => node.remove());
+                buttons.length = 0;
+
+                let n = -1, tick;
+                while (tick = ticks[++n]) buttons.push(create('button', {
+                    type:  'button',
+                    part:  'tick',
+                    name:  'value',
+                    value: tick.value,
+                    style: '--normal-value: ' + tick.normal + ';',
+                    text:  tick.label
+                }));
+
+                marker.after.apply(marker, buttons);
+            }),
+
+            // Output display
+            Signal.frame(() => {
+                if (!internals.$loaded.value) return;
+
+                const {
+                    $display: { value: unit },
+                    $value:   { value: value }
+                } = internals ;
+
+                // Render display
+                const display = toDisplay(unit, value);
+                text.textContent = display.value;
+                abbr.textContent = display.unit;
+            })
+        ];
     }
-}, Object.assign({}, properties, {
+}, Object.assign({
     /**
     value=""
     The initial value of the input.
@@ -238,5 +277,23 @@ console.log(Stream.combine);
     Current value of the input.
     **/
 
-    value: createAttributeProperty('value', 0, parseValue)
-}), 'stephen.band/form-elements/');
+    value: {
+        attribute: function(value) {
+            this[name] = value === null ? 0 : value.trim() ;
+        },
+
+        get: function() {
+            const internals = getInternals(this);
+            const signal = internals.$value;
+            return signal.value;
+        },
+
+        set: function(value) {
+            const internals = getInternals(this);
+            const signal = internals.$valuein;
+            signal.value = parseValue(value) || 0;
+        },
+
+        enumerable: true
+    }
+}, properties), 'stephen.band/form-elements/');

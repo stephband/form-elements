@@ -12,9 +12,9 @@ export function assignNormal(data, scale, min, max, value) {
     return data;
 }
 
-export function updateData(scale, min, max, step, ticks, display, data) {
-    //console.log('UPDATE data', data, axis);
-    //const { scale, min, max, step, ticks, display } = axis;
+export function updateData(data, axis) {
+console.log('UPDATE data', data, axis);
+    const { scale, min, max, step, ticks, display } = axis;
 
     data.scale = scale;
     data.min   = min;

@@ -49,8 +49,8 @@ import delegate from 'dom/delegate.js';
 import events   from 'dom/events.js';
 import trigger  from 'dom/trigger.js';
 import element  from 'dom/element.js';
-import createObjectProperty from 'dom/element/create-object-property.js';
-import createStringProperty from 'dom/element/create-string-property.js';
+import { createObjectAttribute, createStringAttribute } from 'dom/element/create-attribute.js';
+//import createStringProperty from 'dom/element/create-string-property.js';
 
 const isTopWindow = (() => {
     // Test that we are not running in an iframe
@@ -247,13 +247,13 @@ export default element('<file-menu>', {
     }
 }, {
     // Declare title property to make it an observable signal
-    title:    createStringProperty(),
+    title:    createStringAttribute(),
     // Reserve the prefix '$' for internal use
-    prefix:   createStringProperty(/^(?!$\/)/),
+    prefix:   createStringAttribute(/^(?!$\/)/),
     // Declare title property to make it an observable signal
-    filename: createStringProperty(),
+    filename: createStringAttribute(),
     // Data is the parsed data object from storage
-    data:     createObjectProperty(),
+    data:     createObjectAttribute(),
     // Value is the JSON of data, it need not be a signal property. Don't make
     // it enumerable, if we JSON.stringify() the element it ought not be included?
     // TODO: dont need thais AND 'data' property
