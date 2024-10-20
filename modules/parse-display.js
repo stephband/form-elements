@@ -2,6 +2,7 @@
 import overload       from 'fn/overload.js';
 import todB           from 'fn/to-db.js';
 import { formatTime } from 'fn/time.js';
+import compile        from './compile.js';
 
 function outputMilli() {
     return {
@@ -126,3 +127,10 @@ export const formatters = {
 };
 
 export const toDisplay = overload((unit) => unit.toLowerCase(), formatters);
+
+
+export default function parseDisplay(format) {
+    return /\$\\*\{/.test(format) ?
+        compile(format.replaceAll(/\$\\*\{/g, '${')) :
+        (value) => toDisplay(format, value) ;
+}

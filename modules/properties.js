@@ -4,6 +4,7 @@ import { createAttribute, createNumberAttribute, createStringAttribute } from 'd
 import { getScale } from './scales.js';
 import parseValue   from './parse-value.js';
 import parseTicks   from './parse-ticks.js';
+import parseDisplay from './parse-display.js';
 
 
 export default {
@@ -114,7 +115,7 @@ export default {
     ```
     **/
 
-    display: createStringAttribute('display'),
+    display: createAttribute('display', '', parseDisplay),
 
     /**
     step=""
