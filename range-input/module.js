@@ -39,22 +39,18 @@ Safari 14 crashes when clicking on elements with delegateFocus:
 https://github.com/material-components/material-components-web-components/issues/1720
 */
 
-//import Privates                    from 'fn/privates.js';
 import { clamp }                   from 'fn/clamp.js';
 import nothing                     from 'fn/nothing.js';
 import Signal                      from 'fn/signal.js';
 import create                      from 'dom/create.js';
 import element, { getInternals }   from 'dom/element.js';
-//import { createAttributeProperty } from 'dom/element/create-attribute.js';
 import events                      from 'dom/events.js';
 import { trigger }                 from 'dom/trigger.js';
 import parseValue                  from '../modules/parse-value.js';
 import { getScale }                from '../modules/scales.js';
-//import { updateData, updateValue } from '../modules/data.js';
 import { toDisplay }               from '../modules/display.js';
 import { nearestStep }             from '../modules/step.js';
 import { toKeyValue }              from '../modules/key.js';
-//import * as defaults               from '../modules/defaults.js';
 import properties                  from '../modules/properties.js';
 
 
