@@ -2,7 +2,7 @@
 /* output */
 
 [part="output"] {
-    width: var(--handle-width);
+    width: var(--handle-size);
     height: 1lh;
     text-align: center;
 }

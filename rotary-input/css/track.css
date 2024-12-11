@@ -5,9 +5,9 @@
 :host::before {
     content: '';
     grid-area: handle;
-    width: calc(var(--handle-width) + 2 * var(--track-width));
+    width: calc(var(--handle-size) + 2 * var(--track-size));
     height: 0;
-    padding-top: calc(var(--handle-width) + 2 * var(--track-width));
+    padding-top: calc(var(--handle-size) + 2 * var(--track-size));
     background: var(--track-background) conic-gradient(
         from calc(180deg + var(--rotation-start)),
         transparent 0deg,

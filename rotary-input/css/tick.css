@@ -2,7 +2,7 @@
 /* tick */
 
 [part="tick"] {
-    --tick-radius: calc(0.5 * var(--handle-width) + 0.75rem);
+    --tick-radius: calc(0.5 * var(--handle-size) + 0.75rem);
     --tick-line-height: 0.9375rem;
     --tick-height: 0.1875rem;
 

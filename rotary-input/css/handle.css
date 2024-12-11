@@ -3,9 +3,9 @@
 :host::after {
     content: '';
     grid-area: handle;
-    width: var(--handle-width);
+    width: var(--handle-size);
     height: 0;
-    padding-top: var(--handle-width);
+    padding-top: var(--handle-size);
     box-shadow: var(--handle-shadow);
     background: var(--handle-background);
     border: var(--handle-border);
@@ -18,9 +18,9 @@
 .handle {
     cursor: pointer;
     cursor: ns-resize;
-    width: var(--handle-width);
+    width: var(--handle-size);
     height: 0;
-    padding-top: var(--handle-width);
+    padding-top: var(--handle-size);
     background: transparent;
     border: 0;
     border-radius: 50%;
@@ -29,7 +29,6 @@
     /* Disable scroll */
     touch-action: none;
     -webkit-touch-action:  none;
-
     -webkit-touch-callout: none; /* iOS Safari */
       -webkit-user-select: none; /* Safari */
           -ms-user-select: none; /* Internet Explorer/Edge */
@@ -39,13 +38,13 @@
 .handle::after {
     content: '';
     position: absolute;
-    width: var(--handle-dot-width);
-    height: var(--handle-dot-height);
+    width: var(--dot-size);
+    height: var(--dot-size);
     left: 50%;
-    top: calc(50% + var(--handle-dot-distance));
+    top: calc(50% + var(--dot-distance));
     transform: translate3d(-50%, 0, 0);
     border-radius: 50%;
-    background-color: var(--handle-dot-background);
-    border: var(--handle-dot-border);
-    box-shadow: var(--handle-dot-shadow);
+    background-color: var(--dot-background);
+    border: var(--dot-border);
+    box-shadow: var(--dot-shadow);
 }

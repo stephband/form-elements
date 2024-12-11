@@ -63,7 +63,7 @@ import gestures        from 'dom/gestures.js';
 import { trigger }     from 'dom/trigger.js';
 import parseLength     from 'dom/parse-length.js';
 import { createNumberAttribute } from 'dom/element/create-attribute.js';
-import { updateData, updateValue } from '../modules/data.js';
+import { updateData, valueFromValue } from '../modules/data.js';
 import properties      from '../modules/properties.js';
 import parseValue      from '../modules/parse-value.js';
 import { toDisplay }   from '../modules/parse-display.js';
@@ -81,15 +81,15 @@ function toTickValue(e) {
     return parseFloat(target.value);
 }
 
-const toGestureValue = overload((pointer, e) => e.type, {
-    'pointerdown': (data, e) => ({
-        law:   data.law,
-        min:   data.min,
-        max:   data.max,
+const toGestureValue = overload((internals, e) => e.type, {
+    'pointerdown': ({ law, min, max, $normal, $value }, e) => ({
+        law:   law.value,
+        min:   min.value,
+        max:   max.value,
         e0:    e,
         y0:    e.clientY,
-        y:     data.normal,
-        value: data.value,
+        y:     $normal.value,
+        value: $value.value,
         touchRange: parseLength(getComputedStyle(e.target).getPropertyValue('--touch-range'))
     }),
 
@@ -194,7 +194,6 @@ export default element('<rotary-input>', {
         output.prepend(outputText);
         shadow.append(marker);
 
-        const data       = {};
         const hostStyle  = style.sheet.cssRules[0].style;
         const childStyle = style.sheet.cssRules[1].style;
         const display    = Signal.of(defaults.display);
@@ -203,46 +202,40 @@ export default element('<rotary-input>', {
         const max        = Signal.of(defaults.max);
         const step       = Signal.of(defaults.step);
         const ticks      = Signal.of(defaults.ticks);
-        const value      = Signal.of(defaults.value);
+        const $value     = Signal.of(defaults.value);
+        const $normal    = Signal.of(defaults.value);
 
         assign(internals, {
             host: this,
             hostStyle, childStyle, outputText, outputAbbr, buttons,
-            law, min, max, step, ticks, display, value
+            law, min, max, step, ticks, display, $value, $normal
         });
 
-        // ???
-        internals.data       = data;
-
         // Updates
-        const pushValue = (value) => {
-            console.log('PUSH VALUE');
-            privates.value.push(value);
+        const setValue = (value) => {
+            $value.value = value;
             trigger('input', this);
         };
-
-
-
 
         // Track pointer on ticks and update value
         events({ type: 'pointerdown', select: '[name="value"]' }, shadow)
         .map(toTickValue)
-        .each(pushValue);
+        .each(setValue);
 
         // Track gestures on handle and update value
         gestures({ threshold: 1, select: '[part="handle"]' }, shadow)
         .each((events) => {
             events
-            .scan(toGestureValue, data)
+            .scan(toGestureValue, internals)
             .map(get('value'))
-            .each(pushValue)
+            .each(setValue)
         });
 
         // While this is focused allow up and down arrows to change value
         events('keydown', this)
         .filter(() => document.activeElement === this || this.contains(document.activeElement))
-        .map((e) => toKeyValue(e, law.value, min.value, max.value, step.value, data.normal))
-        .each(pushValue);
+        .map((e) => toKeyValue(e, law.value, min.value, max.value, step.value, $normal.value))
+        .each(setValue);
     },
 
     load: function(shadow, { childStyle }) {
@@ -250,7 +243,7 @@ export default element('<rotary-input>', {
     },
 
     connect: function(shadow, internals) {
-        const { hostStyle, outputAbbr, outputText, buttons, marker, law, min, max, step, ticks, display, value, data } = internals;
+        const { hostStyle, outputAbbr, outputText, buttons, marker, law, min, max, step, ticks, display, $value, $normal } = internals;
         return [
             // Observe attribute updates
             Signal.frame(() => {
@@ -259,9 +252,11 @@ export default element('<rotary-input>', {
 
             // Observe value attribute updates
             Signal.frame(() => {
-                if (value.value === undefined) return;
-                updateValue(data, law.value, min.value, max.value, step.value, value.value);
-                renderValue(hostStyle, internals, outputText, outputAbbr, display.value, value.value, data.normal);
+                if ($value.value === undefined) return;
+                const { value, normal } = valueFromValue(law.value, min.value, max.value, step.value, $value.value);
+                //$value.value  = value;
+                $normal.value = normal;
+                renderValue(hostStyle, internals, outputText, outputAbbr, display.value, value, normal);
             })
         ];
     }
