@@ -48,7 +48,7 @@ import create   from 'dom/create.js';
 import delegate from 'dom/delegate.js';
 import events   from 'dom/events.js';
 import trigger  from 'dom/trigger.js';
-import element  from 'dom/element.js';
+import element, { getInternals } from 'dom/element.js';
 import { createObjectAttribute, createStringAttribute } from 'dom/element/create-attribute.js';
 //import createStringProperty from 'dom/element/create-string-property.js';
 
@@ -99,13 +99,12 @@ export default element('<file-menu>', {
 
         <select name="setting">
             <option value selected disabled id="default-option">Settings</option>
-            <hr id="marker"/>
             <hr/>
             <option value="$store">Store</option>
-            <option value="$store-as">Store As</option>
+            <option value="$store-as">Store as&hellip;</option>
             <option value="$delete">Delete</option>
             <hr/>
-            <option value="$save-as">Save as</option>
+            <option value="$save-as">Save as&hellip;</option>
         </select>
 
         <svg viewbox="0 0 24 24">
@@ -125,7 +124,7 @@ export default element('<file-menu>', {
     construct: function(shadow, internals, data) {
         const select = shadow.querySelector('select');
         const dialog = shadow.querySelector('dialog');
-        const marker = shadow.getElementById('marker');
+        const marker = shadow.getElementById('default-option');
 
         events('change', shadow).each(delegate({
             '[name="setting"]': overload(get('value'), {
@@ -169,12 +168,29 @@ export default element('<file-menu>', {
                 },
 
                 default: (select, e) => {
-                    const json = localStorage.getItem(select.value);
-                    const data = JSON.parse(json);
+                    // TODO: This is a cheeky backdoor to allow consumers to add
+                    // actions (a la stage-node). There's probably a better way.
+                    if (this.actions && this.actions[select.value]) {
+                        this.actions[select.value](select, e);
+                        return;
+                    }
 
-                    // If that worked update state
-                    internals.filename = select.value.slice(this.prefix.length);
-                    this.data  = data;
+                    // If value starts with $preset data is taken from the
+                    // presets object
+                    if (select.value.startsWith('$/')) {
+                        const name = select.value.slice(2);
+                        const data = internals.presets[name];
+                        internals.filename = name;
+                        this.data = data;
+                    }
+
+                    // Get data from localStorage
+                    else {
+                        const json = localStorage.getItem(select.value);
+                        const data = JSON.parse(json);
+                        internals.filename = select.value.slice(this.prefix.length);
+                        this.data  = data;
+                    }
 
                     // Change events do not cross the shadow boundary. Emulate
                     // a change event when data has actually changed.
@@ -210,14 +226,19 @@ export default element('<file-menu>', {
                 select.value = key;
                 dialog.close();
             }
-        }))
+        }));
     },
 
     connect: function(shadow, internals, data) {
         const select = shadow.querySelector('select');
-        const marker = shadow.getElementById('marker');
+        const marker = shadow.getElementById('default-option');
 
-        // Declare render signals
+        if (this.children.length) {
+            select.appendChild(create('hr'));
+            select.append.apply(select, this.children);
+        }
+
+        // Return array of render signals
         return [
             Signal.frame(() => {
                 const defaultOption = shadow.getElementById('default-option');
@@ -247,13 +268,13 @@ export default element('<file-menu>', {
     }
 }, {
     // Declare title property to make it an observable signal
-    title:    createStringAttribute(),
+    title:    createStringAttribute('title'),
     // Reserve the prefix '$' for internal use
-    prefix:   createStringAttribute(/^(?!$\/)/),
+    prefix:   createStringAttribute('prefix', (string) => /^(?!$\/)/.test(string)),
     // Declare title property to make it an observable signal
-    filename: createStringAttribute(),
+    filename: createStringAttribute('filename'),
     // Data is the parsed data object from storage
-    data:     createObjectAttribute(),
+    data:     createObjectAttribute('data'),
     // Value is the JSON of data, it need not be a signal property. Don't make
     // it enumerable, if we JSON.stringify() the element it ought not be included?
     // TODO: dont need thais AND 'data' property
@@ -269,5 +290,25 @@ export default element('<file-menu>', {
         set: function(json) {
             this.data = JSON.parse(json);
         }
+    },
+
+    createPreset: function(name, data) {
+        const internals = getInternals(this);
+        const select = internals.shadowRoot.querySelector('select');
+        const prefix = '$/';
+
+        if (!internals.presets) {
+            internals.presets = {};
+            select.append(
+                create('hr', { id: 'presets' }),
+                create('option', { disabled: true, html: 'Presets' })
+            );
+        }
+
+        const presets = internals.presets;
+
+        if (presets[name]) throw new Error('Cannot overwrite preset');
+        presets[name] = data;
+        select.append(create('option', { value: prefix + name, html: name }));
     }
 }, 'stephen.band/form-elements/file-menu/');

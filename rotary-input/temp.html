@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/rotary-input/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <title>rotary-input</title>
+
+    <meta charset="utf-8" />
+    <meta name="author" content="Stephen Band" />
+    <meta name="description" content="A rotating knob input that can be dragged vertically, with scaling, step, ticks, units and formatted output display." />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@stephband">
+    <meta property="og:title" content="rotary-input" />
+    <meta property="og:description" content="A rotating knob input that can be dragged vertically, with scaling, step, ticks, units and formatted output display." />
+    <meta property="og:image" content="https://stephen.band/form-elements/rotary-input/images/card.png" />
+    <meta property="og:url" content="https://stephen.band/form-elements/" />
+
+    <script title="load">
+        document.documentElement.className += ' js loading';
+        // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+        // Wait for other load handlers to run first - Bolt does a few things on
+        // load (eg. targetable scrolls) and we want them to run before the loading
+        // class is removed
+        window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+    </script>
+
+    <script title="debug">
+        window.DEBUG = true;
+        window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../literal/documentation/module.css">
+    <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
+
+    <script title="element">
+        window.rotaryInputStylesheet = './shadow.css';
+    </script>
+
+    <style>
+        rotary-input {
+            max-width: 15rem;
+        }
+
+        rotary-input + rotary-input {
+            margin-left: var(--x-gap);
+        }
+    </style>
+
+    <script type="importmap">{
+        "imports": {
+            "bolt/":       "../../bolt/",
+            "dom/":        "../../dom/modules/",
+            "fn/":         "../../fn/modules/",
+            "form/":       "../../form-elements/",
+            "literal/":    "../../literal/",
+            "midi/":       "../../midi/modules/",
+            "soundstage/": "../../soundstage/modules/"
+        }
+    }</script>
+
+    <script type="module">
+        import RotaryInput from './element.js';
+        import events      from 'dom/events.js';
+
+        // Test
+        events('input change', document)
+        .each((e) => console.log(e.type, e.target.value));
+    </script>
+</head>
+
+<body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
+    <rotary-input name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1">
+        Pan
+    </rotary-input>
+
+    <rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" scale="log-48dB" display="dB" value="-6dB">
+        Volume
+    </rotary-input>
+
+    <rotary-input name="frequency" min="20" max="20000" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" scale="log" display="Hz" value="1000">
+        Frequency
+    </rotary-input>
+</body>

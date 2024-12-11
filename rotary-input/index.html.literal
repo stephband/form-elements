@@ -21,10 +21,8 @@
 
 <body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
     ${ include('literal/documentation/templates/element.literal', comments(
-        "./module.js",
-        "./modules/lifecycle.js",
+        "./element.js",
         "../modules/properties.js",
-        "./modules/properties.js",
         "../css/host.css",
         "../css/label.css",
         "../css/track.css",
@@ -45,7 +43,7 @@
     ${ include('literal/documentation/templates/scripts.literal', './package.json') }
 
     <script type="module">
-    import RotaryInput from './build/module.js';
+    import RotaryInput from './build/element.js';
     import events      from 'dom/events.js';
 
     // Test
