@@ -22,6 +22,4 @@
     z-index: 0;
 }
 
-:host(:focus)::before {
-
-}
+:host(:focus)::before {}

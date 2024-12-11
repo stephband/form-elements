@@ -3,6 +3,7 @@
 
 [part="output"] {
     width: var(--handle-width);
+    height: 1lh;
     text-align: center;
 }
 
