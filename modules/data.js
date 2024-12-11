@@ -2,6 +2,7 @@
 
 import nothing           from 'fn/nothing.js';
 import { clamp }         from 'fn/clamp.js';
+import { wrap }          from 'fn/wrap.js';
 import parseTicks        from './parse-ticks.js';
 import parseValue        from './parse-value.js';
 import { createSteps, nearestStep } from './step.js';
@@ -45,9 +46,13 @@ export function updateData(law, min, max, step, ticks, display, data) {
 
 const point = {};
 
-export function valueFromValue(law, min, max, step, value) {
-    point.value  = clamp(min, max, value);
+export function valueFromValue(law, min, max, step, value, wrapped = false) {
+    point.value  = wrapped ?
+        wrap(min, max, value) :
+        clamp(min, max, value) ;
+
     point.normal = law.normalise(min, max, point.value);
+
     return step ?
         // Round to nearest step by normal value, as that is visually the nearest
         nearestStep(step, point.normal) :

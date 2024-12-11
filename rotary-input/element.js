@@ -50,19 +50,22 @@ tallest element. If there are no ticks the component will collapse a bit
 smaller.
 */
 
+import id              from 'fn/id.js';
 import get             from 'fn/get.js';
 import overload        from 'fn/overload.js';
 import Privates        from 'fn/privates.js';
 import { clamp }       from 'fn/clamp.js';
+import { wrap }        from 'fn/wrap.js';
 import Stream          from 'fn/stream.js';
 import Signal          from 'fn/signal.js';
 import create          from 'dom/create.js';
 import element         from 'dom/element.js';
 import events          from 'dom/events.js';
 import gestures        from 'dom/gestures.js';
+import isSafari        from 'dom/is-safari.js';
 import { trigger }     from 'dom/trigger.js';
 import parseLength     from 'dom/parse-length.js';
-import { createNumberAttribute } from 'dom/element/create-attribute.js';
+import { createNumberAttribute, createBooleanAttribute } from 'dom/element/create-attribute.js';
 import { updateData, valueFromValue } from '../modules/data.js';
 import properties      from '../modules/properties.js';
 import parseValue      from '../modules/parse-value.js';
@@ -82,23 +85,17 @@ function toTickValue(e) {
 }
 
 const toGestureValue = overload((internals, e) => e.type, {
-    'pointerdown': ({ law, min, max, $normal, $value }, e) => ({
-        law:   law.value,
-        min:   min.value,
-        max:   max.value,
+    'pointerdown': ({ $normal }, e) => ({
         e0:    e,
         y0:    e.clientY,
         y:     $normal.value,
-        value: $value.value,
         touchRange: parseLength(getComputedStyle(e.target).getPropertyValue('--touch-range'))
     }),
 
     default: (data, e) => {
-        const { law, min, max, y, y0, touchRange } = data;
-        const dy     = y0 - e.clientY;
-        const normal = clamp(0, 1, y + dy / touchRange);
-        const value  = law.denormalise(min, max, normal) ;
-        data.value = value;
+        const { y, y0, touchRange } = data;
+        const dy = y0 - e.clientY;
+        data.normal = y + dy / touchRange;
         return data;
     }
 });
@@ -126,9 +123,14 @@ function renderTick(buttons, tick) {
     return buttons;
 }
 
-function renderValue(style, internals, outputText, outputAbbr, unit, value, normal) {
-    // Render handle position
+function renderValue(host, style, internals, outputText, outputAbbr, unit, value, normal) {
+    // Render handle position.
     style.setProperty('--normal-value', normal);
+
+    // Apple pants. Safari has a bug where it does not reliably update style
+    // from variables set in the shadow DOM, so set them on the element to keep
+    // it alert.
+    if (isSafari) host.style.setProperty('--normal-value', normal);
 
     // Render display
     const display = toDisplay(unit, value);
@@ -181,7 +183,7 @@ export default element('<rotary-input>', {
 
     construct: function(shadow, internals) {
         // DOM
-        // TODO: DOes element.js not handle style now? I think so.
+        // TODO: Does element.js not handle hidden style now? I think it does.
         const style      = shadow.querySelector('style');
         const label      = shadow.querySelector('label');
         const handle     = shadow.querySelector('.handle');
@@ -194,27 +196,44 @@ export default element('<rotary-input>', {
         output.prepend(outputText);
         shadow.append(marker);
 
+        // Style
         const hostStyle  = style.sheet.cssRules[0].style;
         const childStyle = style.sheet.cssRules[1].style;
-        const display    = Signal.of(defaults.display);
-        const law        = Signal.of(defaults.law);
-        const min        = Signal.of(defaults.min);
-        const max        = Signal.of(defaults.max);
-        const step       = Signal.of(defaults.step);
-        const ticks      = Signal.of(defaults.ticks);
-        const $value     = Signal.of(defaults.value);
-        const $normal    = Signal.of(defaults.value);
+
+        // Attribute/property signals
+        const $law    = Signal.of(defaults.law);
+        const $min    = Signal.of(defaults.min);
+        const $max    = Signal.of(defaults.max);
+        const $wrap   = Signal.of(false);
+        const $step   = Signal.of(defaults.step);
+        const $ticks  = Signal.of(defaults.ticks);
+        const $unit   = Signal.of(defaults.unit);
+        const $value  = Signal.of(defaults.value);
+        const $normal = Signal.of(defaults.value);
 
         assign(internals, {
             host: this,
-            hostStyle, childStyle, outputText, outputAbbr, buttons,
-            law, min, max, step, ticks, display, $value, $normal
+            hostStyle, childStyle, outputText, outputAbbr, buttons, marker,
+            $law, $min, $max, $step, $ticks, $unit, $value, $normal, $wrap
         });
 
-        // Updates
-        const setValue = (value) => {
-            $value.value = value;
+        // Update
+        const setValue = (unclamped) => {
+            const law    = $law.value;
+            const value  = $wrap.value ?
+                wrap($min.value, $max.value, unclamped) :
+                clamp($min.value, $max.value, unclamped) ;
+
+            $value.value  = value;
+            $normal.value = law.normalise($min.value, $max.value, value);
+
             trigger('input', this);
+        };
+
+        const setNormal = (normal) => {
+            const law   = $law.value;
+            const value = law.denormalise($min.value, $max.value, normal);
+            return setValue(value);
         };
 
         // Track pointer on ticks and update value
@@ -223,18 +242,20 @@ export default element('<rotary-input>', {
         .each(setValue);
 
         // Track gestures on handle and update value
+        // Safari has a bug where the handle is put back to its starting
+        // position at the end of a gesture, at least until the document is
+        // resized
         gestures({ threshold: 1, select: '[part="handle"]' }, shadow)
-        .each((events) => {
-            events
+        .each((events) => events
             .scan(toGestureValue, internals)
-            .map(get('value'))
-            .each(setValue)
-        });
+            .map(get('normal'))
+            .each(setNormal)
+        );
 
         // While this is focused allow up and down arrows to change value
         events('keydown', this)
         .filter(() => document.activeElement === this || this.contains(document.activeElement))
-        .map((e) => toKeyValue(e, law.value, min.value, max.value, step.value, $normal.value))
+        .map((e) => toKeyValue(e, $law.value, $min.value, $max.value, $step.value, $normal.value))
         .each(setValue);
     },
 
@@ -243,20 +264,17 @@ export default element('<rotary-input>', {
     },
 
     connect: function(shadow, internals) {
-        const { hostStyle, outputAbbr, outputText, buttons, marker, law, min, max, step, ticks, display, $value, $normal } = internals;
+        const { host, hostStyle, outputAbbr, outputText, buttons, marker, $law, $min, $max, $step, $wrap, $ticks, $unit, $value, $normal } = internals;
         return [
             // Observe attribute updates
             Signal.frame(() => {
-                renderData(hostStyle, law.value, min.value, max.value, ticks.value, buttons, marker);
+                renderData(hostStyle, $law.value, $min.value, $max.value, $ticks.value, buttons, marker);
             }),
 
             // Observe value attribute updates
             Signal.frame(() => {
-                if ($value.value === undefined) return;
-                const { value, normal } = valueFromValue(law.value, min.value, max.value, step.value, $value.value);
-                //$value.value  = value;
-                $normal.value = normal;
-                renderValue(hostStyle, internals, outputText, outputAbbr, display.value, value, normal);
+                if ($value.value === undefined) { console.log('CANT HAPPEN'); return; }
+                renderValue(host, hostStyle, internals, outputText, outputAbbr, $unit.value, $value.value, $normal.value);
             })
         ];
     }
@@ -270,5 +288,17 @@ export default element('<rotary-input>', {
     .value
     Current value of the input.
     **/
-    value: createNumberAttribute('value', 0, -Infinity, Infinity, parseValue)
+    value: createNumberAttribute('value', 0, -Infinity, Infinity, parseValue),
+
+    /**
+    wrap=""
+    Boolean attribute indicating whether rotation is continuous and value
+    'wraps' around.
+    **/
+
+    /**
+    .wrap
+    Boolean indicating whether rotation is continuous and value 'wraps' around.
+    **/
+    wrap: createBooleanAttribute('wrap')
 }), 'stephen.band/form-elements/');
