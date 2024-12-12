@@ -12,7 +12,8 @@ Takes a unit value as a string and returns a number. Units may be any letters.
 **/
 
 export default function parseValue(string) {
-    // Coerce null, undefined, false, '' to 0. Not sure why. Should perhaps error.
+    // Coerce null, undefined, false, '', 'any' to 0. Not sure why.
+    // Should perhaps error.
     if (!string) { return 0; }
 
     // Returns numbers without units

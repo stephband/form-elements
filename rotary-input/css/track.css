@@ -1,13 +1,9 @@
 
-/* Track is made of before content on host. This may not be the best plan, it is
-   probably overideable from the outside? */
-
-:host::before {
+.track {
     content: '';
     grid-area: handle;
     width: calc(var(--handle-size) + 2 * var(--track-size));
-    height: 0;
-    padding-top: calc(var(--handle-size) + 2 * var(--track-size));
+    height: calc(var(--handle-size) + 2 * var(--track-size));
     background: var(--track-background) conic-gradient(
         from calc(180deg + var(--rotation-start)),
         transparent 0deg,
@@ -19,7 +15,6 @@
     box-shadow: var(--track-shadow);
     border-width: 0;
     border-radius: 50%;
-    z-index: 0;
 }
 
-:host(:focus)::before {}
+:host(:focus) > .track {}

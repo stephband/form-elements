@@ -169,13 +169,16 @@ Emitted from the element when a handle has been moved.
 
 export default element('<rotary-input>', {
     mode: 'closed',
+
     focusable: true,
 
+    // <label part="label" for="input"><slot></slot></label>
     shadow: `
         <link rel="stylesheet" href="${ window.rhythmSynthStylesheet || import.meta.url.replace(/js$/, 'css') }"/>
         <style>:host {} :host > * { visibility: hidden; }</style>
-        <label part="label" for="input"><slot></slot></label>
-        <div part="handle" class="handle"></div>
+        <div class="track" part="track"></div>
+        <div class="static-handle handle"></div>
+        <div class="rotate-handle handle" part="handle"></div>
         <output part="output">
             <abbr part="unit"></abbr>
         </output>
@@ -185,7 +188,7 @@ export default element('<rotary-input>', {
         // DOM
         // TODO: Does element.js not handle hidden style now? I think it does.
         const style      = shadow.querySelector('style');
-        const label      = shadow.querySelector('label');
+        //const label      = shadow.querySelector('label');
         const handle     = shadow.querySelector('.handle');
         const output     = shadow.querySelector('output');
         const outputText = document.createTextNode('');
@@ -209,7 +212,7 @@ export default element('<rotary-input>', {
         const $ticks  = Signal.of(defaults.ticks);
         const $unit   = Signal.of(defaults.unit);
         const $value  = Signal.of(defaults.value);
-        const $normal = Signal.of(defaults.value);
+        const $normal = Signal.from(() => $law.value.normalise($min.value, $max.value, $value.value));
 
         assign(internals, {
             host: this,
@@ -225,8 +228,6 @@ export default element('<rotary-input>', {
                 clamp($min.value, $max.value, unclamped) ;
 
             $value.value  = value;
-            $normal.value = law.normalise($min.value, $max.value, value);
-
             trigger('input', this);
         };
 
@@ -267,15 +268,9 @@ export default element('<rotary-input>', {
         const { host, hostStyle, outputAbbr, outputText, buttons, marker, $law, $min, $max, $step, $wrap, $ticks, $unit, $value, $normal } = internals;
         return [
             // Observe attribute updates
-            Signal.frame(() => {
-                renderData(hostStyle, $law.value, $min.value, $max.value, $ticks.value, buttons, marker);
-            }),
-
-            // Observe value attribute updates
-            Signal.frame(() => {
-                if ($value.value === undefined) { console.log('CANT HAPPEN'); return; }
-                renderValue(host, hostStyle, internals, outputText, outputAbbr, $unit.value, $value.value, $normal.value);
-            })
+            Signal.frame(() => renderData(hostStyle, $law.value, $min.value, $max.value, $ticks.value, buttons, marker)),
+            // Observe value updates
+            Signal.frame(() => renderValue(host, hostStyle, internals, outputText, outputAbbr, $unit.value, $value.value, $normal.value))
         ];
     }
 }, assign({}, properties, {

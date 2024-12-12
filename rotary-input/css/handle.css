@@ -1,28 +1,29 @@
-/* Handle static element */
 
-:host::after {
-    content: '';
-    grid-area: handle;
+/*
+.handle has two elements. There's a static element and a rotating element. It is
+best to apply style to the static element where it is not needed to move, as the
+moving element can have small artifacts as it rotates.
+*/
+
+.handle {
     width: var(--handle-size);
-    height: 0;
-    padding-top: var(--handle-size);
+    min-width: 1em;
+    aspect-ratio: 1;
+    border: var(--handle-border, 1px solid currentcolor);
+    cursor: pointer;
+    cursor: ns-resize;
+}
+
+.static-handle {
     box-shadow: var(--handle-shadow);
     background: var(--handle-background);
-    border: var(--handle-border);
     border-radius: 50%;
     z-index: 0;
 }
 
-/* Handle rotating element */
-
-.handle {
-    cursor: pointer;
-    cursor: ns-resize;
-    width: var(--handle-size);
-    height: 0;
-    padding-top: var(--handle-size);
+.rotate-handle {
     background: transparent;
-    border: 0;
+    border-color: transparent;
     border-radius: 50%;
     transform: rotate3d(0, 0, 1, calc(var(--rotation-start) + var(--normal-value) * var(--rotation-range)));
 
@@ -35,13 +36,17 @@
               user-select: none; /* Non-prefixed version */
 }
 
-.handle::after {
+
+/* Dot */
+
+.rotate-handle::after {
     content: '';
     position: absolute;
     width: var(--dot-size);
     height: var(--dot-size);
+    aspect-ratio: 1;
     left: 50%;
-    top: calc(50% + var(--dot-distance));
+    top: 0.09375rem;
     transform: translate3d(-50%, 0, 0);
     border-radius: 50%;
     background-color: var(--dot-background);
