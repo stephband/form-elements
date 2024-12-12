@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/rotary-input/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <title>rotary-input</title>
+
+    <meta charset="utf-8" />
+    <meta name="author" content="Stephen Band" />
+    <meta name="description" content="A customised number/range input with the property `.normal`." />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@stephband">
+    <meta property="og:title" content="rotary-input" />
+    <meta property="og:description" content="A customised number/range input with the property `.normal`." />
+    <meta property="og:image" content="https://stephen.band/form-elements/normal-input/card.png" />
+    <meta property="og:url" content="https://stephen.band/form-elements/" />
+
+    <script title="load">
+        document.documentElement.className += ' js loading';
+        // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+        // Wait for other load handlers to run first - Bolt does a few things on
+        // load (eg. targetable scrolls) and we want them to run before the loading
+        // class is removed
+        window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+        window.DEBUG = true;
+        window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../literal/documentation/module.css">
+    <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
+
+    <style>
+        @import './pan-input.css';
+
+        rotary-input + rotary-input {
+            margin-left: var(--x-gap);
+        }
+
+        body {
+            background-color: #eeeeee;
+            //background: white;
+            padding: 3.25em;
+        }
+    </style>
+
+    <script type="importmap">{
+        "imports": {
+            "dom/":        "../../dom/modules/",
+            "fn/":         "../../fn/modules/",
+            "form/":       "../../form-elements/"
+        }
+    }</script>
+
+    <script type="module">
+        import NormalInput from './element.js';
+    </script>
+</head>
+
+<body>
+    <h4>&lt;input is="normal-input"&gt;</h4>
+
+    <p>Customises built-in number and range inputs with both the property <code>normal</code>
+    and the CSS property <code>--normal</code>, which describes the position of the handle
+    in the range <code>0-1</code>, regardless of the values of <code>min</code> and <code>max</code>,
+    permitting the application of handle position based styles:</p>
+
+    <label>Pan</label>
+    <input is="normal-input" class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
+</body>

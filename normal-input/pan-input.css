@@ -1,0 +1,69 @@
+
+.pan-input {
+    -webkit-appearance: none !important;
+    display: block;
+    max-width: 4.3125em;
+    padding-top: 1.125rem;
+
+    --track-size:  0.125em;
+    --handle-size: 0.625rem;
+
+    cursor: pointer;
+    background-color: transparent;
+    border-width: 0;
+
+    /*required for proper track sizing in FF*/
+    /*width: 100%;
+    height: 100%;*/
+
+    cursor: panner;
+    cursor: ew-resize;
+
+    background-color: transparent;
+    background-image: radial-gradient(circle at 50% 138%,
+        transparent 0%,
+        transparent calc(66% - 0.5 * var(--track-size)),
+        black       calc(66% - 0.5 * var(--track-size)),
+        black       calc(66% + 0.5 * var(--track-size)),
+        transparent calc(66% + 0.5 * var(--track-size)),
+        transparent 100%
+    );
+    background-size: 100%;
+    background-position: center center;
+    border-radius: calc(0.5 * var(--track-size));
+
+    /* Only very rough back of the envelope stuff, revisit this formula please */
+    --x: calc((var(--normal) * 2 - 1) * 0.98);
+    --y: calc((sqrt(1 - pow(var(--x), 2)) - 0.2) * 1.25);
+}
+
+.pan-input::-webkit-slider-runnable-track {
+    background: transparent;
+    border-width: 0;
+}
+
+.pan-input:hover,
+.pan-input:focus-visible {
+    background-color: none;
+}
+
+.pan-input::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+
+    cursor: pointer;
+    cursor: ew-resize;
+
+    width: var(--handle-size, 0.6875rem);
+    height: var(--handle-size, var(--handle-size, 0.6875rem));
+
+    background: black;
+    border: 2px solid black;
+    border-radius: 50%;
+
+    /* Increase hit zone */
+    outline: 0.25rem solid transparent;
+
+
+
+    transform: translate3d(0, calc(var(--y) * -1.125em), 0);
+}
