@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/rotary-input/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <title>rotary-input</title>
+
+    <meta charset="utf-8" />
+    <meta name="author" content="Stephen Band" />
+    <meta name="description" content="A rotating knob input that can be dragged vertically, with scaling, step, ticks, units and formatted output display." />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@stephband">
+    <meta property="og:title" content="rotary-input" />
+    <meta property="og:description" content="A rotating knob input that can be dragged vertically, with scaling, step, ticks, units and formatted output display." />
+    <meta property="og:image" content="https://stephen.band/form-elements/rotary-input/images/card.png" />
+    <meta property="og:url" content="https://stephen.band/form-elements/" />
+
+    <script title="load">
+        document.documentElement.className += ' js loading';
+        // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+        // Wait for other load handlers to run first - Bolt does a few things on
+        // load (eg. targetable scrolls) and we want them to run before the loading
+        // class is removed
+        window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+        window.DEBUG = true;
+        window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../literal/documentation/module.css">
+    <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
+
+    <style>
+        rotary-input + rotary-input {
+            margin-left: var(--x-gap);
+        }
+
+        body {
+            background-color: #eeeeee;
+            //background: white;
+            padding: 3.25em;
+        }
+
+        .pan-input {
+            display: block;
+            max-width: 4.3125em;
+            padding-top: 1.125rem;
+
+            --track-size: 0.125em;
+            --handle-size: 0.625rem;
+            --y: 1;
+
+            cursor: pointer;
+
+            -webkit-appearance: none !important;
+            background-color: transparent;
+            border-width: 0;
+
+            /*required for proper track sizing in FF*/
+            /*width: 100%;
+            height: 100%;*/
+
+            cursor: panner;
+            cursor: ew-resize;
+
+            background-color: transparent;
+            background-image: radial-gradient(circle at 50% 138%,
+                transparent 0%,
+                transparent calc(66% - 0.5 * var(--track-size)),
+                black       calc(66% - 0.5 * var(--track-size)),
+                black       calc(66% + 0.5 * var(--track-size)),
+                transparent calc(66% + 0.5 * var(--track-size)),
+                transparent 100%
+            );
+            background-size: 100%;
+            background-position: center center;
+            border-radius: calc(0.5 * var(--track-size))
+        }
+
+        .pan-input::-webkit-slider-runnable-track {
+            background: transparent;
+            border-width: 0;
+        }
+
+        .pan-input:hover,
+        .pan-input:focus-visible {
+            background-color: none;
+        }
+
+        .pan-input::-webkit-slider-thumb {
+            -webkit-appearance: none !important;
+
+            cursor: pointer;
+            cursor: ew-resize;
+
+            width: var(--handle-size, 0.6875rem);
+            height: var(--handle-size, var(--handle-size, 0.6875rem));
+
+            background: black;
+            border: 2px solid black;
+            border-radius: 50%;
+
+            /* Increase hit zone */
+            outline: 0.25rem solid transparent;
+
+            transform: translate3d(0, calc(var(--y) * -1.125em), 0);
+        }
+
+
+        .chan-block {
+            display: inline-block;
+            width: 4.625em;
+            padding: 1em 0.15625em 5em;
+            background: rgba(0,0,0,0.2)
+        }
+
+        .chan-block + .chan-block {
+            margin-left: 1px;
+        }
+    </style>
+
+    <script type="importmap">{
+        "imports": {
+            "bolt/":       "../../bolt/",
+            "dom/":        "../../dom/modules/",
+            "fn/":         "../../fn/modules/",
+            "form/":       "../../form-elements/",
+            "literal/":    "../../literal/",
+            "midi/":       "../../midi/modules/",
+            "soundstage/": "../../soundstage/modules/"
+        }
+    }</script>
+
+    <script type="module">
+        import { clamp }   from 'fn/clamp.js';
+        import normalise   from 'fn/normalise.js';
+        import denormalise from 'fn/denormalise.js';
+        import events from 'dom/events.js';
+
+        events({ type: 'input', select: '.pan-input' }, document.body).each((e) => {
+            const input = e.target;
+
+            const min    = input.min === '' ? 0   : parseFloat(input.min);
+            const max    = input.max === '' ? 100 : parseFloat(input.max);
+            const value  = input.valueAsNumber || parseFloat(input.value);
+            const normal = normalise(min, max, value);
+
+            input.normalValue = normal;
+            //input.outputValue = clamp(min, max, output);
+            input.style.setProperty('--normal-value', normal);
+            // Circular arc motion
+            // y = ROOT(1 - x^2)
+            // But with some scaling so that x goes between -0.98 and 0.98 or something like that
+            const x = (normal * 2 - 1) * 0.98;
+            console.log(normal, x, (Math.pow(1 - Math.pow(x, 2), 0.5) - 0.2) * 1.25);
+            // Arse
+            input.style.setProperty('--y', (Math.pow(1 - Math.pow(x, 2), 0.5) - 0.2) * 1.25);
+        });
+    </script>
+</head>
+
+<body>
+    <p>A proof of concept</p>
+    <div class="chan-block block">
+        <input class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
+    </div
+    ><div class="chan-block block">
+        <input class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
+    </div
+    ><div class="chan-block block">
+        <input class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
+    </div>
+</body>
