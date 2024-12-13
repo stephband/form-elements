@@ -1,24 +1,29 @@
 
+@import '../../bolt/elements/focus.css';
+
 .pan-input {
+    --track-size:  0.125em;
+    --handle-size: 0.75rem;
+    --handle-background:
+        /* background-image */
+        radial-gradient(hsl(202, 7%, 90%), hsl(162, 2%, 56%))
+        /* background-position / background-size */
+        80% 100% / 140% 140%;
+    --handle-shadow:
+        inset 0 0 0 0.03125rem hsl(153, 2%, 26%),
+        0.003125rem 0.09375rem 0.125rem rgba(0,0,0,0.25);
+
     -webkit-appearance: none !important;
+
     display: block;
     max-width: 4.3125em;
     padding-top: 1.125rem;
-
-    --track-size:  0.125em;
-    --handle-size: 0.75rem;
-
-    cursor: pointer;
-    background-color: transparent;
-    border-width: 0;
-
-    /*required for proper track sizing in FF*/
-    /*width: 100%;
-    height: 100%;*/
+    aspect-ratio: 2;
 
     cursor: panner;
     cursor: ew-resize;
 
+    /* Arc track. Very rough. Revisit. */
     background-color: transparent;
     background-image: radial-gradient(circle at 50% 138%,
         transparent 0%,
@@ -30,22 +35,28 @@
     );
     background-size: 100%;
     background-position: center center;
+
+    border-width: 0;
     border-radius: calc(0.5 * var(--track-size));
 
-    /* Only very rough back of the envelope stuff, revisit this formula please */
+    /* Rough back of the envelope stuff for a arc path, revisit this formula please */
     --x: calc((var(--normal) * 2 - 1) * 0.98);
     --y: calc((sqrt(1 - pow(var(--x), 2)) - 0.2) * 1.25);
-}
-
-.pan-input::-webkit-slider-runnable-track {
-    background: transparent;
-    border-width: 0;
 }
 
 .pan-input:hover,
 .pan-input:focus-visible {
     background-color: none;
 }
+
+/* Track */
+
+.pan-input::-webkit-slider-runnable-track {
+    background: transparent;
+    border-width: 0;
+}
+
+/* Handle */
 
 .pan-input::-webkit-slider-thumb {
     -webkit-appearance: none !important;
@@ -55,18 +66,46 @@
 
     width: var(--handle-size, 0.6875rem);
     height: var(--handle-size, var(--handle-size, 0.6875rem));
+    transform: translate3d(0, calc(var(--y) * -1.125em), 0);
 
-    background: black;
-    background-image: radial-gradient(hsl(202, 7%, 90%), hsl(162, 2%, 56%));
-    background-size: 140% 140%;
-    background-position: 80% 100%;
+    background: var(--handle-background);
     border-width: 0;
     border-radius: 50%;
-    box-shadow: 0.003125rem 0.09375rem 0.125rem rgba(0,0,0,0.25),
-        inset 0 0 0 0.03125rem hsl(153, 2%, 26%);
+    box-shadow: var(--handle-shadow);
 
     /* Increase hit zone */
     outline: 0.25rem solid transparent;
+}
 
+.pan-input::-moz-range-thumb {
+    cursor: pointer;
+    cursor: ew-resize;
+
+    width:  var(--handle-size, 0.6875rem);
+    height: var(--handle-size, var(--handle-size, 0.6875rem));
     transform: translate3d(0, calc(var(--y) * -1.125em), 0);
+
+    background: var(--handle-background);
+    border-width:  0;
+    border-radius: 50%;
+    box-shadow: var(--handle-shadow);
+
+    /* Increase hit zone */
+    outline: 0.25rem solid transparent;
+}
+
+/* Focus */
+
+.pan-input:focus-visible {
+    outline-width: 0;
+    /* Override rule in focus.css */
+    box-shadow: none !important;
+}
+
+.pan-input:focus-visible::-webkit-slider-thumb {
+    box-shadow: var(--focus-shadow), var(--handle-shadow);
+}
+
+.pan-input:focus-visible::-moz-range-thumb {
+    box-shadow: var(--focus-shadow), var(--handle-shadow);
 }
