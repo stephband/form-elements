@@ -65,7 +65,7 @@ Names must be lowercase, as attribute values are converted to lowercase.
 */
 
 export const laws = {
-    'linear': { normalise, denormalise },
+    'linear': { normalise, denormalise, name: 'Linear' },
 
     'pow-2':  new PowerScale(2),
     'pow-3':  new PowerScale(3),

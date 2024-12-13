@@ -33,6 +33,7 @@
 
     <style>
         @import './pan-input.css';
+        @import '../../music/classes/fader-input.css';
 
         rotary-input + rotary-input {
             margin-left: var(--x-gap);
@@ -55,6 +56,10 @@
 
     <script type="module">
         import NormalInput from './element.js';
+        import events from 'dom/events.js';
+
+        events('input', document.body)
+        .each((e) => console.log(e.target.value));
     </script>
 </head>
 
@@ -68,4 +73,7 @@
 
     <label>Pan</label>
     <input is="normal-input" class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
+
+    <label>Gain</label>
+    <input is="normal-input" class="fader-input" type="range" name="pan" min="0" max="3.9810717055349722" law="log-36db" step="any" value="1" />
 </body>

@@ -1,6 +1,6 @@
 
 import id from 'fn/id.js';
-import { getScale } from './scales.js';
+import { getScale } from './law.js';
 
 // TODO: Remove in favour of law
 export const scale   = { normalise(){ console.log('"scale" now "law"'); }, denormalise(){ console.log('"scale" now "law"'); } };

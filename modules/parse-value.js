@@ -16,7 +16,7 @@ export default function parseValue(string) {
     // Should perhaps error.
     if (!string) { return 0; }
 
-    // Returns numbers without units
+    // Return numbers without units
     const number = +string;
     if (number || number === 0) { return number; }
 

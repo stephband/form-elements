@@ -6,7 +6,7 @@
     padding-top: 1.125rem;
 
     --track-size:  0.125em;
-    --handle-size: 0.625rem;
+    --handle-size: 0.75rem;
 
     cursor: pointer;
     background-color: transparent;
@@ -57,13 +57,16 @@
     height: var(--handle-size, var(--handle-size, 0.6875rem));
 
     background: black;
-    border: 2px solid black;
+    background-image: radial-gradient(hsl(202, 7%, 90%), hsl(162, 2%, 56%));
+    background-size: 140% 140%;
+    background-position: 80% 100%;
+    border-width: 0;
     border-radius: 50%;
+    box-shadow: 0.003125rem 0.09375rem 0.125rem rgba(0,0,0,0.25),
+        inset 0 0 0 0.03125rem hsl(153, 2%, 26%);
 
     /* Increase hit zone */
     outline: 0.25rem solid transparent;
-
-
 
     transform: translate3d(0, calc(var(--y) * -1.125em), 0);
 }

@@ -1,7 +1,7 @@
 
 import { createAttribute, createNumberAttribute, createStringAttribute } from 'dom/element/create-attribute.js';
 
-import { getScale } from './scales.js';
+import { getScale } from './law.js';
 import parseValue   from './parse-value.js';
 import parseTicks   from './parse-ticks.js';
 import parseDisplay from './parse-display.js';
