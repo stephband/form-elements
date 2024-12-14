@@ -7,15 +7,15 @@
 
     <meta charset="utf-8" />
     <meta name="author" content="Stephen Band" />
-    <meta name="description" content="A customised number/range input with the property `.normal`." />
+    <meta name="description" content="A customised number/range input with a normalised and interpolated value." />
     <meta name="viewport" content="width=device-width" />
 
     <meta name="twitter:card" content="summary">
     <meta name="twitter:site" content="@stephband">
-    <meta property="og:title" content="rotary-input" />
-    <meta property="og:description" content="A customised number/range input with the property `.normal`." />
+    <meta property="og:title" content="normal-input" />
+    <meta property="og:description" content="A customised number/range input with a normalised and interpolated value." />
     <meta property="og:image" content="https://stephen.band/form-elements/normal-input/card.png" />
-    <meta property="og:url" content="https://stephen.band/form-elements/" />
+    <meta property="og:url" content="https://stephen.band/form-elements/normal-input/" />
 
     <script title="load">
         document.documentElement.className += ' js loading';
@@ -69,13 +69,18 @@
 <body>
     <h4>&lt;input is="normal-input"&gt;</h4>
 
-    <p>Customises built-in number and range inputs with both the property <code>normal</code>
+    <p>A customised built-in number and range input with both the property <code>normal</code>
     and the CSS property <code>--normal</code>, which describes the position of the handle
     in the range <code>0-1</code>, regardless of the values of <code>min</code> and <code>max</code>,
-    permitting the application of handle position based styles:</p>
+    permitting the application of handle-position-based styles.</p>
 
     <label>Pan</label>
     <input is="normal-input" class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
+
+    <p>Also adds the <code>law</code> attribute. A fader law adjusts the interpolation
+    of an input's value over its min-max range. An input with <code>law="log-36db"</code>,
+    for example, is dB-linear in it's top portion down to <code>-36dB</code>, and gain-linear
+    down to <code>-∞dB</code>.</p>
 
     <label>Gain</label>
     <input is="normal-input" type="range" name="fader" min="0" max="3.9810717055349722" law="log-36db" step="any" value="1" class="fader-input vertical" style="margin-bottom: calc(-1 * var(--handle-size));" />
