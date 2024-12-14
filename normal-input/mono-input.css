@@ -1,0 +1,137 @@
+
+/* TODO: needs horizontal style */
+[type="range"].mono-input {
+    --handle-size: 0.625rem;
+
+    -webkit-appearance: none !important;
+
+    width: 0.75rem;
+    min-height: 6.25rem;
+    background-color: transparent;
+    border-width: 0;
+
+    background-image: linear-gradient(to top,
+        transparent      0%,
+        transparent      calc(0.5 * var(--handle-size)),
+        currentcolor     calc(0.5 * var(--handle-size)),
+        currentcolor     calc((100% - var(--handle-size)) * var(--normal, 0) + 1px),
+        transparent calc((100% - var(--handle-size)) * var(--normal, 0) + 1px),
+        transparent 100%
+    );
+
+    background-size: 2px 100%;
+    background-position: center center;
+}
+
+/* Track */
+
+[type="range"].mono-input::-webkit-slider-runnable-track {
+    background: transparent;
+    border-width: 0;
+}
+
+[type="range"].mono-input::-moz-range-track {
+    background: transparent;
+    border-width: 0;
+}
+
+/* Handle */
+
+[type="range"].mono-input::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+
+    width: var(--handle-size, 0.6875rem);
+    height: var(--handle-size, var(--handle-size, 0.6875rem));
+
+    background: transparent;
+    border: 2px solid currentcolor;
+    border-radius: 50%;
+
+    /* Increase hit zone */
+    outline: 0.25rem solid transparent;
+}
+
+[type="range"].mono-input::-moz-range-thumb {
+    width: var(--handle-size, 0.6875rem);
+    height: var(--handle-size, var(--handle-size, 0.6875rem));
+
+    background: transparent;
+    border: 2px solid currentcolor;
+    border-radius: 50%;
+
+    /* Increase hit zone */
+    outline: 0.25rem solid transparent;
+}
+
+/* Focus */
+
+[type="range"].mono-input:focus-visible {
+    outline-width: 0;
+    /* Override rule in focus.css */
+    box-shadow: none !important;
+}
+
+[type="range"].mono-input:focus-visible::-webkit-slider-thumb {
+    box-shadow: var(--focus-shadow);
+}
+
+[type="range"].mono-input:focus-visible::-moz-range-thumb {
+    box-shadow: var(--focus-shadow);
+}
+
+
+/* Square heads */
+
+.square-mono-input {
+    --handle-size: 0.5625rem;
+}
+
+.square-mono-input::-webkit-slider-thumb {
+    border-radius: 0.125rem;
+}
+
+.square-mono-input::-moz-range-thumb {
+    border-radius: 0.125rem;
+}
+
+
+
+
+
+
+rotary-input.mono-input {
+    /* Sizes in ems so they adapt.
+       Line widths in rems so they stay constant. */
+    min-width: 1.125em;
+    min-height: 1.125em;
+
+    /* Track */
+    --track-size: 0em;
+    --track-shadow: none;
+    --track-background: transparent;
+    --value-color: none;
+
+    /* Handle */
+    --handle-size: 1.125em;
+    --handle-border: 0.125rem solid currentcolor;
+    --handle-background: transparent;
+    --handle-shadow: none;
+
+    /* Dot */
+    --dot-size: 0.125em;
+    --dot-distance: calc(50% - 2 * var(--dot-size) - 1px);
+    --dot-background: rgb(43, 52, 57);
+    --dot-border: 0.125rem solid currentcolor;
+    --dot-shadow: none;
+}
+
+rotary-input.mono-input::part(output) {
+    display: none;
+}
+
+rotary-input[name^="phase"],
+rotary-input[name$="phase"] {
+    /* Full circle movement */
+    --rotation-start: 0deg;
+    --rotation-range: 360deg;
+}

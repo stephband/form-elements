@@ -5,12 +5,14 @@ import events      from 'dom/events.js';
 import element     from 'dom/element.js';
 import getLaw      from '../modules/law.js';
 
+
 const assign = Object.assign;
 const roots  = new WeakSet();
 
 // The original input.value descriptor. We extend this to apply our own value
 // descriptor so that sets may be observed. Remarkably, this actually works. Mostly.
 const descriptor = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value');
+
 
 function setStyleNormal(input) {
     input.style.setProperty('--normal', input.normal);

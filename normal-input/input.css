@@ -1,0 +1,41 @@
+
+/* Horizontal range input */
+
+[type="range"] {
+    color: inherit;
+    cursor: pointer;
+    cursor: ew-resize;
+}
+
+[type="range"]::-webkit-slider-thumb {
+    cursor: pointer;
+    cursor: ew-resize;
+}
+
+[type="range"]::-moz-range-thumb {
+    cursor: pointer;
+    cursor: ew-resize;
+}
+
+/* Vertical range input */
+
+[type="range"]:where(.vertical) {
+    writing-mode: vertical-lr;
+    direction: rtl;
+    appearance: slider-vertical;
+    vertical-align: bottom;
+    width: auto;
+
+    cursor: pointer;
+    cursor: ns-resize;
+}
+
+[type="range"]:where(.vertical)::-webkit-slider-thumb {
+    cursor: pointer;
+    cursor: ns-resize;
+}
+
+[type="range"]:where(.vertical)::-moz-range-thumb {
+    cursor: pointer;
+    cursor: ns-resize;
+}

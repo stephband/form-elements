@@ -32,8 +32,11 @@
     <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
 
     <style>
-        @import './pan-input.css';
+        @import '../../bolt/elements/focus.css';
+        @import './input.css';
         @import './fader-input.css';
+        @import './mono-input.css';
+        @import './pan-input.css';
 
         rotary-input + rotary-input {
             margin-left: var(--x-gap);
@@ -75,5 +78,7 @@
     <input is="normal-input" class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
 
     <label>Gain</label>
-    <input is="normal-input" class="fader-input" type="range" name="pan" min="0" max="3.9810717055349722" law="log-36db" step="any" value="1" />
+    <input is="normal-input" type="range" name="fader" min="0" max="3.9810717055349722" law="log-36db" step="any" value="1" class="fader-input vertical" style="margin-bottom: calc(-1 * var(--handle-size));" />
+    <input is="normal-input" type="range" name="mono" min="0" max="2" law="log-18db" step="any" value="1" class="mono-input vertical" style="height: 195px; margin-left: 5rem;margin-bottom: calc(-0.5 * var(--handle-size));" />
+    <input is="normal-input" type="range" name="pan" min="0" max="2" law="log-18db" step="any" value="1" class="vertical" style="height: 185px; margin-left: 5rem;margin-bottom: calc(-0.5 * var(--handle-size));" />
 </body>

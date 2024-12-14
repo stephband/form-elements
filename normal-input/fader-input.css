@@ -1,6 +1,5 @@
-@import '../../bolt/elements/focus.css';
 
-.fader-input {
+[type="range"].fader-input {
     --track-size: 0.125rem;
     --track-background: #25292c;
     --handle-size: 1.125rem;
@@ -39,17 +38,8 @@
     width:  1.875rem;
     height: 13.125em;
 
-    /* Vertical nonsense */
-    writing-mode:   vertical-lr;
-    direction:      rtl;
-    appearance:     slider-vertical;
-    vertical-align: bottom;
-
     background-color: transparent;
     border-width: 0;
-
-    cursor: pointer;
-    cursor: ns-resize;
 }
 
 /* Track */
