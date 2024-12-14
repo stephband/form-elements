@@ -54,6 +54,10 @@
         input + p {
             margin-top: 2lh;
         }
+
+        input + .text-10 {
+            margin-top: 4lh;
+        }
     </style>
 
     <script type="importmap">{
@@ -76,9 +80,9 @@
 <body style="max-width: 50em; margin-left: auto; margin-right: auto;">
     <h4>&lt;input is="normal-input"&gt;</h4>
 
-    <p>A customised built-in number and range input with both the property <code>normal</code>
+    <p>A customised built-in<span class="text-10">*</span> number and range input with both the property <code>normal</code>
     and the CSS property <code>--normal</code>, which describes the position of the handle
-    in the range <code>0-1</code>, regardless of the values of <code>min</code> and <code>max</code>,
+    in the range <code>0-1</code> regardless of the values of <code>min</code> and <code>max</code>,
     permitting the application of handle-position-based styles.</p>
 
     <label>Pan</label>
@@ -94,5 +98,5 @@
     <input is="normal-input" type="range" name="mono" min="0" max="2" law="log-18db" step="any" value="1" class="mono-input vertical" style="height: 195px; margin-left: 5rem;margin-bottom: calc(-0.5 * var(--handle-size));" />
     <input is="normal-input" type="range" name="pan" min="0" max="2" law="log-18db" step="any" value="1" class="vertical" style="height: 185px; margin-left: 5rem;margin-bottom: calc(-0.5 * var(--handle-size));" />
 
-    <p>Customised built-in behaviour is polyfilled in Safai.</p>
+    <p class="text-10">*Customised built-in behaviour is polyfilled in Safai.</p>
 </body>
