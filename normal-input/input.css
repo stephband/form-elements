@@ -5,6 +5,7 @@
     color: inherit;
     cursor: pointer;
     cursor: ew-resize;
+    touch-action: none;
 }
 
 [type="range"]::-webkit-slider-thumb {
