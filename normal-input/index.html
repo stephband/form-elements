@@ -51,12 +51,27 @@
             padding: 3.25em;
         }
 
+        input {
+            width: auto;
+        }
+
+        input  { vertical-align: middle; }
+        output { display: inline-block; vertical-align: middle; font-family: monospace; font-size: 0.75em; margin-top: var(--input-margin); }
+
         input + p {
             margin-top: 2lh;
         }
 
         input + .text-10 {
             margin-top: 4lh;
+        }
+
+        .text-10 + p {
+            margin-top: 2lh;
+        }
+
+        p + closed-shadow {
+            margin-top: 3lh;
         }
     </style>
 
@@ -70,10 +85,67 @@
 
     <script type="module">
         import NormalInput from './element.js';
+        import element from 'dom/element.js';
         import events from 'dom/events.js';
 
-        events('input', document.body)
+        // Log to console
+        events({ type: 'input', select: '[is="normal-input"]' }, document.body)
         .each((e) => console.log(e.target.value));
+
+        // Log test input to output
+        const output = document.body.querySelector('output[for="test-input"]');
+        events({ type: 'input', select: '#test-input' }, document)
+        .each((e) => output.textContent = e.target.value.toPrecision(3));
+
+        // Test closed shadow
+        element('<closed-shadow>', {
+            mode: 'closed',
+            shadow: `
+                <style>
+                    :host  { display: block; }
+                    input  { vertical-align: middle; }
+                    output { vertical-align: middle; font-family: monospace; font-size: 0.75em; }
+                </style>
+                <p>Test input in a closed shadow DOM</p>
+                <input is="normal-input" type="range" name="fader" min="0" max="1" law="log-36db" step="any" value="0.5" id="test-input" />
+                <output for="test-input"></output>
+            `,
+            construct: function(shadow) {
+                const output = shadow.querySelector('output');
+                events('input', shadow)
+                .each((e) => output.textContent = e.target.value.toPrecision(3));
+            },
+            connect: function(shadow) {
+                // Safari requires a boot up the arse, as it does not implement
+                // customised built-ins. This does nothing in other browsers.
+                NormalInput.polyfillByRoot(shadow);
+            }
+        });
+
+        // Test open shadow
+        element('<open-shadow>', {
+            mode: 'open',
+            shadow: `
+                <style>
+                    :host  { display: block; }
+                    input  { vertical-align: middle; }
+                    output { vertical-align: middle; font-family: monospace; font-size: 0.75em; }
+                </style>
+                <p>Test input in an open shadow DOM</p>
+                <input is="normal-input" type="range" name="fader" min="0" max="1" law="log-36db" step="any" value="0.5" id="test-input" />
+                <output for="test-input"></output>
+            `,
+            construct: function(shadow) {
+                const output = shadow.querySelector('output');
+                events('input', shadow)
+                .each((e) => output.textContent = e.target.value.toPrecision(3));
+            },
+            connect: function(shadow) {
+                // Safari requires a boot up the arse, as it does not implement
+                // customised built-ins. This does nothing in other browsers.
+                NormalInput.polyfillByRoot(shadow);
+            }
+        });
     </script>
 </head>
 
@@ -99,4 +171,10 @@
     <input is="normal-input" type="range" name="pan" min="0" max="2" law="log-18db" step="any" value="1" class="vertical" style="height: 185px; margin-left: 5rem;margin-bottom: calc(-0.5 * var(--handle-size));" /-->
 
     <p class="text-10">*Customised built-in behaviour is polyfilled in Safari.</p>
+
+    <p>Test input in the light DOM</p>
+    <input is="normal-input" type="range" name="test" min="0" max="1" law="log-36db" step="any" value="0.5" id="test-input" />
+    <output for="test-input"></output>
+    <closed-shadow></closed-shadow>
+    <open-shadow></open-shadow>
 </body>

@@ -34,7 +34,7 @@ export default element('<input is="normal-input">', {
         if (roots.has(root)) return;
         roots.add(root);
 
-        events({ type: 'input', select: '[is="normal-input"]' }, root)
+        events({ type: 'input', select: '[is="normal-input"]', capture: true }, root)
         .each((e) => setStyleNormal(e.target));
     }
 }, {
