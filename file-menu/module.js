@@ -270,7 +270,10 @@ export default element('<file-menu>', {
     // Declare title property to make it an observable signal
     title:    createStringAttribute('title'),
     // Reserve the prefix '$' for internal use
-    prefix:   createStringAttribute('prefix', '', (string) => /^(?!$\/)/.test(string)),
+    prefix:   createStringAttribute('prefix', '', (string) => {
+        if (/^\$/.test(string)) throw new Error('<file-menu> prefix may not start with "$"');
+        return string;
+    }),
     // Declare title property to make it an observable signal
     filename: createStringAttribute('filename'),
     // Data is the parsed data object from storage
