@@ -91,7 +91,7 @@
 .pan-input::-moz-range-thumb {
     width:  var(--handle-size, 0.6875rem);
     height: var(--handle-size, var(--handle-size, 0.6875rem));
-    transform: translate3d(0, calc(var(--y) * -1 * var(--xrange)), 0);
+    transform: translate3d(0, calc(var(--y) * -1 * var(--xrange) - (0.5 * var(--yrange))), 0);
 
     background: var(--handle-background);
     border-width:  0;
