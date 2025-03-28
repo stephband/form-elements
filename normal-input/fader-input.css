@@ -18,10 +18,12 @@
             hsl(180, 1%, 66%) 0%,
             hsl(193, 5%, 79%) 14%,
             hsl(179, 1%, 49%) 15%,
-            hsl(180, 1%, 64%) 49%,
-            hsl(120, 1%, 26%) 49%,
-            hsl(120, 1%, 26%) 51%,
-            hsl(180, 1%, 64%) 51%,
+            /* Anything less than 2.8% does not show up on low resolution
+               screens, I guess because 2.8% ~= 1px when the handle is 36px high */
+            hsl(180, 1%, 64%) 48.6%,
+            hsl(120, 1%, 26%) 48.6%,
+            hsl(120, 1%, 26%) 51.4%,
+            hsl(180, 1%, 64%) 51.4%,
             hsl(193, 6%, 83%) 85%,
             hsl(179, 1%, 56%) 86%,
             hsl(179, 1%, 50%) 100%
@@ -37,7 +39,6 @@
 
     width:  1.875rem;
     height: 13.125em;
-
     background-color: transparent;
     border-width: 0;
 }
@@ -54,6 +55,7 @@
         transparent calc(100% - var(--handle-size) + 1px),
         transparent 100%
     );
+    /*box-shadow: var(--track-shadow);*/
     border-width: 0;
     width: var(--track-size);
 }
@@ -68,6 +70,7 @@
         transparent calc(100% - var(--handle-size) + 1px),
         transparent 100%
     );
+    /*box-shadow: var(--track-shadow);*/
     border-width: 0;
     width: var(--track-size);
 }

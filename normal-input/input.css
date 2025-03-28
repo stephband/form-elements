@@ -23,7 +23,7 @@
 [type="range"]:where(.vertical) {
     writing-mode: vertical-lr;
     direction: rtl;
-    appearance: slider-vertical;
+    /*appearance: slider-vertical;*/
     vertical-align: bottom;
     width: auto;
 

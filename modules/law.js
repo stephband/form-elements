@@ -1,7 +1,7 @@
 
 import normalise   from 'fn/normalise.js';
 import denormalise from 'fn/denormalise.js';
-import { dB6, dB12, dB18, dB24, dB30, dB36, dB48, dB60, dB66, dB72, dB96 } from './constants.js';
+import { dB6, dB12, dB18, dB24, dB30, dB36, dB48, dB60, dB66, dB72, dB90, dB96 } from './constants.js';
 
 const assign = Object.assign;
 

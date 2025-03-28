@@ -54,7 +54,7 @@ import id              from 'fn/id.js';
 import get             from 'fn/get.js';
 import overload        from 'fn/overload.js';
 import Privates        from 'fn/privates.js';
-import { clamp }       from 'fn/clamp.js';
+import clamp           from 'fn/clamp.js';
 import { wrap }        from 'fn/wrap.js';
 import Stream          from 'fn/stream.js';
 import Signal          from 'fn/signal.js';

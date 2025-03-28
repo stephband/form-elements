@@ -1,6 +1,6 @@
 
 import Privates        from 'fn/privates.js';
-import { clamp }       from 'fn/clamp.js';
+import clamp           from 'fn/clamp.js';
 import get             from 'fn/get.js';
 import noop            from 'fn/noop.js';
 import overload        from 'fn/overload.js';

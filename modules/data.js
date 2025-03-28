@@ -1,7 +1,7 @@
 
 
 import nothing           from 'fn/nothing.js';
-import { clamp }         from 'fn/clamp.js';
+import clamp             from 'fn/clamp.js';
 import { wrap }          from 'fn/wrap.js';
 import parseTicks        from './parse-ticks.js';
 import parseValue        from './parse-value.js';

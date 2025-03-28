@@ -1,4 +1,4 @@
-import { clamp }   from 'fn/clamp.js';
+import clamp       from 'fn/clamp.js';
 import normalise   from 'fn/normalise.js';
 import denormalise from 'fn/denormalise.js';
 import events      from 'dom/events.js';

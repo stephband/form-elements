@@ -132,6 +132,6 @@ rotary-input.mono-input::part(output) {
 rotary-input[name^="phase"],
 rotary-input[name$="phase"] {
     /* Full circle movement */
-    --rotation-start: 0deg;
+    --rotation-start: 90deg;
     --rotation-range: 360deg;
 }

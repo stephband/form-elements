@@ -1,6 +1,6 @@
 
 import Privates             from 'fn/privates.js';
-import { clamp }            from 'fn/clamp.js';
+import clamp                from 'fn/clamp.js';
 import id                   from 'fn/id.js';
 import Stream               from 'fn/stream.js';
 import get                  from 'fn/get.js';

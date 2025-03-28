@@ -17,7 +17,9 @@
     line-height: inherit;
     margin: calc(-1 * var(--border-width));
     max-width: none;
+    width: 100%;
     color: inherit;
+    cursor: pointer;
 }
 
 :host > svg {
@@ -48,4 +50,8 @@ select {
     background: none;
     border-width: 0;
     border-radius: 0;
+}
+
+select:focus {
+    outline: none;
 }
