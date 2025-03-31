@@ -128,7 +128,6 @@ export const formatters = {
 
 export const toDisplay = overload((unit) => unit.toLowerCase(), formatters);
 
-
 export default function parseDisplay(format) {
     return /\$\\*\{/.test(format) ?
         compile(format.replaceAll(/\$\\*\{/g, '${')) :

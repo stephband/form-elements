@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/rotary-input/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <title>rotary-input</title>
+
+    <meta charset="utf-8" />
+    <meta name="author" content="Stephen Band" />
+    <meta name="description" content="A customised number/range input with a normalised and interpolated value." />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@stephband">
+    <meta property="og:title" content="normal-input" />
+    <meta property="og:description" content="A customised number/range input with a normalised and interpolated value." />
+    <meta property="og:image" content="https://stephen.band/form-elements/normal-input/card.png?1" />
+    <meta property="og:url" content="https://stephen.band/form-elements/normal-input/" />
+
+    <script title="load">
+        document.documentElement.className += ' js loading';
+        // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+        // Wait for other load handlers to run first - Bolt does a few things on
+        // load (eg. targetable scrolls) and we want them to run before the loading
+        // class is removed
+        window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+        window.DEBUG = true;
+        window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
+    </script>
+
+    <link rel="stylesheet" href="../../literal/documentation/module.css">
+    <!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
+
+    <style>
+        @import '../../bolt/elements/focus.css';
+        @import './input.css';
+        @import './fader-input.css';
+        @import './mono-input.css';
+        @import './pan-input.css';
+
+        rotary-input + rotary-input {
+            margin-left: var(--x-gap);
+        }
+
+        :root {
+            background-color: #f2f2f2;
+        }
+
+        body {
+            //background: white;
+            padding: 3.25em;
+        }
+
+        input {
+            width: auto;
+        }
+
+        input  { vertical-align: middle; }
+        output { display: inline-block; vertical-align: middle; font-family: monospace; font-size: 0.75em; margin-top: var(--input-margin); }
+
+        input + p {
+            margin-top: 2lh;
+        }
+
+        input + .text-10 {
+            margin-top: 4lh;
+        }
+
+        .text-10 + p {
+            margin-top: 2lh;
+        }
+
+        p + closed-shadow {
+            margin-top: 3lh;
+        }
+    </style>
+
+    <script type="importmap">{
+        "imports": {
+            "dom/":        "../../dom/modules/",
+            "fn/":         "../../fn/modules/",
+            "form/":       "../../form-elements/"
+        }
+    }</script>
+
+    <script type="module">
+        import NormalInput from './element.js';
+        import element from 'dom/element.js';
+        import events from 'dom/events.js';
+
+        // Log to console
+        events({ type: 'input', select: '[is="normal-input"]' }, document.body)
+        .each((e) => console.log(e.target.value));
+
+        // Log test input to output
+        const output = document.body.querySelector('output[for="test-input"]');
+        events({ type: 'input', select: '#test-input' }, document)
+        .each((e) => output.textContent = e.target.value.toPrecision(3));
+
+        // Test closed shadow
+        element('<closed-shadow>', {
+            mode: 'closed',
+            shadow: `
+                <style>
+                    :host  { display: block; }
+                    input  { vertical-align: middle; }
+                    output { vertical-align: middle; font-family: monospace; font-size: 0.75em; }
+                </style>
+                <p>Test input in a closed shadow DOM</p>
+                <input is="normal-input" type="range" name="fader" min="0" max="1" law="log-36db" step="any" value="0.5" id="test-input" />
+                <output for="test-input"></output>
+            `,
+            construct: function(shadow) {
+                const output = shadow.querySelector('output');
+                events('input', shadow)
+                .each((e) => output.textContent = e.target.value.toPrecision(3));
+            },
+            connect: function(shadow) {
+                // Safari requires a boot up the arse, as it does not implement
+                // customised built-ins. This does nothing in other browsers.
+                NormalInput.polyfillByRoot(shadow);
+            }
+        });
+
+        // Test open shadow
+        element('<open-shadow>', {
+            mode: 'open',
+            shadow: `
+                <style>
+                    :host  { display: block; }
+                    input  { vertical-align: middle; }
+                    output { vertical-align: middle; font-family: monospace; font-size: 0.75em; }
+                </style>
+                <p>Test input in an open shadow DOM</p>
+                <input is="normal-input" type="range" name="fader" min="0" max="1" law="log-36db" step="any" value="0.5" id="test-input" />
+                <output for="test-input"></output>
+            `,
+            construct: function(shadow) {
+                const output = shadow.querySelector('output');
+                events('input', shadow)
+                .each((e) => output.textContent = e.target.value.toPrecision(3));
+            },
+            connect: function(shadow) {
+                // Safari requires a boot up the arse, as it does not implement
+                // customised built-ins. This does nothing in other browsers.
+                NormalInput.polyfillByRoot(shadow);
+            }
+        });
+    </script>
+</head>
+
+<body style="max-width: 50em; margin-left: auto; margin-right: auto;">
+    <h4>&lt;input is="normal-input"&gt;</h4>
+
+    <p>A customised built-in<span class="text-10">*</span> number and range input with both the property <code>.normal</code>
+    and the CSS property <code>--normal</code>, which describes the position of the handle
+    in the range <code>0-1</code> regardless of the values of <code>min</code> and <code>max</code>,
+    permitting the application of handle-position-based styles.</p>
+
+    <label>Pan</label>
+    <input is="normal-input" class="pan-input" type="range" name="pan" min="-1" max="1" value="0" step="any" />
+
+    <p>Also adds the <code>law</code> attribute. A fader law adjusts the interpolation
+    of an input's value over its range. An input with <code>law="log-36db"</code>,
+    for example, is dB-linear in its top portion down to <code>-36dB</code>, and gain-linear
+    down to <code>-∞dB</code>.</p>
+
+    <label>Gain</label>
+    <input is="normal-input" type="range" name="fader" min="0" max="3.9810717055349722" law="log-36db" step="any" value="1" class="fader-input vertical" style="margin-bottom: calc(-1 * var(--handle-size));" />
+    <!--input is="normal-input" type="range" name="mono" min="0" max="2" law="log-18db" step="any" value="1" class="mono-input vertical" style="height: 195px; margin-left: 5rem;margin-bottom: calc(-0.5 * var(--handle-size));" />
+    <input is="normal-input" type="range" name="pan" min="0" max="2" law="log-18db" step="any" value="1" class="vertical" style="height: 185px; margin-left: 5rem;margin-bottom: calc(-0.5 * var(--handle-size));" /-->
+
+    <p class="text-10">*Customised built-in behaviour is polyfilled in Safari.</p>
+
+    <p>Test input in the light DOM</p>
+    <input is="normal-input" type="range" name="test" min="0" max="1" law="log-36db" step="any" value="0.5" id="test-input" />
+    <output for="test-input"></output>
+    <closed-shadow></closed-shadow>
+    <open-shadow></open-shadow>
+</body>

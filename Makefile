@@ -5,7 +5,7 @@ DEBUG=
 
 # Must format with tabs not spaces
 literal:
-	deno run --allow-read --allow-env --allow-net --allow-write --allow-run --unstable --no-check literal/deno/make-literal.js ./ debug
+	deno run --allow-read --allow-env --allow-net --allow-write --allow-run --unstable --no-check ../literal/deno/make-literal.js ./ debug
 
 number-control:
 	deno run --allow-read --allow-env --allow-net --allow-write --allow-run ../fn/deno/make-modules.js ./number-control/build/ ./number-control/module.js ./number-control/module.css ./number-control/shadow.css

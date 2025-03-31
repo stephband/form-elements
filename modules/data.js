@@ -1,24 +1,22 @@
 
 
-import nothing           from 'fn/nothing.js';
-import clamp             from 'fn/clamp.js';
-import parseTicks        from './parse-ticks.js';
-import parseValue        from './parse-value.js';
+import nothing    from 'fn/nothing.js';
+import clamp      from 'fn/clamp.js';
+import wrap       from 'fn/wrap.js';
+import parseTicks from './parse-ticks.js';
+import parseValue from './parse-value.js';
 import { createSteps, nearestStep } from './step.js';
 import { generateTicks } from './ticks.js';
 
-export function assignNormal(data, scale, min, max, value) {
-    data.normal = scale.normalise(min, max, value);
+export function assignNormal(data, law, min, max, value) {
+    data.normal = law.normalise(min, max, value);
     return data;
 }
 
-export function updateData(scale, min, max, step, ticks, display, data) {
-    //console.log('UPDATE data', data, axis);
-    //const { scale, min, max, step, ticks, display } = axis;
-
-    data.scale = scale;
-    data.min   = min;
-    data.max   = max;
+export function updateData(law, min, max, step, ticks, display, data) {
+    data.law = law;
+    data.min = min;
+    data.max = max;
 
     data.ticks = (ticks ?
             ticks.length ? ticks :
@@ -26,7 +24,7 @@ export function updateData(scale, min, max, step, ticks, display, data) {
         nothing)
         // Filter to ticks within range min-max
         .filter((tick) => tick.value >= data.min && tick.value <= data.max)
-        .map((tick) => assignNormal(tick, scale, min, max, tick.value)) ;
+        .map((tick) => assignNormal(tick, law, min, max, tick.value)) ;
 
     data.step =
         // "any"
@@ -36,10 +34,10 @@ export function updateData(scale, min, max, step, ticks, display, data) {
         // Multiple values
         /\s|,/.test(step) ? parseTicks(step)
             .filter((step) => step.value >= data.min && step.value <= data.max)
-            .map((step) => assignNormal(step, scale, min, max, step.value)) :
+            .map((step) => assignNormal(step, law, min, max, step.value)) :
         // Generate from a single step value
         createSteps(min, max, parseValue(step))
-        .map((step) => assignNormal(step, scale, min, max, step.value)) ;
+        .map((step) => assignNormal(step, law, min, max, step.value)) ;
 
     data.display = display;
 
@@ -48,9 +46,12 @@ export function updateData(scale, min, max, step, ticks, display, data) {
 
 const point = {};
 
-export function valueFromValue(scale, min, max, step, value) {
-    point.value  = clamp(min, max, value);
-    point.normal = scale.normalise(min, max, point.value);
+export function valueFromValue(law, min, max, step, value, wrapped = false) {
+    point.value  = wrapped ?
+        wrap(min, max, value) :
+        clamp(min, max, value) ;
+
+    point.normal = law.normalise(min, max, point.value);
 
     return step ?
         // Round to nearest step by normal value, as that is visually the nearest
@@ -59,9 +60,9 @@ export function valueFromValue(scale, min, max, step, value) {
         point ;
 }
 
-export function valueFromNormal(scale, min, max, step, normal) {
+export function valueFromNormal(law, min, max, step, normal) {
     point.normal = clamp(0, 1, normal);
-    point.value  = scale.denormalise(min, max, point.normal);
+    point.value  = law.denormalise(min, max, point.normal);
 
     return step ?
         // Round to nearest step by normal value, as that is visually the nearest
@@ -70,8 +71,8 @@ export function valueFromNormal(scale, min, max, step, normal) {
         point ;
 }
 
-export function updateValue(data, scale, min, max, step, value) {
-    const state = valueFromValue(scale, min, max, step, value);
+export function updateValue(data, law, min, max, step, value) {
+    const state = valueFromValue(law, min, max, step, value);
     data.value  = state.value;
     data.normal = state.normal;
     return data;

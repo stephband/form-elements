@@ -4,7 +4,7 @@ import Privates                from 'fn/privates.js';
 import { createAttribute, createAttributeProperty, createBoolean } from '../../modules/attributes.js';
 import parsePoints     from '../../modules/parse-points.js';
 import stringifyPoints from '../../modules/stringify-points.js';
-import { getScale }    from '../../modules/scales.js';
+import { getScale }    from '../../modules/law.js';
 import parseValue      from '../../modules/parse-value.js';
 import parseTicks      from '../../modules/parse-ticks.js';
 

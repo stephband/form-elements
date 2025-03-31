@@ -48,7 +48,7 @@ import events          from 'dom/events.js';
 import { trigger }     from 'dom/trigger.js';
 import compile         from '../modules/compile.js';
 import parseValue      from '../modules/parse-value.js';
-import { getScale }    from '../modules/scales.js';
+import { getScale }    from '../modules/law.js';
 import { nearestStep } from '../modules/step.js';
 import { toKeyValue }  from '../modules/key.js';
 import properties      from '../modules/properties.js';

@@ -2,7 +2,10 @@
 /* output */
 
 [part="output"] {
-    width: var(--handle-width);
+    width: var(--handle-size);
+    height: 1lh;
+    margin-left: var(--track-size);
+    margin-right: var(--track-size);
     text-align: center;
 }
 

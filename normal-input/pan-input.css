@@ -1,0 +1,119 @@
+
+.pan-input {
+    --track-size:  0.125em;
+    --handle-size: 0.75rem;
+
+    --handle-background:
+        /* background-image */
+        radial-gradient(hsl(202, 7%, 90%), hsl(162, 2%, 56%))
+        /* background-position / background-size */
+        80% 100% / 140% 140%;
+
+    --handle-shadow:
+        inset 0 0 0 0.03125rem hsl(153, 2%, 26%),
+        0.003125rem 0.09375rem 0.125rem rgba(0,0,0,0.25);
+
+    /* Width of the input */
+    --width:  4.5rem;
+    /* The arc angle. Change just this to change the arc! */
+    --angle: calc(0.5 * 3.141592653589793);
+
+    /* Here be dragons. This magic makes --y follow an arc over the range of
+       --normal. There is a graph of this formula here:
+       https://www.desmos.com/calculator/icup3b3mnp */
+    --b: calc(sqrt(4 * var(--angle) / 3.141592653589793));
+    --y: calc(((sqrt(1 - pow(var(--b) * (var(--normal) - 0.5), 2))) - (sqrt(1 - var(--angle) / 3.141592653589793))) / var(--b));
+    /* The range of travel */
+    --xrange: calc(var(--width) - var(--handle-size));
+    --yrange: (0.5 * var(--xrange) / sin(0.5 * var(--angle)))
+            - (0.5 * var(--xrange) / tan(0.5 * var(--angle)));
+    --height: calc(var(--yrange) + var(--handle-size));
+
+
+
+
+    -webkit-appearance: none !important;
+
+    display: block;
+    width:   var(--width);
+    height:  var(--height);
+
+    /* Arc track. Very rough. Revisit. */
+    background-color: transparent;
+    /*background-image: radial-gradient(circle at 50% 138%,
+        transparent 0%,
+        transparent calc(66% - 0.5 * var(--track-size)),
+        black       calc(66% - 0.5 * var(--track-size)),
+        black       calc(66% + 0.5 * var(--track-size)),
+        transparent calc(66% + 0.5 * var(--track-size)),
+        transparent 100%
+    );*/
+
+    background-image: url('data:image/svg+xml;utf8,<svg viewBox="0 -1.85 4.5 1.85" version="1.1" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">\
+        <path d="M0.375 -0.375 A 2.651650 2.651650 0 0 1 4.125 -0.375" stroke="%2325292c" stroke-width="0.125" fill="none" stroke-linecap="round"></path>\
+    </svg>');
+    background-size: 100% auto;
+    background-position: 50% 100%;
+    border-width: 0;
+    border-radius: calc(0.5 * var(--track-size));
+}
+
+.pan-input:hover,
+.pan-input:focus-visible {
+    background-color: none;
+}
+
+/* Track */
+
+.pan-input::-webkit-slider-runnable-track {
+    background: transparent;
+    border-width: 0;
+}
+
+/* Handle */
+
+.pan-input::-webkit-slider-thumb {
+    -webkit-appearance: none !important;
+
+    width: var(--handle-size, 0.6875rem);
+    height: var(--handle-size, var(--handle-size, 0.6875rem));
+    transform: translate3d(0, calc(var(--y) * -1 * var(--xrange) - (0.5 * var(--yrange))), 0);
+
+    background: var(--handle-background);
+    border-width: 0;
+    border-radius: 50%;
+    box-shadow: var(--handle-shadow);
+
+    /* Increase hit zone */
+    outline: 0.25rem solid transparent;
+}
+
+.pan-input::-moz-range-thumb {
+    width:  var(--handle-size, 0.6875rem);
+    height: var(--handle-size, var(--handle-size, 0.6875rem));
+    transform: translate3d(0, calc(var(--y) * -1 * var(--xrange) - (0.5 * var(--yrange))), 0);
+
+    background: var(--handle-background);
+    border-width:  0;
+    border-radius: 50%;
+    box-shadow: var(--handle-shadow);
+
+    /* Increase hit zone */
+    outline: 0.25rem solid transparent;
+}
+
+/* Focus */
+
+.pan-input:focus-visible {
+    outline-width: 0;
+    /* Override rule in focus.css */
+    box-shadow: none !important;
+}
+
+.pan-input:focus-visible::-webkit-slider-thumb {
+    box-shadow: var(--focus-shadow), var(--handle-shadow);
+}
+
+.pan-input:focus-visible::-moz-range-thumb {
+    box-shadow: var(--focus-shadow), var(--handle-shadow);
+}

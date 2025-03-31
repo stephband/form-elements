@@ -1,7 +1,7 @@
 
 import { createAttribute, createNumberAttribute, createStringAttribute } from 'dom/element/create-attribute.js';
 
-import { getScale } from './scales.js';
+import { getScale } from './law.js';
 import parseValue   from './parse-value.js';
 import parseTicks   from './parse-ticks.js';
 import parseDisplay from './parse-display.js';
@@ -48,8 +48,8 @@ export default {
     max: createNumberAttribute('max', 1, -Infinity, Infinity, parseValue),
 
     /**
-    scale="linear"
-    Fader scale. This is the name of a transform to be applied over the range
+    law="linear"
+    Fader law. This is the name of a transform to be applied over the range
     of the fader travel. Possible values are:
 
     - `"linear"`
@@ -63,7 +63,7 @@ export default {
     - `"log-96dB"`
     **/
 
-    scale: createAttribute('scale', 'linear', getScale),
+    law: createAttribute('law', 'linear', getScale),
 
     /**
     ticks=""
@@ -125,5 +125,5 @@ export default {
     - A space or comma separated list of values, with or without units
     **/
 
-    step: createStringAttribute('any')
+    step: createStringAttribute('step', 'any')
 };
