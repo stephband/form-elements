@@ -1,13 +1,13 @@
 
 import Privates             from 'fn/privates.js';
-import { clamp }            from 'fn/clamp.js';
+import clamp                from 'fn/clamp.js';
 import id                   from 'fn/id.js';
 import Stream               from 'fn/stream.js';
 import get                  from 'fn/get.js';
 import last                 from 'fn/last.js';
 import overload             from 'fn/overload.js';
 import noop                 from 'fn/noop.js';
-import { remove }           from 'fn/remove.js';
+import remove               from 'fn/remove.js';
 import normalise            from 'fn/normalise.js';
 import denormalise          from 'fn/denormalise.js';
 import observe              from '../../../fn/observer/observe.js';
