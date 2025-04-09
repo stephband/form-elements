@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<!-- Literal template "/Users/stephband/Sites/form-elements/range-input/index.html.literal" -->
+
+<html lang="en">
+<head>
+    <title>form-elements</title>
+
+    <meta charset="utf-8" />
+    <meta name="author" content="Stephen Band" />
+    <meta name="description" content="A collection of advanced form controls published as custom elements" />
+    <meta name="viewport" content="width=device-width" />
+
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@stephband">
+    <meta property="og:title" content="form-elements" />
+    <meta property="og:description" content="A collection of advanced form controls published as custom elements" />
+    <meta property="og:image" content="https://stephen.band/form-elements/card.png" />
+    <meta property="og:url" content="https://stephen.band/form-elements/" />
+
+    <script type="importmap">{
+        "imports": {
+            "fn/":  "../../fn/modules/",
+            "dom/": "../../dom/modules/"
+        }
+    }</script>
+
+    <script title="load">
+        document.documentElement.className += ' js loading';
+        // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
+        // Wait for other load handlers to run first - Bolt does a few things on
+        // load (eg. targetable scrolls) and we want them to run before the loading
+        // class is removed
+        window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
+    </script>
+
+    <script title="debug">
+        window.DEBUG = true;
+    </script>
+</head>
+
+<body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
+    <file-menu prefix="harmoniser/" title="Settings"></file-menu>
+
+    <script type="module">
+    import StorageSelect from './module.js';
+    import events from 'dom/events.js';
+
+    events('change', document.body)
+    .each((e) => {
+        console.log(e.type, e.target, e.target.value, e.target.data);
+    });
+    </script>
+</body>
