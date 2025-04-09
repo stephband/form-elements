@@ -4,7 +4,8 @@ import element from 'dom/element.js';
 import { createReadonlyProperty } from 'dom/element/create-attribute.js';
 
 export default element('<select is="menu-select">', {
-    construct: function(shadow, internals) {
+    construct: function() {
+        // We want menu to return to default state even if fn() throws
         events('input', this).each((e) => {
             const value   = e.target.value;
             const actions = this.actions;
@@ -31,6 +32,12 @@ export default element('<select is="menu-select">', {
             // at this point?
             e.preventDefault();
         });
+    },
+
+    connect: function() {
+        // We want menu to start in default state, nothing selected
+        this.value = '';
+        requestAnimationFrame(() => this.value = '');
     }
 }, {
     actions: createReadonlyProperty('actions', {})
