@@ -107,7 +107,7 @@ export default element('<file-menu>', {
             <option value="$save-as">Save as&hellip;</option>
         </select>
 
-        <svg viewbox="0 0 24 24">
+        <svg viewbox="0 0 24 24" part="arrow">
             <path d="M7,10 L17,10 L12,15 Z"/>
         </svg>
 
