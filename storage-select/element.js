@@ -34,18 +34,21 @@ property is the corresponding data read from localStorage and parsed as JSON.
 **/
 
 
-import get      from 'fn/get.js';
-import noop     from 'fn/noop.js';
-import overload from 'fn/overload.js';
-import Signal   from 'fn/signal.js';
-import create   from 'dom/create.js';
-import delegate from 'dom/delegate.js';
-import events   from 'dom/events.js';
+
+import byAlphabet from 'fn/get.js';
+import get        from 'fn/get.js';
+import noop       from 'fn/noop.js';
+import overload   from 'fn/overload.js';
+import Signal     from 'fn/signal.js';
+import create     from 'dom/create.js';
+import delegate   from 'dom/delegate.js';
+import events     from 'dom/events.js';
 //import trigger  from 'dom/trigger.js';
 import element, { getInternals } from 'dom/element.js';
 import { createObjectAttribute, createStringAttribute } from 'dom/element/create-attribute.js';
 //import createStringProperty from 'dom/element/create-string-property.js';
 
+const S = String.prototype;
 const isTopWindow = (() => {
     // Test that we are not running in an iframe
     try { return window.self === window.top; }
@@ -104,8 +107,19 @@ function showDialog(select, internals, id) {
             // Store
             const key = prefix + name;
             localStorage.setItem(key, JSON.stringify(data));
+
+            // Create an option for key so that select.value may be set
             if (!select.querySelector('option[value="' + key + '"]')) {
-                select.append(create('option', { value: key, text: name }));
+                let marker = select.querySelector('[name="$localstorage"]');
+                // Generate options for inserted values
+                let option;
+                // Scan through options until we find a place to insert alphabetically
+                while ((option = marker.nextElementSibling) && option.value && byAlphabet(option.value, key) !== -1) {
+                    marker = option;
+                }
+
+                // Insert new option
+                marker.after(create('option', { value: key, text: name }));
             }
 
             // Update state and close dialog
@@ -147,7 +161,7 @@ export default element('<select is="storage-select">', {
                 // Save under the current name
                 localStorage.setItem(key, JSON.stringify(this.data));
                 // Reselect the current option
-                select.value = key;
+                this.value = key;
                 // Mark as handled
                 e.preventDefault();
             },
@@ -170,7 +184,7 @@ export default element('<select is="storage-select">', {
                 // Remove option
                 this.querySelector('[value="' + key + '"]').remove();
                 // Select default option
-                internals.filename = select.value = '';
+                internals.filename = this.value = '';
                 // Mark as handled
                 e.preventDefault();
             },
@@ -201,20 +215,43 @@ export default element('<select is="storage-select">', {
                 e.preventDefault();
             }
         }));
+
+        // Update list of items from localStorage when select is focused
+        events('focus', this).each(() => {
+            const prefix = this.prefix;
+            const values = Object
+                .keys(localStorage)
+                .filter((key) => key.startsWith(prefix))
+                .sort(byAlphabet);
+
+            let marker = this.querySelector('[name="$localstorage"]')
+                || this.children[this.children.length -1];
+
+            // Generate options for inserted values
+            let n = -1, option;
+            while (values[++n]) {
+                option = marker.nextElementSibling;
+
+                if (option && option.value && option.value === values[n]) {
+                    marker = option;
+                    continue;
+                }
+
+                option = create('option', { value: values[n], text: values[n].slice(prefix.length) });
+                marker.after(option);
+                marker = option;
+            }
+
+            // Remove unmatched trailing options
+            while ((option = marker.nextElementSibling) && option.value && option.value.startsWith(prefix)) {
+                option.remove();
+            }
+        });
     },
 
     connect: function(shadow, internals, data) {
-        //const marker = shadow.getElementById('default-option');
-
         // Return array of render signals
-        return  Signal.frame(() => {
-            const prefix = this.prefix;
-            const options = Object.keys(localStorage)
-                .filter((key) => key.startsWith(prefix))
-                .map((key) => create('option', { value: key, text: key.slice(prefix.length) }));
-
-            this.append.apply(this, options);
-
+        return Signal.frame(() => {
             // Select default option and update state
             internals.filename = this.value = '';
             this.data = null;
