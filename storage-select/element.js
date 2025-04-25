@@ -35,14 +35,15 @@ property is the corresponding data read from localStorage and parsed as JSON.
 
 
 
-import byAlphabet from 'fn/get.js';
-import get        from 'fn/get.js';
-import noop       from 'fn/noop.js';
-import overload   from 'fn/overload.js';
-import Signal     from 'fn/signal.js';
-import create     from 'dom/create.js';
-import delegate   from 'dom/delegate.js';
-import events     from 'dom/events.js';
+import byAlphabet  from 'fn/get.js';
+import get         from 'fn/get.js';
+import noop        from 'fn/noop.js';
+import overload    from 'fn/overload.js';
+import Signal      from 'fn/signal.js';
+import create      from 'dom/create.js';
+import delegate    from 'dom/delegate.js';
+import events      from 'dom/events.js';
+import updateNodes from 'dom/update-nodes.js';
 //import trigger  from 'dom/trigger.js';
 import element, { getInternals } from 'dom/element.js';
 import { createObjectAttribute, createStringAttribute } from 'dom/element/create-attribute.js';
@@ -117,7 +118,6 @@ function showDialog(select, internals, id) {
                 while ((option = marker.nextElementSibling) && option.value && byAlphabet(option.value, key) !== -1) {
                     marker = option;
                 }
-
                 // Insert new option
                 marker.after(create('option', { value: key, text: name }));
             }
@@ -224,28 +224,15 @@ export default element('<select is="storage-select">', {
                 .filter((key) => key.startsWith(prefix))
                 .sort(byAlphabet);
 
-            let marker = this.querySelector('[name="$localstorage"]')
-                || this.children[this.children.length -1];
-
-            // Generate options for inserted values
-            let n = -1, option;
-            while (values[++n]) {
-                option = marker.nextElementSibling;
-
-                if (option && option.value && option.value === values[n]) {
-                    marker = option;
-                    continue;
-                }
-
-                option = create('option', { value: values[n], text: values[n].slice(prefix.length) });
-                marker.after(option);
-                marker = option;
-            }
-
-            // Remove unmatched trailing options
-            while ((option = marker.nextElementSibling) && option.value && option.value.startsWith(prefix)) {
-                option.remove();
-            }
+            let marker = this.querySelector('[name="$localstorage"]');
+            if (marker) updateNodes(values, this, marker.nextElementSibling,
+                // Create node from object
+                (value) => create('option', { value: value, text: value.slice(prefix.length) }),
+                // Match node to object
+                (node, value) => node.value === value,
+                // Detect whether node belongs to collection
+                (node) => node.value && node.value.startsWith(prefix)
+            );
         });
     },
 
@@ -272,6 +259,7 @@ export default element('<select is="storage-select">', {
     }),
     // Declare title property to make it an observable signal
     filename: createStringAttribute('filename'),
+
     // Data is the parsed data object from storage
     data:     createObjectAttribute('data')
 }, 'stephen.band/form-elements/storage-select/');
