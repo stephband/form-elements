@@ -35,7 +35,7 @@ property is the corresponding data read from localStorage and parsed as JSON.
 
 
 
-import byAlphabet  from 'fn/get.js';
+import byAlphabet  from 'fn/by-alphabet.js';
 import get         from 'fn/get.js';
 import noop        from 'fn/noop.js';
 import overload    from 'fn/overload.js';
