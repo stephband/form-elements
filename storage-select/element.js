@@ -99,7 +99,7 @@ function showDialog(select, internals, id) {
     if (!dialog) throw new Error(`Store as dialog not found id="${ id }"`);
     dialog.showModal();
 
-    events('click', dialog).each(delegate({
+    const stream = events('click', dialog).each(delegate({
         '[name="store"]': (button, e) => {
             const input = dialog.querySelector('[name="name"]');
             const name  = input.value;
@@ -107,7 +107,6 @@ function showDialog(select, internals, id) {
 
             // Store
             const key = prefix + name;
-console.log('DATA', data, select);
             localStorage.setItem(key, JSON.stringify(data));
 
             // Create an option for key so that select.value may be set
@@ -127,12 +126,14 @@ console.log('DATA', data, select);
             select.value = key;
             internals.filename = name;
             dialog.close();
+            stream.stop();
         },
 
         '[name="cancel"]': (button, e) => {
             const key = prefix + internals.filename;
             select.value = key;
             dialog.close();
+            stream.stop();
         }
     }));
 
