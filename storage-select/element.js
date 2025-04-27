@@ -107,6 +107,7 @@ function showDialog(select, internals, id) {
 
             // Store
             const key = prefix + name;
+console.log('DATA', data, select);
             localStorage.setItem(key, JSON.stringify(data));
 
             // Create an option for key so that select.value may be set
@@ -151,8 +152,10 @@ export default element('<select is="storage-select">', {
                     const dialog = showDialog(this, internals, id);
                     // Return select to default state
                     this.value = '';
-                    // Mark as handled
-                    e.preventDefault();
+                    // Input and change events are not cancelable, so if we
+                    // don't want other handlers to run we have no choice but
+                    // to stop propagation
+                    e.stopImmediatePropagation();
                     return;
                 }
 
@@ -163,7 +166,7 @@ export default element('<select is="storage-select">', {
                 // Reselect the current option
                 this.value = key;
                 // Mark as handled
-                e.preventDefault();
+                e.stopImmediatePropagation();
             },
 
             '$store-as': (e) => {
@@ -173,7 +176,7 @@ export default element('<select is="storage-select">', {
                 // Return select to default state
                 this.value = '';
                 // Mark as handled
-                e.preventDefault();
+                e.stopImmediatePropagation();
                 return;
             },
 
@@ -186,7 +189,7 @@ export default element('<select is="storage-select">', {
                 // Select default option
                 internals.filename = this.value = '';
                 // Mark as handled
-                e.preventDefault();
+                e.stopImmediatePropagation();
             },
 
             '$save-as': async (e) => {
@@ -199,7 +202,7 @@ export default element('<select is="storage-select">', {
                     downloadAs(internals.filename + '.json', this.data);
                 }
                 // Mark as handled
-                e.preventDefault();
+                e.stopImmediatePropagation();
             },
 
             default: (e) => {
@@ -209,10 +212,9 @@ export default element('<select is="storage-select">', {
                 // then parse it as .data
                 const json = localStorage.getItem(this.value);
                 const data = JSON.parse(json);
+
                 internals.filename = this.value.slice(this.prefix.length);
                 this.data = data;
-                // Mark as handled
-                e.preventDefault();
             }
         }));
 
@@ -241,7 +243,7 @@ export default element('<select is="storage-select">', {
         return Signal.frame(() => {
             // Select default option and update state
             internals.filename = this.value = '';
-            this.data = null;
+            //this.data = null;
 
             // We want menu to start in default state, nothing selected (??)
             this.value = '';
