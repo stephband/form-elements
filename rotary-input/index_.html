@@ -3,8 +3,7 @@
 
 <html lang="en">
 <head>
-    
-<title>rotary-input</title>
+    <title>rotary-input</title>
 
 <meta charset="utf-8" />
 <meta name="author" content="Stephen Band" />
@@ -22,8 +21,6 @@
 
 
 
-<script type="importmap"></script>
-
 <script title="load">
     document.documentElement.className += ' js loading';
     // window.addEventListener('DOMContentLoaded', () => document.documentElement.classList.remove('content-loading'));
@@ -33,26 +30,15 @@
     window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
 </script>
 
-<script type="module">
-    import '../../literal/literal-html/element.js';
-</script>
-
 
 <script title="debug">
     window.DEBUG = true;
+    window.detailsToggleStylesheet = 'https://stephen.band/literal/documentation/build/details-toggle/shadow.css';
 </script>
 
-
-
-<script type="importmap">{
-    "imports": {
-        "dom/":  "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/",
-        "fn/":   "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/",
-        "bolt/": "https://cdn.jsdelivr.net/gh/stephband/bolt-2@main/"
-    }
-}</script>
-
-<link rel="stylesheet" href="../../literal/documentation/build/module.css">
+<link rel="stylesheet" href="literal/documentation/module.css">
+<!--link rel="stylesheet" href="https://stephen.band/literal/documentation/build/module.css"-->
+<link rel="preload" as="style" href="https://stephen.band/literal/documentation/build/details-toggle/shadow.css">
 
 
     <script title="element">
@@ -81,11 +67,11 @@ display.</p>
     Pan
 </rotary-input>
 
-<rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" law="log-48dB" display="dB" value="-6dB">
+<rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" scale="log-48dB" display="dB" value="-6dB">
     Volume
 </rotary-input>
 
-<rotary-input name="frequency" min="20" max="20000" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000">
+<rotary-input name="frequency" min="20" max="20000" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" scale="log" display="Hz" value="1000">
     Frequency
 </rotary-input>
 
@@ -93,14 +79,12 @@ display.</p>
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;rotary-input&gt;</code> custom element, upgrading any
 instances already in the DOM:</p>
-<pre><code class="language-js"><span class="token keyword">import</span> RotaryInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/rotary-input.js'</span><span class="token punctuation">;</span>
-</code></pre>
+<pre><code class="language-js"><span class="token keyword">import</span> RotaryInput <span class="token keyword">from</span> <span class="token string">'literal/documentation/templates/rotary-input.js'</span><span class="token punctuation">;</span></code></pre>
 <h2 id="use">Use</h2>
 <p>You can now author rotating knobs in forms:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pan<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Pan<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gain<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log-48dB<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dB<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-6dB<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
-<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>frequency<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20000<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Hz<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Frequency<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
-</code></pre>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gain<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB<span class="token punctuation">"</span></span> <span class="token attr-name">scale</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log-48dB<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dB<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-6dB<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>frequency<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20000<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz<span class="token punctuation">"</span></span> <span class="token attr-name">scale</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Hz<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Frequency<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span></code></pre>
 
 </div>
 
@@ -110,59 +94,36 @@ instances already in the DOM:</p>
     <h3>Attributes</h3>
     
 
-<details class="attribute-details" id="attribute-value-2">
-    <summary class="attribute-text text-05">
-        <code class="token language-html">value</code>
-    </summary>
-
-    <p>The initial value of the input.</p>
-
-</details>
-
-
-
-<details class="attribute-details" id="attribute-wrap">
-    <summary class="attribute-text text-05">
-        <code class="token language-html">wrap</code>
-    </summary>
-
-    <p>Boolean attribute indicating whether rotation is continuous and value
-‘wraps’ around.</p>
-
-</details>
-
-
-
-<details class="attribute-details" id="attribute-min-2">
-    <summary class="attribute-text text-05">
+<details-toggle class="attribute-details-toggle" id="attribute-min-2">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">min <span class="default-text">="<em>0</em>"</span></code>
-    </summary>
+    </h4>
 
     <p>Value at lower limit of fader. Will interpret string values with recognised
 units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="attribute-details" id="attribute-max-2">
-    <summary class="attribute-text text-05">
+<details-toggle class="attribute-details-toggle" id="attribute-max-2">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">max <span class="default-text">="<em>1</em>"</span></code>
-    </summary>
+    </h4>
 
     <p>Value at upper limit of fader. Will interpret string values with recognised
 units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="attribute-details" id="attribute-law-2">
-    <summary class="attribute-text text-05">
-        <code class="token language-html">law <span class="default-text">="<em>linear</em>"</span></code>
-    </summary>
+<details-toggle class="attribute-details-toggle" id="attribute-scale-2">
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">scale <span class="default-text">="<em>linear</em>"</span></code>
+    </h4>
 
-    <p>Fader law. This is the name of a transform to be applied over the range
+    <p>Fader scale. This is the name of a transform to be applied over the range
 of the fader travel. Possible values are:</p>
 <ul>
 <li><code>&quot;linear&quot;</code></li>
@@ -176,35 +137,33 @@ of the fader travel. Possible values are:</p>
 <li><code>&quot;log-96dB&quot;</code></li>
 </ul>
 
-</details>
+</details-toggle>
 
 
 
-<details class="attribute-details" id="attribute-ticks-2">
-    <summary class="attribute-text text-05">
+<details-toggle class="attribute-details-toggle" id="attribute-ticks-2">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">ticks</code>
-    </summary>
+    </h4>
 
     <p>A space or comma separated list of values at which to display tick marks.
 Values may be listed with or without units, eg:</p>
 <pre><code class="language-html">ticks=&quot;0 0.2 0.4 0.6 0.8 1&quot;
-ticks=&quot;-∞dB -48dB -36dB -24dB -12dB 0dB&quot;
-</code></pre>
+ticks=&quot;-∞dB -48dB -36dB -24dB -12dB 0dB&quot;</code></pre>
 <p>Note that the unicode <code>∞</code> infinity character is interpreted as <code>Infinity</code>
 (after unit conversion <code>-∞dB</code> is <code>0</code> and <code>0dB</code> is 1).</p>
 <p>Ticks may optionally be given labels, displayed in lieu of the tick value.
 Labels are written in square brackets following the tick value:</p>
-<pre><code class="language-html">ticks=&quot;0 [None] 0.5 [Half] 1 [Full]&quot;
-</code></pre>
+<pre><code class="language-html">ticks=&quot;0 [None] 0.5 [Half] 1 [Full]&quot;</code></pre>
 
-</details>
-
+</details-toggle>
 
 
-<details class="attribute-details" id="attribute-display-2">
-    <summary class="attribute-text text-05">
+
+<details-toggle class="attribute-details-toggle" id="attribute-display-2">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">display</code>
-    </summary>
+    </h4>
 
     <p>The units to display the value in. The output value and all ticks are
 displayed in this unit. Possible values are:</p>
@@ -219,29 +178,38 @@ displayed in this unit. Possible values are:</p>
 <p>Display formatters may be added by importing the formatters object:</p>
 <pre><code class="language-js">RangeInput<span class="token punctuation">.</span>displayFormats<span class="token punctuation">[</span><span class="token string">'my-format'</span><span class="token punctuation">]</span> <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token parameter">format<span class="token punctuation">,</span> value</span><span class="token punctuation">)</span> <span class="token operator">=></span> <span class="token punctuation">{</span>
     <span class="token comment">// Return an object of the form `{ value, unit }`</span>
-<span class="token punctuation">}</span><span class="token punctuation">;</span>
-</code></pre>
+<span class="token punctuation">}</span><span class="token punctuation">;</span></code></pre>
 <p>This format may now be used by declaring the display attribute:</p>
-<pre><code class="language-html">display=&quot;my-format&quot;
-</code></pre>
+<pre><code class="language-html">display=&quot;my-format&quot;</code></pre>
 
-</details>
-
+</details-toggle>
 
 
-<details class="attribute-details" id="attribute-step-2">
-    <summary class="attribute-text text-05">
+
+<details-toggle class="attribute-details-toggle" id="attribute-step-2">
+    <h4 class="attribute-text text-05" slot="summary">
         <code class="token language-html">step</code>
-    </summary>
+    </h4>
 
     <p>Step is either:</p>
 <ul>
-<li><code>&quot;any&quot;</code>, the default value</li>
-<li><code>&quot;ticks&quot;</code>, the values in the <code>ticks</code> attribute are used as step values</li>
-<li>A space or comma separated list of values, with or without units</li>
+<li><code>&quot;any&quot;</code> (the default value)</li>
+<li><code>&quot;ticks&quot;</code>. The values in the <code>ticks</code> attribute are used as step values</li>
+<li>A space or comma separated list of values, written with or without units</li>
 </ul>
 
-</details>
+</details-toggle>
+
+
+
+<details-toggle class="attribute-details-toggle" id="attribute-value-1">
+    <h4 class="attribute-text text-05" slot="summary">
+        <code class="token language-html">value</code>
+    </h4>
+
+    <p>The initial value of the input.</p>
+
+</details-toggle>
 
 
 
@@ -249,62 +217,51 @@ displayed in this unit. Possible values are:</p>
     <h3>Properties</h3>
     
 
-<details class="property-details" id="property|selector-value-2">
-    <summary class="property-text text-05">
-        <code class="property language-js">.value</code>
-    </summary>
-
-    <p>Current value of the input.</p>
-
-</details>
-
-
-
-<details class="property-details" id="property|selector-wrap">
-    <summary class="property-text text-05">
-        <code class="property language-js">.wrap</code>
-    </summary>
-
-    <p>Boolean indicating whether rotation is continuous and value ‘wraps’ around.</p>
-
-</details>
-
-
-
-<details class="property-details" id="property-type-2">
-    <summary class="property-text text-05">
+<details-toggle class="property-details-toggle" id="property-type-2">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.type</code>
-    </summary>
+    </h4>
 
     <p>“number”
 A readonly property with the value <code>&quot;number&quot;</code> (provided for consistency
 with native form elements, which all have a type).</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="property-details" id="property|selector-min-2">
-    <summary class="property-text text-05">
+<details-toggle class="property-details-toggle" id="property|selector-min-2">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.min</code>
-    </summary>
+    </h4>
 
     <p>Value at lower limit of fader. Will interpret string values with recognised
 units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="property-details" id="property|selector-max-2">
-    <summary class="property-text text-05">
+<details-toggle class="property-details-toggle" id="property|selector-max-2">
+    <h4 class="property-text text-05" slot="summary">
         <code class="property language-js">.max</code>
-    </summary>
+    </h4>
 
     <p>Value at upper limit of fader. Will interpret string values with recognised
 units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or numbers.</p>
 
-</details>
+</details-toggle>
+
+
+
+<details-toggle class="property-details-toggle" id="property|selector-value-1">
+    <h4 class="property-text text-05" slot="summary">
+        <code class="property language-js">.value</code>
+    </h4>
+
+    <p>Current value of the input.</p>
+
+</details-toggle>
 
 
 
@@ -316,25 +273,25 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
     <h3>Events</h3>
     
 
-<details class="string-details" id="string-input-1">
-    <summary class="string-text text-05">
+<details-toggle class="string-details-toggle" id="string-input-1">
+    <h4 class="string-text text-05" slot="summary">
         <code class=" language-js">"input"</code>
-    </summary>
+    </h4>
 
     <p>Emitted from the element during the movement of a handle.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="string-details" id="string-change-1">
-    <summary class="string-text text-05">
+<details-toggle class="string-details-toggle" id="string-change-1">
+    <h4 class="string-text text-05" slot="summary">
         <code class=" language-js">"change"</code>
-    </summary>
+    </h4>
 
     <p>Emitted from the element when a handle has been moved.</p>
 
-</details>
+</details-toggle>
 
 
 </div>
@@ -344,36 +301,36 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
     <h3>Parts</h3>
     
 
-<details class="part-details" id="part-label-2">
-    <summary class="part-text text-05">
+<details-toggle class="part-details-toggle" id="part-label-2">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(label)</code>
-    </summary>
+    </h4>
 
     <p>Style the label.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="part-details" id="part-tick-2">
-    <summary class="part-text text-05">
+<details-toggle class="part-details-toggle" id="part-tick-2">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(tick)</code>
-    </summary>
+    </h4>
 
     <p>Style the tick marks.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="part-details" id="part-output-2">
-    <summary class="part-text text-05">
+<details-toggle class="part-details-toggle" id="part-output-2">
+    <h4 class="part-text text-05" slot="summary">
         <code class=" language-css">::part(output)</code>
-    </summary>
+    </h4>
 
     <p>Style the display of the output value.</p>
 
-</details>
+</details-toggle>
 
 
 
@@ -381,170 +338,170 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
     <h3>Variables</h3>
     
 
-<details class="var-details" id="var-value-color-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-value-color-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--value-color</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-value-color-start-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-value-color-start-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--value-color-start</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-value-color-end-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-value-color-end-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--value-color-end</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-handle-color-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-handle-color-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--handle-color</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-handle-background-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-handle-background-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--handle-background</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-handle-border-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-handle-border-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--handle-border</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-output-color-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-output-color-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--output-color</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-track-background-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-track-background-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--track-background</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-track-padding-1">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-track-padding-1">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--track-padding</code>
-    </summary>
+    </h4>
 
     <p>Make the range input slightly wider than the control to allow range thumb
 to line up with label text.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-handle-size">
-    <summary class="var-text text-05">
-        <code class=" language-css">--handle-size</code>
-    </summary>
+<details-toggle class="var-details-toggle" id="var-handle-width">
+    <h4 class="var-text text-05" slot="summary">
+        <code class=" language-css">--handle-width</code>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-handle-shadow">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-handle-shadow">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--handle-shadow</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-track-width">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-track-width">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--track-width</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-track-shadow">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-track-shadow">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--track-shadow</code>
-    </summary>
+    </h4>
 
     
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-rotation-start">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-rotation-start">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--rotation-start</code>
-    </summary>
+    </h4>
 
     <p>Angle (clockwise from south) at which to start rotational travel.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-rotation-range">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-rotation-range">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--rotation-range</code>
-    </summary>
+    </h4>
 
     <p>Angle (clockwise from south) through which handle travels.</p>
 
-</details>
+</details-toggle>
 
 
 
-<details class="var-details" id="var-touch-range">
-    <summary class="var-text text-05">
+<details-toggle class="var-details-toggle" id="var-touch-range">
+    <h4 class="var-text text-05" slot="summary">
         <code class=" language-css">--touch-range</code>
-    </summary>
+    </h4>
 
     <p>Vertical distance of mouse or touch movement that results in one
 full range of rotation of the handle. Cannot be specified as a <code>%</code> length,
 other length units accepted..</p>
 
-</details>
+</details-toggle>
 
 
 
@@ -574,12 +531,12 @@ other length units accepted..</p>
 </section>
 
     
-<hr class="x1 4x @2-x2 x-stretch" style="margin-top: 4.2em;" />
+<hr class="x1 4x @2-x2 x-stretch" />
 
 <div class="x1 4x @2-x2 x-stretch y-start">
     <p class="text-10">
     Built by <a href="https://stephen.band/">Stephen Band</a> for
-    <a href="https://cruncher.ch">Cruncher</a>.
+    <a href="https://cruncher.ch"><img style="width: 1.366666667em; display: inline-block; vertical-align: bottom; margin-top: -0.1em; margin-bottom: -0.1em;" src="https://cruncher.ch/static/images/logo.svg" alt="Cruncher logo"/> Cruncher</a>.
     </p>
 
     <p class="text-10">
@@ -594,22 +551,21 @@ other length units accepted..</p>
 <footer class="x1 4x @1-6x @2-7x @3-9x 4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid grid footer">
     <div class="x1 4x @1-2x @2-x2 x-stretch y-start">
         <h3>Elements</h3>
-        <a class="block" href="https://stephen.band/literal/literal-html/"><code>&lt;template is="literal-html"&gt;</code></a>
         <a class="block" href="https://stephen.band/slide-show/"><code>&lt;slide-show&gt;</code></a>
+        <a class="block" href="https://stephen.band/details-toggle/"><code>&lt;details-toggle&gt;</code></a>
         <a class="block" href="https://stephen.band/form-elements/rotary-input/"><code>&lt;rotary-input&gt;</code></a>
         <a class="block" href="https://stephen.band/form-elements/range-input/"><code>&lt;range-input&gt;</code></a>
         <a class="block" href="https://stephen.band/form-elements/y-input/"><code>&lt;y-input&gt;</code></a>
         <a class="block" href="https://stephen.band/form-elements/xy-input/"><code>&lt;xy-input&gt;</code></a>
-        <a class="block" href="https://stephen.band/form-elements/normal-input/"><code>&lt;normal-input&gt;</code></a>
         <a class="block" href="https://stephen.band/form-elements/number-control/"><code>&lt;number-control&gt;</code></a>
         <a class="block" href="https://stephen.band/form-elements/select-control/"><code>&lt;select-control&gt;</code></a>
-        <a class="block" href="https://stephen.band/form-elements/menu-select/"><code>&lt;select is="menu-select"&gt;</code></a>
+        <a class="block" href="https://stephen.band/literal/literal-element/"><code>&lt;literal-element&gt;</code></a>
+        <a class="block" href="https://stephen.band/literal/literal-include/"><code>&lt;literal-include&gt;</code></a>
     </div>
 
     <div class="x1 4x @1-2x @1-x3 @2-x4 x-stretch y-start">
         <h3>Tools</h3>
         <a class="block" href="https://stephen.band/font-size/">Font-size calculator</a>
-        <a class="block" href="https://stephen.band/harmony-circle/">Harmonic circle</a>
     </div>
 </footer>
 
@@ -617,7 +573,7 @@ other length units accepted..</p>
 
 
     <script type="module">
-    import RotaryInput from './element.js';
+    import RotaryInput from './build/module.js';
     import events      from 'dom/events.js';
 
     // Test
