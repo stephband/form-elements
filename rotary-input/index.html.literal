@@ -10,7 +10,9 @@
 
     <style>
         rotary-input {
-            max-width: 15rem;
+            width: 10vmax;
+            min-width: 7.5rem;
+            max-width: 12rem;
         }
 
         rotary-input + rotary-input {

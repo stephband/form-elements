@@ -11,7 +11,8 @@ Style the tick marks.
     margin: 0;
     padding: 0;
 
-    font-family: 'Andale Mono', Monaco, Lucida, monospace;
+    /*font-family: 'Andale Mono', Monaco, Lucida, monospace;*/
+    font-family: monospace, monospace;
     font-size: 0.625em;
     line-height: 0.9375rem;
     letter-spacing: -0.04em;
@@ -21,7 +22,7 @@ Style the tick marks.
     /* Make ::before mark visible outside label*/
     overflow: visible;
     border-width: 0;
-    color: #666666;
+    color: #555555;
     background: transparent;
 
     -webkit-touch-callout: none; /* iOS Safari */

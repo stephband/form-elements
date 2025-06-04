@@ -5,12 +5,12 @@
     width: calc(var(--handle-size) + 2 * var(--track-size));
     height: calc(var(--handle-size) + 2 * var(--track-size));
     background: var(--track-background) conic-gradient(
-        from calc(180deg + var(--rotation-start)),
+        from var(--rotation-start),
         transparent 0deg,
-        transparent calc(min(var(--normal-value), var(--normal-zero)) * var(--rotation-range)),
-        var(--value-color) calc(min(var(--normal-value), var(--normal-zero)) * var(--rotation-range)),
-        var(--value-color) calc(max(var(--normal-value), var(--normal-zero)) * var(--rotation-range)),
-        transparent calc(max(var(--normal-value), var(--normal-zero)) * var(--rotation-range))
+        transparent calc(min(var(--normal), var(--normal-zero)) * var(--rotation-range)),
+        var(--value-color) calc(min(var(--normal), var(--normal-zero)) * var(--rotation-range)),
+        var(--value-color) calc(max(var(--normal), var(--normal-zero)) * var(--rotation-range)),
+        transparent calc(max(var(--normal), var(--normal-zero)) * var(--rotation-range))
     );
     box-shadow: var(--track-shadow);
     border-width: 0;

@@ -25,7 +25,7 @@ moving element can have small artifacts as it rotates.
     background: transparent;
     border-color: transparent;
     border-radius: 50%;
-    transform: rotate3d(0, 0, 1, calc(var(--rotation-start) + var(--normal-value) * var(--rotation-range)));
+    transform: rotate3d(0, 0, 1, calc(var(--rotation-start) + var(--normal) * var(--rotation-range)));
 
     /* Disable scroll */
     touch-action: none;

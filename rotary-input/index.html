@@ -3,7 +3,7 @@
 
 <html lang="en">
 <head>
-    
+
 <script title="debug">
     window.DEBUG = true;
 </script>
@@ -37,11 +37,19 @@
     window.addEventListener('load', () => window.requestAnimationFrame(() => document.documentElement.classList.remove('loading')));
 </script>
 
-<script type="importmap">{
+<!--script type="importmap">{
     "imports": {
         "dom/":  "https://cdn.jsdelivr.net/gh/stephband/dom@master/modules/",
         "fn/":   "https://cdn.jsdelivr.net/gh/stephband/fn@master/modules/",
         "bolt/": "https://cdn.jsdelivr.net/gh/stephband/bolt-2@main/"
+    }
+}</script-->
+
+<script type="importmap">{
+    "imports": {
+        "dom/":  "../../dom/modules/",
+        "fn/":   "../../fn/modules/",
+        "bolt/": "../../bolt/"
     }
 }</script>
 
@@ -59,7 +67,9 @@
 
     <style>
         rotary-input {
-            max-width: 15rem;
+            width: 12.5vw;
+            min-width: 6.875rem;
+            max-width: 10rem;
         }
 
         rotary-input + rotary-input {
@@ -69,9 +79,11 @@
 </head>
 
 <body class="4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid">
-    
 
-<div class="x1 4x @2-x2 x-stretch y-start documentation-block block">
+
+
+
+<div class="x1 4x @1-6x @2-x2 x-stretch y-start documentation-block block">
     <h1 id="rotary-input"><span class="tag-brace">&lt;</span>rotary-input<span class="tag-brace">&gt;</span></h1>
     <p>A rotating knob form input with scaling, ticks, units and formatted output
 display.</p>
@@ -86,8 +98,9 @@ display.</p>
 <rotary-input name="frequency" min="20" max="20000" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000">
     Frequency
 </rotary-input>
+</div>
 
-
+<div class="x1 4x @2-x2 x-stretch y-start documentation-block block">
 <h2 id="import">Import</h2>
 <p>Import and register the <code>&lt;rotary-input&gt;</code> custom element, upgrading any
 instances already in the DOM:</p>
@@ -104,9 +117,9 @@ instances already in the DOM:</p>
 
 
 <div class="x1 4x @1-3x @2-x2 x-stretch y-start">
-    
+
     <h3>Attributes</h3>
-    
+
 
 <details class="attribute-details" id="attribute-value-2">
     <summary class="attribute-text text-05">
@@ -243,9 +256,9 @@ displayed in this unit. Possible values are:</p>
 
 
 
-    
+
     <h3>Properties</h3>
-    
+
 
 <details class="property-details" id="property|selector-value-2">
     <summary class="property-text text-05">
@@ -306,13 +319,13 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-    
-    
-    
 
-    
+
+
+
+
     <h3>Events</h3>
-    
+
 
 <details class="string-details" id="string-input-1">
     <summary class="string-text text-05">
@@ -338,9 +351,9 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 </div>
 
 <div class="x1 4x @1-x4 @1-3x @2-x5 x-stretch y-start">
-    
+
     <h3>Parts</h3>
-    
+
 
 <details class="part-details" id="part-label-2">
     <summary class="part-text text-05">
@@ -375,16 +388,16 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 
 
 
-    
+
     <h3>Variables</h3>
-    
+
 
 <details class="var-details" id="var-value-color-1">
     <summary class="var-text text-05">
         <code class=" language-css">--value-color</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -394,7 +407,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class=" language-css">--value-color-start</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -404,7 +417,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class=" language-css">--value-color-end</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -414,7 +427,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class=" language-css">--handle-color</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -424,7 +437,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class=" language-css">--handle-background</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -434,7 +447,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class=" language-css">--handle-border</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -444,7 +457,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class=" language-css">--output-color</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -454,7 +467,7 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
         <code class=" language-css">--track-background</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -476,7 +489,7 @@ to line up with label text.</p>
         <code class=" language-css">--handle-size</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -486,7 +499,7 @@ to line up with label text.</p>
         <code class=" language-css">--handle-shadow</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -496,7 +509,7 @@ to line up with label text.</p>
         <code class=" language-css">--track-width</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -506,7 +519,7 @@ to line up with label text.</p>
         <code class=" language-css">--track-shadow</code>
     </summary>
 
-    
+
 </details>
 
 
@@ -546,14 +559,14 @@ other length units accepted..</p>
 
 
 
-    
-    
-    
+
+
+
 </div>
 
 
 
-    
+
 <section class="x1 4x @2-x2 x-stretch y-start">
     <h2>Contribute</h2>
     <p>
@@ -571,7 +584,7 @@ other length units accepted..</p>
     </ul>
 </section>
 
-    
+
 <hr class="x1 4x @2-x2 x-stretch" style="margin-top: 4.2em;" />
 
 <div class="x1 4x @2-x2 x-stretch y-start">
@@ -588,7 +601,7 @@ other length units accepted..</p>
     </p>
 </div>
 
-    
+
 <footer class="x1 4x @1-6x @2-7x @3-9x 4x-grid @1-6x-grid @2-7x-grid @3-9x-grid grid grid footer">
     <div class="x1 4x @1-2x @2-x2 x-stretch y-start">
         <h3>Elements</h3>

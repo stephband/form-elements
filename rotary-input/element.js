@@ -59,7 +59,7 @@ import wrap            from 'fn/wrap.js';
 import Stream          from 'fn/stream.js';
 import Signal          from 'fn/signal.js';
 import create          from 'dom/create.js';
-import element         from 'dom/element.js';
+import element, { getInternals } from 'dom/element.js';
 import events          from 'dom/events.js';
 import gestures        from 'dom/gestures.js';
 import isSafari        from 'dom/is-safari.js';
@@ -110,11 +110,11 @@ function renderTick(buttons, tick) {
             part: 'tick',
             name: 'value',
             value: tick.value,
-            style: '--normal-value: ' + tick.normal + ';',
+            style: '--normal: ' + tick.normal + ';',
             children: [
                 create('span', {
                     text: tick.label,
-                    style: 'transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (var(--rotation-start) + ' + tick.normal + ' * var(--rotation-range)))) translate3d(calc(' + Math.sin(tick.normal * 6.28318531) + ' * -33%), 0, 0);'
+                    style: 'transform: translate3d(-50%, 0, 0) rotate3d(0, 0, 1, calc(-1 * (180deg + var(--rotation-start) + ' + tick.normal + ' * var(--rotation-range)))) translate3d(calc(' + Math.sin(tick.normal * 6.28318531) + ' * -33%), 0, 0);'
                 })
             ]
         })
@@ -125,12 +125,12 @@ function renderTick(buttons, tick) {
 
 function renderValue(host, style, internals, outputText, outputAbbr, unit, value, normal) {
     // Render handle position.
-    style.setProperty('--normal-value', normal);
+    style.setProperty('--normal', normal);
 
     // Apple pants. Safari has a bug where it does not reliably update style
     // from variables set in the shadow DOM, so set them on the element to keep
     // it alert.
-    if (isSafari) host.style.setProperty('--normal-value', normal);
+    if (isSafari) host.style.setProperty('--normal', normal);
 
     // Render display
     const display = toDisplay(unit, value);
@@ -268,12 +268,35 @@ export default element('<rotary-input>', {
         const { host, hostStyle, outputAbbr, outputText, buttons, marker, $law, $min, $max, $step, $wrap, $ticks, $unit, $value, $normal } = internals;
         return [
             // Observe attribute updates
-            Signal.frame(() => renderData(hostStyle, $law.value, $min.value, $max.value, $ticks.value, buttons, marker)),
+            Signal.frame(() => {
+                const law   = $law.value;
+                const min   = $min.value;
+                const max   = $max.value;
+                const ticks = $ticks.value;
+
+                // Define tick.normal on each tick
+                if (ticks) ticks.forEach((tick) => tick.normal = law.normalise(min, max, tick.value));
+
+                renderData(hostStyle, law, min, max, ticks, buttons, marker);
+            }),
             // Observe value updates
             Signal.frame(() => renderValue(host, hostStyle, internals, outputText, outputAbbr, $unit.value, $value.value, $normal.value))
         ];
     }
 }, assign({}, properties, {
+    /**
+    .normal
+    The normal of the input, a readonly number in the range `0`-`1`. This
+    corresponds to the ratio of the input's handle position over its travel.
+    Also available to CSS as `var(--normal)`.
+    **/
+    normal: {
+        get: function() {
+            const { $normal } = getInternals(this);
+            return $normal.value;
+        }
+    },
+
     /**
     value=""
     The initial value of the input.
@@ -288,12 +311,13 @@ export default element('<rotary-input>', {
     /**
     wrap=""
     Boolean attribute indicating whether rotation is continuous and value
-    'wraps' around.
+    'wraps' around between `min` and `max`.
     **/
 
     /**
     .wrap
-    Boolean indicating whether rotation is continuous and value 'wraps' around.
+    Boolean indicating whether rotation is continuous and value 'wraps' around
+    between `.min` and `.max`.
     **/
     wrap: createBooleanAttribute('wrap')
 }), 'stephen.band/form-elements/');
