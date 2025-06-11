@@ -7,6 +7,11 @@
     margin-left: var(--track-size);
     margin-right: var(--track-size);
     text-align: center;
+
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 
 :host(:focus) > [part="output"] {

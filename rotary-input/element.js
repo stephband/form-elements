@@ -5,17 +5,14 @@
 A rotating knob form input with scaling, ticks, units and formatted output
 display.
 
-<rotary-input name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1">
-    Pan
-</rotary-input>
+<label for="pan">Pan</label>
+<rotary-input name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1" id="pan"></rotary-input>
 
-<rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" law="log-48dB" display="dB" value="-6dB">
-    Volume
-</rotary-input>
+<label for="gain">Gain</label>
+<rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" law="log-48dB" display="dB" value="-6dB" id="gain"></rotary-input>
 
-<rotary-input name="frequency" min="20" max="20000" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000">
-    Frequency
-</rotary-input>
+<label for="frequency">Frequency</label>
+<rotary-input name="frequency" min="20" max="20000" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000" id="frequency"></rotary-input>
 
 
 ## Import
@@ -29,12 +26,12 @@ import RotaryInput from './rotary-input.js';
 
 ## Use
 
-You can now author rotating knobs in forms:
+You can now author rotating knob inputs:
 
 ```html
-<rotary-input name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1">Pan</rotary-input>
-<rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" law="log-48dB" display="dB" value="-6dB">Volume</rotary-input>
-<rotary-input name="frequency" min="20" max="20000" ticks="20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000">Frequency</rotary-input>
+<rotary-input name="pan" min="-1" max="1" ticks="-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1"></rotary-input>
+<rotary-input name="gain" min="0" max="2" ticks="-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB" law="log-48dB" display="dB" value="-6dB"></rotary-input>
+<rotary-input name="frequency" min="20" max="20000" ticks="20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000"></rotary-input>
 ```
 
 **/
@@ -56,7 +53,6 @@ import overload        from 'fn/overload.js';
 import Privates        from 'fn/privates.js';
 import clamp           from 'fn/clamp.js';
 import wrap            from 'fn/wrap.js';
-import Stream          from 'fn/stream.js';
 import Signal          from 'fn/signal.js';
 import create          from 'dom/create.js';
 import element, { getInternals } from 'dom/element.js';
@@ -141,7 +137,7 @@ function renderValue(host, style, internals, outputText, outputAbbr, unit, value
     internals.setFormValue(value);
 }
 
-function renderData(style, law, min, max, ticks, buttons, marker) {
+function renderData(style, law, min, max, ticks, buttons, shadow) {
     // Style
     style.setProperty('--normal-zero', law.normalise(min, max, 0));
 
@@ -151,7 +147,7 @@ function renderData(style, law, min, max, ticks, buttons, marker) {
 
     if (!ticks) return;
     buttons = ticks.reduce(renderTick, buttons);
-    marker.after.apply(marker, buttons);
+    shadow.append.apply(shadow, buttons);
 }
 
 
@@ -172,36 +168,28 @@ export default element('<rotary-input>', {
 
     focusable: true,
 
-    // <label part="label" for="input"><slot></slot></label>
     shadow: `
-        <link rel="stylesheet" href="${ window.rhythmSynthStylesheet || import.meta.url.replace(/js$/, 'css') }"/>
-        <style>:host {} :host > * { visibility: hidden; }</style>
+        <link rel="stylesheet" href="${ window.rotaryInputStylesheet || import.meta.url.replace(/.js$/, '-shadow.css') }"/>
+        <style>:host {}</style>
         <div class="track" part="track"></div>
         <div class="static-handle handle"></div>
         <div class="rotate-handle handle" part="handle"></div>
-        <output part="output">
-            <abbr part="unit"></abbr>
-        </output>
+        <output part="output"><abbr part="unit"></abbr></output>
     `,
 
     construct: function(shadow, internals) {
         // DOM
-        // TODO: Does element.js not handle hidden style now? I think it does.
         const style      = shadow.querySelector('style');
-        //const label      = shadow.querySelector('label');
         const handle     = shadow.querySelector('.handle');
         const output     = shadow.querySelector('output');
         const outputText = document.createTextNode('');
         const outputAbbr = shadow.querySelector('abbr');
-        const marker     = document.createTextNode('');
         const buttons    = [];
 
         output.prepend(outputText);
-        shadow.append(marker);
 
         // Style
-        const hostStyle  = style.sheet.cssRules[0].style;
-        const childStyle = style.sheet.cssRules[1].style;
+        const hostStyle = style.sheet.cssRules[0].style;
 
         // Attribute/property signals
         const $law    = Signal.of(defaults.law);
@@ -216,7 +204,7 @@ export default element('<rotary-input>', {
 
         assign(internals, {
             host: this,
-            hostStyle, childStyle, outputText, outputAbbr, buttons, marker,
+            hostStyle, outputText, outputAbbr, buttons, /*marker, */
             $law, $min, $max, $step, $ticks, $unit, $value, $normal, $wrap
         });
 
@@ -260,12 +248,8 @@ export default element('<rotary-input>', {
         .each(setValue);
     },
 
-    load: function(shadow, { childStyle }) {
-        childStyle.visibility = '';
-    },
-
     connect: function(shadow, internals) {
-        const { host, hostStyle, outputAbbr, outputText, buttons, marker, $law, $min, $max, $step, $wrap, $ticks, $unit, $value, $normal } = internals;
+        const { host, hostStyle, outputAbbr, outputText, buttons, $law, $min, $max, $step, $wrap, $ticks, $unit, $value, $normal } = internals;
         return [
             // Observe attribute updates
             Signal.frame(() => {
@@ -277,8 +261,9 @@ export default element('<rotary-input>', {
                 // Define tick.normal on each tick
                 if (ticks) ticks.forEach((tick) => tick.normal = law.normalise(min, max, tick.value));
 
-                renderData(hostStyle, law, min, max, ticks, buttons, marker);
+                renderData(hostStyle, law, min, max, ticks, buttons, shadow);
             }),
+
             // Observe value updates
             Signal.frame(() => renderValue(host, hostStyle, internals, outputText, outputAbbr, $unit.value, $value.value, $normal.value))
         ];

@@ -59,10 +59,8 @@
 
 
 <link rel="stylesheet" href="../../literal/documentation/build/module.css">
-
-
     <script title="element">
-        window.rotaryInputStylesheet = './build/shadow.css';
+        window.rotaryInputStylesheet = './element-shadow.css';
     </script>
 
     <style>
@@ -95,7 +93,7 @@ display.</p>
     Volume
 </rotary-input>
 
-<rotary-input name="frequency" min="20" max="20000" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000">
+<rotary-input name="frequency" min="20Hz" max="20kHz" ticks="25Hz 50Hz 100Hz 250Hz 500Hz 1kHz 2.5kHz 5kHz 10kHz 20kHz" law="log" display="Hz" value="1000">
     Frequency
 </rotary-input>
 </div>
@@ -107,7 +105,7 @@ instances already in the DOM:</p>
 <pre><code class="language-js"><span class="token keyword">import</span> RotaryInput <span class="token keyword">from</span> <span class="token string">'../../literal/documentation/templates/rotary-input.js'</span><span class="token punctuation">;</span>
 </code></pre>
 <h2 id="use">Use</h2>
-<p>You can now author rotating knobs in forms:</p>
+<p>You can now author rotating knob inputs:</p>
 <pre><code class="language-html"><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>pan<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-1 -0.8 -0.6 -0.4 -0.2 0 0.2 0.4 0.6 0.8 1<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Pan<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>gain<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>0<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>2<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-∞dB -48dB -42dB -36dB -30dB -24dB -18dB -12dB -6dB 0dB 6dB<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log-48dB<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>dB<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>-6dB<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Volume<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
 <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>rotary-input</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>frequency<span class="token punctuation">"</span></span> <span class="token attr-name">min</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20<span class="token punctuation">"</span></span> <span class="token attr-name">max</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20000<span class="token punctuation">"</span></span> <span class="token attr-name">ticks</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>20Hz 30Hz 50Hz 100Hz 200Hz 300Hz 500Hz 1kHz 2kHz 3kHz 5kHz 10kHz 20kHz<span class="token punctuation">"</span></span> <span class="token attr-name">law</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>log<span class="token punctuation">"</span></span> <span class="token attr-name">display</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>Hz<span class="token punctuation">"</span></span> <span class="token attr-name">value</span><span class="token attr-value"><span class="token punctuation attr-equals">=</span><span class="token punctuation">"</span>1000<span class="token punctuation">"</span></span><span class="token punctuation">></span></span>Frequency<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>rotary-input</span><span class="token punctuation">></span></span>
@@ -353,18 +351,6 @@ units, eg. <code>&quot;0dB&quot;</code> or <code>&quot;200Hz&quot;</code>, or nu
 <div class="x1 4x @1-x4 @1-3x @2-x5 x-stretch y-start">
 
     <h3>Parts</h3>
-
-
-<details class="part-details" id="part-label-2">
-    <summary class="part-text text-05">
-        <code class=" language-css">::part(label)</code>
-    </summary>
-
-    <p>Style the label.</p>
-
-</details>
-
-
 
 <details class="part-details" id="part-tick-2">
     <summary class="part-text text-05">
